@@ -8,7 +8,7 @@ import { useState } from "react";
 
 interface Props {
   planA: SimulationResult;
-  planB: SimulationResult;
+  planB?: SimulationResult;
   startYear: number;
   startMonth: number;
   monthlyAmount: number;
@@ -16,12 +16,13 @@ interface Props {
 
 export default function ShareCard({ planA, planB, startYear, startMonth, monthlyAmount }: Props) {
   const [copied, setCopied] = useState(false);
-  const sorted = [planA, planB].sort((a, b) => b.profit - a.profit);
+  const sorted = planB ? [planA, planB].sort((a, b) => b.profit - a.profit) : [planA];
   const winner = sorted[0];
   const loser = sorted[1];
-  const diff = winner.profit - loser.profit;
+  const diff = loser ? winner.profit - loser.profit : null;
 
-  const shareText = `📈 #積立タイムマシン
+  const shareText = planB && loser
+    ? `📈 #積立タイムマシン
 
 もし${startYear}年${startMonth}月から
 毎月${formatCurrency(monthlyAmount)}積み立てていたら...
@@ -32,7 +33,17 @@ export default function ShareCard({ planA, planB, startYear, startMonth, monthly
 vs ${loser.fundName}
 利益 +${formatCurrency(loser.profit)}（${loser.returnRate.toFixed(1)}%）
 
-差額 ${formatCurrency(diff)} の違い！
+差額 ${formatCurrency(diff!)} の違い！
+今すぐ試す → https://tsumitate-timemachine.vercel.app`
+    : `📈 #積立タイムマシン
+
+もし${startYear}年${startMonth}月から
+毎月${formatCurrency(monthlyAmount)}積み立てていたら...
+
+🏆 ${winner.fundName}
+利益 +${formatCurrency(winner.profit)}（${winner.returnRate.toFixed(1)}%）
+元本 ${formatCurrency(planA.totalPrincipal)} → ${formatCurrency(planA.finalValue)}
+
 今すぐ試す → https://tsumitate-timemachine.vercel.app`;
 
   const handleCopy = async () => {
@@ -90,10 +101,12 @@ vs ${loser.fundName}
               </div>
             ))}
           </div>
-          <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-            <p className="text-xs text-zinc-500">差額</p>
-            <p className="text-sm font-black text-white">{formatCurrency(diff)}</p>
-          </div>
+          {diff !== null && (
+            <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
+              <p className="text-xs text-zinc-500">差額</p>
+              <p className="text-sm font-black text-white">{formatCurrency(diff)}</p>
+            </div>
+          )}
         </div>
       </div>
 

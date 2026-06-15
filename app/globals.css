@@ -151,3 +151,29 @@
 input[type="range"] {
   accent-color: #6366f1;
 }
+
+/* Safe area utilities */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.pb-safe-nav {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+}
+
+/* Minimum touch target */
+.tap-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Smooth momentum scroll on iOS */
+.scroll-touch {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
