@@ -245,7 +245,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
   const funds = getFundsByCategory(activeCategory);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <div className="flex items-center gap-2">
         <BookOpen className="h-4 w-4 text-indigo-400" />
         <p className="font-heading text-sm font-semibold text-white">銘柄図鑑</p>
@@ -253,7 +253,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
       </div>
 
       {/* Category tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4" style={{ scrollbarWidth: "none" }}>
+      <div className="flex gap-1.5 overflow-x-auto pb-1 -mx-4 px-4" style={{ scrollbarWidth: "none" }}>
         {CATEGORY_ORDER.map((catId) => {
           const cat = FUND_CATEGORIES[catId];
           const isActive = activeCategory === catId;

@@ -15,7 +15,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "eMAXIS Slim 全世界株式（オルカン）",
     shortName: "オルカン", ticker: "vt.us",
     color: "#6366f1", riskLevel: 3,
-    description: "全世界約3000銘柄に分散",
+    description: "世界中の企業へまとめて投資できる",
     annualReturns: {
       2015: 0.014, 2016: 0.075, 2017: 0.241, 2018: -0.093,
       2019: 0.271, 2020: 0.163, 2021: 0.305, 2022: -0.180,
@@ -41,7 +41,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "バンガード・トータル・ワールド・ストック ETF",
     shortName: "VT", ticker: "vt.us",
     color: "#818cf8", riskLevel: 3,
-    description: "全世界9000銘柄以上",
+    description: "世界中へETFで分散投資できる",
     annualReturns: {
       2015: 0.009, 2016: 0.080, 2017: 0.244, 2018: -0.096,
       2019: 0.266, 2020: 0.161, 2021: 0.299, 2022: -0.183,
@@ -69,7 +69,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "eMAXIS Slim 米国株式（S&P500）",
     shortName: "S&P500", ticker: "^spx",
     color: "#f59e0b", riskLevel: 3,
-    description: "米国大型株500社",
+    description: "アメリカの代表企業500社に投資できる",
     annualReturns: {
       2015: 0.016, 2016: 0.121, 2017: 0.218, 2018: -0.045,
       2019: 0.316, 2020: 0.186, 2021: 0.289, 2022: -0.184,
@@ -95,7 +95,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "バンガード・トータル・ストック・マーケット ETF",
     shortName: "VTI", ticker: "vti.us",
     color: "#3b82f6", riskLevel: 3,
-    description: "米国全体（約3700銘柄）",
+    description: "アメリカ株式市場全体に幅広く投資できる",
     annualReturns: {
       2015: 0.008, 2016: 0.128, 2017: 0.215, 2018: -0.053,
       2019: 0.311, 2020: 0.213, 2021: 0.258, 2022: -0.194,
@@ -123,7 +123,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "バンガード・米国高配当株式 ETF",
     shortName: "VYM", ticker: "vym.us",
     color: "#10b981", riskLevel: 2,
-    description: "米国高配当株400銘柄",
+    description: "アメリカの配当が多い企業に投資できる",
     annualReturns: {
       2015: -0.001, 2016: 0.175, 2017: 0.196, 2018: -0.085,
       2019: 0.267, 2020: 0.024, 2021: 0.281, 2022: -0.001,
@@ -149,7 +149,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "楽天・高配当株式・米国ファンド（SCHD）",
     shortName: "SCHD", ticker: "schd.us",
     color: "#059669", riskLevel: 2,
-    description: "配当成長株100銘柄に集中",
+    description: "配当を増やし続ける優良企業に投資できる",
     annualReturns: {
       2015: -0.012, 2016: 0.173, 2017: 0.185, 2018: -0.074,
       2019: 0.278, 2020: 0.068, 2021: 0.299, 2022: -0.034,
@@ -177,7 +177,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "iFreeNEXT NASDAQ100 インデックス",
     shortName: "NASDAQ100", ticker: "^ndx",
     color: "#8b5cf6", riskLevel: 4,
-    description: "米国ナスダック主要100社",
+    description: "アメリカの主要テック企業100社に投資できる",
     annualReturns: {
       2015: 0.097, 2016: 0.074, 2017: 0.331, 2018: -0.012,
       2019: 0.397, 2020: 0.488, 2021: 0.271, 2022: -0.330,
@@ -203,7 +203,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "iFreeNEXT FANG+インデックス",
     shortName: "FANG+", ticker: "^nyfang",
     color: "#ef4444", riskLevel: 5,
-    description: "米国巨大テック10社に集中",
+    description: "GAFAMなど超大手テック10社に集中投資できる",
     annualReturns: {
       2015: 0.122, 2016: 0.056, 2017: 0.416, 2018: 0.064,
       2019: 0.414, 2020: 0.628, 2021: 0.344, 2022: -0.443,
@@ -231,7 +231,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "iShares MSCI インド ETF（INDA）",
     shortName: "インド株", ticker: "inda.us",
     color: "#f97316", riskLevel: 5,
-    description: "インド株式市場に集中投資",
+    description: "急成長中のインド企業に投資できる",
     annualReturns: {
       2015: -0.062, 2016: -0.015, 2017: 0.381, 2018: -0.083,
       2019: 0.126, 2020: 0.143, 2021: 0.418, 2022: 0.012,
@@ -257,7 +257,7 @@ export const FUNDS: Record<FundId, Fund> = {
     name: "iShares MSCI 新興国株式 ETF（EEM）",
     shortName: "新興国株", ticker: "eem.us",
     color: "#ec4899", riskLevel: 4,
-    description: "中国・台湾・韓国など新興国全体",
+    description: "中国・台湾など新興国全体に分散投資できる",
     annualReturns: {
       2015: -0.147, 2016: 0.113, 2017: 0.373, 2018: -0.146,
       2019: 0.184, 2020: 0.182, 2021: -0.048, 2022: -0.201,

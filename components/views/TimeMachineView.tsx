@@ -5,16 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, simulateAll, formatCurrency, START_YEAR_OPTIONS, MONTH_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
 import FundSelector from "@/components/simulation/FundSelector";
-import ResultCard from "@/components/simulation/ResultCard";
 import EmotionalMessage from "@/components/simulation/EmotionalMessage";
-import ComparisonChart from "@/components/simulation/ComparisonChart";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
 import RankingView from "@/components/simulation/RankingView";
 import QuickScenarios from "@/components/simulation/QuickScenarios";
 import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
 import { QuickScenario } from "@/lib/scenarios";
-import { ChevronDown, Zap, Trophy, Settings2 } from "lucide-react";
+import { ChevronDown, Zap, Trophy, Settings2, GitCompareArrows, Share2, ShieldCheck, Clock3, Target } from "lucide-react";
 
 type SubMode = "single" | "ranking";
 
@@ -44,6 +42,7 @@ export default function TimeMachineView({
   const [showResult, setShowResult] = useState(autoRun);
   const [showShare, setShowShare] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showCalcDetails, setShowCalcDetails] = useState(false);
   const [subMode, setSubMode] = useState<SubMode>("single");
 
   const handleScenario = useCallback((s: QuickScenario) => {
@@ -91,7 +90,10 @@ export default function TimeMachineView({
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className="text-center"
       >
-        <h2 className="font-heading text-xl font-semibold text-white mb-1">🕰️ 積立タイムマシン</h2>
+        <h2 className="font-heading text-xl font-semibold text-white mb-1 flex items-center justify-center gap-2">
+          <Clock3 className="h-5 w-5 text-indigo-300" />
+          積立タイムマシン
+        </h2>
         <p className="text-sm text-zinc-400">あの時から積み立てていたら、いくらになった？</p>
       </motion.div>
 
@@ -104,7 +106,7 @@ export default function TimeMachineView({
           onClick={() => setSubMode("single")}
           className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
-          🎯 銘柄ひとつ
+          <span className="inline-flex items-center gap-1"><Target className="h-3.5 w-3.5" />銘柄ひとつ</span>
         </button>
         <button
           onClick={() => setSubMode("ranking")}
@@ -289,24 +291,25 @@ export default function TimeMachineView({
               <p className="text-sm text-zinc-400">
                 {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
               </p>
+
+              {/* 信頼性の根拠（常時表示） */}
+              <div className="mt-4 pt-3 border-t border-white/8 flex items-center justify-center gap-1.5 text-[10px] text-zinc-400">
+                <ShieldCheck className="h-3 w-3 flex-shrink-0" />
+                <span>2015〜2025年の実データ使用・配当再投資込み・手数料・税金は考慮外</span>
+              </div>
             </div>
 
+            {/* 優先順位2位：人生換算 */}
             <EmotionalMessage result={result} yearsElapsed={yearsElapsed} />
-            <ResultCard result={result} label="" isWinner delay={0} />
 
-            {/* Compare CTA */}
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-center space-y-3">
-              <p className="text-xs text-zinc-400">他の銘柄と比較してみる</p>
-              <button
-                onClick={() => onCompare(fund)}
-                className="w-full rounded-xl py-3 text-sm font-bold border border-white/15 text-zinc-300 hover:bg-white/8 transition-colors"
-              >
-                ⚔️ 比較モードへ
-              </button>
-            </div>
-
-            <CalculationDetails resultA={result} />
-
+            {/* 優先順位3位：シェア */}
+            <button
+              onClick={() => setShowShare((v) => !v)}
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-300 hover:bg-white/8 transition-colors"
+            >
+              <Share2 className="h-4 w-4" />
+              {showShare ? "閉じる" : "この結果をシェアする"}
+            </button>
             <AnimatePresence>
               {showShare && (
                 <motion.div
@@ -324,12 +327,38 @@ export default function TimeMachineView({
               )}
             </AnimatePresence>
 
+            {/* 比較モード誘導（圧縮・控えめ） */}
             <button
-              onClick={() => setShowShare((v) => !v)}
-              className="w-full rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-400 hover:bg-white/8"
+              onClick={() => onCompare(fund)}
+              className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors py-1"
             >
-              {showShare ? "閉じる" : "📤 この結果をシェアする"}
+              <GitCompareArrows className="h-3.5 w-3.5" />
+              他の銘柄と比較する
             </button>
+
+            {/* 計算条件（折りたたみ・デフォルト非表示でスクロールを圧縮） */}
+            <button
+              onClick={() => setShowCalcDetails((v) => !v)}
+              className="w-full flex items-center justify-center gap-1.5 text-[11px] text-zinc-400 hover:text-zinc-200 transition-colors"
+            >
+              <ChevronDown
+                className="h-3 w-3 transition-transform duration-200"
+                style={{ transform: showCalcDetails ? "rotate(180deg)" : "none" }}
+              />
+              {showCalcDetails ? "計算の詳細を閉じる" : "計算の詳細を見る"}
+            </button>
+            <AnimatePresence>
+              {showCalcDetails && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden"
+                >
+                  <CalculationDetails resultA={result} />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
               ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。

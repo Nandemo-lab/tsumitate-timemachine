@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { ChevronRight, Sparkles, TrendingUp, Zap, Star } from "lucide-react";
+import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3 } from "lucide-react";
 import { MainTab } from "@/components/layout/BottomNav";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
@@ -68,7 +68,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       {/* ── Hero（コンパクト・静的表示） ── */}
       <div className="px-3 text-center">
         <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 mb-2">
-          <span className="text-xs">⏰</span>
+          <Clock3 className="h-3 w-3 text-indigo-300" />
           <span className="text-xs font-semibold text-indigo-300">積立タイムマシン</span>
         </div>
         <h1 className="font-heading text-[1.4rem] font-semibold text-white leading-[1.45] tracking-[0.01em] mb-1.5">
@@ -155,7 +155,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         className="px-4"
       >
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-base">🌟</span>
+          <Star className="h-4 w-4 text-amber-400" fill="#f59e0b" />
           <p className="font-heading text-sm font-semibold text-white">今日のおすすめ銘柄</p>
         </div>
 

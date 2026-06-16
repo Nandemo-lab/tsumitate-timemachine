@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import FundEncyclopedia from "@/components/simulation/FundEncyclopedia";
+import { BookOpen } from "lucide-react";
 
 interface Props {
   initialFund?: FundId | null;
@@ -19,7 +20,10 @@ export default function EncyclopediaView({ initialFund, onCompare }: Props) {
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className="mb-4 text-center"
       >
-        <h2 className="font-heading text-xl font-semibold text-white mb-1">📚 銘柄図鑑</h2>
+        <h2 className="font-heading text-xl font-semibold text-white mb-1 flex items-center justify-center gap-2">
+          <BookOpen className="h-5 w-5 text-indigo-300" />
+          銘柄図鑑
+        </h2>
         <p className="text-sm text-zinc-400">10銘柄をやさしく解説。タップして詳細＆シミュレーション</p>
       </motion.div>
 

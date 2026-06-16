@@ -224,7 +224,7 @@ export default function AdvancedSimulation() {
     <div className="space-y-5">
       <div className="flex items-center gap-2">
         <BarChart3 className="h-4 w-4 text-violet-400" />
-        <p className="text-sm font-black text-white">詳細シミュレーション</p>
+        <p className="font-heading text-sm font-semibold text-white">詳細シミュレーション</p>
         <span className="text-xs text-zinc-400">あなたの積立ストーリーを入力</span>
       </div>
 

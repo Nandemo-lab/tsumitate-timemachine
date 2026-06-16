@@ -11,7 +11,7 @@ import WinnerBanner from "@/components/simulation/WinnerBanner";
 import ComparisonChart from "@/components/simulation/ComparisonChart";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
-import { ChevronDown, Zap } from "lucide-react";
+import { ChevronDown, Zap, Share2, ShieldCheck, GitCompareArrows } from "lucide-react";
 
 const MONTHLY_AMOUNTS = [10000, 20000, 30000, 50000, 100000];
 
@@ -27,6 +27,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   const [monthlyAmount, setMonthlyAmount] = useState(30000);
   const [showResult, setShowResult] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showCalcDetails, setShowCalcDetails] = useState(false);
 
   const run = useCallback(() => {
     setShowResult(true);
@@ -54,7 +55,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   }, [startYear, startMonth]);
 
   return (
-    <div className="pt-6 pb-28 px-4 space-y-5">
+    <div className="pt-6 pb-28 px-4 space-y-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -62,7 +63,10 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className="text-center"
       >
-        <h2 className="font-heading text-xl font-semibold text-white mb-1">⚔️ 比較モード</h2>
+        <h2 className="font-heading text-xl font-semibold text-white mb-1 flex items-center justify-center gap-2">
+          <GitCompareArrows className="h-5 w-5 text-indigo-300" />
+          比較モード
+        </h2>
         <p className="text-sm text-zinc-400">2つの銘柄を同じ条件で比べる</p>
       </motion.div>
 
@@ -119,7 +123,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         <FundSelector
           value={fundA}
           onChange={(id) => { setFundA(id); setShowResult(false); }}
-          label="プランA"
+          label="1つ目の銘柄"
           accentColor="#6366f1"
         />
       </div>
@@ -135,7 +139,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         <FundSelector
           value={fundB}
           onChange={(id) => { setFundB(id); setShowResult(false); }}
-          label="プランB"
+          label="2つ目の銘柄"
           accentColor="#f59e0b"
         />
       </div>
@@ -166,14 +170,30 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             exit={{ opacity: 0 }}
             className="space-y-5"
           >
+            {/* 銘柄名を主役にした見出し：どの2つを比較しているか瞬時に分かる */}
             <div className="text-center">
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-1">比較結果</p>
+              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">比較結果</p>
+              <div className="flex items-center justify-center gap-3 mb-1">
+                <p className="font-heading text-xl font-bold" style={{ color: resultA.fundColor }}>
+                  {resultA.fundName}
+                </p>
+                <span className="text-xs font-bold text-zinc-400">VS</span>
+                <p className="font-heading text-xl font-bold" style={{ color: resultB.fundColor }}>
+                  {resultB.fundName}
+                </p>
+              </div>
               <p className="text-xs text-zinc-400">
                 {startYear}年{startMonth}月〜2025年6月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
 
             <WinnerBanner winner={winnerResult} loser={loserResult} difference={difference} />
+
+            {/* 信頼性の根拠（常時表示） */}
+            <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 -mt-2">
+              <ShieldCheck className="h-3 w-3 flex-shrink-0" />
+              <span>2015〜2025年の実データ使用・配当再投資込み・手数料・税金は考慮外</span>
+            </div>
 
             {/* なぜ差が出たか */}
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
@@ -199,8 +219,8 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <ResultCard result={resultA} label="プランA" isWinner={resultA.profit >= resultB.profit} delay={0} />
-              <ResultCard result={resultB} label="プランB" isWinner={resultB.profit > resultA.profit} delay={0.08} />
+              <ResultCard result={resultA} label="" isWinner={resultA.profit >= resultB.profit} delay={0} />
+              <ResultCard result={resultB} label="" isWinner={resultB.profit > resultA.profit} delay={0.08} />
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
@@ -218,8 +238,13 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
               <ComparisonChart planA={resultA} planB={resultB} />
             </div>
 
-            <CalculationDetails resultA={resultA} resultB={resultB} />
-
+            <button
+              onClick={() => setShowShare((v) => !v)}
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-300 hover:bg-white/8 transition-colors"
+            >
+              <Share2 className="h-4 w-4" />
+              {showShare ? "閉じる" : "この結果をシェアする"}
+            </button>
             <AnimatePresence>
               {showShare && (
                 <motion.div
@@ -238,12 +263,29 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
               )}
             </AnimatePresence>
 
+            {/* 計算条件（折りたたみ・デフォルト非表示でスクロールを圧縮） */}
             <button
-              onClick={() => setShowShare((v) => !v)}
-              className="w-full rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-400 hover:bg-white/8"
+              onClick={() => setShowCalcDetails((v) => !v)}
+              className="w-full flex items-center justify-center gap-1.5 text-[11px] text-zinc-400 hover:text-zinc-200 transition-colors"
             >
-              {showShare ? "閉じる" : "📤 この結果をシェアする"}
+              <ChevronDown
+                className="h-3 w-3 transition-transform duration-200"
+                style={{ transform: showCalcDetails ? "rotate(180deg)" : "none" }}
+              />
+              {showCalcDetails ? "計算の詳細を閉じる" : "計算の詳細を見る"}
             </button>
+            <AnimatePresence>
+              {showCalcDetails && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden"
+                >
+                  <CalculationDetails resultA={resultA} resultB={resultB} />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
               ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。
