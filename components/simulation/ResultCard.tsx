@@ -45,7 +45,12 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
           </div>
         )}
 
-        {/* HERO: 利益額（最優先） */}
+        {/* 銘柄名（やや強調） */}
+        <p className="font-heading text-lg font-bold mb-3" style={{ color: result.fundColor }}>
+          {result.fundName}
+        </p>
+
+        {/* HERO: 利益額 */}
         <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">利益</p>
         <div className="flex items-baseline gap-1 mb-1">
           {isProfit
@@ -54,7 +59,7 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
           }
           <p
             className="font-heading font-number text-4xl font-bold leading-none"
-            style={{ color: profitColor, filter: isWinner ? `drop-shadow(0 0 10px ${profitColor}40)` : "none" }}
+            style={{ color: profitColor, filter: isWinner ? `drop-shadow(0 0 8px ${profitColor}33)` : "none" }}
           >
             <AnimatedNumber
               value={result.profit}
@@ -64,14 +69,9 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
           </p>
         </div>
 
-        {/* リターン率（2位） */}
-        <p className="font-number text-base font-semibold mb-4" style={{ color: profitColor }}>
+        {/* リターン率 */}
+        <p className="font-number text-base font-semibold mb-5" style={{ color: profitColor }}>
           {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
-        </p>
-
-        {/* 銘柄名（3位） */}
-        <p className="font-heading text-base font-semibold mb-5" style={{ color: result.fundColor }}>
-          {result.fundName}
         </p>
 
         {/* Sub numbers */}

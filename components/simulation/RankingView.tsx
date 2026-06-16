@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { RankingItem } from "@/types";
 import { formatCurrency } from "@/lib/simulation";
 import AnimatedNumber from "./AnimatedNumber";
-import { Flame, TrendingUp } from "lucide-react";
+import { Flame } from "lucide-react";
+import { getFundTags } from "@/lib/funds";
 
 interface Props {
   ranking: RankingItem[];
@@ -51,10 +52,13 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
               </span>
             </div>
 
-            {/* HERO: 利益額（最優先） */}
+            {/* 銘柄名（やや強調） */}
+            <p className="font-heading text-lg font-bold text-white mb-1">🥇 {top.fund.shortName}</p>
+
+            {/* HERO: 利益額 */}
             <p
               className="font-heading font-number text-3xl font-bold"
-              style={{ color: "#10b981", filter: "drop-shadow(0 0 10px #10b98140)" }}
+              style={{ color: "#10b981", filter: "drop-shadow(0 0 8px #10b98133)" }}
             >
               +<AnimatedNumber
                 value={top.result.profit}
@@ -65,8 +69,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
             <p className="font-number text-sm font-semibold text-emerald-300 mt-0.5">
               +{top.result.returnRate.toFixed(1)}%
             </p>
-            <p className="font-heading text-base font-semibold text-white mt-2">🥇 {top.fund.shortName}</p>
-            <p className="text-xs text-zinc-400 mt-1">
+            <p className="text-xs text-zinc-400 mt-2">
               {startYear}年{startMonth}月〜 毎月{formatCurrency(monthlyAmount)}
             </p>
           </div>
@@ -131,13 +134,19 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
 
                 {/* Fund info */}
                 <div className="flex-1 min-w-0 text-right">
-                  <div className="flex items-center justify-end gap-1.5 mb-0.5">
-                    <p className="font-heading text-sm font-semibold" style={{ color: isTopThree ? item.fund.color : "#e4e4e7" }}>
+                  <div className="flex items-center justify-end gap-1.5 mb-1">
+                    <p className="font-heading text-base font-bold" style={{ color: isTopThree ? item.fund.color : "#e4e4e7" }}>
                       {item.fund.shortName}
                     </p>
                     <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: item.fund.color }} />
                   </div>
-                  <p className="text-[10px] text-zinc-400 truncate">{item.fund.description}</p>
+                  <div className="flex items-center justify-end gap-1 flex-wrap">
+                    {getFundTags(item.fund).slice(0, 2).map((t) => (
+                      <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded border border-white/10 text-zinc-400">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>

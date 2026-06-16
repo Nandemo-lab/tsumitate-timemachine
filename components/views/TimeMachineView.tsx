@@ -279,7 +279,7 @@ export default function TimeMachineView({
               style={{
                 background: "rgba(255,255,255,0.02)",
                 border: `1px solid ${result.fundColor}30`,
-                boxShadow: `0 0 28px ${result.fundColor}12`,
+                boxShadow: `0 0 22px ${result.fundColor}10`,
               }}
             >
               <p className="text-xs text-zinc-400 mb-1">{result.fundName}の利益</p>

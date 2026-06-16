@@ -8,11 +8,11 @@ import { simulate, formatCurrency } from "@/lib/simulation";
 import { ChevronRight, Sparkles, TrendingUp, Zap, Star } from "lucide-react";
 import { MainTab } from "@/components/layout/BottomNav";
 
-const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; label: string }[] = [
-  { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, label: "コロナ後に始めていたら" },
-  { fundId: "sp500",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, label: "S&P500で5年間" },
-  { fundId: "orcan",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, label: "オルカンで堅実に" },
-  { fundId: "india",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, label: "インド株の躍進" },
+const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
+  { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "2020年のコロナショック直後に始めていたら" },
+  { fundId: "sp500",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "新NISA開始前から米国の成長に賭けていたら" },
+  { fundId: "orcan",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "世界全体にコツコツ分散していたら" },
+  { fundId: "india",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "成長する新興国に早くから注目していたら" },
 ];
 
 interface Props {
@@ -70,13 +70,13 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="px-4 text-center"
+        className="px-3 text-center"
       >
         <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 mb-2">
           <span className="text-xs">⏰</span>
           <span className="text-xs font-semibold text-indigo-300">積立タイムマシン</span>
         </div>
-        <h1 className="font-heading text-[1.6rem] font-semibold text-white leading-[1.3] mb-1.5">
+        <h1 className="font-heading text-[1.4rem] font-semibold text-white leading-[1.45] tracking-[0.01em] mb-1.5">
           もしあの時から
           <span
             className="text-transparent bg-clip-text"
@@ -101,7 +101,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </div>
 
         <div className="flex gap-3 overflow-x-auto px-4 pb-2 scroll-touch" style={{ scrollbarWidth: "none" }}>
-          {taraeba.map(({ fund, result, startYear, monthlyAmount, label }, i) => (
+          {taraeba.map(({ fund, result, startYear, monthlyAmount, scene }, i) => (
             <motion.button
               key={fund.id}
               initial={{ opacity: 0, x: 24 }}
@@ -111,16 +111,18 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               className="flex-shrink-0 w-48 rounded-2xl p-4 text-left border border-white/8 bg-white/[0.02]"
               whileTap={{ scale: 0.97 }}
             >
-              <p className="text-[11px] text-zinc-400 mb-1">{label}</p>
-              <div className="flex items-center gap-1.5 mb-3">
+              <div className="flex items-center gap-1.5 mb-1">
                 <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />
                 <p className="font-heading text-xs font-semibold text-zinc-300">{fund.encyclopedia.nickname}</p>
               </div>
-              <p className="font-heading font-number text-[1.7rem] font-bold text-emerald-400 leading-none">
+              <p className="font-heading font-number text-[1.7rem] font-bold text-emerald-400 leading-none mb-1.5">
                 +{formatCurrency(result.profit)}
               </p>
-              <p className="text-[11px] text-zinc-400 mt-1.5">
+              <p className="text-[11px] text-zinc-400">
                 +{result.returnRate.toFixed(1)}% · 月{(monthlyAmount / 10000).toFixed(0)}万円 {startYear}年〜
+              </p>
+              <p className="text-[11px] text-zinc-500 mt-2 pt-2 border-t border-white/8 leading-snug">
+                {scene}
               </p>
             </motion.button>
           ))}
@@ -169,9 +171,9 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           whileTap={{ scale: 0.99 }}
         >
           {/* Top section */}
-          <div className="p-5 pb-4">
+          <div className="p-4 pb-3">
             {/* Category + NISA */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2.5">
               <span className="text-xs">{FUND_CATEGORIES[pick.category].emoji}</span>
               <span className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">
                 {FUND_CATEGORIES[pick.category].label}
@@ -179,46 +181,40 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               {pickEnc.nisaCompatible && (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300">NISA対応</span>
               )}
-            </div>
-
-            {/* HERO: 利益額が最初に目に入る配置 */}
-            <p className="text-[11px] text-zinc-400 mb-1">2020年から月3万円積立なら</p>
-            <div className="flex items-end justify-between mb-3">
-              <p className="font-heading font-number text-[2.1rem] font-bold text-emerald-400 leading-none">
-                +{formatCurrency(pickResult.profit)}
-              </p>
-              <p className="font-number text-base font-bold text-emerald-400 mb-1">+{pickResult.returnRate.toFixed(1)}%</p>
-            </div>
-
-            {/* Fund name */}
-            <h3 className="font-heading text-lg font-semibold text-white mb-0.5">{pickEnc.nickname}</h3>
-            <p className="text-[11px] text-zinc-400 mb-3">{pickEnc.formalName}</p>
-
-            {/* Beginner score */}
-            <div className="flex items-center gap-1.5 mb-3">
-              <div className="flex gap-0.5">
+              <div className="flex items-center gap-0.5 ml-auto">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star
                     key={j}
-                    className="h-3 w-3"
+                    className="h-2.5 w-2.5"
                     fill={j < pickEnc.beginnerScore ? "#f59e0b" : "none"}
                     stroke={j < pickEnc.beginnerScore ? "#f59e0b" : "#52525b"}
                   />
                 ))}
               </div>
-              <span className="text-[11px] text-zinc-400">初心者向け</span>
             </div>
 
-            {/* Catchcopy */}
-            <p className="text-sm text-zinc-300 leading-relaxed">{pickEnc.catchCopy}</p>
+            {/* 銘柄名（やや目立たせる） */}
+            <h3 className="font-heading text-lg font-bold text-white mb-2">{pickEnc.nickname}</h3>
+
+            {/* HERO: 利益額 → リターン率 */}
+            <p className="text-[11px] text-zinc-400 mb-1">2020年から月3万円積立なら</p>
+            <div className="flex items-end gap-2 mb-2.5">
+              <p className="font-heading font-number text-[1.9rem] font-bold text-emerald-400 leading-none">
+                +{formatCurrency(pickResult.profit)}
+              </p>
+              <p className="font-number text-sm font-bold text-emerald-300 mb-0.5">+{pickResult.returnRate.toFixed(1)}%</p>
+            </div>
+
+            {/* Catchcopy — 最大2行 */}
+            <p className="text-sm text-zinc-300 leading-relaxed line-clamp-2">{pickEnc.catchCopy}</p>
           </div>
 
-          {/* Feature tags */}
-          <div className="px-5 pb-4 flex flex-wrap gap-1.5">
-            {pickEnc.features.map((f) => (
+          {/* Feature tags — 1行に収める */}
+          <div className="px-4 pb-3 flex gap-1.5 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+            {pickEnc.features.slice(0, 3).map((f) => (
               <span
                 key={f}
-                className="rounded-lg px-2.5 py-1 text-xs font-medium border border-white/8 text-zinc-300"
+                className="flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium border border-white/8 text-zinc-300 whitespace-nowrap"
               >
                 {f}
               </span>
@@ -226,7 +222,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           </div>
 
           {/* CTA row */}
-          <div className="px-5 py-3.5 flex items-center justify-between border-t border-white/8">
+          <div className="px-4 py-3 flex items-center justify-between border-t border-white/8">
             <p className="text-xs font-bold text-zinc-300">詳しく見る</p>
             <ChevronRight className="h-4 w-4 text-zinc-400" />
           </div>
@@ -330,7 +326,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
-                    {tags.slice(0, 1).map((t) => (
+                    {tags.slice(0, 2).map((t) => (
                       <span key={t} className="text-[10px] font-medium px-1.5 py-0.5 rounded border border-white/10 text-zinc-400">
                         {t}
                       </span>

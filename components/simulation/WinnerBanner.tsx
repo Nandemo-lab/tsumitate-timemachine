@@ -35,11 +35,14 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
       </div>
 
       <div className="px-5 pt-5 pb-4">
-        {/* HERO: 利益額（最優先） */}
-        <p className="text-xs text-zinc-400 mb-1">{winner.fundName}の利益</p>
+        {/* 銘柄名（やや強調） */}
+        <p className="font-heading text-lg font-bold text-white mb-3">{winner.fundName}</p>
+
+        {/* HERO: 利益額 */}
+        <p className="text-xs text-zinc-400 mb-1">利益</p>
         <p
           className="font-heading font-number text-4xl font-bold mb-1"
-          style={{ color: "#10b981", filter: "drop-shadow(0 0 12px #10b98140)" }}
+          style={{ color: "#10b981", filter: "drop-shadow(0 0 9px #10b98133)" }}
         >
           <AnimatedNumber
             value={winner.profit}
@@ -48,13 +51,10 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
           />
         </p>
 
-        {/* リターン率（2位） */}
-        <p className="font-number text-lg font-semibold text-emerald-300 mb-3">
+        {/* リターン率 */}
+        <p className="font-number text-lg font-semibold text-emerald-300 mb-4">
           +{winner.returnRate.toFixed(1)}%
         </p>
-
-        {/* 銘柄名（3位） */}
-        <p className="font-heading text-base font-semibold text-white mb-4">{winner.fundName}</p>
 
         {/* Divider */}
         <div className="border-t border-white/8 pt-3">
