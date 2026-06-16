@@ -49,8 +49,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-zinc-950">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <main className="relative min-h-dvh bg-zinc-950 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full blur-3xl"
           style={{ background: "radial-gradient(ellipse, #6366f115 0%, transparent 70%)" }}

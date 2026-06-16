@@ -65,13 +65,8 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
   return (
     <div className="pt-3 pb-28 space-y-7">
 
-      {/* ── Hero（コンパクト） ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="px-3 text-center"
-      >
+      {/* ── Hero（コンパクト・静的表示） ── */}
+      <div className="px-3 text-center">
         <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 mb-2">
           <span className="text-xs">⏰</span>
           <span className="text-xs font-semibold text-indigo-300">積立タイムマシン</span>
@@ -86,7 +81,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           </span>
         </h1>
         <p className="text-sm text-zinc-400">過去の実績で「たられば」を体験する</p>
-      </motion.div>
+      </div>
 
       {/* ── 人気のたられば ── */}
       <motion.section

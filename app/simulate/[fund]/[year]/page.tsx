@@ -98,7 +98,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-zinc-950">
+      <main className="min-h-dvh bg-zinc-950">
         {/* Ambient glow */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
           <div

@@ -74,7 +74,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable} ${geistMono.variable} dark`}>
-      <body className="min-h-screen bg-zinc-950 text-zinc-50 antialiased">
+      <body className="min-h-dvh bg-zinc-950 text-zinc-50 antialiased">
         {children}
       </body>
     </html>
