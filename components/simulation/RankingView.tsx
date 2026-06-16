@@ -38,31 +38,34 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative rounded-2xl overflow-hidden p-5"
         style={{
-          background: `linear-gradient(145deg, ${top.fund.color}25 0%, #09090b 65%)`,
+          background: "rgba(255,255,255,0.02)",
           border: `1px solid ${top.fund.color}50`,
-          boxShadow: `0 0 36px ${top.fund.color}14`,
         }}
       >
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: `linear-gradient(90deg, transparent, ${top.fund.color}, transparent)` }}
-        />
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Flame className="h-4 w-4" style={{ color: top.fund.color }} />
-              <span className="text-xs font-black tracking-widest uppercase" style={{ color: top.fund.color }}>
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: top.fund.color }}>
                 最高パフォーマンス
               </span>
             </div>
-            <p className="text-xl font-black text-white mb-1">🥇 {top.fund.shortName}</p>
-            <p className="font-number text-3xl font-black" style={{ color: "#10b981" }}>
+
+            {/* HERO: 利益額（最優先） */}
+            <p
+              className="font-heading font-number text-3xl font-bold"
+              style={{ color: "#10b981", filter: "drop-shadow(0 0 10px #10b98140)" }}
+            >
               +<AnimatedNumber
                 value={top.result.profit}
                 formatter={(n) => formatCurrency(Math.round(n))}
                 duration={1500}
               />
             </p>
+            <p className="font-number text-sm font-semibold text-emerald-300 mt-0.5">
+              +{top.result.returnRate.toFixed(1)}%
+            </p>
+            <p className="font-heading text-base font-semibold text-white mt-2">🥇 {top.fund.shortName}</p>
             <p className="text-xs text-zinc-400 mt-1">
               {startYear}年{startMonth}月〜 毎月{formatCurrency(monthlyAmount)}
             </p>
@@ -70,11 +73,6 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
           <div className="text-right flex-shrink-0">
             <p className="text-[10px] text-zinc-400 mb-0.5">現在資産</p>
             <p className="text-sm font-bold text-zinc-200">{formatCurrency(top.result.finalValue)}</p>
-            <p className="text-[10px] text-zinc-400 mt-2 mb-0.5">リターン</p>
-            <div className="flex items-center gap-1 justify-end">
-              <TrendingUp className="h-3 w-3 text-emerald-400" />
-              <p className="text-sm font-black text-emerald-400">+{top.result.returnRate.toFixed(1)}%</p>
-            </div>
           </div>
         </div>
       </motion.div>
@@ -94,15 +92,13 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
               transition={{ delay: i * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="relative rounded-xl overflow-hidden p-4"
               style={{
-                background: isTopThree
-                  ? `linear-gradient(135deg, ${item.fund.color}12 0%, rgba(255,255,255,0.03) 100%)`
-                  : "rgba(255,255,255,0.04)",
-                border: `1px solid ${isTopThree ? item.fund.color + "30" : "rgba(255,255,255,0.07)"}`,
+                background: "rgba(255,255,255,0.015)",
+                border: `1px solid ${isTopThree ? item.fund.color + "25" : "rgba(255,255,255,0.07)"}`,
               }}
             >
               {/* Animated bar */}
               <motion.div
-                className="absolute left-0 top-0 bottom-0 opacity-20"
+                className="absolute left-0 top-0 bottom-0 opacity-[0.08]"
                 style={{ background: item.fund.color }}
                 initial={{ width: 0 }}
                 animate={{ width: `${barWidth}%` }}
@@ -113,42 +109,35 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
                 {/* Rank badge */}
                 <div className="flex-shrink-0 w-8 text-center">
                   {isTopThree ? (
-                    <div>
-                      <div
-                        className="text-lg leading-none"
-                        style={{ filter: isTopThree ? `drop-shadow(0 0 6px ${medal.glow})` : "none" }}
-                      >
-                        {medal.emoji}
-                      </div>
-                    </div>
+                    <div className="text-lg leading-none">{medal.emoji}</div>
                   ) : (
-                    <span className="text-xs font-black text-zinc-400">{i + 1}</span>
+                    <span className="text-xs font-bold text-zinc-400">{i + 1}</span>
                   )}
                 </div>
 
-                {/* Fund info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: item.fund.color }} />
-                    <p className="text-sm font-black" style={{ color: isTopThree ? item.fund.color : "#e4e4e7" }}>
-                      {item.fund.shortName}
-                    </p>
-                  </div>
-                  <p className="text-[10px] text-zinc-400 truncate">{item.fund.description}</p>
-                </div>
-
-                {/* Numbers */}
-                <div className="text-right flex-shrink-0">
-                  <p className="text-sm font-black text-white">
+                {/* Numbers — 利益額を最優先で先頭に */}
+                <div className="flex-shrink-0">
+                  <p className="font-number text-sm font-bold text-white">
                     +<AnimatedNumber
                       value={item.result.profit}
                       formatter={(n) => formatCurrency(Math.round(n))}
                       duration={900 + i * 80}
                     />
                   </p>
-                  <p className="text-[10px] font-bold text-emerald-400">
+                  <p className="text-[10px] font-semibold text-emerald-400">
                     +{item.result.returnRate.toFixed(1)}%
                   </p>
+                </div>
+
+                {/* Fund info */}
+                <div className="flex-1 min-w-0 text-right">
+                  <div className="flex items-center justify-end gap-1.5 mb-0.5">
+                    <p className="font-heading text-sm font-semibold" style={{ color: isTopThree ? item.fund.color : "#e4e4e7" }}>
+                      {item.fund.shortName}
+                    </p>
+                    <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: item.fund.color }} />
+                  </div>
+                  <p className="text-[10px] text-zinc-400 truncate">{item.fund.description}</p>
                 </div>
               </div>
             </motion.div>

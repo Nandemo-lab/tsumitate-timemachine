@@ -286,3 +286,19 @@ export function getFundsByCategory(category: FundCategory): Fund[] {
   return FUND_LIST.filter((f) => f.category === category);
 }
 export const CATEGORY_ORDER: FundCategory[] = ["global", "us", "dividend", "hightech", "emerging"];
+
+// 投資初心者が選びやすいよう、銘柄の特徴を短いラベルに要約する
+export function getFundTags(fund: Fund): string[] {
+  const enc = fund.encyclopedia;
+  const tags: string[] = [];
+  if (enc.beginnerScore >= 5) tags.push("初心者向け");
+  else if (fund.id === "sp500") tags.push("王道");
+  if (fund.category === "hightech") tags.push("高リターン");
+  if (fund.category === "us") tags.push("米国株");
+  if (fund.category === "dividend") tags.push("高配当");
+  if (fund.category === "emerging") tags.push("新興国");
+  const feeValue = parseFloat(enc.managementFee);
+  if (!Number.isNaN(feeValue) && feeValue < 0.1) tags.push("低コスト");
+  if (enc.expectedHorizon.includes("10年")) tags.push("長期向け");
+  return Array.from(new Set(tags)).slice(0, 2);
+}

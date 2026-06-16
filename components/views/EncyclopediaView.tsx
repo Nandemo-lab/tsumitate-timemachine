@@ -12,15 +12,15 @@ interface Props {
 
 export default function EncyclopediaView({ initialFund, onCompare }: Props) {
   return (
-    <div className="pt-12 pb-28 px-4">
+    <div className="pt-6 pb-28 px-4">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="pt-4 mb-6 text-center"
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-4 text-center"
       >
-        <h2 className="text-2xl font-black text-white mb-1">📚 銘柄図鑑</h2>
-        <p className="text-xs text-zinc-400">10銘柄をやさしく解説。タップして詳細＆シミュレーション</p>
+        <h2 className="font-heading text-xl font-semibold text-white mb-1">📚 銘柄図鑑</h2>
+        <p className="text-sm text-zinc-400">10銘柄をやさしく解説。タップして詳細＆シミュレーション</p>
       </motion.div>
 
       <FundEncyclopedia

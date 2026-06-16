@@ -99,7 +99,7 @@ function InlineSimulator({
           <div>
             <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
             <p
-              className="text-3xl font-black"
+              className="font-heading font-number text-3xl font-bold"
               style={{ color: isProfit ? "#10b981" : "#ef4444" }}
             >
               {isProfit ? "+" : ""}{formatCurrency(result.profit)}
@@ -159,8 +159,8 @@ function FundDetailCard({
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="rounded-2xl overflow-hidden"
       style={{
-        background: `linear-gradient(145deg, ${fund.color}14 0%, rgba(255,255,255,0.03) 100%)`,
-        border: `1px solid ${fund.color}30`,
+        background: "rgba(255,255,255,0.02)",
+        border: `1px solid ${fund.color}35`,
       }}
     >
       {/* Header */}
@@ -248,7 +248,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
     <div className="space-y-5">
       <div className="flex items-center gap-2">
         <BookOpen className="h-4 w-4 text-indigo-400" />
-        <p className="text-sm font-black text-white">銘柄図鑑</p>
+        <p className="font-heading text-sm font-semibold text-white">銘柄図鑑</p>
         <span className="text-xs text-zinc-400">タップして詳細・シミュレーション</span>
       </div>
 
@@ -289,10 +289,8 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                 onClick={() => setExpandedFund(isExpanded ? null : fund.id)}
                 className="w-full rounded-2xl p-4 text-left transition-all"
                 style={{
-                  background: isExpanded
-                    ? `linear-gradient(145deg, ${fund.color}14 0%, rgba(255,255,255,0.03) 100%)`
-                    : "rgba(255,255,255,0.04)",
-                  border: `1px solid ${isExpanded ? fund.color + "35" : "rgba(255,255,255,0.08)"}`,
+                  background: isExpanded ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.02)",
+                  border: `1px solid ${isExpanded ? fund.color + "40" : "rgba(255,255,255,0.08)"}`,
                 }}
                 whileTap={{ scale: 0.99 }}
               >
@@ -305,7 +303,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-black text-white">{enc.nickname}</p>
+                      <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
                       {enc.nisaCompatible && (
                         <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">
                           NISA

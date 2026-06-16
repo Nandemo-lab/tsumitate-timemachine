@@ -54,15 +54,15 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   }, [startYear, startMonth]);
 
   return (
-    <div className="pt-12 pb-28 px-4 space-y-5">
+    <div className="pt-6 pb-28 px-4 space-y-5">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="text-center pt-4"
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="text-center"
       >
-        <h2 className="font-heading text-2xl font-bold text-white mb-1">⚔️ 比較モード</h2>
+        <h2 className="font-heading text-xl font-semibold text-white mb-1">⚔️ 比較モード</h2>
         <p className="text-sm text-zinc-400">2つの銘柄を同じ条件で比べる</p>
       </motion.div>
 
@@ -78,7 +78,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
                 onClick={() => { setStartYear(y); setShowResult(false); }}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
-                    ? "bg-indigo-500/25 text-indigo-300 border-indigo-500/50"
+                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
                     : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300"
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
@@ -102,7 +102,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
                 onClick={() => { setMonthlyAmount(a); setShowResult(false); }}
                 className={`rounded-xl text-xs font-black transition-all border ${
                   monthlyAmount === a
-                    ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/40"
+                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
                     : "bg-white/5 text-zinc-400 border-white/8 hover:bg-white/10"
                 }`}
                 style={{ minHeight: 44 }}
@@ -115,7 +115,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
       </div>
 
       {/* Fund A */}
-      <div className="rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-5">
+      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
         <FundSelector
           value={fundA}
           onChange={(id) => { setFundA(id); setShowResult(false); }}
@@ -131,7 +131,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
       </div>
 
       {/* Fund B */}
-      <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5">
+      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
         <FundSelector
           value={fundB}
           onChange={(id) => { setFundB(id); setShowResult(false); }}
@@ -147,7 +147,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         className="w-full relative overflow-hidden rounded-2xl py-5 text-base font-black text-white"
         style={{
           background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
-          boxShadow: "0 8px 32px #6366f128",
+          boxShadow: "0 8px 24px #6366f130",
         }}
       >
         <span className="flex items-center justify-center gap-2">

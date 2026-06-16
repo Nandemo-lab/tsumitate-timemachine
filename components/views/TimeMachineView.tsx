@@ -83,15 +83,15 @@ export default function TimeMachineView({
   };
 
   return (
-    <div className="pt-12 pb-28 px-4 space-y-5">
+    <div className="pt-6 pb-28 px-4 space-y-5">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="text-center pt-4"
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="text-center"
       >
-        <h2 className="font-heading text-2xl font-bold text-white mb-1">🕰️ 積立タイムマシン</h2>
+        <h2 className="font-heading text-xl font-semibold text-white mb-1">🕰️ 積立タイムマシン</h2>
         <p className="text-sm text-zinc-400">あの時から積み立てていたら、いくらになった？</p>
       </motion.div>
 
@@ -132,7 +132,7 @@ export default function TimeMachineView({
                 onClick={() => { setStartYear(y); setShowResult(false); }}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
-                    ? "bg-indigo-500/25 text-indigo-300 border-indigo-500/50"
+                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
                     : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300"
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
@@ -173,7 +173,7 @@ export default function TimeMachineView({
                 onClick={() => { setMonthlyAmount(a); setShowResult(false); }}
                 className={`rounded-xl text-sm font-black transition-all border ${
                   monthlyAmount === a
-                    ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/40"
+                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
                     : "bg-white/5 text-zinc-400 border-white/8 hover:bg-white/10 hover:text-zinc-300"
                 }`}
                 style={{ minHeight: 48 }}
@@ -195,7 +195,7 @@ export default function TimeMachineView({
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-5">
+            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
               <FundSelector
                 value={fund}
                 onChange={(id) => { setFund(id); setShowResult(false); }}
@@ -214,7 +214,7 @@ export default function TimeMachineView({
         className="w-full relative overflow-hidden rounded-2xl py-5 text-base font-black text-white"
         style={{
           background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
-          boxShadow: "0 8px 32px #6366f128",
+          boxShadow: "0 8px 24px #6366f130",
         }}
       >
         <span className="flex items-center justify-center gap-2">
@@ -245,7 +245,7 @@ export default function TimeMachineView({
             transition={{ duration: 0.35 }}
             className="overflow-hidden"
           >
-            <div className="rounded-2xl border border-violet-500/20 bg-violet-500/5 p-5">
+            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
               <AdvancedSimulation />
             </div>
           </motion.div>
@@ -277,17 +277,20 @@ export default function TimeMachineView({
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="rounded-2xl p-6 text-center"
               style={{
-                background: `linear-gradient(145deg, ${result.fundColor}18 0%, rgba(255,255,255,0.03) 100%)`,
+                background: "rgba(255,255,255,0.02)",
                 border: `1px solid ${result.fundColor}30`,
-                boxShadow: `0 0 36px ${result.fundColor}14`,
+                boxShadow: `0 0 28px ${result.fundColor}12`,
               }}
             >
               <p className="text-xs text-zinc-400 mb-1">{result.fundName}の利益</p>
-              <p className="font-number text-5xl font-black text-emerald-400 mb-1">
+              <p className="font-heading font-number text-5xl font-bold text-emerald-400 mb-1">
                 +{formatCurrency(result.profit)}
               </p>
+              <p className="font-number text-base font-semibold text-emerald-300 mb-1">
+                +{result.returnRate.toFixed(1)}%
+              </p>
               <p className="text-sm text-zinc-400">
-                +{result.returnRate.toFixed(1)}% · {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
+                {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
               </p>
             </motion.div>
 

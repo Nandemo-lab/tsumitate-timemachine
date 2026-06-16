@@ -44,8 +44,8 @@ export default function QuickScenarios({ onSelect }: Props) {
               onClick={() => onSelect(scenario)}
               className="flex-shrink-0 w-[186px] snap-start rounded-2xl p-4 text-left"
               style={{
-                background: `linear-gradient(145deg, ${fund.color}18 0%, rgba(255,255,255,0.03) 100%)`,
-                border: `1px solid ${fund.color}30`,
+                background: "rgba(255,255,255,0.02)",
+                border: `1px solid ${fund.color}28`,
               }}
             >
               {/* Tag */}
@@ -62,7 +62,7 @@ export default function QuickScenarios({ onSelect }: Props) {
               <p className="text-[10px] text-zinc-400 mb-3">{scenario.description}</p>
               <div className="border-t border-white/8 pt-2">
                 <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
-                <p className="text-base font-black" style={{ color: "#10b981" }}>
+                <p className="font-heading font-number text-base font-bold" style={{ color: "#10b981" }}>
                   +{formatCurrency(result.profit)}
                 </p>
                 <div className="flex items-center gap-0.5 mt-0.5">

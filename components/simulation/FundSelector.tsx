@@ -71,12 +71,11 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
               style={
                 isSelected
                   ? {
-                      background: `${fund.color}18`,
-                      borderColor: `${fund.color}55`,
-                      boxShadow: `0 0 0 1px ${fund.color}33, 0 4px 16px ${fund.color}18`,
+                      background: "rgba(255,255,255,0.03)",
+                      borderColor: `${fund.color}60`,
                     }
                   : {
-                      background: "rgba(255,255,255,0.04)",
+                      background: "rgba(255,255,255,0.02)",
                       borderColor: "rgba(255,255,255,0.08)",
                     }
               }
@@ -102,7 +101,7 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
                 </div>
               </div>
               <p
-                className="text-sm font-black leading-tight"
+                className="font-heading text-sm font-semibold leading-tight"
                 style={{ color: isSelected ? fund.color : "#d4d4d8" }}
               >
                 {fund.shortName}

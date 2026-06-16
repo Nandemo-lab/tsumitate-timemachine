@@ -24,16 +24,13 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
       className="relative rounded-2xl overflow-hidden"
       style={{
-        background: isWinner
-          ? `linear-gradient(145deg, ${result.fundColor}18 0%, #09090b 60%)`
-          : "rgba(255,255,255,0.04)",
-        border: `1px solid ${isWinner ? result.fundColor + "44" : "rgba(255,255,255,0.08)"}`,
-        boxShadow: isWinner ? `0 0 22px ${result.fundColor}12` : "none",
+        background: "rgba(255,255,255,0.02)",
+        border: `1px solid ${isWinner ? result.fundColor + "50" : "rgba(255,255,255,0.08)"}`,
       }}
     >
       {isWinner && (
         <div
-          className="absolute top-0 right-0 px-2.5 py-1 text-[10px] font-black tracking-widest rounded-bl-xl"
+          className="absolute top-0 right-0 px-2.5 py-1 text-[10px] font-bold tracking-widest rounded-bl-xl"
           style={{ background: result.fundColor, color: "#000" }}
         >
           WINNER
@@ -41,32 +38,41 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
       )}
 
       <div className="p-5">
-        {/* Plan label + fund name */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: result.fundColor }} />
-          <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-400">{label}</span>
+        {label && (
+          <div className="flex items-center gap-2 mb-3">
+            <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: result.fundColor }} />
+            <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-400">{label}</span>
+          </div>
+        )}
+
+        {/* HERO: 利益額（最優先） */}
+        <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">利益</p>
+        <div className="flex items-baseline gap-1 mb-1">
+          {isProfit
+            ? <TrendingUp className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
+            : <TrendingDown className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
+          }
+          <p
+            className="font-heading font-number text-4xl font-bold leading-none"
+            style={{ color: profitColor, filter: isWinner ? `drop-shadow(0 0 10px ${profitColor}40)` : "none" }}
+          >
+            <AnimatedNumber
+              value={result.profit}
+              formatter={(n) => `${n >= 0 ? "+" : ""}${formatCurrency(Math.round(n))}`}
+              duration={1500}
+            />
+          </p>
         </div>
-        <p className="text-base font-black mb-5" style={{ color: result.fundColor }}>
-          {result.fundName}
+
+        {/* リターン率（2位） */}
+        <p className="font-number text-base font-semibold mb-4" style={{ color: profitColor }}>
+          {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
         </p>
 
-        {/* HERO: 利益額 */}
-        <div className="mb-4">
-          <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">利益</p>
-          <div className="flex items-baseline gap-1">
-            {isProfit
-              ? <TrendingUp className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
-              : <TrendingDown className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
-            }
-            <p className="font-number text-4xl font-black leading-none" style={{ color: profitColor }}>
-              <AnimatedNumber
-                value={result.profit}
-                formatter={(n) => `${n >= 0 ? "+" : ""}${formatCurrency(Math.round(n))}`}
-                duration={1500}
-              />
-            </p>
-          </div>
-        </div>
+        {/* 銘柄名（3位） */}
+        <p className="font-heading text-base font-semibold mb-5" style={{ color: result.fundColor }}>
+          {result.fundName}
+        </p>
 
         {/* Sub numbers */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-4 border-t border-white/8">
@@ -83,20 +89,14 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
             </p>
           </div>
           <div className="col-span-2">
-            <p className="text-[10px] text-zinc-400 mb-0.5">リターン率</p>
-            <div className="flex items-center gap-1.5">
-              <div className="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ background: profitColor }}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${Math.min(Math.abs(result.returnRate) / 2, 100)}%` }}
-                  transition={{ delay: delay + 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                />
-              </div>
-              <span className="text-xs font-bold" style={{ color: profitColor }}>
-                {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
-              </span>
+            <div className="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden">
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: profitColor }}
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min(Math.abs(result.returnRate) / 2, 100)}%` }}
+                transition={{ delay: delay + 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              />
             </div>
           </div>
         </div>
