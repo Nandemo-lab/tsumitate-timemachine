@@ -98,9 +98,9 @@ export default async function SimulatePage({ params, searchParams }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-dvh bg-zinc-950">
+      <main className="relative min-h-dvh bg-zinc-950 overflow-hidden">
         {/* Ambient glow */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl opacity-15"
             style={{ background: `radial-gradient(ellipse, ${fundData.color} 0%, transparent 70%)` }}

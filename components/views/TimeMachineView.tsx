@@ -271,10 +271,7 @@ export default function TimeMachineView({
             </div>
 
             {/* Profit hero */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            <div
               className="rounded-2xl p-6 text-center"
               style={{
                 background: "rgba(255,255,255,0.02)",
@@ -292,7 +289,7 @@ export default function TimeMachineView({
               <p className="text-sm text-zinc-400">
                 {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
               </p>
-            </motion.div>
+            </div>
 
             <EmotionalMessage result={result} yearsElapsed={yearsElapsed} />
             <ResultCard result={result} label="" isWinner delay={0} />

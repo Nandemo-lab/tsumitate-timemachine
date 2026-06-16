@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { SimulationResult } from "@/types";
 import { FundId } from "@/types";
 import { FUNDS } from "@/lib/funds";
@@ -23,10 +22,7 @@ export default function SimulatePageClient({ fundId, result }: Props) {
   return (
     <div className="space-y-6">
       {/* Hero card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      <div
         className="rounded-2xl p-6 relative overflow-hidden"
         style={{
           background: `linear-gradient(145deg, ${fund.color}22 0%, #09090b 70%)`,
@@ -62,15 +58,10 @@ export default function SimulatePageClient({ fundId, result }: Props) {
             <p className="text-lg font-bold text-zinc-300">{formatCurrency(result.totalPrincipal)}</p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Fake comparison chart (compare to principal) */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="rounded-2xl border border-white/10 bg-white/5 p-5"
-      >
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
         <p className="text-xs font-black tracking-widest uppercase text-zinc-400 mb-4">
           資産推移グラフ
         </p>
@@ -89,7 +80,7 @@ export default function SimulatePageClient({ fundId, result }: Props) {
             profit: 0,
           })),
         }} />
-      </motion.div>
+      </div>
     </div>
   );
 }
