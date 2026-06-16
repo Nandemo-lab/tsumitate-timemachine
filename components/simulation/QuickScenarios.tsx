@@ -27,8 +27,8 @@ export default function QuickScenarios({ onSelect }: Props) {
     <div>
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">人気のたられば</p>
-        <span className="text-[10px] text-zinc-700">タップで即試せる</span>
+        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">人気のたられば</p>
+        <span className="text-[10px] text-zinc-400">タップで即試せる</span>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory"
         style={{ scrollbarWidth: "none" }}>
@@ -59,15 +59,15 @@ export default function QuickScenarios({ onSelect }: Props) {
               )}
               <div className="text-xl mb-2">{scenario.emoji}</div>
               <p className="text-xs font-bold text-zinc-300 mb-1 leading-snug">{scenario.label}</p>
-              <p className="text-[10px] text-zinc-600 mb-3">{scenario.description}</p>
+              <p className="text-[10px] text-zinc-400 mb-3">{scenario.description}</p>
               <div className="border-t border-white/8 pt-2">
-                <p className="text-[10px] text-zinc-600 mb-0.5">利益</p>
+                <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
                 <p className="text-base font-black" style={{ color: "#10b981" }}>
                   +{formatCurrency(result.profit)}
                 </p>
                 <div className="flex items-center gap-0.5 mt-0.5">
-                  <span className="text-[10px] text-zinc-600">試してみる</span>
-                  <ChevronRight className="h-3 w-3 text-zinc-600" />
+                  <span className="text-[10px] text-zinc-400">試してみる</span>
+                  <ChevronRight className="h-3 w-3 text-zinc-400" />
                 </div>
               </div>
             </motion.button>

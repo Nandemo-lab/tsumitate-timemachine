@@ -31,7 +31,7 @@ function BeginnerScore({ score }: { score: number }) {
           stroke={i < score ? "#f59e0b" : "#3f3f46"}
         />
       ))}
-      <span className="text-[10px] text-zinc-500 ml-1">初心者向け</span>
+      <span className="text-[10px] text-zinc-400 ml-1">初心者向け</span>
     </div>
   );
 }
@@ -55,7 +55,7 @@ function InlineSimulator({
       className="rounded-xl p-4 space-y-4"
       style={{ background: `${fund.color}10`, border: `1px solid ${fund.color}25` }}
     >
-      <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">
+      <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">
         もしあの時から積立ていたら？
       </p>
 
@@ -71,7 +71,7 @@ function InlineSimulator({
               <option key={y} value={y} className="bg-zinc-900">{y}年から</option>
             ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-500" />
+          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
         </div>
         <div className="relative flex-1">
           <select
@@ -83,7 +83,7 @@ function InlineSimulator({
               <option key={a} value={a} className="bg-zinc-900">月{(a / 10000).toFixed(0)}万円</option>
             ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-500" />
+          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
         </div>
       </div>
 
@@ -97,7 +97,7 @@ function InlineSimulator({
       >
         <div className="flex items-end justify-between">
           <div>
-            <p className="text-[10px] text-zinc-600 mb-0.5">利益</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
             <p
               className="text-3xl font-black"
               style={{ color: isProfit ? "#10b981" : "#ef4444" }}
@@ -112,7 +112,7 @@ function InlineSimulator({
                 {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
               </span>
             </div>
-            <p className="text-[10px] text-zinc-500">
+            <p className="text-[10px] text-zinc-400">
               {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
             </p>
           </div>
@@ -187,22 +187,22 @@ function FundDetailCard({
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 px-5 pb-3">
         <div>
-          <p className="text-[10px] text-zinc-600 mb-0.5">信託報酬</p>
+          <p className="text-[10px] text-zinc-400 mb-0.5">信託報酬</p>
           <p className="text-xs font-bold text-zinc-300">{enc.managementFee}</p>
         </div>
         <div>
-          <p className="text-[10px] text-zinc-600 mb-0.5">ボラティリティ</p>
+          <p className="text-[10px] text-zinc-400 mb-0.5">ボラティリティ</p>
           <p className="text-xs font-bold text-zinc-300">{enc.volatility}</p>
         </div>
         <div>
-          <p className="text-[10px] text-zinc-600 mb-0.5">推奨期間</p>
+          <p className="text-[10px] text-zinc-400 mb-0.5">推奨期間</p>
           <p className="text-xs font-bold text-zinc-300">{enc.expectedHorizon}</p>
         </div>
       </div>
 
       {/* For whom */}
       <div className="px-5 pb-3">
-        <p className="text-[10px] text-zinc-600 mb-1 font-black tracking-widest uppercase">こんな人向け</p>
+        <p className="text-[10px] text-zinc-400 mb-1 font-black tracking-widest uppercase">こんな人向け</p>
         <p className="text-xs text-zinc-400 leading-relaxed">{enc.forWhom}</p>
       </div>
 
@@ -249,7 +249,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
       <div className="flex items-center gap-2">
         <BookOpen className="h-4 w-4 text-indigo-400" />
         <p className="text-sm font-black text-white">銘柄図鑑</p>
-        <span className="text-xs text-zinc-600">タップして詳細・シミュレーション</span>
+        <span className="text-xs text-zinc-400">タップして詳細・シミュレーション</span>
       </div>
 
       {/* Category tabs */}
@@ -264,7 +264,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
               className={`flex-shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition-all border ${
                 isActive
                   ? "bg-white/15 text-white border-white/20"
-                  : "bg-white/[0.04] text-zinc-500 border-white/8 hover:text-zinc-300"
+                  : "bg-white/[0.04] text-zinc-400 border-white/8 hover:text-zinc-300"
               }`}
             >
               <span>{cat.emoji}</span>
@@ -275,7 +275,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
       </div>
 
       {/* Category description */}
-      <p className="text-xs text-zinc-600">{FUND_CATEGORIES[activeCategory].description}</p>
+      <p className="text-xs text-zinc-400">{FUND_CATEGORIES[activeCategory].description}</p>
 
       {/* Fund list */}
       <div className="space-y-2">
@@ -313,10 +313,10 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                       )}
                       <RiskBadge level={fund.riskLevel} />
                     </div>
-                    <p className="text-[10px] text-zinc-500 truncate mt-0.5">{enc.formalName}</p>
+                    <p className="text-[10px] text-zinc-400 truncate mt-0.5">{enc.formalName}</p>
                   </div>
                   <ChevronRight
-                    className="h-4 w-4 text-zinc-600 flex-shrink-0 transition-transform duration-300"
+                    className="h-4 w-4 text-zinc-400 flex-shrink-0 transition-transform duration-300"
                     style={{ transform: isExpanded ? "rotate(90deg)" : "none" }}
                   />
                 </div>

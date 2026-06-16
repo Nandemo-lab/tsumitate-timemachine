@@ -4,6 +4,7 @@ import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, formatCurrency, START_YEAR_OPTIONS, MONTH_OPTIONS } from "@/lib/simulation";
+import { FUNDS } from "@/lib/funds";
 import FundSelector from "@/components/simulation/FundSelector";
 import ResultCard from "@/components/simulation/ResultCard";
 import WinnerBanner from "@/components/simulation/WinnerBanner";
@@ -61,15 +62,15 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="text-center pt-4"
       >
-        <h2 className="text-2xl font-black text-white mb-1">⚔️ 比較モード</h2>
-        <p className="text-xs text-zinc-500">2つの銘柄を同じ条件で比べる</p>
+        <h2 className="font-heading text-2xl font-bold text-white mb-1">⚔️ 比較モード</h2>
+        <p className="text-sm text-zinc-400">2つの銘柄を同じ条件で比べる</p>
       </motion.div>
 
       {/* Conditions */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-4">
         {/* Year chips */}
         <div>
-          <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500 mb-2">積立開始年</p>
+          <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">積立開始年</p>
           <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
             {START_YEAR_OPTIONS.map((y) => (
               <button
@@ -78,7 +79,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
                     ? "bg-indigo-500/25 text-indigo-300 border-indigo-500/50"
-                    : "bg-white/5 text-zinc-500 border-white/8 hover:text-zinc-300"
+                    : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300"
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
               >
@@ -91,7 +92,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         {/* Amount */}
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">毎月の積立額</p>
+            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">毎月の積立額</p>
             <span className="text-xl font-black text-white">{formatCurrency(monthlyAmount)}</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -102,7 +103,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
                 className={`rounded-xl text-xs font-black transition-all border ${
                   monthlyAmount === a
                     ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/40"
-                    : "bg-white/5 text-zinc-500 border-white/8 hover:bg-white/10"
+                    : "bg-white/5 text-zinc-400 border-white/8 hover:bg-white/10"
                 }`}
                 style={{ minHeight: 44 }}
               >
@@ -125,7 +126,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
 
       <div className="flex items-center gap-3">
         <div className="flex-1 h-px bg-white/8" />
-        <span className="text-[10px] text-zinc-600 font-black tracking-widest">VS</span>
+        <span className="text-[10px] text-zinc-400 font-black tracking-widest">VS</span>
         <div className="flex-1 h-px bg-white/8" />
       </div>
 
@@ -166,13 +167,36 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             className="space-y-5"
           >
             <div className="text-center">
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-600 mb-1">比較結果</p>
-              <p className="text-xs text-zinc-500">
+              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-1">比較結果</p>
+              <p className="text-xs text-zinc-400">
                 {startYear}年{startMonth}月〜2025年6月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
 
             <WinnerBanner winner={winnerResult} loser={loserResult} difference={difference} />
+
+            {/* なぜ差が出たか */}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+              <p className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">なぜ差が出たのか</p>
+              {[winnerResult, loserResult].map((r, i) => {
+                const enc = FUNDS[r.fundId].encyclopedia;
+                return (
+                  <div key={r.fundId} className="flex gap-3">
+                    <div className="h-2 w-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: r.fundColor }} />
+                    <div>
+                      <p className="text-sm font-bold text-white mb-1">
+                        {enc.nickname}{i === 0 ? "が勝った理由" : "の特徴"}
+                      </p>
+                      <ul className="space-y-0.5">
+                        {enc.pros.slice(0, 3).map((p) => (
+                          <li key={p} className="text-sm text-zinc-300 leading-relaxed">・{p}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <ResultCard result={resultA} label="プランA" isWinner={resultA.profit >= resultB.profit} delay={0} />
@@ -181,12 +205,12 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
               <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">資産推移グラフ</p>
+                <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">資産推移グラフ</p>
                 <div className="flex items-center gap-3">
                   {[resultA, resultB].map((r) => (
                     <div key={r.fundId} className="flex items-center gap-1.5">
                       <div className="h-2 w-2 rounded-full" style={{ background: r.fundColor }} />
-                      <span className="text-[10px] text-zinc-500">{r.fundName}</span>
+                      <span className="text-[10px] text-zinc-400">{r.fundName}</span>
                     </div>
                   ))}
                 </div>
@@ -221,7 +245,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
               {showShare ? "閉じる" : "📤 この結果をシェアする"}
             </button>
 
-            <p className="text-center text-[10px] text-zinc-700 px-4">
+            <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
               ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。
             </p>
           </motion.div>

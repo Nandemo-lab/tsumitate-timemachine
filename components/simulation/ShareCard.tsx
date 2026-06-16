@@ -80,7 +80,7 @@ vs ${loser.fundName}
           }}
         />
         <div className="relative">
-          <p className="text-xs font-black tracking-widest text-zinc-500 mb-3">
+          <p className="text-xs font-black tracking-widest text-zinc-400 mb-3">
             ⏰ 積立タイムマシン
           </p>
           <p className="text-xs text-zinc-400 mb-3">
@@ -103,7 +103,7 @@ vs ${loser.fundName}
           </div>
           {diff !== null && (
             <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-              <p className="text-xs text-zinc-500">差額</p>
+              <p className="text-xs text-zinc-400">差額</p>
               <p className="text-sm font-black text-white">{formatCurrency(diff)}</p>
             </div>
           )}

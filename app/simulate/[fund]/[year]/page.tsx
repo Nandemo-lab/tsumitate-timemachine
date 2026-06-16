@@ -109,7 +109,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
 
         <div className="relative max-w-2xl mx-auto px-4 py-12 pb-24">
           {/* パンくず */}
-          <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
+          <nav className="flex items-center gap-2 text-xs text-zinc-400 mb-8">
             <Link href="/" className="hover:text-zinc-400 transition-colors">トップ</Link>
             <span>/</span>
             <span className="text-zinc-400">{fundData.shortName}</span>
@@ -176,11 +176,11 @@ export default async function SimulatePage({ params, searchParams }: Props) {
                     href={`/simulate/${fund}/${y}?amount=${monthlyAmount}`}
                     className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/8 transition-all"
                   >
-                    <p className="text-xs text-zinc-500 mb-1">{y}年〜</p>
+                    <p className="text-xs text-zinc-400 mb-1">{y}年〜</p>
                     <p className="text-sm font-bold" style={{ color: fundData.color }}>
                       +{formatCurrency(r.profit)}
                     </p>
-                    <p className="text-xs text-zinc-600">+{r.returnRate.toFixed(1)}%</p>
+                    <p className="text-xs text-zinc-400">+{r.returnRate.toFixed(1)}%</p>
                   </Link>
                 );
               })}
@@ -203,7 +203,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
                     <p className="text-sm font-bold text-white">
                       +{formatCurrency(r.profit)}
                     </p>
-                    <p className="text-xs text-zinc-600">+{r.returnRate.toFixed(1)}%</p>
+                    <p className="text-xs text-zinc-400">+{r.returnRate.toFixed(1)}%</p>
                   </Link>
                 );
               })}

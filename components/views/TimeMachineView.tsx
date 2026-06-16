@@ -91,8 +91,8 @@ export default function TimeMachineView({
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="text-center pt-4"
       >
-        <h2 className="text-2xl font-black text-white mb-1">🕰️ 積立タイムマシン</h2>
-        <p className="text-xs text-zinc-500">あの時から積み立てていたら、いくらになった？</p>
+        <h2 className="font-heading text-2xl font-bold text-white mb-1">🕰️ 積立タイムマシン</h2>
+        <p className="text-sm text-zinc-400">あの時から積み立てていたら、いくらになった？</p>
       </motion.div>
 
       {/* Quick Scenarios */}
@@ -102,13 +102,13 @@ export default function TimeMachineView({
       <div className="flex rounded-xl border border-white/10 bg-white/[0.04] p-1 gap-1">
         <button
           onClick={() => setSubMode("single")}
-          className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-white/15 text-white" : "text-zinc-600"}`}
+          className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
           🎯 銘柄ひとつ
         </button>
         <button
           onClick={() => setSubMode("ranking")}
-          className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "ranking" ? "bg-white/15 text-white" : "text-zinc-600"}`}
+          className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "ranking" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
           <Trophy className="h-3.5 w-3.5" />
           全銘柄ランキング
@@ -120,8 +120,8 @@ export default function TimeMachineView({
         {/* Start year — chips */}
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">積立開始年</p>
-            <p className="text-[11px] text-zinc-600">
+            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">積立開始年</p>
+            <p className="text-[11px] text-zinc-400">
               約{yearsElapsed.toFixed(1)}年間
             </p>
           </div>
@@ -133,7 +133,7 @@ export default function TimeMachineView({
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
                     ? "bg-indigo-500/25 text-indigo-300 border-indigo-500/50"
-                    : "bg-white/5 text-zinc-500 border-white/8 hover:text-zinc-300"
+                    : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300"
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
               >
@@ -150,7 +150,7 @@ export default function TimeMachineView({
                 className={`flex-shrink-0 rounded-lg text-xs font-bold transition-all ${
                   startMonth === m
                     ? "bg-white/15 text-white"
-                    : "text-zinc-700 hover:text-zinc-500"
+                    : "text-zinc-400 hover:text-zinc-400"
                 }`}
                 style={{ minHeight: 32, minWidth: 36, padding: "0 6px" }}
               >
@@ -163,7 +163,7 @@ export default function TimeMachineView({
         {/* Monthly amount */}
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">毎月の積立額</p>
+            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">毎月の積立額</p>
             <span className="text-xl font-black text-white">{formatCurrency(monthlyAmount)}</span>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -174,7 +174,7 @@ export default function TimeMachineView({
                 className={`rounded-xl text-sm font-black transition-all border ${
                   monthlyAmount === a
                     ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/40"
-                    : "bg-white/5 text-zinc-500 border-white/8 hover:bg-white/10 hover:text-zinc-300"
+                    : "bg-white/5 text-zinc-400 border-white/8 hover:bg-white/10 hover:text-zinc-300"
                 }`}
                 style={{ minHeight: 48 }}
               >
@@ -228,7 +228,7 @@ export default function TimeMachineView({
         <div className="flex-1 h-px bg-white/[0.06]" />
         <button
           onClick={() => setShowAdvanced((v) => !v)}
-          className="flex items-center gap-1.5 text-[10px] text-zinc-700 hover:text-zinc-500 transition-colors"
+          className="flex items-center gap-1.5 text-[10px] text-zinc-400 hover:text-zinc-400 transition-colors"
         >
           <Settings2 className="h-3 w-3" />
           {showAdvanced ? "詳細設定を閉じる" : "詳細シミュレーション（上級者向け）"}
@@ -264,8 +264,8 @@ export default function TimeMachineView({
             className="space-y-5"
           >
             <div className="text-center">
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-600 mb-1">シミュレーション結果</p>
-              <p className="text-xs text-zinc-500">
+              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-1">シミュレーション結果</p>
+              <p className="text-xs text-zinc-400">
                 {startYear}年{startMonth}月〜2025年6月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
@@ -279,10 +279,11 @@ export default function TimeMachineView({
               style={{
                 background: `linear-gradient(145deg, ${result.fundColor}18 0%, rgba(255,255,255,0.03) 100%)`,
                 border: `1px solid ${result.fundColor}30`,
+                boxShadow: `0 0 36px ${result.fundColor}14`,
               }}
             >
-              <p className="text-xs text-zinc-500 mb-1">{result.fundName}の利益</p>
-              <p className="text-5xl font-black text-emerald-400 mb-1">
+              <p className="text-xs text-zinc-400 mb-1">{result.fundName}の利益</p>
+              <p className="font-number text-5xl font-black text-emerald-400 mb-1">
                 +{formatCurrency(result.profit)}
               </p>
               <p className="text-sm text-zinc-400">
@@ -330,7 +331,7 @@ export default function TimeMachineView({
               {showShare ? "閉じる" : "📤 この結果をシェアする"}
             </button>
 
-            <p className="text-center text-[10px] text-zinc-700 px-4">
+            <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
               ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。
             </p>
           </motion.div>
@@ -350,7 +351,7 @@ export default function TimeMachineView({
               startYear={startYear}
               startMonth={startMonth}
             />
-            <p className="mt-4 text-center text-[10px] text-zinc-700">
+            <p className="mt-4 text-center text-xs text-zinc-400 px-4 leading-relaxed">
               ※ 過去実績に基づくシミュレーションです。将来を保証しません。
             </p>
           </motion.div>

@@ -24,7 +24,7 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
       style={{
         background: `linear-gradient(145deg, ${winner.fundColor}28 0%, #09090b 70%)`,
         border: `1px solid ${winner.fundColor}55`,
-        boxShadow: `0 0 60px ${winner.fundColor}20, inset 0 1px 0 ${winner.fundColor}30`,
+        boxShadow: `0 0 40px ${winner.fundColor}16, inset 0 1px 0 ${winner.fundColor}25`,
       }}
     >
       {/* Top glow stripe */}
@@ -46,20 +46,20 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
         <p className="text-2xl font-black text-white mb-1">{winner.fundName}</p>
 
         {/* Profit hero */}
-        <p className="text-4xl font-black mb-1" style={{ color: "#10b981" }}>
+        <p className="font-number text-4xl font-black mb-1" style={{ color: "#10b981" }}>
           <AnimatedNumber
             value={winner.profit}
             formatter={(n) => `+${formatCurrency(Math.round(n))}`}
             duration={1600}
           />
         </p>
-        <p className="text-xs text-zinc-500 mb-4">の利益（元本 {formatCurrency(winner.totalPrincipal)}）</p>
+        <p className="text-xs text-zinc-400 mb-4">の利益（元本 {formatCurrency(winner.totalPrincipal)}）</p>
 
         {/* Divider */}
         <div className="border-t border-white/10 pt-3">
           <div className="flex items-baseline justify-between gap-4">
             <div>
-              <p className="text-[10px] text-zinc-500 mb-0.5">{loser.fundName}との差</p>
+              <p className="text-[10px] text-zinc-400 mb-0.5">{loser.fundName}との差</p>
               <p className="text-xl font-black" style={{ color: winner.fundColor }}>
                 +<AnimatedNumber
                   value={difference}
@@ -69,7 +69,7 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
               </p>
             </div>
             <div className="text-right">
-              <p className="text-[10px] text-zinc-500 mb-0.5">リターン率</p>
+              <p className="text-[10px] text-zinc-400 mb-0.5">リターン率</p>
               <p className="text-xl font-black text-emerald-400">
                 +{winner.returnRate.toFixed(1)}%
               </p>

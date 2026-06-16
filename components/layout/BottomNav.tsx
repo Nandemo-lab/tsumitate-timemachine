@@ -48,7 +48,7 @@ export default function BottomNav({ active, onChange }: Props) {
               <span className="text-xl leading-none">{emoji}</span>
               <span
                 className={`text-[10px] font-bold transition-colors leading-tight ${
-                  isActive ? "text-indigo-300" : "text-zinc-600"
+                  isActive ? "text-indigo-300" : "text-zinc-400"
                 }`}
               >
                 {label}

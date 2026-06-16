@@ -20,7 +20,7 @@ export default function EncyclopediaView({ initialFund, onCompare }: Props) {
         className="pt-4 mb-6 text-center"
       >
         <h2 className="text-2xl font-black text-white mb-1">📚 銘柄図鑑</h2>
-        <p className="text-xs text-zinc-500">10銘柄をやさしく解説。タップして詳細＆シミュレーション</p>
+        <p className="text-xs text-zinc-400">10銘柄をやさしく解説。タップして詳細＆シミュレーション</p>
       </motion.div>
 
       <FundEncyclopedia

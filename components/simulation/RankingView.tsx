@@ -40,7 +40,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
         style={{
           background: `linear-gradient(145deg, ${top.fund.color}25 0%, #09090b 65%)`,
           border: `1px solid ${top.fund.color}50`,
-          boxShadow: `0 0 60px ${top.fund.color}18`,
+          boxShadow: `0 0 36px ${top.fund.color}14`,
         }}
       >
         <div
@@ -56,21 +56,21 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
               </span>
             </div>
             <p className="text-xl font-black text-white mb-1">🥇 {top.fund.shortName}</p>
-            <p className="text-3xl font-black" style={{ color: "#10b981" }}>
+            <p className="font-number text-3xl font-black" style={{ color: "#10b981" }}>
               +<AnimatedNumber
                 value={top.result.profit}
                 formatter={(n) => formatCurrency(Math.round(n))}
                 duration={1500}
               />
             </p>
-            <p className="text-xs text-zinc-500 mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               {startYear}年{startMonth}月〜 毎月{formatCurrency(monthlyAmount)}
             </p>
           </div>
           <div className="text-right flex-shrink-0">
-            <p className="text-[10px] text-zinc-500 mb-0.5">現在資産</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">現在資産</p>
             <p className="text-sm font-bold text-zinc-200">{formatCurrency(top.result.finalValue)}</p>
-            <p className="text-[10px] text-zinc-500 mt-2 mb-0.5">リターン</p>
+            <p className="text-[10px] text-zinc-400 mt-2 mb-0.5">リターン</p>
             <div className="flex items-center gap-1 justify-end">
               <TrendingUp className="h-3 w-3 text-emerald-400" />
               <p className="text-sm font-black text-emerald-400">+{top.result.returnRate.toFixed(1)}%</p>
@@ -122,7 +122,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
                       </div>
                     </div>
                   ) : (
-                    <span className="text-xs font-black text-zinc-600">{i + 1}</span>
+                    <span className="text-xs font-black text-zinc-400">{i + 1}</span>
                   )}
                 </div>
 
@@ -134,7 +134,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
                       {item.fund.shortName}
                     </p>
                   </div>
-                  <p className="text-[10px] text-zinc-600 truncate">{item.fund.description}</p>
+                  <p className="text-[10px] text-zinc-400 truncate">{item.fund.description}</p>
                 </div>
 
                 {/* Numbers */}

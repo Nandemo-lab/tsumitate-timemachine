@@ -75,7 +75,7 @@ function EventRow({
             </select>
             <button
               onClick={onDelete}
-              className="p-1.5 rounded-lg hover:bg-red-500/20 text-zinc-600 hover:text-red-400 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-lg hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition-colors flex-shrink-0"
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>
@@ -166,7 +166,7 @@ function EventRow({
                     className={`px-2 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       (event.bonusMonths ?? []).includes(m)
                         ? "bg-indigo-500 text-white"
-                        : "bg-white/[0.06] text-zinc-500"
+                        : "bg-white/[0.06] text-zinc-400"
                     }`}
                   >
                     {m}月
@@ -225,7 +225,7 @@ export default function AdvancedSimulation() {
       <div className="flex items-center gap-2">
         <BarChart3 className="h-4 w-4 text-violet-400" />
         <p className="text-sm font-black text-white">詳細シミュレーション</p>
-        <span className="text-xs text-zinc-600">あなたの積立ストーリーを入力</span>
+        <span className="text-xs text-zinc-400">あなたの積立ストーリーを入力</span>
       </div>
 
       {/* Event list */}
@@ -246,7 +246,7 @@ export default function AdvancedSimulation() {
       {/* Add event */}
       <button
         onClick={addEvent}
-        className="w-full flex items-center justify-center gap-2 rounded-xl py-3 border border-dashed border-white/15 text-xs text-zinc-500 hover:text-zinc-300 hover:border-white/25 transition-all"
+        className="w-full flex items-center justify-center gap-2 rounded-xl py-3 border border-dashed border-white/15 text-xs text-zinc-400 hover:text-zinc-300 hover:border-white/25 transition-all"
       >
         <Plus className="h-3.5 w-3.5" />
         イベントを追加
@@ -273,15 +273,15 @@ export default function AdvancedSimulation() {
           >
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-[10px] text-zinc-600 mb-1">最終利益</p>
+                <p className="text-[10px] text-zinc-400 mb-1">最終利益</p>
                 <p className="text-3xl font-black text-emerald-400">
                   +{formatCurrency(result.profit)}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-[10px] text-zinc-600 mb-0.5">評価額</p>
+                <p className="text-[10px] text-zinc-400 mb-0.5">評価額</p>
                 <p className="text-base font-bold text-zinc-200">{formatCurrency(result.finalValue)}</p>
-                <p className="text-[10px] text-zinc-600">元本 {formatCurrency(result.totalPrincipal)}</p>
+                <p className="text-[10px] text-zinc-400">元本 {formatCurrency(result.totalPrincipal)}</p>
               </div>
             </div>
 
@@ -317,7 +317,7 @@ export default function AdvancedSimulation() {
               </div>
             )}
 
-            <p className="text-[10px] text-zinc-700 text-center">
+            <p className="text-[10px] text-zinc-400 text-center">
               ※ 手数料・税金は含みません。過去の実績であり将来を保証しません。
             </p>
           </motion.div>

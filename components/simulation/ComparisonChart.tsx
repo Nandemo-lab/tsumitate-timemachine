@@ -71,7 +71,7 @@ const CustomTooltip = ({
     <div className="rounded-xl border border-white/10 bg-zinc-900/98 p-3 shadow-xl backdrop-blur-sm text-xs">
       <p className="mb-2 font-bold text-zinc-200">{label}</p>
       {mode === "value" && (
-        <p className="text-zinc-500 mb-2 text-[10px]">元本: {formatCurrency(principal)}</p>
+        <p className="text-zinc-400 mb-2 text-[10px]">元本: {formatCurrency(principal)}</p>
       )}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between gap-6">
@@ -94,7 +94,7 @@ const CustomTooltip = ({
         </div>
         {vA !== vB && (
           <div className="pt-1 border-t border-white/10">
-            <span className="text-zinc-500 text-[10px]">差: </span>
+            <span className="text-zinc-400 text-[10px]">差: </span>
             <span className="font-bold text-white text-[10px]">{formatCurrency(Math.abs(vA - vB))}</span>
           </div>
         )}
@@ -129,7 +129,7 @@ export default function ComparisonChart({ planA, planB }: Props) {
             key={m}
             onClick={() => setMode(m)}
             className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
-              mode === m ? "bg-white/15 text-white" : "text-zinc-500 hover:text-zinc-300"
+              mode === m ? "bg-white/15 text-white" : "text-zinc-400 hover:text-zinc-300"
             }`}
           >
             {m === "value" ? "評価額" : "利益額"}

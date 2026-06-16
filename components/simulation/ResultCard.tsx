@@ -28,7 +28,7 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
           ? `linear-gradient(145deg, ${result.fundColor}18 0%, #09090b 60%)`
           : "rgba(255,255,255,0.04)",
         border: `1px solid ${isWinner ? result.fundColor + "44" : "rgba(255,255,255,0.08)"}`,
-        boxShadow: isWinner ? `0 0 30px ${result.fundColor}18` : "none",
+        boxShadow: isWinner ? `0 0 22px ${result.fundColor}12` : "none",
       }}
     >
       {isWinner && (
@@ -44,7 +44,7 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
         {/* Plan label + fund name */}
         <div className="flex items-center gap-2 mb-4">
           <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: result.fundColor }} />
-          <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">{label}</span>
+          <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-400">{label}</span>
         </div>
         <p className="text-base font-black mb-5" style={{ color: result.fundColor }}>
           {result.fundName}
@@ -52,13 +52,13 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
 
         {/* HERO: 利益額 */}
         <div className="mb-4">
-          <p className="text-[10px] text-zinc-500 mb-1 font-semibold tracking-widest uppercase">利益</p>
+          <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">利益</p>
           <div className="flex items-baseline gap-1">
             {isProfit
               ? <TrendingUp className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
               : <TrendingDown className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
             }
-            <p className="text-4xl font-black leading-none" style={{ color: profitColor }}>
+            <p className="font-number text-4xl font-black leading-none" style={{ color: profitColor }}>
               <AnimatedNumber
                 value={result.profit}
                 formatter={(n) => `${n >= 0 ? "+" : ""}${formatCurrency(Math.round(n))}`}
@@ -71,19 +71,19 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
         {/* Sub numbers */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-4 border-t border-white/8">
           <div>
-            <p className="text-[10px] text-zinc-500 mb-0.5">現在資産</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">現在資産</p>
             <p className="text-sm font-bold text-zinc-200">
               {formatCurrency(result.finalValue)}
             </p>
           </div>
           <div>
-            <p className="text-[10px] text-zinc-500 mb-0.5">元本</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">元本</p>
             <p className="text-sm font-semibold text-zinc-400">
               {formatCurrency(result.totalPrincipal)}
             </p>
           </div>
           <div className="col-span-2">
-            <p className="text-[10px] text-zinc-500 mb-0.5">リターン率</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">リターン率</p>
             <div className="flex items-center gap-1.5">
               <div className="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden">
                 <motion.div

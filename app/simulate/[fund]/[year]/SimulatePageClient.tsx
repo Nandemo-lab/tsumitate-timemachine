@@ -54,11 +54,11 @@ export default function SimulatePageClient({ fundId, result }: Props) {
         </div>
         <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
           <div>
-            <p className="text-xs text-zinc-500 mb-0.5">現在評価額</p>
+            <p className="text-xs text-zinc-400 mb-0.5">現在評価額</p>
             <p className="text-lg font-black text-white">{formatCurrency(result.finalValue)}</p>
           </div>
           <div>
-            <p className="text-xs text-zinc-500 mb-0.5">投資元本</p>
+            <p className="text-xs text-zinc-400 mb-0.5">投資元本</p>
             <p className="text-lg font-bold text-zinc-300">{formatCurrency(result.totalPrincipal)}</p>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function SimulatePageClient({ fundId, result }: Props) {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="rounded-2xl border border-white/10 bg-white/5 p-5"
       >
-        <p className="text-xs font-black tracking-widest uppercase text-zinc-500 mb-4">
+        <p className="text-xs font-black tracking-widest uppercase text-zinc-400 mb-4">
           資産推移グラフ
         </p>
         {/* Use comparison chart with the same fund but showing data */}

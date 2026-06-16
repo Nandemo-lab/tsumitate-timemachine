@@ -27,7 +27,7 @@ export default function EmotionalMessage({ result, yearsElapsed }: Props) {
             <p className="text-base font-black text-white leading-snug whitespace-pre-line">
               {msg.headline}
             </p>
-            <p className="text-xs text-zinc-500 mt-1.5 leading-relaxed">{msg.sub}</p>
+            <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">{msg.sub}</p>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default function EmotionalMessage({ result, yearsElapsed }: Props) {
       {/* Life values */}
       {msg.lifeValues.length > 0 && (
         <div className="px-5 py-4">
-          <p className="text-[10px] font-black tracking-widest uppercase text-zinc-600 mb-3">
+          <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-3">
             この利益でできること
           </p>
           <div className="grid grid-cols-3 gap-2">
@@ -48,7 +48,7 @@ export default function EmotionalMessage({ result, yearsElapsed }: Props) {
                 className="rounded-xl bg-white/5 border border-white/8 p-3 text-center"
               >
                 <span className="text-xl block mb-1">{lv.emoji}</span>
-                <p className="text-[10px] text-zinc-500 mb-0.5 leading-tight">{lv.label}</p>
+                <p className="text-[10px] text-zinc-400 mb-0.5 leading-tight">{lv.label}</p>
                 <p className="text-xs font-black text-white">
                   {lv.count !== null ? `${lv.count.toLocaleString()}` : ""}{lv.unit}
                 </p>

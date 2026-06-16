@@ -22,7 +22,7 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500">{label}</p>
+        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">{label}</p>
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-1.5 rounded-full" style={{ background: currentFund.color }} />
           <p className="text-xs font-bold" style={{ color: currentFund.color }}>{currentFund.shortName}</p>
@@ -43,7 +43,7 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
                 "flex-shrink-0 flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[11px] font-bold transition-all border",
                 isActive
                   ? "bg-white/15 text-white border-white/20"
-                  : "bg-white/5 text-zinc-500 border-white/8 hover:text-zinc-300 hover:bg-white/8"
+                  : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300 hover:bg-white/8"
               )}
             >
               <span>{cat.emoji}</span>
@@ -107,14 +107,14 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
               >
                 {fund.shortName}
               </p>
-              <p className="mt-0.5 text-[10px] text-zinc-600 line-clamp-1">{fund.description}</p>
+              <p className="mt-0.5 text-[10px] text-zinc-400 line-clamp-1">{fund.description}</p>
             </motion.button>
           );
         })}
       </div>
 
       {/* カテゴリ説明 */}
-      <p className="text-[10px] text-zinc-600">
+      <p className="text-[10px] text-zinc-400">
         {FUND_CATEGORIES[activeCategory].description}
       </p>
     </div>
