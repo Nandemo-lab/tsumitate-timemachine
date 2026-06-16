@@ -123,7 +123,7 @@ export default function ComparisonChart({ planA, planB }: Props) {
   return (
     <div>
       {/* Mode toggle */}
-      <div className="flex rounded-lg border border-white/10 bg-white/5 p-0.5 gap-0.5 w-fit mb-4">
+      <div className="flex rounded-lg border border-white/10 bg-white/5 p-0.5 gap-0.5 w-fit mb-3">
         {(["value", "profit"] as const).map((m) => (
           <button
             key={m}
@@ -135,6 +135,26 @@ export default function ComparisonChart({ planA, planB }: Props) {
             {m === "value" ? "評価額" : "利益額"}
           </button>
         ))}
+      </div>
+
+      {/* 凡例：元本・資産・利益が一目で分かる */}
+      <div className="flex items-center gap-x-4 gap-y-1 flex-wrap mb-3 text-[11px]">
+        {mode === "value" && (
+          <div className="flex items-center gap-1.5 text-zinc-400">
+            <span className="inline-block h-0 w-3 border-t border-dashed" style={{ borderColor: "#a1a1aa" }} />
+            投資元本
+          </div>
+        )}
+        <div className="flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: planA.fundColor }} />
+          <span style={{ color: planA.fundColor }} className="font-semibold">{planA.fundName}</span>
+          <span className="text-zinc-400">{mode === "value" ? "の資産" : "の利益"}</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: planB.fundColor }} />
+          <span style={{ color: planB.fundColor }} className="font-semibold">{planB.fundName}</span>
+          <span className="text-zinc-400">{mode === "value" ? "の資産" : "の利益"}</span>
+        </div>
       </div>
 
       <div className="h-60 sm:h-72 w-full">
@@ -186,8 +206,8 @@ export default function ComparisonChart({ planA, planB }: Props) {
                 type="monotone"
                 dataKey="principalA"
                 name="principalA"
-                stroke="#ffffff18"
-                strokeWidth={1}
+                stroke="#a1a1aa"
+                strokeWidth={1.5}
                 strokeDasharray="4 4"
                 fill="url(#gradPrincipal)"
                 dot={false}

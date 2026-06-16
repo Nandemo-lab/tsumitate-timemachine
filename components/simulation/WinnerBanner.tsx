@@ -38,23 +38,23 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
         {/* 銘柄名（やや強調） */}
         <p className="font-heading text-lg font-bold text-white mb-3">{winner.fundName}</p>
 
-        {/* HERO: 利益額 */}
+        {/* HERO: 利益額（リターン率を隣接させて関連性を強調） */}
         <p className="text-xs text-zinc-400 mb-1">利益</p>
-        <p
-          className="font-heading font-number text-4xl font-bold mb-1"
-          style={{ color: "#10b981", filter: "drop-shadow(0 0 9px #10b98133)" }}
-        >
-          <AnimatedNumber
-            value={winner.profit}
-            formatter={(n) => `+${formatCurrency(Math.round(n))}`}
-            duration={1600}
-          />
-        </p>
-
-        {/* リターン率 */}
-        <p className="font-number text-lg font-semibold text-emerald-300 mb-4">
-          +{winner.returnRate.toFixed(1)}%
-        </p>
+        <div className="flex items-baseline gap-2 mb-4">
+          <p
+            className="font-heading font-number text-4xl font-bold"
+            style={{ color: "#10b981", filter: "drop-shadow(0 0 9px #10b98133)" }}
+          >
+            <AnimatedNumber
+              value={winner.profit}
+              formatter={(n) => `+${formatCurrency(Math.round(n))}`}
+              duration={1600}
+            />
+          </p>
+          <p className="font-number text-lg font-semibold text-emerald-300">
+            （+{winner.returnRate.toFixed(1)}%）
+          </p>
+        </div>
 
         {/* Divider */}
         <div className="border-t border-white/8 pt-3">

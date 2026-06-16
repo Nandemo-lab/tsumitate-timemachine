@@ -50,9 +50,9 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
           {result.fundName}
         </p>
 
-        {/* HERO: 利益額 */}
+        {/* HERO: 利益額（リターン率を隣接させて関連性を強調） */}
         <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">利益</p>
-        <div className="flex items-baseline gap-1 mb-1">
+        <div className="flex items-baseline gap-2 mb-5">
           {isProfit
             ? <TrendingUp className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
             : <TrendingDown className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />
@@ -67,12 +67,10 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
               duration={1500}
             />
           </p>
+          <p className="font-number text-base font-semibold" style={{ color: profitColor }}>
+            （{isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%）
+          </p>
         </div>
-
-        {/* リターン率 */}
-        <p className="font-number text-base font-semibold mb-5" style={{ color: profitColor }}>
-          {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
-        </p>
 
         {/* Sub numbers */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-4 border-t border-white/8">

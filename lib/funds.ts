@@ -280,6 +280,20 @@ export const FUNDS: Record<FundId, Fund> = {
   },
 };
 
+// ホームランキングなどで使う、1行に収まる超短い説明
+export const FUND_SHORT_DESC: Record<FundId, string> = {
+  orcan: "長期積立向け",
+  vt: "全世界ETF",
+  sp500: "米国成長重視",
+  vti: "米国分散型",
+  vym: "配当重視型",
+  schd: "配当成長型",
+  nasdaq100: "ハイリターン型",
+  fangplus: "攻めの成長株",
+  india: "新興国成長",
+  emerging: "新興国分散",
+};
+
 export const FUND_LIST = Object.values(FUNDS);
 export function getFund(id: FundId): Fund { return FUNDS[id]; }
 export function getFundsByCategory(category: FundCategory): Fund[] {

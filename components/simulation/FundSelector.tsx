@@ -20,7 +20,7 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
   const fundsInCategory = getFundsByCategory(activeCategory);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">{label}</p>
         <div className="flex items-center gap-1.5">

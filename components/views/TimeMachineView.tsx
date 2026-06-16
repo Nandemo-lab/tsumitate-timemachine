@@ -282,12 +282,14 @@ export default function TimeMachineView({
               }}
             >
               <p className="text-xs text-zinc-400 mb-1">{result.fundName}の利益</p>
-              <p className="font-heading font-number text-5xl font-bold text-emerald-400 mb-1">
-                +{formatCurrency(result.profit)}
-              </p>
-              <p className="font-number text-base font-semibold text-emerald-300 mb-1">
-                +{result.returnRate.toFixed(1)}%
-              </p>
+              <div className="flex items-baseline justify-center gap-2 mb-1">
+                <p className="font-heading font-number text-5xl font-bold text-emerald-400">
+                  +{formatCurrency(result.profit)}
+                </p>
+                <p className="font-number text-base font-semibold text-emerald-300">
+                  （+{result.returnRate.toFixed(1)}%）
+                </p>
+              </div>
               <p className="text-sm text-zinc-400">
                 {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
               </p>

@@ -55,20 +55,22 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
             {/* 銘柄名（やや強調） */}
             <p className="font-heading text-lg font-bold text-white mb-1">🥇 {top.fund.shortName}</p>
 
-            {/* HERO: 利益額 */}
-            <p
-              className="font-heading font-number text-3xl font-bold"
-              style={{ color: "#10b981", filter: "drop-shadow(0 0 8px #10b98133)" }}
-            >
-              +<AnimatedNumber
-                value={top.result.profit}
-                formatter={(n) => formatCurrency(Math.round(n))}
-                duration={1500}
-              />
-            </p>
-            <p className="font-number text-sm font-semibold text-emerald-300 mt-0.5">
-              +{top.result.returnRate.toFixed(1)}%
-            </p>
+            {/* HERO: 利益額（リターン率を隣接表示） */}
+            <div className="flex items-baseline gap-2">
+              <p
+                className="font-heading font-number text-3xl font-bold"
+                style={{ color: "#10b981", filter: "drop-shadow(0 0 8px #10b98133)" }}
+              >
+                +<AnimatedNumber
+                  value={top.result.profit}
+                  formatter={(n) => formatCurrency(Math.round(n))}
+                  duration={1500}
+                />
+              </p>
+              <p className="font-number text-sm font-semibold text-emerald-300">
+                （+{top.result.returnRate.toFixed(1)}%）
+              </p>
+            </div>
             <p className="text-xs text-zinc-400 mt-2">
               {startYear}年{startMonth}月〜 毎月{formatCurrency(monthlyAmount)}
             </p>
@@ -128,7 +130,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
                     />
                   </p>
                   <p className="text-[10px] font-semibold text-emerald-400">
-                    +{item.result.returnRate.toFixed(1)}%
+                    （+{item.result.returnRate.toFixed(1)}%）
                   </p>
                 </div>
 

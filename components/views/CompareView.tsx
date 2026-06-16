@@ -70,8 +70,8 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         <p className="text-sm text-zinc-400">2つの銘柄を同じ条件で比べる</p>
       </motion.div>
 
-      {/* Conditions */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-4">
+      {/* Conditions（開始年・積立額を1カードに統合） */}
+      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-3">
         {/* Year chips */}
         <div>
           <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">積立開始年</p>
@@ -119,7 +119,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
       </div>
 
       {/* Fund A */}
-      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
+      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
         <FundSelector
           value={fundA}
           onChange={(id) => { setFundA(id); setShowResult(false); }}
@@ -128,14 +128,14 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 -my-1">
         <div className="flex-1 h-px bg-white/8" />
         <span className="text-[10px] text-zinc-400 font-black tracking-widest">VS</span>
         <div className="flex-1 h-px bg-white/8" />
       </div>
 
       {/* Fund B */}
-      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
+      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
         <FundSelector
           value={fundB}
           onChange={(id) => { setFundB(id); setShowResult(false); }}
@@ -224,17 +224,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">資産推移グラフ</p>
-                <div className="flex items-center gap-3">
-                  {[resultA, resultB].map((r) => (
-                    <div key={r.fundId} className="flex items-center gap-1.5">
-                      <div className="h-2 w-2 rounded-full" style={{ background: r.fundColor }} />
-                      <span className="text-[10px] text-zinc-400">{r.fundName}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-3">資産推移グラフ</p>
               <ComparisonChart planA={resultA} planB={resultB} />
             </div>
 

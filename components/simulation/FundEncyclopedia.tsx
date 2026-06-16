@@ -98,22 +98,25 @@ function InlineSimulator({
         <div className="flex items-end justify-between">
           <div>
             <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
-            <p
-              className="font-heading font-number text-3xl font-bold"
-              style={{ color: isProfit ? "#10b981" : "#ef4444" }}
-            >
-              {isProfit ? "+" : ""}{formatCurrency(result.profit)}
-            </p>
+            <div className="flex items-baseline gap-1.5">
+              <p
+                className="font-heading font-number text-3xl font-bold"
+                style={{ color: isProfit ? "#10b981" : "#ef4444" }}
+              >
+                {isProfit ? "+" : ""}{formatCurrency(result.profit)}
+              </p>
+              <span className="font-number text-sm font-bold" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
+                （{isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%）
+              </span>
+            </div>
           </div>
           <div className="text-right">
             <div className="flex items-center gap-1 justify-end mb-0.5">
               <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
-              <span className="text-base font-black" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
-                {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
-              </span>
+              <span className="text-[10px] text-zinc-400">現在資産</span>
             </div>
-            <p className="text-[10px] text-zinc-400">
-              {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
+            <p className="text-xs font-bold text-zinc-300">
+              {formatCurrency(result.finalValue)}
             </p>
           </div>
         </div>

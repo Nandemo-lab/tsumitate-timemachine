@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { FundId } from "@/types";
-import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags } from "@/lib/funds";
+import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags, FUND_SHORT_DESC } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3 } from "lucide-react";
 import { MainTab } from "@/components/layout/BottomNav";
@@ -103,18 +103,23 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.06 }}
               onClick={() => onTaraeba(fund.id, startYear, 1, monthlyAmount)}
-              className="flex-shrink-0 w-48 rounded-2xl p-4 text-left border border-white/8 bg-white/[0.02]"
+              className="flex-shrink-0 w-56 rounded-2xl p-4 text-left border border-white/8 bg-white/[0.02]"
               whileTap={{ scale: 0.97 }}
             >
               <div className="flex items-center gap-1.5 mb-1">
                 <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />
                 <p className="font-heading text-xs font-semibold text-zinc-300">{fund.encyclopedia.nickname}</p>
               </div>
-              <p className="font-heading font-number text-[1.7rem] font-bold text-emerald-400 leading-none mb-1.5">
-                +{formatCurrency(result.profit)}
-              </p>
+              <div className="flex items-baseline gap-1 mb-1.5 whitespace-nowrap">
+                <p className="font-heading font-number text-2xl font-bold text-emerald-400 leading-none">
+                  +{formatCurrency(result.profit)}
+                </p>
+                <p className="font-number text-xs font-bold text-emerald-300">
+                  （+{result.returnRate.toFixed(1)}%）
+                </p>
+              </div>
               <p className="text-[11px] text-zinc-400">
-                +{result.returnRate.toFixed(1)}% · 月{(monthlyAmount / 10000).toFixed(0)}万円 {startYear}年〜
+                月{(monthlyAmount / 10000).toFixed(0)}万円 {startYear}年〜
               </p>
               <p className="text-[11px] text-zinc-500 mt-2 pt-2 border-t border-white/8 leading-snug">
                 {scene}
@@ -193,11 +198,11 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
 
             {/* HERO: 利益額 → リターン率 */}
             <p className="text-[11px] text-zinc-400 mb-1">2020年から月3万円積立なら</p>
-            <div className="flex items-end gap-2 mb-2.5">
+            <div className="flex items-baseline gap-1.5 mb-2.5">
               <p className="font-heading font-number text-[1.9rem] font-bold text-emerald-400 leading-none">
                 +{formatCurrency(pickResult.profit)}
               </p>
-              <p className="font-number text-sm font-bold text-emerald-300 mb-0.5">+{pickResult.returnRate.toFixed(1)}%</p>
+              <p className="font-number text-sm font-bold text-emerald-300">（+{pickResult.returnRate.toFixed(1)}%）</p>
             </div>
 
             {/* Catchcopy — 最大2行 */}
@@ -270,7 +275,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
                       </span>
                     ))}
                   </div>
-                  <p className="text-[11px] text-zinc-400 truncate">{enc.forWhom.slice(0, 24)}…</p>
+                  <p className="text-[11px] text-zinc-400 truncate">{FUND_SHORT_DESC[fund.id]}</p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-zinc-400 flex-shrink-0" />
               </motion.button>
@@ -328,8 +333,10 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
                     ))}
                   </div>
                 </div>
-                <p className="font-number text-sm font-bold text-emerald-400">+{formatCurrency(result.profit)}</p>
-                <p className="text-[11px] text-zinc-400 w-10 text-right">+{result.returnRate.toFixed(0)}%</p>
+                <div className="text-right flex-shrink-0">
+                  <p className="font-number text-sm font-bold text-emerald-400">+{formatCurrency(result.profit)}</p>
+                  <p className="font-number text-[10px] text-emerald-300">（+{result.returnRate.toFixed(0)}%）</p>
+                </div>
               </motion.button>
             );
           })}
