@@ -346,6 +346,28 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       <p className="text-center text-xs text-zinc-400 px-6 leading-relaxed">
         2015年以降の実績データを使用したシミュレーションです。手数料・税金は考慮していません。
       </p>
+
+      {/* ── フッターリンク ── */}
+      <div className="px-4 pt-1 pb-2 border-t border-white/[0.06]">
+        <nav className="flex items-center justify-center gap-5 flex-wrap mb-2">
+          {[
+            { href: "/terms",   label: "利用規約" },
+            { href: "/privacy", label: "プライバシーポリシー" },
+            { href: "/contact", label: "お問い合わせ" },
+          ].map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <p className="text-center text-[10px] text-zinc-600">
+          © 2025 積立タイムマシン
+        </p>
+      </div>
     </div>
   );
 }
