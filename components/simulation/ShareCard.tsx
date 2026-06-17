@@ -1,10 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SimulationResult } from "@/types";
 import { formatCurrency } from "@/lib/simulation";
 import { Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface Props {
   planA: SimulationResult;
@@ -16,6 +17,8 @@ interface Props {
 
 export default function ShareCard({ planA, planB, startYear, startMonth, monthlyAmount }: Props) {
   const [copied, setCopied] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const sorted = planB ? [planA, planB].sort((a, b) => b.profit - a.profit) : [planA];
   const winner = sorted[0];
   const loser = sorted[1];
@@ -49,7 +52,7 @@ vs ${loser.fundName}
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareText);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1800);
   };
 
   const handleXShare = () => {
@@ -58,6 +61,7 @@ vs ${loser.fundName}
   };
 
   return (
+    <>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -116,8 +120,8 @@ vs ${loser.fundName}
           onClick={handleXShare}
           className="flex-1 flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all bg-white text-black hover:bg-zinc-100 active:scale-98"
         >
-          <span className="text-sm font-black">𝕏</span>
-          Xでシェア
+          <span className="text-sm font-black leading-none">𝕏</span>
+          結果をシェア
         </button>
         <button
           onClick={handleCopy}
@@ -128,8 +132,36 @@ vs ${loser.fundName}
           ) : (
             <Copy className="h-4 w-4" />
           )}
+          <span className="text-xs">{copied ? "コピー済み" : "リンクコピー"}</span>
         </button>
       </div>
     </motion.div>
+
+    {/* Toast — rendered above BottomNav */}
+    {mounted && createPortal(
+      <AnimatePresence>
+        {copied && (
+          <motion.div
+            key="copy-toast"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg"
+            style={{
+              bottom: "calc(env(safe-area-inset-bottom) + 80px)",
+              background: "rgba(16,185,129,0.92)",
+              backdropFilter: "blur(12px)",
+              zIndex: 9999,
+            }}
+          >
+            <Check className="h-4 w-4" />
+            リンクをコピーしました
+          </motion.div>
+        )}
+      </AnimatePresence>,
+      document.body
+    )}
+    </>
   );
 }
