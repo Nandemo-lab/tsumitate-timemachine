@@ -5,6 +5,7 @@ import { ChevronRight, TrendingUp, CheckCircle2, ArrowRight, ShieldCheck } from 
 import { getFundSeoPage, FUND_SEO_PAGES, FundSeoPage } from "@/lib/fund-seo";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import SiteFooter from "@/components/layout/SiteFooter";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 
@@ -381,6 +382,8 @@ export default async function FundLandingPage({ params }: Props) {
           </section>
         </div>
       </div>
+
+      <SiteFooter />
     </>
   );
 }
