@@ -17,6 +17,7 @@ const notoSerifJP = Noto_Serif_JP({
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const OG_IMAGE = `${BASE_URL}/api/og`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -25,11 +26,11 @@ export const metadata: Metadata = {
     template: "%s | 積立タイムマシン",
   },
   description:
-    "「もしあの時から積み立てていたら？」を過去の実績データで体験。S&P500・オルカン・NASDAQ100など主要インデックスの積立投資シミュレーター。",
+    "過去の実績データをもとに、オルカン・S&P500・NASDAQ100などの積立結果をシミュレーション。もし数年前から投資していたら今いくらになっていたかを無料で確認できます。",
   keywords: [
-    "積立投資", "シミュレーター", "NISA", "新NISA", "S&P500",
-    "オルカン", "NASDAQ100", "インデックス投資", "資産形成",
-    "積立NISA", "投資信託", "ETF", "たられば",
+    "積立投資", "シミュレーター", "たられば投資", "NISA", "新NISA", "S&P500",
+    "オルカン", "全世界株", "NASDAQ100", "インデックス投資", "資産形成",
+    "積立NISA", "投資信託", "ETF", "過去シミュレーション", "積立計算",
   ],
   authors: [{ name: "積立タイムマシン" }],
   creator: "積立タイムマシン",
@@ -38,23 +39,22 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     url: BASE_URL,
     siteName: "積立タイムマシン",
-    title: "積立タイムマシン｜もしあの時から積み立てていたら？",
-    description: "過去の実績で「たられば」を体験する積立投資シミュレーター",
+    title: "もし2020年から積み立てていたら？",
+    description: "オルカン・S&P500・NASDAQ100の積立結果を無料シミュレーション",
     images: [
       {
-        url: `${BASE_URL}/api/og?fund=sp500&year=2020&amount=30000`,
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "積立タイムマシン",
+        alt: "積立タイムマシン｜もし2020年から積み立てていたら？ +110万円",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "積立タイムマシン｜もしあの時から積み立てていたら？",
-    description: "過去の実績で「たられば」を体験する積立投資シミュレーター",
-    images: [`${BASE_URL}/api/og?fund=sp500&year=2020&amount=30000`],
-    creator: "@tsumitate_tm",
+    title: "もし2020年から積み立てていたら？",
+    description: "オルカン・S&P500・NASDAQ100の積立結果を無料シミュレーション",
+    images: [OG_IMAGE],
   },
   alternates: { canonical: BASE_URL },
   robots: {
@@ -71,9 +71,29 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "積立タイムマシン",
+  url: "https://tsumitate-timemachine.vercel.app",
+  description: "過去の実績データをもとに、オルカン・S&P500・NASDAQ100などの積立投資シミュレーションを無料で体験できるWebアプリ。",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  inLanguage: "ja",
+  isAccessibleForFree: true,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+  creator: { "@type": "Organization", name: "積立タイムマシン" },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable} ${geistMono.variable} dark`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-dvh bg-zinc-950 text-zinc-50 antialiased">
         {children}
       </body>

@@ -24,30 +24,32 @@ export default function ShareCard({ planA, planB, startYear, startMonth, monthly
   const loser = sorted[1];
   const diff = loser ? winner.profit - loser.profit : null;
 
+  const url = "https://tsumitate-timemachine.vercel.app";
   const shareText = planB && loser
-    ? `📈 #積立タイムマシン
+    ? `もし${startYear}年${startMonth}月から${winner.fundName}を
+毎月${formatCurrency(monthlyAmount)}積み立てていたら
 
-もし${startYear}年${startMonth}月から
-毎月${formatCurrency(monthlyAmount)}積み立てていたら...
-
-🏆 ${winner.fundName}
-利益 +${formatCurrency(winner.profit)}（${winner.returnRate.toFixed(1)}%）
++${formatCurrency(winner.profit)}（+${winner.returnRate.toFixed(1)}%）
 
 vs ${loser.fundName}
-利益 +${formatCurrency(loser.profit)}（${loser.returnRate.toFixed(1)}%）
++${formatCurrency(loser.profit)}（+${loser.returnRate.toFixed(1)}%）
 
-差額 ${formatCurrency(diff!)} の違い！
-今すぐ試す → https://tsumitate-timemachine.vercel.app`
-    : `📈 #積立タイムマシン
+差額 ${formatCurrency(diff!)} の違いに！
 
-もし${startYear}年${startMonth}月から
-毎月${formatCurrency(monthlyAmount)}積み立てていたら...
+📊 積立タイムマシン
+${url}
 
-🏆 ${winner.fundName}
-利益 +${formatCurrency(winner.profit)}（${winner.returnRate.toFixed(1)}%）
+自分でも試してみる↓ #積立タイムマシン #新NISA`
+    : `もし${startYear}年${startMonth}月から${winner.fundName}を
+毎月${formatCurrency(monthlyAmount)}積み立てていたら
+
++${formatCurrency(winner.profit)}（+${winner.returnRate.toFixed(1)}%）
 元本 ${formatCurrency(planA.totalPrincipal)} → ${formatCurrency(planA.finalValue)}
 
-今すぐ試す → https://tsumitate-timemachine.vercel.app`;
+📊 積立タイムマシン
+${url}
+
+自分でも試してみる↓ #積立タイムマシン #新NISA`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareText);
