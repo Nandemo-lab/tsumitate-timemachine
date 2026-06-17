@@ -56,6 +56,7 @@ export const metadata: Metadata = {
     description: "オルカン・S&P500・NASDAQ100の積立結果を無料シミュレーション",
     images: [OG_IMAGE],
   },
+  verification: { google: "cRn8VxxoWtUthqHWNPZRw8NNbK813gzFn70_S7gw9oQ" },
   alternates: { canonical: BASE_URL },
   robots: {
     index: true,
