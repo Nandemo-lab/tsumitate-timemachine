@@ -307,9 +307,14 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
-                      {enc.nisaCompatible && (
+                      {enc.nisaSupport.tsumitate && (
                         <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">
-                          NISA
+                          つみたて枠
+                        </span>
+                      )}
+                      {enc.nisaSupport.growth && !enc.nisaSupport.tsumitate && (
+                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-300">
+                          成長投資枠
                         </span>
                       )}
                       <RiskBadge level={fund.riskLevel} />

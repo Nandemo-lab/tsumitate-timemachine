@@ -178,7 +178,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               <span className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">
                 {FUND_CATEGORIES[pick.category].label}
               </span>
-              {pickEnc.nisaCompatible && (
+              {(pickEnc.nisaSupport.tsumitate || pickEnc.nisaSupport.growth) && (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300">NISA対応</span>
               )}
               <div className="flex items-center gap-0.5 ml-auto">

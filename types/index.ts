@@ -26,7 +26,10 @@ export interface FundEncyclopediaData {
   beginnerScore: 1 | 2 | 3 | 4 | 5;  // 初心者向け度
   volatility: "低" | "中" | "高" | "非常に高";
   expectedHorizon: string;        // 推奨投資期間
-  nisaCompatible: boolean;
+  nisaSupport: {
+    tsumitate: boolean; // つみたて投資枠
+    growth: boolean;    // 成長投資枠
+  };
 }
 
 export interface Fund {
