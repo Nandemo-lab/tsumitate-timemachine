@@ -227,30 +227,41 @@ export default async function ComparePage({ params }: Props) {
             </div>
           </section>
 
-          {/* ── 関連リンク ─────────────────────────────────────── */}
-          <section>
-            <h2
-              className="text-sm font-bold text-zinc-400 mb-3"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
-              各銘柄の詳細はこちら
-            </h2>
-            <div className="flex flex-col gap-2">
-              {[
-                { href: "/orukan", label: "オルカンとは？特徴・実績を詳しく見る", color: fundA.color },
-                { href: "/sp500",  label: "S&P500とは？特徴・実績を詳しく見る", color: fundB.color },
-              ].map(({ href, label, color }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 text-sm text-zinc-300 hover:text-white transition-colors"
+          {/* ── 関連する比較 ────────────────────────────────────── */}
+          {(() => {
+            const related = COMPARE_PAGES.filter((p) => p.slug !== page.slug);
+            if (related.length === 0) return null;
+            return (
+              <section>
+                <h2
+                  className="text-base font-bold text-white mb-4"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
-                  {label}
-                  <ChevronRight className="h-4 w-4 flex-shrink-0" style={{ color }} />
-                </Link>
-              ))}
-            </div>
-          </section>
+                  関連する比較
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {related.map((p) => {
+                    const fA = FUNDS[p.fundAId];
+                    const fB = FUNDS[p.fundBId];
+                    return (
+                      <Link
+                        key={p.slug}
+                        href={`/compare/${p.slug}`}
+                        className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      >
+                        <span className="flex items-center gap-2 text-sm font-bold text-white">
+                          <span style={{ color: fA.color }}>{fA.shortName}</span>
+                          <span className="text-zinc-500 text-xs">vs</span>
+                          <span style={{ color: fB.color }}>{fB.shortName}</span>
+                        </span>
+                        <span className="text-xs text-zinc-500">{p.relatedDescription}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })()}
 
         </div>
         <SiteFooter />

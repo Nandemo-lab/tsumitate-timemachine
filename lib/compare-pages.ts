@@ -17,6 +17,7 @@ export interface ComparePage {
   fundBId: FundId;
   metaTitle: string;
   metaDescription: string;
+  relatedDescription: string; // 関連比較カードに表示するひと言説明
   h1: string;
   intro: string;
   conclusionA: string;        // "分散重視 → オルカン"
@@ -36,6 +37,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     metaTitle: "オルカンとS&P500はどっち？過去実績・リスク・積立結果を比較",
     metaDescription:
       "オルカンとS&P500を過去実績・リスク・分散性・積立シミュレーションで比較。新NISAでどちらを選ぶべきか分かりやすく解説。",
+    relatedDescription: "全世界 vs 米国集中を比較",
     h1: "オルカン vs S&P500｜どちらを選ぶ？徹底比較",
     intro:
       "新NISAで最も人気の2銘柄「オルカン」と「S&P500」。過去の積立実績・リスク・分散性を数字で比べ、あなたに合った選び方を解説します。",
@@ -90,6 +92,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     metaTitle: "S&P500とNASDAQ100はどっち？過去実績・リスク・積立結果を比較",
     metaDescription:
       "S&P500とNASDAQ100を過去実績・リスク・積立シミュレーションで比較。新NISAでどちらを選ぶべきか分かりやすく解説。",
+    relatedDescription: "安定の500社 vs ハイテク100社",
     h1: "S&P500 vs NASDAQ100｜どちらを選ぶ？徹底比較",
     intro:
       "どちらも米国株に投資する人気インデックス。「安定の500社」か「ハイテク100社」か——過去の積立実績とリスクを数字で比べ、あなたに合った選択肢を解説します。",
@@ -144,6 +147,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     metaTitle: "VTIとオルカンはどっち？過去実績・リスク・積立結果を比較",
     metaDescription:
       "VTIとオルカンを過去実績・分散性・積立シミュレーションで比較。ETFと投資信託の違いも解説。",
+    relatedDescription: "ETFと投資信託を比較",
     h1: "VTI vs オルカン｜どちらを選ぶ？徹底比較",
     intro:
       "「米国全体に投資するETF」VTIと「全世界に分散する投資信託」オルカン。どちらも長期積立の定番ですが、投資対象・コスト・買い方の違いを数字で解説します。",
@@ -198,6 +202,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     metaTitle: "SCHDとVYMはどっち？配当金・過去実績・積立結果を比較",
     metaDescription:
       "人気の高配当ETFであるSCHDとVYMを比較。配当利回り・増配率・積立結果の違いを解説。",
+    relatedDescription: "人気高配当ETFを比較",
     h1: "SCHD vs VYM｜高配当ETFを徹底比較",
     intro:
       "米国高配当ETFの2大人気銘柄「SCHD」と「VYM」。配当利回り・増配率・資産成長性の違いを過去データで比べ、あなたの配当投資に合った選択肢を解説します。",
@@ -252,6 +257,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     metaTitle: "NASDAQ100とFANG+はどっち？過去実績・リスク・積立結果を比較",
     metaDescription:
       "NASDAQ100とFANG+を過去実績・値動き・積立シミュレーションで比較。ハイテク投資の違いを解説。",
+    relatedDescription: "ハイテク分散 vs 超集中10銘柄",
     h1: "NASDAQ100 vs FANG+｜ハイテク投資を徹底比較",
     intro:
       "どちらも「ハイテク株集中投資」の人気インデックス。NASDAQ100の100銘柄 vs FANG+の10銘柄——分散度・リターン・リスクを過去データで徹底比較します。",
