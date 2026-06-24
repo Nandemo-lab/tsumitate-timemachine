@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { FUND_LIST } from "@/lib/funds";
 import { FUND_SEO_PAGES } from "@/lib/fund-seo";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
+import { FUND_PAGES } from "@/lib/fund-seo-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 const YEARS = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
@@ -43,5 +44,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...fundLandingPages, ...comparePages, ...simPages];
+  // 銘柄解説ページ（/fund/[slug]）
+  const fundArticlePages: MetadataRoute.Sitemap = FUND_PAGES.map((p) => ({
+    url: `${BASE_URL}/fund/${p.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.9,
+  }));
+
+  return [...staticPages, ...fundLandingPages, ...fundArticlePages, ...comparePages, ...simPages];
 }

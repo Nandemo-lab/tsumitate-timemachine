@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { ChevronRight, CheckCircle2, ArrowRight, TrendingUp } from "lucide-react";
 import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
+import { getFundPageSlug } from "@/lib/fund-seo-pages";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 import ComparePageClient from "./ComparePageClient";
@@ -258,6 +259,47 @@ export default async function ComparePage({ params }: Props) {
                       </Link>
                     );
                   })}
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* ── 関連する銘柄解説 ─────────────────────────────────── */}
+          {(() => {
+            const fundLinks = [
+              { fundId: page.fundAId, fund: fundA },
+              { fundId: page.fundBId, fund: fundB },
+            ].flatMap(({ fundId, fund: f }) => {
+              const s = getFundPageSlug(fundId);
+              return s ? [{ slug: s, fund: f }] : [];
+            });
+            if (fundLinks.length === 0) return null;
+            return (
+              <section>
+                <h2
+                  className="text-base font-bold text-white mb-4"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  関連する銘柄解説
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {fundLinks.map(({ slug: fSlug, fund: f }) => (
+                    <Link
+                      key={fSlug}
+                      href={`/fund/${fSlug}`}
+                      className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    >
+                      <span
+                        className="h-2 w-2 rounded-full flex-shrink-0"
+                        style={{ background: f.color }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-white">{f.shortName}とは？</p>
+                        <p className="text-[10px] text-zinc-500 truncate">{f.encyclopedia.catchCopy}</p>
+                      </div>
+                      <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                    </Link>
+                  ))}
                 </div>
               </section>
             );
