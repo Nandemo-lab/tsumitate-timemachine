@@ -270,7 +270,6 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                   : "bg-white/[0.04] text-zinc-400 border-white/8 hover:text-zinc-300"
               }`}
             >
-              <span>{cat.emoji}</span>
               <span>{cat.label}</span>
             </button>
           );
