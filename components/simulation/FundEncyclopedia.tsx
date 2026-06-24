@@ -314,10 +314,6 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                     </div>
                     <p className="text-[10px] text-zinc-400 truncate mt-0.5">{enc.formalName}</p>
                   </div>
-                  <ChevronRight
-                    className="h-4 w-4 text-zinc-400 flex-shrink-0 transition-transform duration-300"
-                    style={{ transform: isExpanded ? "rotate(90deg)" : "none" }}
-                  />
                 </div>
               </motion.button>
 
