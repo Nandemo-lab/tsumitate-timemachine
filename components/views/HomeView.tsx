@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags, FUND_SHORT_DESC } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3 } from "lucide-react";
+import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3, BarChart2 } from "lucide-react";
+import Link from "next/link";
+import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { MainTab } from "@/components/layout/BottomNav";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
@@ -346,6 +348,41 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       <p className="text-center text-xs text-zinc-400 px-6 leading-relaxed">
         2015年以降の実績データを使用したシミュレーションです。手数料・税金は考慮していません。
       </p>
+
+      {/* ── 人気比較ランキング ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.35 }}
+        className="px-4 space-y-3"
+      >
+        <div className="flex items-center gap-2">
+          <BarChart2 className="h-4 w-4 text-violet-400" />
+          <p className="font-heading text-sm font-semibold text-white">人気比較ランキング</p>
+        </div>
+        <div className="space-y-2">
+          {COMPARE_PAGES.slice(0, 5).map((cp, i) => {
+            const fA = FUNDS[cp.fundAId];
+            const fB = FUNDS[cp.fundBId];
+            const RANK = ["🥇", "🥈", "🥉", "4位", "5位"];
+            return (
+              <Link
+                key={cp.slug}
+                href={`/compare/${cp.slug}`}
+                className="flex items-center gap-3 rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 hover:bg-white/[0.06] transition-colors"
+              >
+                <span className="text-sm w-6 text-center flex-shrink-0">{RANK[i]}</span>
+                <span className="flex items-center gap-1.5 text-sm font-bold flex-1 min-w-0">
+                  <span style={{ color: fA.color }}>{fA.shortName}</span>
+                  <span className="text-zinc-500 text-xs">vs</span>
+                  <span style={{ color: fB.color }}>{fB.shortName}</span>
+                </span>
+                <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+              </Link>
+            );
+          })}
+        </div>
+      </motion.section>
 
       {/* ── フッターリンク ── */}
       <div className="px-4 pt-1 pb-2 border-t border-white/[0.06]">

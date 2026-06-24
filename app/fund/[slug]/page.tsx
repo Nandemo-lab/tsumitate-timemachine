@@ -13,6 +13,7 @@ import { getFundPage, FUND_PAGES } from "@/lib/fund-seo-pages";
 import { getComparePage } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
@@ -103,6 +104,9 @@ export default async function FundPage({ params }: Props) {
   const relatedCompares = page.relatedCompareSlugs
     .map((s) => getComparePage(s))
     .filter(Boolean) as ReturnType<typeof getComparePage>[];
+
+  // この銘柄の年別たらればページ
+  const fundYearPages = YEAR_PAGES.filter((yp) => yp.fundId === page.fundId);
 
   // 関連銘柄ページ
   const relatedFunds = page.relatedFundSlugs
@@ -484,6 +488,53 @@ export default async function FundPage({ params }: Props) {
                     <ChevronRight className="h-3.5 w-3.5 text-zinc-500 ml-auto" />
                   </Link>
                 ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── 年別たられば ─────────────────────────────────────── */}
+          {fundYearPages.length > 0 && (
+            <section>
+              <h2
+                className="text-base font-bold text-white mb-4"
+                style={{ fontFamily: "var(--font-serif-jp), serif" }}
+              >
+                {enc.nickname}のたられば：年別シミュレーション
+              </h2>
+              <div className="grid grid-cols-1 gap-2">
+                {fundYearPages.map((yp) => {
+                  const r = simulate({
+                    fundId: yp.fundId,
+                    startYear: yp.year,
+                    startMonth: yp.simMonth,
+                    monthlyAmount: yp.simAmount,
+                  });
+                  return (
+                    <Link
+                      key={yp.year}
+                      href={`/${yp.fundSlug}/${yp.year}`}
+                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="text-xs font-bold px-2 py-0.5 rounded flex-shrink-0"
+                          style={{ background: `${fund.color}20`, color: fund.color }}
+                        >
+                          {yp.year}年〜
+                        </span>
+                        <span className="text-sm text-zinc-300">
+                          {yp.year}年から積み立てていたら？
+                        </span>
+                      </div>
+                      <span
+                        className="text-xs font-bold font-number flex-shrink-0"
+                        style={{ color: r.profit >= 0 ? "#10b981" : "#ef4444" }}
+                      >
+                        {r.profit >= 0 ? "+" : ""}{r.returnRate.toFixed(1)}%
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
             </section>
           )}

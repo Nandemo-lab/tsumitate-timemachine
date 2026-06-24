@@ -6,6 +6,7 @@ import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
 import { getFundPageSlug } from "@/lib/fund-seo-pages";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 import ComparePageClient from "./ComparePageClient";
 
@@ -230,7 +231,15 @@ export default async function ComparePage({ params }: Props) {
 
           {/* ── 関連する比較 ────────────────────────────────────── */}
           {(() => {
-            const related = COMPARE_PAGES.filter((p) => p.slug !== page.slug);
+            // 両銘柄に関連するものを優先、それ以外で補完して最大4件
+            const involved = new Set([page.fundAId, page.fundBId]);
+            const priority = COMPARE_PAGES.filter(
+              (p) => p.slug !== page.slug && (involved.has(p.fundAId) || involved.has(p.fundBId))
+            );
+            const others = COMPARE_PAGES.filter(
+              (p) => p.slug !== page.slug && !priority.includes(p)
+            );
+            const related = [...priority, ...others].slice(0, 4);
             if (related.length === 0) return null;
             return (
               <section>
@@ -238,7 +247,7 @@ export default async function ComparePage({ params }: Props) {
                   className="text-base font-bold text-white mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
-                  関連する比較
+                  次に読まれることが多い比較
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {related.map((p) => {
@@ -256,6 +265,57 @@ export default async function ComparePage({ params }: Props) {
                           <span style={{ color: fB.color }}>{fB.shortName}</span>
                         </span>
                         <span className="text-xs text-zinc-500">{p.relatedDescription}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* ── 他の人気シミュレーション ──────────────────────────── */}
+          {(() => {
+            const involved = new Set([page.fundAId, page.fundBId]);
+            const simLinks = YEAR_PAGES.filter((yp) => involved.has(yp.fundId)).slice(0, 4);
+            if (simLinks.length === 0) return null;
+            return (
+              <section>
+                <h2
+                  className="text-base font-bold text-white mb-4"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  他の人気シミュレーション
+                </h2>
+                <div className="grid grid-cols-1 gap-2">
+                  {simLinks.map((yp) => {
+                    const f = FUNDS[yp.fundId];
+                    const r = simulate({
+                      fundId: yp.fundId,
+                      startYear: yp.year,
+                      startMonth: yp.simMonth,
+                      monthlyAmount: yp.simAmount,
+                    });
+                    return (
+                      <Link
+                        key={`${yp.fundSlug}-${yp.year}`}
+                        href={`/${yp.fundSlug}/${yp.year}`}
+                        className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span
+                            className="h-2 w-2 rounded-full flex-shrink-0"
+                            style={{ background: f.color }}
+                          />
+                          <span className="text-sm text-zinc-300">
+                            {yp.year}年から{f.encyclopedia.nickname}を積み立てていたら
+                          </span>
+                        </div>
+                        <span
+                          className="text-xs font-bold font-number flex-shrink-0"
+                          style={{ color: r.profit >= 0 ? "#10b981" : "#ef4444" }}
+                        >
+                          {r.profit >= 0 ? "+" : ""}{r.returnRate.toFixed(1)}%
+                        </span>
                       </Link>
                     );
                   })}

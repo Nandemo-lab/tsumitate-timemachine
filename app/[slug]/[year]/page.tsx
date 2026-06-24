@@ -92,6 +92,11 @@ export default async function YearPage({ params }: Props) {
     .map((s) => getComparePage(s))
     .filter(Boolean) as NonNullable<ReturnType<typeof getComparePage>>[];
 
+  // 同じ年・他銘柄のクロスリンク
+  const crossFundPages = YEAR_PAGES.filter(
+    (yp) => yp.year === page.year && yp.fundSlug !== page.fundSlug
+  );
+
   // 関連銘柄ページ（/fund/[slug]）
   const relatedFunds = page.relatedFundSlugs
     .map((s) => {
@@ -435,6 +440,52 @@ export default async function YearPage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {/* ── 他の人気シミュレーション（同年・他銘柄） ─────────── */}
+          {crossFundPages.length > 0 && (
+            <section>
+              <h2
+                className="text-base font-bold text-white mb-4"
+                style={{ fontFamily: "var(--font-serif-jp), serif" }}
+              >
+                {page.year}年から他の銘柄を積み立てていたら？
+              </h2>
+              <div className="grid grid-cols-1 gap-2">
+                {crossFundPages.map((yp) => {
+                  const f = FUNDS[yp.fundId];
+                  const r = simulate({
+                    fundId: yp.fundId,
+                    startYear: yp.year,
+                    startMonth: yp.simMonth,
+                    monthlyAmount: yp.simAmount,
+                  });
+                  return (
+                    <Link
+                      key={yp.fundSlug}
+                      href={`/${yp.fundSlug}/${yp.year}`}
+                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="h-2 w-2 rounded-full flex-shrink-0"
+                          style={{ background: f.color }}
+                        />
+                        <span className="text-sm text-zinc-300">
+                          {yp.year}年から{f.encyclopedia.nickname}を積み立てていたら
+                        </span>
+                      </div>
+                      <span
+                        className="text-xs font-bold font-number flex-shrink-0"
+                        style={{ color: r.profit >= 0 ? "#10b981" : "#ef4444" }}
+                      >
+                        {r.profit >= 0 ? "+" : ""}{r.returnRate.toFixed(1)}%
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
         </div>
         <SiteFooter />
