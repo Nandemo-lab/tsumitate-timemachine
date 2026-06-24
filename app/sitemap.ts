@@ -61,12 +61,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  // 年別総合ランキングページ（/from/[year]）
+  const fromYearPages: MetadataRoute.Sitemap = [2019, 2020, 2021, 2022, 2023, 2024].map((y) => ({
+    url: `${BASE_URL}/from/${y}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
   return [
     ...staticPages,
     ...fundLandingPages,
     ...fundArticlePages,
     ...yearArticlePages,
     ...comparePages,
+    ...fromYearPages,
     ...simPages,
   ];
 }

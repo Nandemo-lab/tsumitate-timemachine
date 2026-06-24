@@ -72,7 +72,7 @@ export const FUND_PAGES: FundPage[] = [
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
-    relatedCompareSlugs: ["orukan-vs-sp500", "sp500-vs-nasdaq100"],
+    relatedCompareSlugs: ["orukan-vs-sp500", "sp500-vs-nasdaq100", "vti-vs-sp500", "schd-vs-sp500"],
     relatedFundSlugs: ["orukan", "nasdaq100", "vti"],
     faqs: [
       {
@@ -152,7 +152,7 @@ export const FUND_PAGES: FundPage[] = [
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
-    relatedCompareSlugs: ["schd-vs-vym"],
+    relatedCompareSlugs: ["schd-vs-vym", "schd-vs-sp500"],
     relatedFundSlugs: ["vym", "sp500", "orukan"],
     faqs: [
       {
@@ -232,7 +232,7 @@ export const FUND_PAGES: FundPage[] = [
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
-    relatedCompareSlugs: ["vti-vs-orukan"],
+    relatedCompareSlugs: ["vti-vs-orukan", "vti-vs-sp500"],
     relatedFundSlugs: ["sp500", "orukan", "nasdaq100"],
     faqs: [
       {
