@@ -297,12 +297,6 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                 whileTap={{ scale: 0.99 }}
               >
                 <div className="flex items-center gap-3">
-                  <div
-                    className="h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
-                    style={{ background: `${fund.color}20` }}
-                  >
-                    {FUND_CATEGORIES[fund.category].emoji}
-                  </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
