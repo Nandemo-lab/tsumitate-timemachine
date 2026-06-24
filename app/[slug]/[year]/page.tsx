@@ -9,10 +9,11 @@ import {
   Home,
 } from "lucide-react";
 import { getYearPage, YEAR_PAGES } from "@/lib/year-pages";
-import { getComparePage } from "@/lib/compare-pages";
+import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
@@ -92,10 +93,30 @@ export default async function YearPage({ params }: Props) {
     .map((s) => getComparePage(s))
     .filter(Boolean) as NonNullable<ReturnType<typeof getComparePage>>[];
 
-  // 同じ年・他銘柄のクロスリンク
+  // 比較ページ検索（2銘柄IDから）
+  const findCompareSlug = (a: FundId, b: FundId): string | null => {
+    const cp = COMPARE_PAGES.find(
+      (p) => (p.fundAId === a && p.fundBId === b) || (p.fundAId === b && p.fundBId === a)
+    );
+    return cp ? cp.slug : null;
+  };
+
+  // 同じ年・他銘柄のクロスリンク（リターン率降順・上位5件）
   const crossFundPages = YEAR_PAGES.filter(
     (yp) => yp.year === page.year && yp.fundSlug !== page.fundSlug
-  );
+  )
+    .map((yp) => ({
+      yp,
+      result: simulate({
+        fundId: yp.fundId,
+        startYear: yp.year,
+        startMonth: yp.simMonth,
+        monthlyAmount: yp.simAmount,
+      }),
+      compareSlug: findCompareSlug(page.fundId, yp.fundId),
+    }))
+    .sort((a, b) => b.result.returnRate - a.result.returnRate)
+    .slice(0, 5);
 
   // 関連銘柄ページ（/fund/[slug]）
   const relatedFunds = page.relatedFundSlugs
@@ -451,41 +472,85 @@ export default async function YearPage({ params }: Props) {
                 {page.year}年から他の銘柄を積み立てていたら？
               </h2>
               <div className="grid grid-cols-1 gap-2">
-                {crossFundPages.map((yp) => {
+                {crossFundPages.map(({ yp, result: r, compareSlug }, i) => {
                   const f = FUNDS[yp.fundId];
-                  const r = simulate({
-                    fundId: yp.fundId,
-                    startYear: yp.year,
-                    startMonth: yp.simMonth,
-                    monthlyAmount: yp.simAmount,
-                  });
+                  const MEDALS = ["🥇", "🥈", "🥉"];
+                  const medal = MEDALS[i] ?? null;
                   return (
-                    <Link
+                    <div
                       key={yp.fundSlug}
-                      href={`/${yp.fundSlug}/${yp.year}`}
-                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
                     >
-                      <div className="flex items-center gap-3">
+                      <Link
+                        href={`/${yp.fundSlug}/${yp.year}`}
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.04] transition-colors"
+                      >
+                        {medal ? (
+                          <span className="text-sm w-5 text-center flex-shrink-0">{medal}</span>
+                        ) : (
+                          <span className="text-xs text-zinc-500 w-5 text-center flex-shrink-0">{i + 1}</span>
+                        )}
                         <span
                           className="h-2 w-2 rounded-full flex-shrink-0"
                           style={{ background: f.color }}
                         />
-                        <span className="text-sm text-zinc-300">
-                          {yp.year}年から{f.encyclopedia.nickname}を積み立てていたら
+                        <span className="text-sm text-zinc-300 flex-1 min-w-0">
+                          {f.encyclopedia.nickname}
                         </span>
-                      </div>
-                      <span
-                        className="text-xs font-bold font-number flex-shrink-0"
-                        style={{ color: r.profit >= 0 ? "#10b981" : "#ef4444" }}
-                      >
-                        {r.profit >= 0 ? "+" : ""}{r.returnRate.toFixed(1)}%
-                      </span>
-                    </Link>
+                        <span
+                          className="text-sm font-bold font-number flex-shrink-0"
+                          style={{ color: r.profit >= 0 ? "#10b981" : "#ef4444" }}
+                        >
+                          {r.profit >= 0 ? "+" : ""}{r.returnRate.toFixed(1)}%
+                        </span>
+                      </Link>
+                      {compareSlug && (
+                        <div className="border-t border-white/[0.06] px-4 py-2">
+                          <Link
+                            href={`/compare/${compareSlug}`}
+                            className="flex items-center justify-end gap-1 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors"
+                          >
+                            {enc.nickname} vs {f.encyclopedia.nickname}を比較する
+                            <ArrowRight className="h-3 w-3" />
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
             </section>
           )}
+
+          {/* ── 人気ページ ──────────────────────────────────────────── */}
+          <section>
+            <h2
+              className="text-base font-bold text-white mb-4"
+              style={{ fontFamily: "var(--font-serif-jp), serif" }}
+            >
+              人気ページ
+            </h2>
+            <div className="grid grid-cols-1 gap-2">
+              {[
+                { label: "オルカンとは？",           href: "/fund/orukan" },
+                { label: "S&P500とは？",             href: "/fund/sp500" },
+                { label: "NASDAQ100とは？",           href: "/fund/nasdaq100" },
+                { label: "オルカン vs S&P500",       href: "/compare/orukan-vs-sp500" },
+                { label: "S&P500 vs NASDAQ100",      href: "/compare/sp500-vs-nasdaq100" },
+                { label: "2020年からオルカン",        href: "/orukan/2020" },
+                { label: "2020年からS&P500",         href: "/sp500/2020" },
+              ].map(({ label, href }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-2.5 text-sm text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.06] transition-colors"
+                >
+                  {label}
+                  <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />
+                </Link>
+              ))}
+            </div>
+          </section>
 
         </div>
         <SiteFooter />
