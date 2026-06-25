@@ -104,8 +104,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       siteName: "積立タイムマシン",
       locale: "ja_JP",
+      images: [
+        {
+          url: `${BASE_URL}/api/og?fund=sp500&year=${year}&amount=30000`,
+          width: 1200,
+          height: 630,
+          alt: `${year}年から積み立てていたら？全銘柄リターン比較`,
+        },
+      ],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${BASE_URL}/api/og?fund=sp500&year=${year}&amount=30000`],
+    },
   };
 }
 

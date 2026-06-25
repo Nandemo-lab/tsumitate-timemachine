@@ -7,6 +7,8 @@ import {
   ArrowRight,
   Calendar,
   Home,
+  Wallet,
+  BookOpen,
 } from "lucide-react";
 import { getYearPage, YEAR_PAGES } from "@/lib/year-pages";
 import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
@@ -15,6 +17,7 @@ import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { MONTHLY_AMOUNTS } from "@/lib/monthly-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 
@@ -521,6 +524,65 @@ export default async function YearPage({ params }: Props) {
               </div>
             </section>
           )}
+
+          {/* ── 月額別シミュレーション ────────────────────────────── */}
+          {["orukan", "sp500", "nasdaq100"].includes(slug) && (
+            <section>
+              <div className="flex items-center gap-2 mb-4">
+                <Wallet className="h-4 w-4 text-violet-400" />
+                <h2
+                  className="text-base font-bold text-white"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  月額別シミュレーション
+                </h2>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {MONTHLY_AMOUNTS.map((amt) => {
+                  const label = amt >= 10000 ? `月${amt / 10000}万円` : `月${amt}円`;
+                  return (
+                    <Link
+                      key={amt}
+                      href={`/${slug}/monthly/${amt}`}
+                      className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-3 py-2.5 hover:bg-white/[0.06] transition-colors"
+                    >
+                      <span className="text-sm text-zinc-300">{label}</span>
+                      <ChevronRight className="h-3 w-3 text-zinc-500" />
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* ── 関連ガイド ────────────────────────────────────────── */}
+          <section>
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen className="h-4 w-4 text-indigo-400" />
+              <h2
+                className="text-base font-bold text-white"
+                style={{ fontFamily: "var(--font-serif-jp), serif" }}
+              >
+                投資ガイド
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 gap-2">
+              {[
+                { label: "新NISAのおすすめ積立先は？",  href: "/guide/nisa-beginner" },
+                { label: "インデックス投資とは？",       href: "/guide/index-investing" },
+                { label: "ドルコスト平均法とは？",       href: "/guide/dollar-cost-averaging" },
+              ].map(({ label, href }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-2.5 hover:bg-white/[0.06] transition-colors"
+                >
+                  <span className="text-sm text-zinc-400">{label}</span>
+                  <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
+                </Link>
+              ))}
+            </div>
+          </section>
 
           {/* ── 人気ページ ──────────────────────────────────────────── */}
           <section>

@@ -5,10 +5,11 @@ import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags, FUND_SHORT_DESC } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3, BarChart2 } from "lucide-react";
+import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3, BarChart2, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { MainTab } from "@/components/layout/BottomNav";
+import SiteFooter from "@/components/layout/SiteFooter";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
   { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "2020年のコロナショック直後に始めていたら" },
@@ -231,6 +232,54 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </motion.button>
       </motion.section>
 
+      {/* ── 積立開始年ランキング ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.25 }}
+        className="px-4 space-y-3"
+      >
+        <div>
+          <div className="flex items-center gap-2 mb-0.5">
+            <TrendingUp className="h-4 w-4 text-emerald-400" />
+            <p className="font-heading text-sm font-semibold text-white">積立開始年ランキング</p>
+          </div>
+          <p className="text-[11px] text-zinc-500 pl-6">何年から始めた人が一番増えた？</p>
+        </div>
+
+        <div
+          className="flex gap-3 overflow-x-auto pb-1"
+          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+        >
+          {[
+            { year: 2020, label: "コロナ後の絶好機", color: "#10b981" },
+            { year: 2021, label: "相場回復局面から", color: "#3b82f6" },
+            { year: 2022, label: "下落相場を経験",   color: "#f59e0b" },
+            { year: 2023, label: "AIブーム期から",   color: "#8b5cf6" },
+            { year: 2024, label: "新NISA元年",       color: "#ec4899" },
+          ].map(({ year, label, color }) => (
+            <Link
+              key={year}
+              href={`/from/${year}`}
+              className="flex-shrink-0 w-36 rounded-2xl border border-white/[0.08] p-4 space-y-2 hover:bg-white/[0.06] transition-colors"
+              style={{ background: "rgba(255,255,255,0.03)" }}
+            >
+              <span
+                className="text-[10px] font-black px-2 py-0.5 rounded inline-block"
+                style={{ background: `${color}20`, color }}
+              >
+                {year}年〜
+              </span>
+              <p className="text-sm font-bold text-white leading-snug">{year}年から<br />積み立てたら</p>
+              <p className="text-[11px] text-zinc-500 leading-snug">{label}</p>
+              <p className="text-[10px] font-bold text-zinc-400 flex items-center gap-1">
+                詳細を見る <ChevronRight className="h-3 w-3" />
+              </p>
+            </Link>
+          ))}
+        </div>
+      </motion.section>
+
       {/* ── 初心者向けランキング ── */}
       <motion.section
         initial={{ opacity: 0, y: 16 }}
@@ -349,6 +398,40 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         2015年以降の実績データを使用したシミュレーションです。手数料・税金は考慮していません。
       </p>
 
+      {/* ── 人気ガイド ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.33 }}
+        className="px-4 space-y-3"
+      >
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-4 w-4 text-indigo-400" />
+          <p className="font-heading text-sm font-semibold text-white">投資ガイド</p>
+        </div>
+        <div className="grid grid-cols-1 gap-2">
+          {[
+            { label: "新NISAのおすすめ積立先は？",   href: "/guide/nisa-beginner",         sub: "オルカン・S&P500・NASDAQ100を比較" },
+            { label: "インデックス投資とは？",        href: "/guide/index-investing",        sub: "仕組み・メリット・実績を解説" },
+            { label: "ドルコスト平均法とは？",        href: "/guide/dollar-cost-averaging",  sub: "定額積立が最強の理由" },
+            { label: "積立投資の始め方",              href: "/guide/how-to-start",           sub: "NISAで今日からスタートする手順" },
+            { label: "老後資金シミュレーション",      href: "/guide/retirement-investing",   sub: "30代・40代の積立プラン" },
+          ].map(({ label, href, sub }) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 hover:bg-white/[0.06] transition-colors"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white">{label}</p>
+                <p className="text-[11px] text-zinc-500 mt-0.5">{sub}</p>
+              </div>
+              <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+            </Link>
+          ))}
+        </div>
+      </motion.section>
+
       {/* ── 人気比較ランキング ── */}
       <motion.section
         initial={{ opacity: 0, y: 16 }}
@@ -384,27 +467,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </div>
       </motion.section>
 
-      {/* ── フッターリンク ── */}
-      <div className="px-4 pt-1 pb-2 border-t border-white/[0.06]">
-        <nav className="flex items-center justify-center gap-5 flex-wrap mb-2">
-          {[
-            { href: "/terms",   label: "利用規約" },
-            { href: "/privacy", label: "プライバシーポリシー" },
-            { href: "/contact", label: "お問い合わせ" },
-          ].map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors"
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-        <p className="text-center text-[10px] text-zinc-600">
-          © 2025 積立タイムマシン
-        </p>
-      </div>
+      <SiteFooter />
     </div>
   );
 }

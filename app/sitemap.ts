@@ -4,6 +4,9 @@ import { FUND_SEO_PAGES } from "@/lib/fund-seo";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
 import { YEAR_PAGES } from "@/lib/year-pages";
+import { MONTHLY_PAGES } from "@/lib/monthly-pages";
+import { GUIDE_PAGES } from "@/lib/guide-pages";
+import { RANKING_CATEGORY_SLUGS } from "@/lib/ranking-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 const YEARS = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
@@ -69,6 +72,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
+  // 月額別シミュレーションページ（/[slug]/monthly/[amount]）
+  const monthlyAmountPages: MetadataRoute.Sitemap = MONTHLY_PAGES.map((p) => ({
+    url: `${BASE_URL}/${p.fundSlug}/monthly/${p.amount}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
+  // ランキングページ（/ranking, /ranking/[category]）
+  const rankingPages: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/ranking`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
+    ...RANKING_CATEGORY_SLUGS.map((s) => ({
+      url: `${BASE_URL}/ranking/${s}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    })),
+  ];
+
+  // 目的別ガイドページ（/guide/[slug]）
+  const guideArticlePages: MetadataRoute.Sitemap = GUIDE_PAGES.map((p) => ({
+    url: `${BASE_URL}/guide/${p.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.9,
+  }));
+
   return [
     ...staticPages,
     ...fundLandingPages,
@@ -76,6 +106,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...yearArticlePages,
     ...comparePages,
     ...fromYearPages,
+    ...monthlyAmountPages,
+    ...guideArticlePages,
+    ...rankingPages,
     ...simPages,
   ];
 }
