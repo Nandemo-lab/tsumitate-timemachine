@@ -191,6 +191,125 @@ function parseCsv(text: string): Map<string, ScRow> {
   return map;
 }
 
+// ── TOP5 生成 ─────────────────────────────────────────────────────────
+
+interface Top5Item {
+  rank: number;
+  path: string;
+  pageType: string;
+  stars: number;
+  primaryReason: string;
+  action: string;
+  effect: string;
+  specific: string;
+  sc?: ScRow;
+}
+
+type EnrichedPage = PageSeoData & {
+  sc?: ScRow;
+  score: ScoreResult;
+  tLen: number;
+  dLen: number;
+  hasTitleIssue: boolean;
+  hasDescIssue: boolean;
+};
+
+function generateTop5(enriched: EnrichedPage[]): Top5Item[] {
+  // SC あり → score×impressions 降順、なければ score のみ
+  const sorted = [...enriched].sort((a, b) => {
+    const sd = b.score.stars - a.score.stars;
+    if (sd !== 0) return sd;
+    return (b.sc?.impressions ?? 0) - (a.sc?.impressions ?? 0);
+  });
+
+  const items: Top5Item[] = [];
+
+  for (const p of sorted) {
+    if (items.length >= 5) break;
+
+    const { sc, score, tLen, dLen, hasTitleIssue, hasDescIssue } = p;
+    const missingCats = ALL_LINK_CATEGORIES.filter(c => !p.internalLinkCategories.includes(c));
+    let action = "";
+    let effect = "";
+    let specific = "";
+
+    // 最優先: 高表示×低CTR
+    if (sc && sc.impressions > 100 && sc.ctr < 0.02) {
+      const addClicks = Math.round(sc.impressions * (0.03 - sc.ctr));
+      action = "タイトルを見直してCTRを改善する";
+      effect = `CTR ${(sc.ctr * 100).toFixed(1)}% → 目標3%で月+${addClicks}クリック増（推定）`;
+      specific = p.suggestedTitle
+        ? `変更候補: 「${p.suggestedTitle}」（${p.suggestedTitle.length}字）`
+        : "検索意図に合ったキーワードをtitleに追加する";
+    }
+    // 順位11〜20位 → 内部リンク強化
+    else if (sc && sc.position >= 11 && sc.position <= 20) {
+      action = "内部リンクを強化して検索順位をトップ10に押し上げる";
+      effect = `順位${sc.position.toFixed(1)}位 → 10位以内でクリック数3〜5倍が見込める`;
+      specific = missingCats.length > 0
+        ? `「${missingCats.slice(0, 2).join("」「")}」ページからの内部リンクを追加する`
+        : "関連する人気ページからのアンカーテキストを最適化する";
+    }
+    // 高表示・低クリック → descriptionも見直し
+    else if (sc && sc.impressions > 500 && sc.clicks < 10) {
+      action = "descriptionに行動喚起を追加してクリックを促す";
+      effect = `表示${sc.impressions.toLocaleString()}回あるのにクリック${sc.clicks}回 → desc改善でCTR1〜2%改善が見込める`;
+      specific = p.suggestedDescription
+        ? `変更候補: 「${p.suggestedDescription.slice(0, 60)}…」`
+        : "「今すぐ確認→」などの行動喚起フレーズを末尾に追加する";
+    }
+    // title文字数問題
+    else if (hasTitleIssue) {
+      action = tLen < 30
+        ? "titleが短すぎるため検索キーワードを追加する"
+        : "titleが長すぎるため32〜40字に圧縮する";
+      effect = "検索結果でのタイトル表示が改善しCTR向上が期待できる";
+      specific = p.suggestedTitle
+        ? `変更候補: 「${p.suggestedTitle}」（${p.suggestedTitle.length}字）`
+        : tLen < 30
+        ? "ファンド名 + 積立年 + 「評価額」などのキーワードを追加する"
+        : "冗長な修飾語を削ってコアキーワードだけ残す";
+    }
+    // description文字数問題
+    else if (hasDescIssue) {
+      action = dLen < 80
+        ? "descriptionを80〜140字に拡充する"
+        : "descriptionを170字以内に圧縮する";
+      effect = "Googleスニペット表示が改善しCTR向上が期待できる";
+      specific = p.suggestedDescription
+        ? `変更候補: 「${p.suggestedDescription.slice(0, 60)}…」（${p.suggestedDescription.length}字）`
+        : dLen < 80
+        ? "実績数値・メリット・行動喚起を追加する"
+        : "重複表現を削り「今すぐ確認→」で締める";
+    }
+    // 内部リンク不足
+    else if (missingCats.length > 0) {
+      action = `不足している内部リンクカテゴリを追加する`;
+      effect = "ページ間の回遊率向上とクロール頻度改善が期待できる";
+      specific = `「${missingCats.join("」「")}」への内部リンクが未設置 → 関連ページへのリンクを追加する`;
+    }
+    else {
+      action = "OGP画像を追加してSNS流入を強化する";
+      effect = "SNSシェア時のクリック率が大幅に改善できる";
+      specific = "/api/og エンドポイントを使ったOGP画像を設定する";
+    }
+
+    items.push({
+      rank: items.length + 1,
+      path: p.path,
+      pageType: p.pageType,
+      stars: score.stars,
+      primaryReason: score.reasons[0],
+      action,
+      effect,
+      specific,
+      sc,
+    });
+  }
+
+  return items;
+}
+
 // ── Constants ─────────────────────────────────────────────────────────
 
 const PAGE_TYPE_COLORS: Record<string, string> = {
@@ -235,6 +354,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [notes, setNotes] = useState<Record<string, string>>({});
+  const [showTop5, setShowTop5] = useState(false);
 
   // ⑩ 修正メモ: localStorage
   useEffect(() => {
@@ -262,6 +382,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
       setScData(map);
       setShowCsv(false);
       setCsvText("");
+      setShowTop5(true);
     } catch (e) {
       setCsvError(String(e));
     }
@@ -282,6 +403,9 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
     const hasDescIssue = dLen < 80 || dLen > 170;
     return { ...p, sc, score, tLen, dLen, hasTitleIssue, hasDescIssue };
   }), [pages, scData]);
+
+  // TOP5
+  const top5Items = useMemo(() => generateTop5(enriched), [enriched]);
 
   // ⑨ ダッシュボード統計
   const stats = useMemo(() => {
@@ -384,19 +508,39 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
     <div className="min-h-screen bg-zinc-950 text-zinc-100 text-xs font-sans">
 
       {/* ── Sticky Header ────────────────────────────────────────────── */}
-      <div className="sticky top-0 z-30 border-b border-white/[0.08] bg-zinc-950/95 backdrop-blur px-4 py-3">
-        <div className="max-w-screen-2xl mx-auto flex flex-wrap items-center gap-3">
+      <div className="sticky top-0 z-30 border-b border-white/[0.08] bg-zinc-950/95 backdrop-blur px-4 py-2.5">
+        {/* Row 1: タイトル + ボタン群 */}
+        <div className="max-w-screen-2xl mx-auto flex items-center gap-2 flex-wrap">
           <div className="flex-1 min-w-0">
-            <h1 className="text-sm font-bold text-white tracking-tight">SEO管理ダッシュボード</h1>
-            <p className="text-[10px] text-zinc-500 mt-0.5">積立タイムマシン · {stats.totalPages} ページ</p>
+            <h1 className="text-[13px] font-bold text-white tracking-tight whitespace-nowrap">SEO管理ダッシュボード</h1>
+            <p className="text-[10px] text-zinc-500">積立タイムマシン · {stats.totalPages} ページ</p>
           </div>
 
-          {/* タブ */}
-          <div className="flex gap-1 bg-zinc-900 border border-white/[0.08] rounded-lg p-1">
+          {hasSc && (
+            <button
+              onClick={() => setShowTop5(v => !v)}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-colors flex items-center gap-1 shrink-0 ${showTop5 ? "bg-amber-600/30 border border-amber-500/40 text-amber-200" : "bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 text-white"}`}
+            >
+              <span>✦</span>
+              <span className="hidden sm:inline">{showTop5 ? "TOP5を閉じる" : "今週のTOP5を生成"}</span>
+              <span className="sm:hidden">{showTop5 ? "閉じる" : "TOP5"}</span>
+            </button>
+          )}
+          <button
+            onClick={() => setShowCsv(v => !v)}
+            className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-colors shrink-0 ${showCsv ? "bg-zinc-700 text-zinc-300" : "bg-violet-600 hover:bg-violet-500 text-white"}`}
+          >
+            {showCsv ? "閉じる" : hasSc ? `SC済(${scData.size})` : "SC CSV"}
+          </button>
+        </div>
+
+        {/* Row 2: タブ */}
+        <div className="max-w-screen-2xl mx-auto mt-2">
+          <div className="flex gap-1 bg-zinc-900 border border-white/[0.08] rounded-lg p-1 w-fit">
             {([
               { id: "list" as Tab, label: "ページ一覧" },
-              { id: "duplicate" as Tab, label: `重複監査 ${duplicates.dupTitles.length + duplicates.dupDescs.length > 0 ? `(${duplicates.dupTitles.length + duplicates.dupDescs.length})` : ""}` },
-              { id: "notes" as Tab, label: `修正メモ ${Object.keys(notes).length > 0 ? `(${Object.keys(notes).length})` : ""}` },
+              { id: "duplicate" as Tab, label: `重複監査${duplicates.dupTitles.length + duplicates.dupDescs.length > 0 ? `(${duplicates.dupTitles.length + duplicates.dupDescs.length})` : ""}` },
+              { id: "notes" as Tab, label: `修正メモ${Object.keys(notes).length > 0 ? `(${Object.keys(notes).length})` : ""}` },
             ] as { id: Tab; label: string }[]).map(t => (
               <button
                 key={t.id}
@@ -408,12 +552,6 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
             ))}
           </div>
 
-          <button
-            onClick={() => setShowCsv(v => !v)}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors ${showCsv ? "bg-zinc-700 text-zinc-300" : "bg-violet-600 hover:bg-violet-500 text-white"}`}
-          >
-            {showCsv ? "閉じる" : hasSc ? `SC連携済 (${scData.size}件)` : "SC CSVを読み込む"}
-          </button>
         </div>
       </div>
 
@@ -456,6 +594,99 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                 読み込む
               </button>
               <span className="text-[10px] text-zinc-600">データはブラウザのみに保存。サーバーには送信しません。</span>
+            </div>
+          </div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════
+            TOP5 パネル
+        ════════════════════════════════════════════════════════ */}
+        {showTop5 && (
+          <div className="rounded-2xl bg-zinc-900 border border-violet-500/25 overflow-hidden">
+            {/* ヘッダー */}
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.06] bg-gradient-to-r from-violet-950/60 to-fuchsia-950/60">
+              <div className="h-7 w-7 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-[11px] font-black text-white flex-shrink-0">
+                AI
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-white">今週やるべきSEO改善 TOP5</p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">
+                  {new Date().toLocaleDateString("ja-JP")} · CTR・順位・表示回数・文字数・内部リンクを総合評価
+                </p>
+              </div>
+              <button onClick={() => setShowTop5(false)} className="text-zinc-600 hover:text-zinc-400 text-lg leading-none px-1">×</button>
+            </div>
+
+            {/* 本文 */}
+            <div className="px-5 py-4 space-y-0">
+              {top5Items.length === 0 && (
+                <p className="text-zinc-500 text-xs py-4">改善対象のページが見つかりませんでした。全ページが良好な状態です。</p>
+              )}
+              {top5Items.map((item, idx) => (
+                <div key={item.path} className={`py-4 ${idx < top5Items.length - 1 ? "border-b border-white/[0.05]" : ""}`}>
+                  {/* ランク行 */}
+                  <div className="flex items-center gap-2 mb-2 flex-wrap">
+                    <span className={`text-sm font-black ${item.rank === 1 ? "text-amber-400" : item.rank === 2 ? "text-zinc-300" : item.rank === 3 ? "text-orange-400" : "text-zinc-500"}`}>
+                      #{item.rank}
+                    </span>
+                    <Stars count={item.stars} size="small" />
+                    <a
+                      href={`${baseUrl}${item.path}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[10px] text-violet-400 hover:text-violet-300 hover:underline"
+                    >
+                      {item.path}
+                    </a>
+                    <span className={`px-1.5 py-px rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[item.pageType] ?? "bg-white/[0.06] text-zinc-400"}`}>
+                      {item.pageType}
+                    </span>
+                    {item.sc && (
+                      <span className="text-[10px] text-zinc-600 ml-auto whitespace-nowrap">
+                        表示 {item.sc.impressions.toLocaleString()} · CTR <span className={ctrColor(item.sc.ctr)}>{ctrFmt(item.sc.ctr)}</span> · <span className={posColor(item.sc.position)}>{item.sc.position.toFixed(1)}位</span>
+                      </span>
+                    )}
+                  </div>
+
+                  {/* 理由 */}
+                  <p className="text-[11px] text-zinc-500 mb-2 flex items-center gap-1.5">
+                    <span className="text-amber-500">⚠</span>
+                    {item.primaryReason}
+                  </p>
+
+                  {/* アクション・効果・具体案 */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div className="rounded-lg bg-violet-500/10 border border-violet-500/15 px-3 py-2">
+                      <p className="text-[9px] text-violet-400 font-bold uppercase tracking-wider mb-1">やること</p>
+                      <p className="text-[11px] text-violet-100 leading-relaxed">{item.action}</p>
+                    </div>
+                    <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/15 px-3 py-2">
+                      <p className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider mb-1">期待効果</p>
+                      <p className="text-[11px] text-emerald-100 leading-relaxed">{item.effect}</p>
+                    </div>
+                    <div className="rounded-lg bg-zinc-800 border border-white/[0.08] px-3 py-2">
+                      <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider mb-1">具体的な変更案</p>
+                      <p className="text-[11px] text-zinc-300 font-mono leading-relaxed">{item.specific}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* フッター */}
+            <div className="px-5 py-3 border-t border-white/[0.06] bg-zinc-900/80 flex items-center justify-between gap-3">
+              <p className="text-[10px] text-zinc-600">推定値はSCデータに基づきます。実際の効果は検索アルゴリズムにより異なります。</p>
+              <button
+                onClick={() => {
+                  const text = top5Items.map(item =>
+                    `#${item.rank} ${item.path}\nやること: ${item.action}\n期待効果: ${item.effect}\n具体案: ${item.specific}`
+                  ).join("\n\n");
+                  navigator.clipboard.writeText(`今週やるべきSEO改善 TOP5\n${new Date().toLocaleDateString("ja-JP")}\n\n${text}`).catch(() => {});
+                }}
+                className="text-[10px] text-zinc-500 hover:text-zinc-300 whitespace-nowrap transition-colors"
+              >
+                テキストコピー
+              </button>
             </div>
           </div>
         )}
