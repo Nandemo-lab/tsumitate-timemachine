@@ -155,7 +155,7 @@ export default async function ComparePage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              スペック比較表
+              {fundA.shortName} vs {fundB.shortName} スペック比較表
             </h2>
             <div className="rounded-xl border border-white/[0.08] overflow-hidden">
               {/* ヘッダー */}
@@ -214,7 +214,7 @@ export default async function ComparePage({ params }: Props) {
               className="text-base font-bold text-white mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              よくある質問
+              {fundA.shortName}と{fundB.shortName}のよくある質問
             </h2>
             <div className="space-y-4">
               {page.faqs.map((faq, i) => (

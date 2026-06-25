@@ -183,16 +183,34 @@ const YEARS = [2020, 2021, 2022, 2023, 2024];
 
 // ── フラット配列の生成 ────────────────────────────────────────────────
 
+const YEAR_LABEL: Record<number, string> = {
+  2020: "コロナ直後",
+  2021: "コロナ回復相場",
+  2022: "暴落スタート",
+  2023: "AIブーム",
+  2024: "新NISA元年",
+};
+
+const YEAR_DESC_PREFIX: Record<number, string> = {
+  2020: "コロナショック直後の",
+  2021: "コロナ後の回復相場が続いた",
+  2022: "株価暴落が続いた",
+  2023: "生成AIブームに沸いた",
+  2024: "新NISA元年の",
+};
+
 export const YEAR_PAGES: YearPage[] = Object.entries(FUND_YEAR_CONFIG).flatMap(
   ([fundSlug, config]) =>
     YEARS.map((year) => {
       const fundName = FUND_DISPLAY_NAMES[fundSlug];
+      const label = YEAR_LABEL[year] ?? String(year);
+      const prefix = YEAR_DESC_PREFIX[year] ?? `${year}年から`;
       return {
         fundSlug,
         fundId: config.fundId,
         year,
-        metaTitle: `${year}年から${fundName}を積み立てていたら？利益・評価額をシミュレーション`,
-        metaDescription: `${year}年1月から毎月3万円を${fundName}に積み立てていた場合の利益・評価額・リターンをシミュレーション。新NISAの参考に過去実績を確認できます。`,
+        metaTitle: `${year}年（${label}）から${fundName}積立→今いくら？過去実績シミュレーション`,
+        metaDescription: `${prefix}${year}年から${fundName}を月3万円積み立てた場合の現在の評価額・利益・リターンを実データで公開。今すぐ確認→`,
         yearContext: YEAR_CONTEXT[year],
         simMonth: 1,
         simAmount: 30000,

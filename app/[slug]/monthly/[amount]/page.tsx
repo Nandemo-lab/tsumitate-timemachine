@@ -374,7 +374,7 @@ export default async function MonthlyAmountPage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {enc.nickname}を年別で見る
+              {enc.nickname}を積立開始年別でシミュレーション
             </h2>
             <div className="grid grid-cols-1 gap-2">
               {page.yearLinks.map((y) => {

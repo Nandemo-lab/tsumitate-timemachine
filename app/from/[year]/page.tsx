@@ -87,12 +87,32 @@ export function generateStaticParams() {
   return SUPPORTED_YEARS.map((y) => ({ year: String(y) }));
 }
 
+const FROM_YEAR_LABEL: Record<number, string> = {
+  2019: "コロナ前夜",
+  2020: "コロナ直後",
+  2021: "コロナ回復",
+  2022: "暴落スタート",
+  2023: "AIブーム",
+  2024: "新NISA元年",
+};
+
+const FROM_YEAR_DESC_PREFIX: Record<number, string> = {
+  2019: "コロナ前夜の",
+  2020: "コロナショック直後の",
+  2021: "コロナ後の回復相場が続いた",
+  2022: "株価暴落が続いた",
+  2023: "生成AIブームに沸いた",
+  2024: "新NISA元年の",
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { year } = await params;
   const yearNum = Number(year);
   if (!SUPPORTED_YEARS.includes(yearNum)) return {};
-  const title = `${year}年から積み立てていたら？全銘柄リターン比較`;
-  const description = `${year}年1月から毎月3万円を積み立てた場合の全銘柄リターンをランキング形式で比較。オルカン・S&P500・NASDAQ100・高配当ETFなど主要ファンドの積立実績を確認できます。`;
+  const label = FROM_YEAR_LABEL[yearNum] ?? String(yearNum);
+  const prefix = FROM_YEAR_DESC_PREFIX[yearNum] ?? `${year}年から`;
+  const title = `${year}年（${label}）から積み立てていたら？全銘柄リターンランキング`;
+  const description = `${prefix}${year}年から月3万円を全銘柄に積み立てた場合のリターンをランキング形式で公開。オルカン・S&P500・NASDAQ100など主要ファンドの実績を今すぐ確認→`;
   return {
     title: `${title} | 積立タイムマシン`,
     description,
@@ -258,7 +278,7 @@ export default async function FromYearPage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              全銘柄リターンランキング
+              {year}年スタート・全銘柄リターンランキング
             </h2>
             <div className="space-y-2">
               {ranked.map(({ fund, result }, i) => {

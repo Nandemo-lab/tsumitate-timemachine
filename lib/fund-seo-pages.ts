@@ -10,6 +10,7 @@ export interface FundPage {
   fundId: FundId;
   metaTitle: string;
   metaDescription: string;
+  h1?: string;
   /** シミュレーション条件 */
   simYear: number;
   simMonth: number;
@@ -26,9 +27,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "orukan",
     fundId: "orcan",
-    metaTitle: "オルカンとは？メリット・デメリット・新NISAで人気の理由",
+    metaTitle: "オルカン（全世界株式）とは？新NISAで人気の理由・メリット・積立実績",
     metaDescription:
-      "オルカン（eMAXIS Slim 全世界株式）の特徴、メリット、デメリット、信託報酬、過去実績をわかりやすく解説します。新NISAでの活用法も紹介。",
+      "eMAXIS Slim全世界株式（オルカン）の信託報酬・NISA対応・メリット・積立実績を解説。オルカンとS&P500どっちがいいか迷っている方も今すぐ確認→",
+    h1: "オルカンとは？特徴・メリット・新NISAでの活用法",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -66,9 +68,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "sp500",
     fundId: "sp500",
-    metaTitle: "S&P500とは？メリット・デメリット・長期投資の実績を解説",
+    metaTitle: "S&P500とは？過去の積立実績・メリット・オルカンとの違いを解説",
     metaDescription:
-      "S&P500（eMAXIS Slim 米国株式）の特徴、メリット、デメリット、過去リターン実績をわかりやすく解説。新NISAでの始め方も紹介します。",
+      "eMAXIS Slim米国株式（S&P500）の信託報酬・NISA対応・積立実績を解説。2020年から月3万円積み立てた場合の実績も公開→今すぐ確認",
+    h1: "S&P500とは？特徴・メリット・長期積立の実績",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -106,9 +109,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "nasdaq100",
     fundId: "nasdaq100",
-    metaTitle: "NASDAQ100とは？メリット・デメリット・S&P500との違いを解説",
+    metaTitle: "NASDAQ100とは？S&P500との違い・リスク・積立実績を解説",
     metaDescription:
-      "NASDAQ100（iFreeNEXT NASDAQ100）の特徴、メリット、デメリット、S&P500との違いをわかりやすく解説。新NISAでの活用法も紹介します。",
+      "NASDAQ100（eMAXIS Slim/iFreeNEXT）の信託報酬・リスク・積立実績を解説。S&P500との違いも比較→今すぐ確認",
+    h1: "NASDAQ100とは？特徴・S&P500との違い・リスク",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -146,9 +150,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "schd",
     fundId: "schd",
-    metaTitle: "SCHDとは？配当利回り・メリット・VYMとの違いを解説",
+    metaTitle: "楽天SCHDとは？配当利回り・増配実績・VYMとの違いを解説",
     metaDescription:
-      "SCHD（楽天・高配当株式・米国ファンド）の特徴、配当利回り、メリット・デメリット、VYMとの違いをわかりやすく解説します。",
+      "楽天SCHD（楽天・高配当株式・米国ファンド）の配当利回り・増配率・積立実績を解説。VYMとの違いも比較→今すぐ確認",
+    h1: "楽天SCHDとは？配当利回り・特徴・VYMとの比較",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -186,9 +191,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "vym",
     fundId: "vym",
-    metaTitle: "VYMとは？配当利回り・メリット・SCHDとの違いを解説",
+    metaTitle: "VYMとは？配当利回り・積立実績・SCHDとの違いを解説",
     metaDescription:
-      "VYM（バンガード・米国高配当株式ETF）の特徴、配当利回り、メリット・デメリット、SCHDとの違いをわかりやすく解説します。",
+      "VYM（バンガード米国高配当株式ETF）の配当利回り・積立実績・SCHDとの違いを解説。安定配当ETFの特徴を今すぐ確認→",
+    h1: "VYMとは？配当利回り・特徴・SCHDとの比較",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -226,9 +232,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "vti",
     fundId: "vti",
-    metaTitle: "VTIとは？メリット・デメリット・S&P500との違いを解説",
+    metaTitle: "VTIとは？S&P500との違い・楽天VTI・積立実績を解説",
     metaDescription:
-      "VTI（バンガード・トータル・ストック・マーケットETF）の特徴、メリット、デメリット、S&P500・オルカンとの違いをわかりやすく解説します。",
+      "VTI（楽天VTI含む）の経費率・S&P500との違い・積立実績を解説。米国全体に投資するETFの特徴を今すぐ確認→",
+    h1: "VTIとは？特徴・楽天VTI・S&P500との違い",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -266,9 +273,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "fangplus",
     fundId: "fangplus",
-    metaTitle: "FANG+とは？メリット・デメリット・リスクをわかりやすく解説",
+    metaTitle: "FANG+とは？NASDAQ100との違い・リスク・積立実績を解説",
     metaDescription:
-      "FANG+（iFreeNEXT FANG+インデックス）の特徴、メリット、デメリット、NASDAQ100との違いをわかりやすく解説します。ハイリスク・ハイリターンの仕組みも紹介。",
+      "FANG+（iFreeNEXT FANG+）の特徴・リスク・NASDAQ100との違い・積立実績を解説。ハイリスク投資の実績を今すぐ確認→",
+    h1: "FANG+とは？特徴・NASDAQ100との違い・リスク",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,

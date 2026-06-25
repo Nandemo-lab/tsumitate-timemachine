@@ -39,7 +39,7 @@ export const GUIDE_PAGES: GuidePage[] = [
   // ─── 新NISAおすすめ ──────────────────────────────────────────────────────
   {
     slug: "nisa-beginner",
-    metaTitle: "新NISAおすすめ銘柄3選【2024年版】初心者でも安心の積立先",
+    metaTitle: "新NISAおすすめ銘柄3選【最新版】初心者でも安心の積立先",
     metaDescription:
       "新NISAで積み立てるならどの銘柄がおすすめ？オルカン・S&P500・NASDAQ100の特徴とシミュレーション結果を比較。初心者でも分かりやすく解説します。",
     h1: "新NISAのおすすめ積立先は？オルカン・S&P500・NASDAQ100を比較",

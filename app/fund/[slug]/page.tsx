@@ -179,7 +179,7 @@ export default async function FundPage({ params }: Props) {
                   className="text-2xl font-black text-white leading-tight"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
-                  {page.metaTitle.split("｜")[0] ?? `${enc.nickname}とは？`}
+                  {page.h1 ?? page.metaTitle}
                 </h1>
               </div>
             </div>
@@ -212,7 +212,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {enc.nickname}の基本情報
+              {enc.nickname}の基本情報・信託報酬・NISA対応
             </h2>
             <div className="rounded-xl border border-white/[0.08] overflow-hidden">
               {[
@@ -252,7 +252,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {enc.nickname}のメリット
+              {enc.nickname}が選ばれる理由・メリット
             </h2>
             <div className="space-y-2">
               {enc.pros.map((p) => (
@@ -276,7 +276,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {enc.nickname}のデメリット・注意点
+              {enc.nickname}のリスク・デメリット・注意点
             </h2>
             <div className="space-y-2">
               {enc.cons.map((c) => (
@@ -413,7 +413,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              よくある質問
+              {enc.nickname}に関するよくある質問
             </h2>
             <div className="space-y-4">
               {page.faqs.map((faq, i) => (

@@ -34,11 +34,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "orukan-vs-sp500",
     fundAId: "orcan",
     fundBId: "sp500",
-    metaTitle: "オルカンとS&P500はどっち？過去実績・リスク・積立結果を比較",
+    metaTitle: "オルカン vs S&P500 どっちがいい？新NISAで積立実績を徹底比較",
     metaDescription:
-      "オルカンとS&P500を過去実績・リスク・分散性・積立シミュレーションで比較。新NISAでどちらを選ぶべきか分かりやすく解説。",
+      "新NISAで最も人気のオルカンとS&P500を積立実績・リスク・信託報酬で比較。月3万円積み立てた場合の差額も公開→今すぐ確認",
     relatedDescription: "全世界 vs 米国集中を比較",
-    h1: "オルカン vs S&P500｜どちらを選ぶ？徹底比較",
+    h1: "オルカンとS&P500、新NISAで積み立てるならどっちがいい？",
     intro:
       "新NISAで最も人気の2銘柄「オルカン」と「S&P500」。過去の積立実績・リスク・分散性を数字で比べ、あなたに合った選び方を解説します。",
     conclusionA: "分散重視・安心感 → オルカン",
@@ -89,11 +89,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "sp500-vs-nasdaq100",
     fundAId: "sp500",
     fundBId: "nasdaq100",
-    metaTitle: "S&P500とNASDAQ100はどっち？過去実績・リスク・積立結果を比較",
+    metaTitle: "S&P500 vs NASDAQ100 どっちがいい？リスク・リターン・積立実績を比較",
     metaDescription:
-      "S&P500とNASDAQ100を過去実績・リスク・積立シミュレーションで比較。新NISAでどちらを選ぶべきか分かりやすく解説。",
+      "S&P500とNASDAQ100の積立実績・リスク・信託報酬を比較。2022年の暴落でどのくらい差がついた？実データで今すぐ確認→",
     relatedDescription: "安定の500社 vs ハイテク100社",
-    h1: "S&P500 vs NASDAQ100｜どちらを選ぶ？徹底比較",
+    h1: "S&P500とNASDAQ100、リスクとリターンどっちを選ぶ？",
     intro:
       "どちらも米国株に投資する人気インデックス。「安定の500社」か「ハイテク100社」か——過去の積立実績とリスクを数字で比べ、あなたに合った選択肢を解説します。",
     conclusionA: "安定・分散重視 → S&P500",
@@ -144,11 +144,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "vti-vs-orukan",
     fundAId: "vti",
     fundBId: "orcan",
-    metaTitle: "VTIとオルカンはどっち？過去実績・リスク・積立結果を比較",
+    metaTitle: "VTI vs オルカン どっちがいい？ETF vs 投信・積立実績を徹底比較",
     metaDescription:
-      "VTIとオルカンを過去実績・分散性・積立シミュレーションで比較。ETFと投資信託の違いも解説。",
+      "VTI（楽天VTI含む）とオルカンの違い・積立実績・NISA対応を比較。ETFと投資信託どちらが長期積立に向いている？今すぐ確認→",
     relatedDescription: "ETFと投資信託を比較",
-    h1: "VTI vs オルカン｜どちらを選ぶ？徹底比較",
+    h1: "VTIとオルカン、米国集中 vs 全世界どっちがいい？",
     intro:
       "「米国全体に投資するETF」VTIと「全世界に分散する投資信託」オルカン。どちらも長期積立の定番ですが、投資対象・コスト・買い方の違いを数字で解説します。",
     conclusionA: "米国集中・ETF運用 → VTI",
@@ -199,11 +199,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "schd-vs-vym",
     fundAId: "schd",
     fundBId: "vym",
-    metaTitle: "SCHDとVYMはどっち？配当金・過去実績・積立結果を比較",
+    metaTitle: "SCHD vs VYM どっちがいい？配当利回り・増配率・積立実績を比較",
     metaDescription:
-      "人気の高配当ETFであるSCHDとVYMを比較。配当利回り・増配率・積立結果の違いを解説。",
+      "楽天SCHDとVYMの配当利回り・増配率・積立実績を比較。高配当ETFはどちらを選ぶべき？今すぐ確認→",
     relatedDescription: "人気高配当ETFを比較",
-    h1: "SCHD vs VYM｜高配当ETFを徹底比較",
+    h1: "SCHDとVYM、配当投資するならどっちがいい？",
     intro:
       "米国高配当ETFの2大人気銘柄「SCHD」と「VYM」。配当利回り・増配率・資産成長性の違いを過去データで比べ、あなたの配当投資に合った選択肢を解説します。",
     conclusionA: "増配率・トータルリターン重視 → SCHD",
@@ -254,11 +254,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "nasdaq100-vs-fangplus",
     fundAId: "nasdaq100",
     fundBId: "fangplus",
-    metaTitle: "NASDAQ100とFANG+はどっち？過去実績・リスク・積立結果を比較",
+    metaTitle: "NASDAQ100 vs FANG+ どっちがリターン大きい？リスク・実績を比較",
     metaDescription:
-      "NASDAQ100とFANG+を過去実績・値動き・積立シミュレーションで比較。ハイテク投資の違いを解説。",
+      "NASDAQ100とFANG+の積立実績・リスク・信託報酬を比較。ハイテク集中投資の2択を実データで今すぐ確認→",
     relatedDescription: "ハイテク分散 vs 超集中10銘柄",
-    h1: "NASDAQ100 vs FANG+｜ハイテク投資を徹底比較",
+    h1: "NASDAQ100とFANG+、ハイテク投資するならどっちがいい？",
     intro:
       "どちらも「ハイテク株集中投資」の人気インデックス。NASDAQ100の100銘柄 vs FANG+の10銘柄——分散度・リターン・リスクを過去データで徹底比較します。",
     conclusionA: "ハイテク分散・安定感重視 → NASDAQ100",
@@ -309,11 +309,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "vt-vs-orukan",
     fundAId: "vt",
     fundBId: "orcan",
-    metaTitle: "VTとオルカンはどっち？ETF vs 投資信託・違いを徹底比較",
+    metaTitle: "VT vs オルカン どっちがいい？全世界ETF vs 投信の違いを比較",
     metaDescription:
-      "VT（バンガード・全世界ETF）とオルカン（eMAXIS Slim 全世界株式）を積立実績・コスト・NISA対応で比較。全世界投資の2択を分かりやすく解説。",
+      "VTとオルカンの積立実績・コスト・NISA対応を比較。全世界投資の2択を今すぐ確認→",
     relatedDescription: "全世界ETF vs 全世界投資信託",
-    h1: "VT vs オルカン｜全世界投資の2択を徹底比較",
+    h1: "VTとオルカン、全世界投資するならどっちがいい？",
     intro:
       "どちらも「全世界株式への長期投資」の定番。VTはバンガード社のETF（約9,000銘柄）、オルカンは三菱UFJの投資信託（約3,000銘柄）。買い方・コスト・NISA対応の違いを数字で比べます。",
     conclusionA: "ETF・幅広分散重視 → VT",
@@ -364,11 +364,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "vti-vs-sp500",
     fundAId: "vti",
     fundBId: "sp500",
-    metaTitle: "VTIとS&P500はどっち？米国投資の2択を過去実績で比較",
+    metaTitle: "VTI vs S&P500 どっちがいい？実績はほぼ同じ？違いを徹底比較",
     metaDescription:
-      "VTI（米国全体ETF）とS&P500を過去実績・コスト・NISA対応で比較。「米国全体 vs 大型株500社」の違いを分かりやすく解説。",
+      "VTIとS&P500の積立実績・コスト・NISA対応を比較。ほぼ同じと言われる2つの本当の違いを今すぐ確認→",
     relatedDescription: "米国全体 vs 大型株500社",
-    h1: "VTI vs S&P500｜米国投資の2択を徹底比較",
+    h1: "VTIとS&P500、どっちを選ぶ？実質的な違いとは",
     intro:
       "どちらも「米国株式への長期投資」の定番。VTIは米国全体（約4,000銘柄）のETF、S&P500は米国大型株500社の投資信託。実績はほぼ同じで、違いは「中小型株を含むか」と「ETFか投信か」の2点です。",
     conclusionA: "中小型株込み・ETF保有 → VTI",
@@ -419,11 +419,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "schd-vs-sp500",
     fundAId: "schd",
     fundBId: "sp500",
-    metaTitle: "SCHDとS&P500はどっち？高配当 vs 成長インデックスを比較",
+    metaTitle: "SCHD vs S&P500 どっちがいい？高配当 vs 成長インデックスを比較",
     metaDescription:
-      "SCHD（高配当）とS&P500（成長インデックス）を過去実績・配当利回り・積立結果で比較。配当投資 vs インデックス投資どちらを選ぶか分かりやすく解説。",
+      "SCHDとS&P500のトータルリターン・配当利回り・積立実績を比較。配当投資 vs インデックス投資どちらがいい？今すぐ確認→",
     relatedDescription: "高配当 vs 成長インデックス",
-    h1: "SCHD vs S&P500｜高配当 vs 成長インデックスを徹底比較",
+    h1: "SCHDとS&P500、配当 vs 成長インデックスどっちがいい？",
     intro:
       "「配当で収入を得ながら増やすSCHD」vs「値上がり益で資産を最大化するS&P500」。目的によって選択が変わる2銘柄を過去実績・リターン・配当で徹底比較します。",
     conclusionA: "配当収入・安定重視 → SCHD",

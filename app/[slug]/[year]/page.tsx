@@ -450,7 +450,7 @@ export default async function YearPage({ params }: Props) {
               className="text-base font-bold text-white mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              よくある質問
+              {page.year}年積立に関するよくある質問
             </h2>
             <div className="space-y-4">
               {allFaqs.map((faq, i) => (
@@ -534,7 +534,7 @@ export default async function YearPage({ params }: Props) {
                   className="text-base font-bold text-white"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
-                  月額別シミュレーション
+                  {enc.nickname}の月額別シミュレーション
                 </h2>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -563,14 +563,14 @@ export default async function YearPage({ params }: Props) {
                 className="text-base font-bold text-white"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
-                投資ガイド
+                投資ガイド・おすすめ記事
               </h2>
             </div>
             <div className="grid grid-cols-1 gap-2">
               {[
-                { label: "新NISAのおすすめ積立先は？",  href: "/guide/nisa-beginner" },
-                { label: "インデックス投資とは？",       href: "/guide/index-investing" },
-                { label: "ドルコスト平均法とは？",       href: "/guide/dollar-cost-averaging" },
+                { label: "新NISAのおすすめ積立先は？オルカン・S&P500・NASDAQ100を比較",  href: "/guide/nisa-beginner" },
+                { label: "インデックス投資とは？初心者向け解説",       href: "/guide/index-investing" },
+                { label: "ドルコスト平均法とは？定額積立のメリット",       href: "/guide/dollar-cost-averaging" },
               ].map(({ label, href }) => (
                 <Link
                   key={href}
@@ -590,17 +590,17 @@ export default async function YearPage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              人気ページ
+              人気の積立シミュレーション
             </h2>
             <div className="grid grid-cols-1 gap-2">
               {[
-                { label: "オルカンとは？",           href: "/fund/orukan" },
-                { label: "S&P500とは？",             href: "/fund/sp500" },
-                { label: "NASDAQ100とは？",           href: "/fund/nasdaq100" },
-                { label: "オルカン vs S&P500",       href: "/compare/orukan-vs-sp500" },
-                { label: "S&P500 vs NASDAQ100",      href: "/compare/sp500-vs-nasdaq100" },
-                { label: "2020年からオルカン",        href: "/orukan/2020" },
-                { label: "2020年からS&P500",         href: "/sp500/2020" },
+                { label: "オルカン（全世界株式）とは？特徴・メリット",           href: "/fund/orukan" },
+                { label: "S&P500とは？積立実績・メリット・オルカンとの違い",     href: "/fund/sp500" },
+                { label: "NASDAQ100とは？S&P500との違い・リスク",               href: "/fund/nasdaq100" },
+                { label: "オルカン vs S&P500 どっちがいい？",                   href: "/compare/orukan-vs-sp500" },
+                { label: "S&P500 vs NASDAQ100 どっちがいい？",                  href: "/compare/sp500-vs-nasdaq100" },
+                { label: "2020年（コロナ直後）からオルカン積立→実績確認",       href: "/orukan/2020" },
+                { label: "2020年（コロナ直後）からS&P500積立→実績確認",        href: "/sp500/2020" },
               ].map(({ label, href }) => (
                 <Link
                   key={href}
