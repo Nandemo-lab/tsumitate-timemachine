@@ -177,6 +177,25 @@ export default async function GuidePage({ params }: Props) {
             ))}
           </section>
 
+          {/* ── 本文セクション（H2・H3） ─────────────────────── */}
+          {page.sections?.map((sec, i) => (
+            <section key={i} className="space-y-4">
+              <h2
+                className="text-base font-bold text-white"
+                style={{ fontFamily: "var(--font-serif-jp), serif" }}
+              >
+                {sec.h2}
+              </h2>
+              <p className="text-sm text-zinc-400 leading-relaxed">{sec.body}</p>
+              {sec.subsections?.map((sub, j) => (
+                <div key={j} className="pl-4 border-l-2 border-indigo-500/30 space-y-1.5">
+                  <h3 className="text-sm font-bold text-zinc-200">{sub.h3}</h3>
+                  <p className="text-sm text-zinc-400 leading-relaxed">{sub.body}</p>
+                </div>
+              ))}
+            </section>
+          ))}
+
           {/* ── シミュレーション結果 ─────────────────────────── */}
           <section>
             <h2
@@ -351,6 +370,49 @@ export default async function GuidePage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {/* ── こんな人におすすめ ──────────────────────────── */}
+          {page.recommendFor && page.recommendFor.length > 0 && (
+            <section className="space-y-3">
+              <h2
+                className="text-base font-bold text-white"
+                style={{ fontFamily: "var(--font-serif-jp), serif" }}
+              >
+                こんな人におすすめ
+              </h2>
+              <div className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2.5">
+                {page.recommendFor.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-indigo-400 text-sm flex-shrink-0 mt-0.5">✓</span>
+                    <p className="text-sm text-zinc-300 leading-relaxed">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── よくある失敗 ─────────────────────────────────── */}
+          {page.commonMistakes && page.commonMistakes.length > 0 && (
+            <section className="space-y-3">
+              <h2
+                className="text-base font-bold text-white"
+                style={{ fontFamily: "var(--font-serif-jp), serif" }}
+              >
+                よくある失敗パターン
+              </h2>
+              <div className="space-y-3">
+                {page.commonMistakes.map((m, i) => (
+                  <div
+                    key={i}
+                    className="rounded-xl bg-amber-500/[0.05] border border-amber-500/20 p-4 space-y-1.5"
+                  >
+                    <p className="text-sm font-bold text-amber-300">⚠ {m.label}</p>
+                    <p className="text-sm text-zinc-400 leading-relaxed">{m.body}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* ── 関連ガイド ───────────────────────────────────── */}
           <section>
