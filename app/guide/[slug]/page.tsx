@@ -25,11 +25,19 @@ const SLUG_TO_FUND_ID: Record<string, FundId> = {
 };
 
 const GUIDE_LABELS: Record<string, string> = {
-  "nisa-beginner":          "新NISAおすすめ",
-  "index-investing":        "インデックス投資とは",
-  "how-to-start":           "積立投資の始め方",
-  "dollar-cost-averaging":  "ドルコスト平均法",
-  "retirement-investing":   "老後資金の積立",
+  "nisa-beginner":              "新NISAおすすめ",
+  "index-investing":            "インデックス投資とは",
+  "how-to-start":               "積立投資の始め方",
+  "dollar-cost-averaging":      "ドルコスト平均法",
+  "retirement-investing":       "老後資金の積立",
+  "orukan-yameta-houga-ii":     "オルカンはやめたほうがいい？",
+  "sp500-booraku-taisho":       "S&P500暴落リスクと対応",
+  "orukan-ippon-de-ii":         "オルカン一本でいい？",
+  "nisa-tsumitate-ikura":       "NISAは月いくら積立？",
+  "nisa-wariate-osusume":       "NISAの割合・配分",
+  "tsumitate-nansnen-keizoku":  "積立は何年続けるべき？",
+  "index-shippai-pattern":      "インデックス投資の失敗パターン",
+  "tsumitate-vs-ikkatu":        "積立vs一括投資",
 };
 
 interface Props {

@@ -411,11 +411,15 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </div>
         <div className="grid grid-cols-1 gap-2">
           {[
-            { label: "新NISAのおすすめ積立先は？",   href: "/guide/nisa-beginner",         sub: "オルカン・S&P500・NASDAQ100を比較" },
-            { label: "インデックス投資とは？",        href: "/guide/index-investing",        sub: "仕組み・メリット・実績を解説" },
-            { label: "ドルコスト平均法とは？",        href: "/guide/dollar-cost-averaging",  sub: "定額積立が最強の理由" },
-            { label: "積立投資の始め方",              href: "/guide/how-to-start",           sub: "NISAで今日からスタートする手順" },
-            { label: "老後資金シミュレーション",      href: "/guide/retirement-investing",   sub: "30代・40代の積立プラン" },
+            { label: "オルカンはやめたほうがいい？",   href: "/guide/orukan-yameta-houga-ii",    sub: "6つの懸念点を実績データで検証" },
+            { label: "S&P500が暴落したらどうなる？",   href: "/guide/sp500-booraku-taisho",      sub: "過去の暴落データと積立継続の効果" },
+            { label: "オルカン一本だけでいい？",       href: "/guide/orukan-ippon-de-ii",        sub: "1本投資の合理的な理由と注意点" },
+            { label: "新NISAは月いくら積立すべき？",   href: "/guide/nisa-tsumitate-ikura",      sub: "収入別おすすめ金額と30年試算" },
+            { label: "新NISAのおすすめ積立先は？",     href: "/guide/nisa-beginner",             sub: "オルカン・S&P500・NASDAQ100を比較" },
+            { label: "ドルコスト平均法とは？",         href: "/guide/dollar-cost-averaging",     sub: "定額積立が最強の理由" },
+            { label: "積立投資の失敗パターン5つ",      href: "/guide/index-shippai-pattern",     sub: "やってはいけない行動と回避法" },
+            { label: "積立vs一括投資どっちが有利？",   href: "/guide/tsumitate-vs-ikkatu",       sub: "過去データで比較検証" },
+            { label: "老後資金シミュレーション",       href: "/guide/retirement-investing",      sub: "30代・40代の積立プラン" },
           ].map(({ label, href, sub }) => (
             <Link
               key={href}
