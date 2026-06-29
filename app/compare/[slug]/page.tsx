@@ -8,6 +8,7 @@ import { getFundPageSlug } from "@/lib/fund-seo-pages";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ComparePageClient from "./ComparePageClient";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
@@ -365,6 +366,7 @@ export default async function ComparePage({ params }: Props) {
             );
           })()}
 
+          <DisclaimerBar />
         </div>
         <SiteFooter />
       </div>

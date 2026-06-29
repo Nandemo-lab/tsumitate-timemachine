@@ -73,9 +73,40 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-const jsonLd = {
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://tsumitate-timemachine.vercel.app/#organization",
+  name: "積立タイムマシン",
+  url: "https://tsumitate-timemachine.vercel.app",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://tsumitate-timemachine.vercel.app/api/og",
+    width: 1200,
+    height: 630,
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    url: "https://tsumitate-timemachine.vercel.app/contact",
+    availableLanguage: "Japanese",
+  },
+};
+
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://tsumitate-timemachine.vercel.app/#website",
+  name: "積立タイムマシン",
+  url: "https://tsumitate-timemachine.vercel.app",
+  inLanguage: "ja",
+  publisher: { "@id": "https://tsumitate-timemachine.vercel.app/#organization" },
+};
+
+const webappLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
+  "@id": "https://tsumitate-timemachine.vercel.app/#webapp",
   name: "積立タイムマシン",
   url: "https://tsumitate-timemachine.vercel.app",
   description: "過去の実績データをもとに、オルカン・S&P500・NASDAQ100などの積立投資シミュレーションを無料で体験できるWebアプリ。",
@@ -84,17 +115,16 @@ const jsonLd = {
   inLanguage: "ja",
   isAccessibleForFree: true,
   offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
-  creator: { "@type": "Organization", name: "積立タイムマシン" },
+  publisher: { "@id": "https://tsumitate-timemachine.vercel.app/#organization" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable} ${geistMono.variable} dark`}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webappLd) }} />
       </head>
       <body className="min-h-dvh bg-zinc-950 text-zinc-50 antialiased">
         {children}

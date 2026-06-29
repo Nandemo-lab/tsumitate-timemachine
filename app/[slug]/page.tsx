@@ -6,6 +6,7 @@ import { getFundSeoPage, FUND_SEO_PAGES, FundSeoPage } from "@/lib/fund-seo";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 
@@ -380,6 +381,7 @@ export default async function FundLandingPage({ params }: Props) {
               ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。
             </p>
           </section>
+          <DisclaimerBar />
         </div>
       </div>
 

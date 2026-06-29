@@ -5,6 +5,7 @@ import { simulate, formatCurrency, calcElapsedYears } from "@/lib/simulation";
 import { FUNDS, FUND_LIST } from "@/lib/funds";
 import { FundId } from "@/types";
 import SimulatePageClient from "./SimulatePageClient";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
 
 interface Props {
   params: Promise<{ fund: string; year: string }>;
@@ -218,6 +219,9 @@ export default async function SimulatePage({ params, searchParams }: Props) {
             >
               ⚡ 自分の条件でシミュレーション
             </Link>
+          </div>
+          <div className="mt-8 px-4">
+            <DisclaimerBar />
           </div>
         </div>
       </main>

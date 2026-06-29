@@ -18,6 +18,7 @@ import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
 import GuideEeat from "@/components/guide/GuideEeat";
 import GuideBodyText from "@/components/guide/GuideBodyText";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 
@@ -610,6 +611,7 @@ export default async function GuidePage({ params }: Props) {
             </div>
           </section>
 
+          <DisclaimerBar />
         </div>
         <SiteFooter />
       </div>

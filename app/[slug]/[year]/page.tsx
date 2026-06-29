@@ -17,6 +17,7 @@ import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { MONTHLY_AMOUNTS } from "@/lib/monthly-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
@@ -614,6 +615,7 @@ export default async function YearPage({ params }: Props) {
             </div>
           </section>
 
+          <DisclaimerBar />
         </div>
         <SiteFooter />
       </div>

@@ -13,6 +13,7 @@ import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 
@@ -533,6 +534,7 @@ export default async function MonthlyAmountPage({ params }: Props) {
             </div>
           </section>
 
+          <DisclaimerBar />
         </div>
         <SiteFooter />
       </div>

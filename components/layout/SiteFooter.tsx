@@ -50,9 +50,11 @@ const SECTIONS = [
   {
     title: "運営",
     links: [
-      { href: "/terms",   label: "利用規約" },
-      { href: "/privacy", label: "プライバシーポリシー" },
-      { href: "/contact", label: "お問い合わせ" },
+      { href: "/about",              label: "このサービスについて" },
+      { href: "/about/data-sources", label: "データソース・計算方法" },
+      { href: "/terms",              label: "利用規約" },
+      { href: "/privacy",            label: "プライバシーポリシー" },
+      { href: "/contact",            label: "お問い合わせ" },
     ],
   },
 ];
