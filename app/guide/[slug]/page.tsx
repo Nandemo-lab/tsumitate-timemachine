@@ -7,13 +7,17 @@ import {
   ArrowRight,
   CheckCircle2,
   BookOpen,
+  ExternalLink,
+  BarChart2,
 } from "lucide-react";
 import { getGuidePage, GUIDE_PAGES } from "@/lib/guide-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, formatYearMonth } from "@/lib/simulation";
 import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
+import GuideEeat from "@/components/guide/GuideEeat";
+import GuideBodyText from "@/components/guide/GuideBodyText";
 
 const BASE_URL = "https://tsumitate-timemachine.vercel.app";
 
@@ -177,24 +181,138 @@ export default async function GuidePage({ params }: Props) {
             ))}
           </section>
 
+          {/* ── E-E-A-T 編集部情報 ───────────────────────────── */}
+          {page.lastUpdated && <GuideEeat lastUpdated={page.lastUpdated} />}
+
+          {/* ── 目次 ────────────────────────────────────────── */}
+          {page.sections && page.sections.length > 0 && (
+            <nav className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-2">
+              <p className="text-xs font-bold text-zinc-300">目次</p>
+              <ol className="space-y-1.5">
+                {page.sections.map((sec, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-[10px] font-bold text-indigo-400 mt-0.5 flex-shrink-0">{i + 1}.</span>
+                    <a
+                      href={`#section-${i}`}
+                      className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors leading-snug"
+                    >
+                      {sec.h2}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+
           {/* ── 本文セクション（H2・H3） ─────────────────────── */}
-          {page.sections?.map((sec, i) => (
-            <section key={i} className="space-y-4">
-              <h2
-                className="text-base font-bold text-white"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
-              >
-                {sec.h2}
-              </h2>
-              <p className="text-sm text-zinc-400 leading-relaxed">{sec.body}</p>
-              {sec.subsections?.map((sub, j) => (
-                <div key={j} className="pl-4 border-l-2 border-indigo-500/30 space-y-1.5">
-                  <h3 className="text-sm font-bold text-zinc-200">{sub.h3}</h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed">{sub.body}</p>
-                </div>
-              ))}
-            </section>
-          ))}
+          {page.sections?.map((sec, i) => {
+            const simEntry = sec.simCallout !== undefined ? simResults[sec.simCallout] : undefined;
+            return (
+              <section key={i} id={`section-${i}`} className="space-y-4">
+                <h2
+                  className="text-base font-bold text-white"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  {sec.h2}
+                </h2>
+                <GuideBodyText body={sec.body} />
+                {sec.subsections?.map((sub, j) => (
+                  <div key={j} className="pl-4 border-l-2 border-indigo-500/30 space-y-1.5">
+                    <h3 className="text-sm font-bold text-zinc-200">{sub.h3}</h3>
+                    <GuideBodyText body={sub.body} />
+                  </div>
+                ))}
+                {/* シミュレーション実績カード */}
+                {simEntry && (() => {
+                  const { row, result, fund } = simEntry;
+                  const isProfit = result.profit >= 0;
+                  return (
+                    <Link
+                      href={`/${row.fundSlug}/${row.year}`}
+                      className="block rounded-xl border border-white/[0.08] overflow-hidden hover:bg-white/[0.04] transition-colors"
+                      style={{ background: `${fund.color}08` }}
+                    >
+                      <div className="px-4 py-3 space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span
+                            className="text-[10px] font-black px-2 py-0.5 rounded"
+                            style={{ background: `${fund.color}20`, color: fund.color }}
+                          >
+                            {fund.shortName}
+                          </span>
+                          <span className="text-[10px] text-zinc-500">
+                            {formatYearMonth(row.year, row.month)}〜2025年6月
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-zinc-500">
+                          月{row.amount >= 10000 ? `${row.amount / 10000}万円` : `${row.amount}円`}積立・積立タイムマシン実績データ
+                        </p>
+                        <div className="flex items-baseline gap-3">
+                          <div>
+                            <span className="text-[10px] text-zinc-500">利益</span>
+                            <span
+                              className="ml-1 text-lg font-black font-number"
+                              style={{ color: isProfit ? "#10b981" : "#ef4444" }}
+                            >
+                              {isProfit ? "+" : ""}{formatCurrency(result.profit)}
+                            </span>
+                            <span
+                              className="ml-1 text-xs font-bold font-number"
+                              style={{ color: isProfit ? "#10b981" : "#ef4444" }}
+                            >
+                              （{isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%）
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 text-[10px] text-zinc-500">
+                          <span>元本 <span className="font-bold text-zinc-300">{formatCurrency(result.totalPrincipal)}</span></span>
+                          <span>評価額 <span className="font-bold text-zinc-300">{formatCurrency(result.finalValue)}</span></span>
+                        </div>
+                      </div>
+                      <div className="px-4 py-2 border-t border-white/[0.06] flex items-center justify-end">
+                        <span className="text-[10px] font-bold text-indigo-400 flex items-center gap-1">
+                          詳細を見る <ArrowRight className="h-2.5 w-2.5" />
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })()}
+                {/* 一次情報ソースリンク */}
+                {sec.sourceLinks && sec.sourceLinks.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {sec.sourceLinks.map((sl, k) => (
+                      <a
+                        key={k}
+                        href={sl.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 bg-white/[0.03] border border-white/[0.07] rounded px-2 py-1 transition-colors"
+                      >
+                        <ExternalLink className="h-2.5 w-2.5 flex-shrink-0" />
+                        {sl.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+                {/* 中間CTA（2番目のセクション後） */}
+                {i === 1 && (
+                  <div className="rounded-xl bg-indigo-500/[0.08] border border-indigo-500/20 p-4 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-indigo-300">実際の数字をシミュレーションしてみる</p>
+                      <p className="text-[10px] text-zinc-500 mt-0.5">自分の積立開始年・金額で試せます</p>
+                    </div>
+                    <Link
+                      href="/"
+                      className="flex-shrink-0 flex items-center gap-1 text-xs font-bold text-indigo-400 border border-indigo-500/30 rounded-lg px-3 py-1.5 hover:bg-indigo-500/10 transition-colors"
+                    >
+                      <BarChart2 className="h-3 w-3" />
+                      試す
+                    </Link>
+                  </div>
+                )}
+              </section>
+            );
+          })}
 
           {/* ── シミュレーション結果 ─────────────────────────── */}
           <section>
