@@ -20,7 +20,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { MONTHLY_AMOUNTS } from "@/lib/monthly-pages";
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 
 interface Props {
   params: Promise<{ slug: string; year: string }>;

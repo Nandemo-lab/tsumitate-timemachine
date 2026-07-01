@@ -24,7 +24,7 @@ export default function ShareCard({ planA, planB, startYear, startMonth, monthly
   const loser = sorted[1];
   const diff = loser ? winner.profit - loser.profit : null;
 
-  const url = "https://tsumitate-timemachine.vercel.app";
+  const url = "https://tsumitate-timemachine.com";
   const shareText = planB && loser
     ? `もし${startYear}年${startMonth}月から${winner.fundName}を
 毎月${formatCurrency(monthlyAmount)}積み立てていたら

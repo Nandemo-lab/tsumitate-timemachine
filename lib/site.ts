@@ -1,5 +1,5 @@
 export const SITE_NAME = "積立タイムマシン";
-export const SITE_URL = "https://tsumitate-timemachine.vercel.app";
+export const SITE_URL = "https://tsumitate-timemachine.com";
 
 // Googleフォームを作成したら、ここにURLを貼るだけで /contact が有効化されます
 // 例: "https://docs.google.com/forms/d/e/XXXX/viewform"

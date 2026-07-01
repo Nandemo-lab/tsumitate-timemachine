@@ -20,7 +20,7 @@ import GuideEeat from "@/components/guide/GuideEeat";
 import GuideBodyText from "@/components/guide/GuideBodyText";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 
 // fundSlug → fundId マッピング
 const SLUG_TO_FUND_ID: Record<string, FundId> = {

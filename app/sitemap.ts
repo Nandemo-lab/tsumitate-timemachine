@@ -8,7 +8,7 @@ import { MONTHLY_PAGES } from "@/lib/monthly-pages";
 import { GUIDE_PAGES } from "@/lib/guide-pages";
 import { RANKING_CATEGORY_SLUGS } from "@/lib/ranking-pages";
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 const YEARS = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 
 export default function sitemap(): MetadataRoute.Sitemap {

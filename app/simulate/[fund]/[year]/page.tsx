@@ -42,7 +42,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const title = `${startYear}年から${fundData.shortName}を積み立てていたら？ ${formatCurrency(result.profit)}の利益`;
   const description = `もし${startYear}年1月から毎月${formatCurrency(monthlyAmount)}を${fundData.shortName}に積み立てていたら、約${elapsed}年で${formatCurrency(result.profit)}の利益（${result.returnRate.toFixed(1)}%リターン）。現在評価額は${formatCurrency(result.finalValue)}。`;
 
-  const ogUrl = new URL("https://tsumitate-timemachine.vercel.app/api/og");
+  const ogUrl = new URL("https://tsumitate-timemachine.com/api/og");
   ogUrl.searchParams.set("fund", fund);
   ogUrl.searchParams.set("year", year);
   ogUrl.searchParams.set("amount", String(monthlyAmount));
@@ -63,7 +63,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       images: [ogUrl.toString()],
     },
     alternates: {
-      canonical: `https://tsumitate-timemachine.vercel.app/simulate/${fund}/${year}`,
+      canonical: `https://tsumitate-timemachine.com/simulate/${fund}/${year}`,
     },
   };
 }

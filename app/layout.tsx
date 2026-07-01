@@ -17,7 +17,7 @@ const notoSerifJP = Noto_Serif_JP({
 });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 const OG_IMAGE = `${BASE_URL}/api/og`;
 
 export const metadata: Metadata = {
@@ -76,19 +76,19 @@ export const viewport: Viewport = {
 const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://tsumitate-timemachine.vercel.app/#organization",
+  "@id": "https://tsumitate-timemachine.com/#organization",
   name: "積立タイムマシン",
-  url: "https://tsumitate-timemachine.vercel.app",
+  url: "https://tsumitate-timemachine.com",
   logo: {
     "@type": "ImageObject",
-    url: "https://tsumitate-timemachine.vercel.app/api/og",
+    url: "https://tsumitate-timemachine.com/api/og",
     width: 1200,
     height: 630,
   },
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
-    url: "https://tsumitate-timemachine.vercel.app/contact",
+    url: "https://tsumitate-timemachine.com/contact",
     availableLanguage: "Japanese",
   },
 };
@@ -96,26 +96,26 @@ const organizationLd = {
 const websiteLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://tsumitate-timemachine.vercel.app/#website",
+  "@id": "https://tsumitate-timemachine.com/#website",
   name: "積立タイムマシン",
-  url: "https://tsumitate-timemachine.vercel.app",
+  url: "https://tsumitate-timemachine.com",
   inLanguage: "ja",
-  publisher: { "@id": "https://tsumitate-timemachine.vercel.app/#organization" },
+  publisher: { "@id": "https://tsumitate-timemachine.com/#organization" },
 };
 
 const webappLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "@id": "https://tsumitate-timemachine.vercel.app/#webapp",
+  "@id": "https://tsumitate-timemachine.com/#webapp",
   name: "積立タイムマシン",
-  url: "https://tsumitate-timemachine.vercel.app",
+  url: "https://tsumitate-timemachine.com",
   description: "過去の実績データをもとに、オルカン・S&P500・NASDAQ100などの積立投資シミュレーションを無料で体験できるWebアプリ。",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Any",
   inLanguage: "ja",
   isAccessibleForFree: true,
   offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
-  publisher: { "@id": "https://tsumitate-timemachine.vercel.app/#organization" },
+  publisher: { "@id": "https://tsumitate-timemachine.com/#organization" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

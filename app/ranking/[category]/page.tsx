@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { getRankingPage, RANKING_CATEGORY_SLUGS } from "@/lib/ranking-pages";
 import RankingView from "../_RankingView";
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 
 interface Props {
   params: Promise<{ category: string }>;

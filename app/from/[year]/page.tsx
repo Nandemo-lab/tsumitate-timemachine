@@ -9,7 +9,7 @@ import { COMPARE_PAGES } from "@/lib/compare-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { FundId } from "@/types";
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 
 const SUPPORTED_YEARS = [2019, 2020, 2021, 2022, 2023, 2024];
 

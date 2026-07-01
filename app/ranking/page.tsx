@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getRankingPage } from "@/lib/ranking-pages";
 import RankingView from "./_RankingView";
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 
 export const metadata: Metadata = (() => {
   const page = getRankingPage("")!;

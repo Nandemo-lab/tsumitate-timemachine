@@ -148,7 +148,7 @@ export async function GET(req: NextRequest) {
               ※過去の実績に基づくシミュレーション。将来を保証しません
             </span>
             <span style={{ color: "#6366f1", fontSize: "16px", fontWeight: 900, display: "flex" }}>
-              tsumitate-timemachine.vercel.app
+              tsumitate-timemachine.com
             </span>
           </div>
         </div>
@@ -301,7 +301,7 @@ export async function GET(req: NextRequest) {
             ※過去の実績に基づくシミュレーション。将来を保証しません
           </div>
           <div style={{ color: "#6366f1", fontSize: "17px", fontWeight: 900, display: "flex" }}>
-            tsumitate-timemachine.vercel.app
+            tsumitate-timemachine.com
           </div>
         </div>
       </div>

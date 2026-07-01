@@ -576,7 +576,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
             <textarea
               value={csvText}
               onChange={e => { setCsvText(e.target.value); setCsvError(""); }}
-              placeholder={"Page,Clicks,Impressions,CTR,Position\nhttps://tsumitate-timemachine.vercel.app/orukan/2020,45,890,5.06%,3.2"}
+              placeholder={"Page,Clicks,Impressions,CTR,Position\nhttps://tsumitate-timemachine.com/orukan/2020,45,890,5.06%,3.2"}
               className="w-full h-32 bg-zinc-800 border border-white/[0.1] rounded-lg px-3 py-2 text-xs text-zinc-300 font-mono resize-y focus:outline-none focus:border-violet-500/50"
               spellCheck={false}
             />

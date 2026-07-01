@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const BASE_URL = "https://tsumitate-timemachine.vercel.app";
+const BASE_URL = "https://tsumitate-timemachine.com";
 
 // ── 短縮ファンド名 ────────────────────────────────────────────────────
 const FUND_SHORT: Record<string, string> = {
