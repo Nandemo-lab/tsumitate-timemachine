@@ -1,0 +1,23 @@
+import type { ArticleMeta } from "@/lib/article-pages";
+
+// Async server components are valid Next.js page components but TypeScript doesn't model
+// them as React.ComponentType. Use ComponentType<{meta: ArticleMeta}> as the common contract.
+export interface ArticleEntry {
+  meta: ArticleMeta;
+  Content: React.ComponentType<{ meta: ArticleMeta }>;
+}
+
+// ─── 記事の追加方法 ─────────────────────────────────────────────────────────
+// 1. content/articles/<slug>.tsx を作成（meta + default export Content component）
+// 2. 下の import を1行追加し、ARTICLE_REGISTRY に1エントリ追加する
+// ──────────────────────────────────────────────────────────────────────────
+
+import OrukanVsSp500, { meta as orukanVsSp500Meta } from "./orukan-vs-sp500";
+
+export const ARTICLE_REGISTRY: Record<string, ArticleEntry> = {
+  "orukan-vs-sp500": {
+    meta: orukanVsSp500Meta,
+    Content: OrukanVsSp500,
+  },
+  // "next-article-slug": { meta: nextMeta, Content: NextContent },
+};
