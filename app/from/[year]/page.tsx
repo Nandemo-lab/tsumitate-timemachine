@@ -114,7 +114,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${year}年（${label}）から積み立てていたら？全銘柄リターンランキング`;
   const description = `${prefix}${year}年から月3万円を全銘柄に積み立てた場合のリターンをランキング形式で公開。オルカン・S&P500・NASDAQ100など主要ファンドの実績を今すぐ確認→`;
   return {
-    title: `${title} | 積立タイムマシン`,
+    title,
     description,
     alternates: { canonical: `${BASE_URL}/from/${year}` },
     openGraph: {

@@ -7,7 +7,7 @@ const BASE_URL = "https://tsumitate-timemachine.com";
 export const metadata: Metadata = (() => {
   const page = getRankingPage("")!;
   return {
-    title: `${page.metaTitle} | 積立タイムマシン`,
+    title: page.metaTitle,
     description: page.metaDescription,
     alternates: { canonical: `${BASE_URL}/ranking` },
     openGraph: {

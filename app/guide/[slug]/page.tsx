@@ -9,9 +9,11 @@ import {
   BookOpen,
   ExternalLink,
   BarChart2,
+  FileText,
 } from "lucide-react";
 import { getGuidePage, GUIDE_PAGES } from "@/lib/guide-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
+import { getArticlesRelatedToGuide } from "@/lib/article-pages";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency, formatYearMonth } from "@/lib/simulation";
 import { FundId } from "@/types";
@@ -58,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = getGuidePage(slug);
   if (!page) return {};
   return {
-    title: `${page.metaTitle} | 積立タイムマシン`,
+    title: page.metaTitle,
     description: page.metaDescription,
     alternates: { canonical: `${BASE_URL}/guide/${slug}` },
     openGraph: {
@@ -557,6 +559,37 @@ export default async function GuidePage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {/* ── 関連コラム ───────────────────────────────────── */}
+          {(() => {
+            const articles = getArticlesRelatedToGuide(slug);
+            if (articles.length === 0) return null;
+            return (
+              <section>
+                <h2
+                  className="text-base font-bold text-white mb-4"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  関連コラム
+                </h2>
+                <div className="space-y-2">
+                  {articles.map((a) => (
+                    <Link
+                      key={a.slug}
+                      href={`/articles/${a.slug}`}
+                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <FileText className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
+                        <span className="text-sm text-zinc-300 leading-snug line-clamp-2">{a.h1}</span>
+                      </div>
+                      <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0 ml-2" />
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
 
           {/* ── CTA ────────────────────────────────────────── */}
           <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">

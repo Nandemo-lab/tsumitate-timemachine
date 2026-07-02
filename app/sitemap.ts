@@ -7,6 +7,7 @@ import { YEAR_PAGES } from "@/lib/year-pages";
 import { MONTHLY_PAGES } from "@/lib/monthly-pages";
 import { GUIDE_PAGES } from "@/lib/guide-pages";
 import { RANKING_CATEGORY_SLUGS } from "@/lib/ranking-pages";
+import { ARTICLE_PAGES } from "@/lib/article-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 const YEARS = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
@@ -101,6 +102,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  // コラム記事（/articles/[slug]）
+  const articlePages: MetadataRoute.Sitemap = ARTICLE_PAGES.map((p) => ({
+    url: `${BASE_URL}/articles/${p.slug}`,
+    lastModified: new Date(p.publishedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
   return [
     ...staticPages,
     ...fundLandingPages,
@@ -110,6 +119,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fromYearPages,
     ...monthlyAmountPages,
     ...guideArticlePages,
+    ...articlePages,
     ...rankingPages,
     ...simPages,
   ];

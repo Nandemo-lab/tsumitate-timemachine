@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = getRankingPage(category);
   if (!page) return {};
   return {
-    title: `${page.metaTitle} | 積立タイムマシン`,
+    title: page.metaTitle,
     description: page.metaDescription,
     alternates: { canonical: `${BASE_URL}/ranking/${category}` },
     openGraph: {

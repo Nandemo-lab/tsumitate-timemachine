@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ChevronRight, CheckCircle2, ArrowRight, TrendingUp } from "lucide-react";
+import { ChevronRight, CheckCircle2, ArrowRight, TrendingUp, BookOpen } from "lucide-react";
 import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
 import { getFundPageSlug } from "@/lib/fund-seo-pages";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { getArticlesRelatedToFunds } from "@/lib/article-pages";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ComparePageClient from "./ComparePageClient";
 
@@ -229,6 +230,37 @@ export default async function ComparePage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {/* ── 関連コラム ─────────────────────────────────────── */}
+          {(() => {
+            const articles = getArticlesRelatedToFunds([page.fundAId, page.fundBId]);
+            if (articles.length === 0) return null;
+            return (
+              <section>
+                <h2
+                  className="text-base font-bold text-white mb-4"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  関連コラム
+                </h2>
+                <div className="space-y-2">
+                  {articles.map((a) => (
+                    <Link
+                      key={a.slug}
+                      href={`/articles/${a.slug}`}
+                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <BookOpen className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
+                        <span className="text-sm text-zinc-300 leading-snug line-clamp-2">{a.h1}</span>
+                      </div>
+                      <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0 ml-2" />
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
 
           {/* ── 関連する比較 ────────────────────────────────────── */}
           {(() => {

@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!page) return {};
   const fund = FUNDS[page.fundId];
   return {
-    title: `${page.metaTitle} | 積立タイムマシン`,
+    title: page.metaTitle,
     description: page.metaDescription,
     alternates: { canonical: `${BASE_URL}/${page.fundSlug}/${page.year}` },
     openGraph: {
