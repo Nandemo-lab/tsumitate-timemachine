@@ -132,11 +132,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="オルカンとは？特徴と仕組み" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          「オルカン」は<strong className="text-white">「eMAXIS Slim全世界株式（オール・カントリー）」</strong>の愛称で、MSCI ACWI（All Country World Index）に連動する投資信託です。先進国23カ国・新興国24カ国を合わせた約47カ国・約2,800銘柄をカバーし、時価総額の比率に応じて世界全体に分散投資できます。
+          「オルカン」は<strong className="text-white">「eMAXIS Slim全世界株式（オール・カントリー）」</strong>の愛称で、MSCI ACWI（All Country World Index）に連動する投資信託です。先進国23カ国・新興国24カ国を合わせた約47カ国・約3,000銘柄をカバーし、時価総額の比率に応じて世界全体に分散投資できます。
         </p>
         <SpecCard rows={[
           ["対象", "先進国23カ国＋新興国24カ国（約47カ国）"],
-          ["銘柄数", "約2,800銘柄（2025年時点）"],
+          ["銘柄数", "約3,000銘柄（2025年時点）"],
           ["米国比率", "約62%（最大だが1国ではない）"],
           ["信託報酬", "年0.05775%（業界最安水準）"],
           ["新NISA対応", "積立投資枠・成長投資枠ともに対象"],
@@ -183,7 +183,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             <tbody className="divide-y divide-white/[0.05]">
               {[
                 ["対象国",     "約47カ国（全世界）",     "米国のみ"],
-                ["銘柄数",     "約2,800銘柄",           "約500銘柄"],
+                ["銘柄数",     "約3,000銘柄",           "約500銘柄"],
                 ["分散度",     "◎ 地域・国際分散",      "△ 米国集中"],
                 ["過去リターン", "○ 高水準",             "◎ さらに高水準"],
                 ["信託報酬",   "0.05775%",              "0.09372%"],
@@ -297,7 +297,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           新NISA（2024年〜）の積立投資枠では、どちらも年間120万円まで非課税で積み立てられます。成長投資枠も合わせると年間360万円、生涯1,800万円の非課税枠を活用できます。
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          金融庁は「長期・積立・分散」の原則を推奨しています。この観点からは、47カ国・約2,800銘柄に分散するオルカンは原則に沿った選択といえます。
+          金融庁は「長期・積立・分散」の原則を推奨しています。この観点からは、47カ国・約3,000銘柄に分散するオルカンは原則に沿った選択といえます。
         </p>
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
           <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
