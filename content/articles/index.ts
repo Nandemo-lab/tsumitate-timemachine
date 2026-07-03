@@ -13,11 +13,16 @@ export interface ArticleEntry {
 // ──────────────────────────────────────────────────────────────────────────
 
 import OrukanVsSp500, { meta as orukanVsSp500Meta } from "./orukan-vs-sp500";
+import OrukanVsNasdaq100, { meta as orukanVsNasdaq100Meta } from "./orukan-vs-nasdaq100";
 
 export const ARTICLE_REGISTRY: Record<string, ArticleEntry> = {
   "orukan-vs-sp500": {
     meta: orukanVsSp500Meta,
     Content: OrukanVsSp500,
+  },
+  "orukan-vs-nasdaq100": {
+    meta: orukanVsNasdaq100Meta,
+    Content: OrukanVsNasdaq100,
   },
   // "next-article-slug": { meta: nextMeta, Content: NextContent },
 };
