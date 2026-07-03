@@ -41,6 +41,8 @@ export interface Fund {
   category: FundCategory;
   description: string;
   riskLevel: 1 | 2 | 3 | 4 | 5;
+  /** 構成銘柄数の表示用文字列（例: "約3,000銘柄"）。記事・比較ページはここを唯一の参照元とする */
+  shareCount: string;
   annualReturns: Record<number, number>;
   encyclopedia: FundEncyclopediaData;
 }

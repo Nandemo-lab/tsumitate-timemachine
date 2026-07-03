@@ -16,6 +16,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "オルカン", ticker: "vt.us",
     color: "#6366f1", riskLevel: 3,
     description: "世界中の企業へまとめて投資できる",
+    shareCount: "約3,000銘柄",
     annualReturns: {
       2015: 0.014, 2016: 0.075, 2017: 0.241, 2018: -0.093,
       2019: 0.271, 2020: 0.163, 2021: 0.305, 2022: -0.180,
@@ -42,6 +43,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "VT", ticker: "vt.us",
     color: "#818cf8", riskLevel: 3,
     description: "世界中へETFで分散投資できる",
+    shareCount: "約9,000銘柄",
     annualReturns: {
       2015: 0.009, 2016: 0.080, 2017: 0.244, 2018: -0.096,
       2019: 0.266, 2020: 0.161, 2021: 0.299, 2022: -0.183,
@@ -70,6 +72,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "S&P500", ticker: "^spx",
     color: "#f59e0b", riskLevel: 3,
     description: "アメリカの代表企業500社に投資できる",
+    shareCount: "500銘柄",
     annualReturns: {
       2015: 0.016, 2016: 0.121, 2017: 0.218, 2018: -0.045,
       2019: 0.316, 2020: 0.186, 2021: 0.289, 2022: -0.184,
@@ -96,6 +99,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "VTI", ticker: "vti.us",
     color: "#3b82f6", riskLevel: 3,
     description: "アメリカ株式市場全体に幅広く投資できる",
+    shareCount: "約3,700銘柄",
     annualReturns: {
       2015: 0.008, 2016: 0.128, 2017: 0.215, 2018: -0.053,
       2019: 0.311, 2020: 0.213, 2021: 0.258, 2022: -0.194,
@@ -124,6 +128,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "VYM", ticker: "vym.us",
     color: "#10b981", riskLevel: 2,
     description: "アメリカの配当が多い企業に投資できる",
+    shareCount: "約400銘柄",
     annualReturns: {
       2015: -0.001, 2016: 0.175, 2017: 0.196, 2018: -0.085,
       2019: 0.267, 2020: 0.024, 2021: 0.281, 2022: -0.001,
@@ -150,6 +155,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "SCHD", ticker: "schd.us",
     color: "#059669", riskLevel: 2,
     description: "配当を増やし続ける優良企業に投資できる",
+    shareCount: "約100銘柄",
     annualReturns: {
       2015: -0.012, 2016: 0.173, 2017: 0.185, 2018: -0.074,
       2019: 0.278, 2020: 0.068, 2021: 0.299, 2022: -0.034,
@@ -178,6 +184,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "NASDAQ100", ticker: "^ndx",
     color: "#8b5cf6", riskLevel: 4,
     description: "アメリカの主要テック企業100社に投資できる",
+    shareCount: "約100銘柄",
     annualReturns: {
       2015: 0.097, 2016: 0.074, 2017: 0.331, 2018: -0.012,
       2019: 0.397, 2020: 0.488, 2021: 0.271, 2022: -0.330,
@@ -204,6 +211,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "FANG+", ticker: "^nyfang",
     color: "#ef4444", riskLevel: 5,
     description: "世界を牽引する大型テクノロジー企業へ集中投資できる",
+    shareCount: "10銘柄",
     annualReturns: {
       2015: 0.122, 2016: 0.056, 2017: 0.416, 2018: 0.064,
       2019: 0.414, 2020: 0.628, 2021: 0.344, 2022: -0.443,
@@ -232,6 +240,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "インド株", ticker: "inda.us",
     color: "#f97316", riskLevel: 5,
     description: "急成長中のインド企業に投資できる",
+    shareCount: "約130銘柄",
     annualReturns: {
       2015: -0.062, 2016: -0.015, 2017: 0.381, 2018: -0.083,
       2019: 0.126, 2020: 0.143, 2021: 0.418, 2022: 0.012,
@@ -258,6 +267,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "新興国株", ticker: "eem.us",
     color: "#ec4899", riskLevel: 4,
     description: "中国・台湾など新興国全体に分散投資できる",
+    shareCount: "約1,200銘柄",
     annualReturns: {
       2015: -0.147, 2016: 0.113, 2017: 0.373, 2018: -0.146,
       2019: 0.184, 2020: 0.182, 2021: -0.048, 2022: -0.201,
@@ -298,6 +308,19 @@ export const FUND_LIST = Object.values(FUNDS);
 export function getFund(id: FundId): Fund { return FUNDS[id]; }
 export function getFundsByCategory(category: FundCategory): Fund[] {
   return FUND_LIST.filter((f) => f.category === category);
+}
+
+/**
+ * 指定年の暦年リターンを「約-33%」のような表示用文字列で返す。
+ * 記事・比較ページの下落率はハードコードせず、必ずこの関数か FUNDS[id].annualReturns を参照する。
+ */
+export function formatAnnualReturn(fundId: FundId, year: number): string {
+  const value = FUNDS[fundId].annualReturns[year];
+  if (value === undefined) return "データなし";
+  const pct = Math.round(value * 1000) / 10; // 小数第1位まで
+  const sign = pct > 0 ? "+" : "";
+  const display = pct < 0 ? `−${Math.abs(pct)}` : `${sign}${pct}`; // 負値は全角マイナス(−)でサイト表記に統一
+  return `約${display}%`;
 }
 export const CATEGORY_ORDER: FundCategory[] = ["global", "us", "dividend", "hightech", "emerging"];
 
