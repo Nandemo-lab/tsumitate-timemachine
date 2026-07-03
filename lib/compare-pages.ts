@@ -1,5 +1,5 @@
 import { FundId } from "@/types";
-import { FUNDS, formatAnnualReturn } from "@/lib/funds";
+import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 
 export interface CompareFaq {
   q: string;
@@ -54,7 +54,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "○ 米国内で分散" },
       { label: "リスク",      a: "中（★★★）",                  b: "中（★★★）" },
       { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+14%（2015〜2025年平均）" },
-      { label: "信託報酬",    a: "年0.05775%",                   b: "年0.09372%" },
+      { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("sp500") },
       { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
     ],
     faqs: [
@@ -109,7 +109,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "リスク",        a: "中（★★★）",                   b: "やや高（★★★★）" },
       { label: "過去の年平均リターン", a: "約+14%（2015〜2025年平均）",        b: "約+20%（2015〜2025年平均）" },
       { label: "最大下落幅",    a: "約−33%（2020年コロナ）",       b: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）` },
-      { label: "信託報酬",      a: "年0.09372%",                   b: "年0.2035%" },
+      { label: "信託報酬",      a: formatExpenseRatio("sp500"),     b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ つみたて・成長両対応" },
     ],
     faqs: [
@@ -165,7 +165,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "リスク",        a: "中（★★★）",                   b: "高（★★★★）" },
       { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",    b: "約+20%（2015〜2025年平均）" },
       { label: "最大下落幅（2022年）", a: formatAnnualReturn("orcan", 2022),  b: formatAnnualReturn("nasdaq100", 2022) },
-      { label: "信託報酬",      a: "年0.05775%",                   b: "年0.2035%〜0.495%" },
+      { label: "信託報酬",      a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
     ],
     faqs: [
@@ -220,7 +220,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "米国比率",      a: "100%",                          b: "約60%" },
       { label: "リスク",        a: "中（★★★）",                   b: "中（★★★）" },
       { label: "過去の年平均リターン", a: "約+13%（2015〜2025年平均）",        b: "約+12%（2015〜2025年平均）" },
-      { label: "経費率",        a: "年0.03%（世界最低水準）",       b: "年0.05775%" },
+      { label: "経費率",        a: `${formatExpenseRatio("vti")}（世界最低水準）`,       b: formatExpenseRatio("orcan") },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",           b: "○ つみたて・成長両対応" },
     ],
     faqs: [
@@ -275,7 +275,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "増配率（10年平均）", a: "約11〜12%",                b: "約6〜7%" },
       { label: "リスク",        a: "中低（★★）",                   b: "中低（★★）" },
       { label: "過去の年平均リターン", a: "約+11%（2015〜2025年平均）",         b: "約+11%（2015〜2025年平均）" },
-      { label: "経費率",        a: "年0.06%",                       b: "年0.06%" },
+      { label: "経費率",        a: formatExpenseRatio("schd"),      b: formatExpenseRatio("vym") },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",           b: "○ 成長投資枠（ETF）" },
     ],
     faqs: [
@@ -330,7 +330,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "リスク",        a: "やや高（★★★★）",              b: "非常に高（★★★★★）" },
       { label: "過去の年平均リターン", a: "約+20%（2015〜2025年平均）", b: "約+25%（2015〜2025年平均）" },
       { label: "最大下落幅",    a: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）`,   b: `${formatAnnualReturn("fangplus", 2022)}（2022年）` },
-      { label: "信託報酬",      a: "年0.2035%",                    b: "年0.7755%" },
+      { label: "信託報酬",      a: formatExpenseRatio("nasdaq100"), b: formatExpenseRatio("fangplus") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ 成長投資枠のみ" },
     ],
     faqs: [
@@ -356,7 +356,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "長期投資向きなのはNASDAQ100とFANG+のどちらですか？",
-        a: "長期投資にはNASDAQ100のほうが向いています。100銘柄への分散・つみたて投資枠対応・低コスト（年0.2035% vs 年0.7755%）という点で積立投資との相性が良いです。FANG+は短期〜中期での大きなリターンを狙う上級者向けの商品です。長期でコツコツ積み立てる場合、NASDAQ100から始める人が多く見られます。",
+        a: "長期投資にはNASDAQ100のほうが向いています。100銘柄への分散・つみたて投資枠対応・低コスト（年0.495% vs 年0.7755%）という点で積立投資との相性が良いです。FANG+は短期〜中期での大きなリターンを狙う上級者向けの商品です。長期でコツコツ積み立てる場合、NASDAQ100から始める人が多く見られます。",
       },
     ],
   },
@@ -383,7 +383,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "形式",        a: "ETF（株式市場でリアルタイム売買）", b: "投資信託（毎日基準価格）" },
       { label: "運用会社",    a: "バンガード社（米国）",               b: "三菱UFJアセット（日本）" },
       { label: "米国比率",    a: "約60%",                             b: "約60〜65%" },
-      { label: "経費率",      a: "年0.07%",                           b: "年0.05775%" },
+      { label: "経費率",      a: formatExpenseRatio("vt"),            b: formatExpenseRatio("orcan") },
       { label: "最低購入額",  a: "数万円〜（口数単位）",              b: "100円〜（積立設定可）" },
       { label: "NISA対応",    a: "○ 成長投資枠（ETF）",              b: "○ つみたて・成長両対応" },
       { label: "自動積立",    a: "△ 証券会社設定必要",               b: "◎ 簡単に毎月自動積立" },
@@ -437,7 +437,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "投資対象",      a: `米国株式全体（${FUNDS.vti.shareCount}）`,      b: `米国大型株（${FUNDS.sp500.shareCount}）` },
       { label: "形式",          a: "ETF（株式市場でリアルタイム売買）", b: "投資信託（毎日基準価格）" },
       { label: "中小型株",      a: "○ 含む",                           b: "× 大型株のみ" },
-      { label: "経費率",        a: "年0.03%（世界最低水準）",           b: "年0.09372%" },
+      { label: "経費率",        a: `${formatExpenseRatio("vti")}（世界最低水準）`,           b: formatExpenseRatio("sp500") },
       { label: "値動きの近似度", a: "S&P500と相関0.99以上",             b: "VTIとほぼ同じ動き" },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",              b: "○ つみたて・成長両対応" },
       { label: "最低購入額",    a: "数万円〜（口数単位）",              b: "100円〜（積立設定可）" },
@@ -494,7 +494,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "増配率（10年）", a: "年平均約11〜12%",                  b: "年平均約5〜7%" },
       { label: "リターン特性",   a: "配当中心・値上がりやや低め",       b: "値上がり重視・配当は低め" },
       { label: "リスク",         a: "中低（★★）",                     b: "中（★★★）" },
-      { label: "経費率",         a: "年0.06%（ETF）/ 年0.192%（投信）", b: "年0.09372%" },
+      { label: "経費率",         a: `年0.06%（ETF）/ ${formatExpenseRatio("schd")}（投信）`, b: formatExpenseRatio("sp500") },
       { label: "NISA対応",       a: "○ 成長投資枠（投信もあり）",       b: "○ つみたて・成長両対応" },
       { label: "適した目的",     a: "配当収入・老後の現金フロー",        b: "資産最大化・長期積立" },
     ],

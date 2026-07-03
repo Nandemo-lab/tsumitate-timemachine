@@ -322,6 +322,16 @@ export function formatAnnualReturn(fundId: FundId, year: number): string {
   const display = pct < 0 ? `−${Math.abs(pct)}` : `${sign}${pct}`; // 負値は全角マイナス(−)でサイト表記に統一
   return `約${display}%`;
 }
+/**
+ * 信託報酬・経費率を「年0.05775%」のような表示用文字列で返す。
+ * FUNDS[id].encyclopedia.managementFee（"0.05775%（年率）"）を唯一の参照元とする。
+ */
+export function formatExpenseRatio(fundId: FundId): string {
+  const raw = FUNDS[fundId].encyclopedia.managementFee;
+  const numeric = raw.replace("（年率）", "");
+  return `年${numeric}`;
+}
+
 export const CATEGORY_ORDER: FundCategory[] = ["global", "us", "dividend", "hightech", "emerging"];
 
 // 投資初心者が選びやすいよう、銘柄の特徴を短いラベルに要約する

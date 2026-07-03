@@ -11,6 +11,7 @@ import {
 import { simulate, formatCurrency } from "@/lib/simulation";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
 import type { ArticleMeta } from "@/lib/article-pages";
 
 // ─── メタデータ ────────────────────────────────────────────────────────────
@@ -113,7 +114,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "「増配率・トータルリターンを重視したい」→ SCHDが向いている",
               "「より多くの銘柄に分散して安定を重視したい」→ VYMが向いている",
-              "「どちらか迷っている」→ 経費率はほぼ同水準のため、増配実績を重視するかどうかで選ぶ",
+              "「どちらか迷っている」→ 増配実績を重視するかどうかで選ぶ",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -138,7 +139,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "約100銘柄"],
           ["配当利回り", "約3.5〜4.0%（目安）"],
           ["増配率（10年平均）", "約11〜12%"],
-          ["経費率", "年0.06%"],
+          ["経費率", "年0.192%（投資信託）"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           銘柄数を絞ることで「配当を増やし続けられる質の高い企業」に的を絞っているのが特徴です。その分、個別銘柄への集中度はVYMよりやや高くなります。
@@ -186,7 +187,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["配当利回り", "約3.5〜4.0%",              "約2.8〜3.2%"],
                 ["増配率（10年平均）", "約11〜12%",         "約6〜7%"],
                 ["分散度",     "△ やや集中",               "◎ 広く分散"],
-                ["経費率",     "0.06%",                    "0.06%"],
+                ["経費率",     "0.192%（投信）",            "0.06%"],
                 ["NISA対応",   "○ 成長投資枠（ETF）",       "○ 成長投資枠（ETF）"],
               ].map(([k, a, b]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
@@ -442,57 +443,3 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
   );
 }
 
-// ─── 共通パーツ ──────────────────────────────────────────────────────────────
-
-function SectionHeading({ index, title }: { index: number; title: string }) {
-  return (
-    <h2
-      className="text-lg font-black text-white flex items-start gap-2 leading-tight"
-      style={{ fontFamily: "var(--font-serif-jp), serif" }}
-    >
-      <span className="text-indigo-400 font-black text-base mt-0.5 flex-shrink-0">{index + 1}.</span>
-      {title}
-    </h2>
-  );
-}
-
-function SpecCard({ rows }: { rows: [string, string][] }) {
-  return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
-      <ul className="space-y-2">
-        {rows.map(([k, v]) => (
-          <li key={k} className="flex items-start gap-3 text-sm">
-            <span className="text-zinc-500 w-20 flex-shrink-0">{k}</span>
-            <span className="text-zinc-200">{v}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function SimCard({ name, color, sim }: {
-  name: string;
-  color: string;
-  sim: { totalPrincipal: number; finalValue: number; profit: number; returnRate: number };
-}) {
-  return (
-    <div
-      className="rounded-xl p-4 space-y-2"
-      style={{
-        background: `linear-gradient(145deg, ${color}12 0%, transparent 70%)`,
-        border: `1px solid ${color}30`,
-      }}
-    >
-      <p className="text-[11px] font-bold" style={{ color }}>{name}</p>
-      <p className="text-xl font-black text-emerald-400 leading-none">
-        +{formatCurrency(sim.profit)}
-      </p>
-      <p className="text-[11px] text-emerald-300">+{sim.returnRate.toFixed(1)}%</p>
-      <div className="pt-1 border-t border-white/[0.06] space-y-0.5">
-        <p className="text-[10px] text-zinc-500">元本 {formatCurrency(sim.totalPrincipal)}</p>
-        <p className="text-[10px] text-zinc-400">評価額 {formatCurrency(sim.finalValue)}</p>
-      </div>
-    </div>
-  );
-}

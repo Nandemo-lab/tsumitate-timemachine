@@ -102,6 +102,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  // コラム一覧（/articles）
+  const articleIndexPage: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+  ];
+
   // コラム記事（/articles/[slug]）
   const articlePages: MetadataRoute.Sitemap = ARTICLE_PAGES.map((p) => ({
     url: `${BASE_URL}/articles/${p.slug}`,
@@ -119,6 +124,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fromYearPages,
     ...monthlyAmountPages,
     ...guideArticlePages,
+    ...articleIndexPage,
     ...articlePages,
     ...rankingPages,
     ...simPages,
