@@ -19,7 +19,7 @@ import type { ArticleMeta } from "@/lib/article-pages";
 export const meta: ArticleMeta = {
   slug: "sp500-vs-nasdaq100",
   h1: "S&P500とNASDAQ100どっち？違い・過去実績・向いている人を徹底比較",
-  metaTitle: "S&P500とNASDAQ100どっち？違い・過去実績・どちらが向いているかを比較 | 積立タイムマシン",
+  metaTitle: "S&P500とNASDAQ100どっち？違い・過去実績・どちらが向いているかを比較",
   metaDescription:
     "S&P500とNASDAQ100の違いを過去シミュレーション・暴落耐性・コスト・新NISAでの選び方から徹底比較。安定分散とハイテク集中、どちらが自分に向いているか判断できます。",
   lastUpdated: "2026年7月",

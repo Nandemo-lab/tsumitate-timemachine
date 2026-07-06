@@ -19,7 +19,7 @@ import type { ArticleMeta } from "@/lib/article-pages";
 export const meta: ArticleMeta = {
   slug: "schd-vs-vym",
   h1: "SCHDとVYMどっち？配当利回り・増配率・過去実績を徹底比較",
-  metaTitle: "SCHDとVYMどっち？配当利回り・増配率・どちらが向いているかを比較 | 積立タイムマシン",
+  metaTitle: "SCHDとVYMどっち？配当利回り・増配率・どちらが向いているかを比較",
   metaDescription:
     "楽天SCHDとVYMの配当利回り・増配率・積立実績を過去シミュレーション・コスト・新NISAでの選び方から徹底比較。増配重視と分散重視、どちらが自分に向いているか判断できます。",
   lastUpdated: "2026年7月",

@@ -19,7 +19,7 @@ import type { ArticleMeta } from "@/lib/article-pages";
 export const meta: ArticleMeta = {
   slug: "orukan-vs-sp500",
   h1: "オルカンとS&P500どっち？違い・過去実績・向いている人を徹底比較",
-  metaTitle: "オルカンとS&P500どっち？違い・過去実績・どちらが向いているかを比較 | 積立タイムマシン",
+  metaTitle: "オルカンとS&P500どっち？違い・過去実績・どちらが向いているかを比較",
   metaDescription:
     "オルカン（全世界株）とS&P500の違いを過去シミュレーション・暴落耐性・コスト・新NISAでの選び方から徹底比較。初心者にも分かりやすく中立的に解説します。",
   lastUpdated: "2025年6月",

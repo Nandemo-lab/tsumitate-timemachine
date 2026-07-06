@@ -19,7 +19,7 @@ import type { ArticleMeta } from "@/lib/article-pages";
 export const meta: ArticleMeta = {
   slug: "schd-vs-sp500",
   h1: "SCHDとS&P500どっち？配当重視と成長重視を過去実績で比較",
-  metaTitle: "SCHDとS&P500どっち？配当重視と成長重視、どちらが向いているかを比較 | 積立タイムマシン",
+  metaTitle: "SCHDとS&P500どっち？配当重視と成長重視、どちらが向いているかを比較",
   metaDescription:
     "楽天SCHDとS&P500のトータルリターン・配当利回り・暴落耐性を過去データで比較。配当収入を重視するか、資産の最大化を重視するか、判断材料を整理しました。",
   lastUpdated: "2026年7月",
