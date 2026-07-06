@@ -16,6 +16,7 @@ import OrukanVsSp500, { meta as orukanVsSp500Meta } from "./orukan-vs-sp500";
 import OrukanVsNasdaq100, { meta as orukanVsNasdaq100Meta } from "./orukan-vs-nasdaq100";
 import Sp500VsNasdaq100, { meta as sp500VsNasdaq100Meta } from "./sp500-vs-nasdaq100";
 import SchdVsVym, { meta as schdVsVymMeta } from "./schd-vs-vym";
+import SchdVsSp500, { meta as schdVsSp500Meta } from "./schd-vs-sp500";
 
 export const ARTICLE_REGISTRY: Record<string, ArticleEntry> = {
   "orukan-vs-sp500": {
@@ -33,6 +34,10 @@ export const ARTICLE_REGISTRY: Record<string, ArticleEntry> = {
   "schd-vs-vym": {
     meta: schdVsVymMeta,
     Content: SchdVsVym,
+  },
+  "schd-vs-sp500": {
+    meta: schdVsSp500Meta,
+    Content: SchdVsSp500,
   },
   // "next-article-slug": { meta: nextMeta, Content: NextContent },
 };
