@@ -7,7 +7,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: `データソース・計算方法 | ${SITE_NAME}`,
+  title: "データソース・計算方法",
   description:
     "積立タイムマシンで使用している年率リターンデータの取得元・計算方法・更新頻度・注意事項を公開しています。",
   alternates: { canonical: `${BASE_URL}/about/data-sources` },
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     type: "article",
     siteName: SITE_NAME,
     locale: "ja_JP",
+    images: [{ url: `${BASE_URL}/api/og?static=1`, width: 1200, height: 630, alt: "データソース・計算方法" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `データソース・計算方法 | ${SITE_NAME}`,
+    description: "シミュレーションに使用する年率リターンの出典・計算方法を公開しています。",
+    images: [`${BASE_URL}/api/og?static=1`],
   },
   robots: { index: true, follow: true },
 };

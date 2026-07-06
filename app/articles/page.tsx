@@ -8,7 +8,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: `コラム一覧 | ${SITE_NAME}`,
+  title: "コラム一覧",
   description: "オルカン・S&P500・NASDAQ100・SCHDなど人気銘柄の比較コラムを過去データとともに解説します。",
   alternates: { canonical: `${BASE_URL}/articles` },
   openGraph: {
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE_NAME,
     locale: "ja_JP",
+    images: [{ url: `${BASE_URL}/api/og?static=1`, width: 1200, height: 630, alt: "コラム一覧" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `コラム一覧 | ${SITE_NAME}`,
+    description: "人気銘柄の比較コラムを過去データとともに解説します。",
+    images: [`${BASE_URL}/api/og?static=1`],
   },
 };
 

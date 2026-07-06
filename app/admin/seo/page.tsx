@@ -10,7 +10,9 @@ import { GUIDE_PAGES } from "@/lib/guide-pages";
 import SeoAdminClient, { type PageSeoData } from "./SeoAdminClient";
 
 export const metadata: Metadata = {
-  title: "SEO管理 | 積立タイムマシン",
+  title: "SEO管理",
+  description: "内部SEO管理用ダッシュボード（非公開）",
+  alternates: { canonical: "https://tsumitate-timemachine.com/admin/seo" },
   robots: { index: false, follow: false },
 };
 

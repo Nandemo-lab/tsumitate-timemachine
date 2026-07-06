@@ -5,7 +5,7 @@ import { SITE_NAME, SITE_URL, LAST_UPDATED_PRIVACY } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
-  title: `プライバシーポリシー | ${SITE_NAME}`,
+  title: "プライバシーポリシー",
   description: "積立タイムマシンのプライバシーポリシーです。個人情報の取り扱いおよびCookieの利用について説明します。",
   alternates: { canonical: `${SITE_URL}/privacy` },
   robots: { index: true, follow: true },

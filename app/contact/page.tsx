@@ -5,7 +5,7 @@ import { SITE_NAME, SITE_URL, CONTACT_FORM_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
-  title: `お問い合わせ | ${SITE_NAME}`,
+  title: "お問い合わせ",
   description: "積立タイムマシンへのお問い合わせはこちら。ご意見・ご要望・不具合報告をお待ちしています。",
   alternates: { canonical: `${SITE_URL}/contact` },
   robots: { index: true, follow: true },

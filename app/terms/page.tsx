@@ -5,7 +5,7 @@ import { SITE_NAME, SITE_URL, LAST_UPDATED_TERMS } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
-  title: `利用規約 | ${SITE_NAME}`,
+  title: "利用規約",
   description: "積立タイムマシンの利用規約です。本サービスは投資シミュレーションおよび情報提供を目的としたサービスです。",
   alternates: { canonical: `${SITE_URL}/terms` },
   robots: { index: true, follow: true },

@@ -9,12 +9,16 @@ import {
 import { RankingPageData, RANKING_LABELS } from "@/lib/ranking-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
+import { FUND_SEO_MAP } from "@/lib/fund-seo";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
 const MEDALS = ["🥇", "🥈", "🥉"];
+
+// /[fundSlug]/monthly/[amount] ページが実際に生成されている銘柄のみ（lib/monthly-pages.ts の FUND_MONTHLY_CONFIG と一致させる）
+const MONTHLY_PAGE_FUND_SLUGS = new Set(["orukan", "sp500", "nasdaq100"]);
 
 interface Props {
   page: RankingPageData;
@@ -227,12 +231,20 @@ export default function RankingView({ page }: Props) {
                         {page.simYear}年積立を見る
                         <ArrowRight className="h-3 w-3" />
                       </Link>
-                    ) : fundPageSlug ? (
+                    ) : fundPageSlug && MONTHLY_PAGE_FUND_SLUGS.has(fundPageSlug) ? (
                       <Link
                         href={`/${fundPageSlug}/monthly/30000`}
                         className="flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-indigo-400 hover:bg-white/[0.06] transition-colors"
                       >
                         月3万円を見る
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    ) : fundPageSlug && FUND_SEO_MAP.has(fundPageSlug) ? (
+                      <Link
+                        href={`/${fundPageSlug}`}
+                        className="flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-indigo-400 hover:bg-white/[0.06] transition-colors"
+                      >
+                        詳しく見る
                         <ArrowRight className="h-3 w-3" />
                       </Link>
                     ) : null}

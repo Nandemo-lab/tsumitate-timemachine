@@ -7,7 +7,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
-  title: `積立タイムマシンについて | ${SITE_NAME}`,
+  title: "積立タイムマシンについて",
   description:
     "積立タイムマシンは「もしあの時から積み立てていたら？」という問いに答えるシミュレーションサービスです。個人開発の経緯・運営方針・データの考え方をご紹介します。",
   alternates: { canonical: `${BASE_URL}/about` },
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     type: "article",
     siteName: SITE_NAME,
     locale: "ja_JP",
+    images: [{ url: `${BASE_URL}/api/og?static=1`, width: 1200, height: 630, alt: "積立タイムマシンについて" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `積立タイムマシンについて | ${SITE_NAME}`,
+    description: "個人開発の積立シミュレーションサービスです。運営方針とデータの考え方をご紹介します。",
+    images: [`${BASE_URL}/api/og?static=1`],
   },
   robots: { index: true, follow: true },
 };
