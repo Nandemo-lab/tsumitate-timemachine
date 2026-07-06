@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # qa-check.mjsの差分検出（変更ページの先頭表示）用に直前コミットも取得
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,7 +40,7 @@ jobs:
           done
 
       - name: Run QA check
-        run: node scripts/qa-check.mjs --server http://localhost:3000
+        run: npm run qa:live
 
       - name: Stop server
         if: always()

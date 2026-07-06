@@ -33,6 +33,15 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 新規記事は `components/articles/ArticleBlocks.tsx` の `SectionHeading` / `SpecCard` /
   `SimCard` を必ず再利用する。記事ファイル内で同名コンポーネントを再定義しない。
 - `content/articles/index.ts` の `ARTICLE_REGISTRY` に登録すること。
+- スキャフォールドを自動生成する場合は以下を使う（`content/articles/<slug>.tsx` の
+  ひな形を生成し、次にやることを画面に表示する）。
+  ```
+  node scripts/new-article.mjs --slug <slug> --fundA <fundId> --fundB <fundId> \
+    --title "..." --description "..."
+  ```
+  生成後は本文・比較表・FAQを既存記事（`content/articles/schd-vs-vym.tsx` 等）を
+  参考に事実ベースで肉付けすること。metaTitleにサイト名サフィックスを直書きしない
+  （root layoutのtemplateが自動付与するため二重表示になる）。
 
 ## 記事・比較ページ・ガイド追加時の必須手順
 
@@ -41,22 +50,28 @@ This version has breaking changes — APIs, conventions, and file structure may 
 1. 既存記事・比較ページ・ガイドとの重複確認
 2. 検索需要・競合性の確認
 3. 内部リンク設計（関連記事・関連比較ページ・シミュレーション導線）
-4. `lib/funds.ts` を参照した事実確認（②で書いた通りハードコード禁止）
+4. `lib/funds.ts` を参照した事実確認（Single Source of Truthの通りハードコード禁止）
 
 **実装後は、以下を上から順に必ず実行してから「完了」と報告すること。**
 
 ```
 1. npm run build            （ビルドが通ることを確認）
-2. node scripts/qa-check.mjs（自動QA。エラー0件を確認。--server指定でHTTP実チェックも可）
+2. npm run qa                （自動QA。ERROR 0件を確認。QA SCOREを報告に含める）
 3. PC確認                    （ブラウザで実際に開き、title/OGP/JSON-LDをDevToolsで確認）
 4. スマホ確認                （モバイル viewport で表示崩れがないか確認）
 5. Search Console登録        （sitemap反映・URL検査でインデックス登録をリクエスト）
 6. X投稿文の作成
 ```
 
-`node scripts/qa-check.mjs` が1件でもエラーを出している状態、または実機確認前の状態で
-「完了しました」と報告してはならない。GitHub Actions（`.github/workflows/qa.yml`）でも
-push・PR時に同じチェックが自動実行され、エラーがあればCIが失敗する。
+`npm run qa`（内部で `node scripts/qa-check.mjs` を実行）が1件でもERRORを出している状態、
+または実機確認前の状態で「完了しました」と報告してはならない。ローカルにサーバーを
+起動できる場合は `npm run qa:live` でcanonical/OGP画像/sitemap掲載URLの実HTTPステータス
+まで検証すること。GitHub Actions（`.github/workflows/qa.yml`）でもpush・PR時に同じ
+チェックが自動実行され、ERRORがあればCIが失敗する。
+
+QA結果は ERROR（必ず修正）/ WARNING（要確認）/ INFO（参考情報、title・description文字数の
+目安逸脱など）の3段階に分かれる。ブロックすべきはERRORのみで、WARNING/INFOは記事の質を
+高めるための参考情報として扱う。
 
 ## 回帰チェック（Regression Test）
 

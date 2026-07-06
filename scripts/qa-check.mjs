@@ -9,20 +9,26 @@
  *   canonical/OGP画像/sitemap掲載URLの実際のHTTPステータスも検証する。
  *     node scripts/qa-check.mjs --server http://localhost:3000
  *
+ * 検出結果は ERROR / WARNING / INFO の3段階に分類される。
+ *   ERROR   : 必ず修正が必要（title二重サフィックス・404・canonical重複・JSON-LD不備・HTTP失敗）
+ *   WARNING : 確認推奨（canonical/description/OGP欠落・robots不整合）
+ *   INFO    : 参考情報（title/description文字数の目安からの逸脱など、都度の修正は必須ではない）
+ *
  * チェック項目:
- *  1. titleにサイト名サフィックスの重複がないか（回帰チェック）
- *  2. titleの文字数（目安30〜35文字、外れは警告）
- *  3. canonicalの欠落・自ページURLとの不一致・重複
- *  4. noindexページにcanonicalがあるか
- *  5. meta descriptionの欠落・重複・文字数（目安90〜120文字）
- *  6. JSON-LD（Article/BreadcrumbList/FAQPage）の必須項目・型チェック
- *  7. OGP画像（og:image）の欠落
- *  8. 内部リンク（href="/..."）が実在ルートを指しているか（404チェック）
- *  9. robots.txtとの整合性（Disallow配下が実際にnoindexになっているか等）
- *  10. [--server指定時のみ] canonical/OGP画像/sitemap掲載URLが実際に200を返すか
+ *  1. titleにサイト名サフィックスの重複がないか（回帰チェック） … ERROR
+ *  2. titleの文字数（目安30〜35文字） … INFO
+ *  3. canonicalの欠落・自ページURLとの不一致・重複 … WARNING / ERROR(重複)
+ *  4. noindexページにcanonicalがあるか … WARNING
+ *  5. meta descriptionの欠落・重複・文字数（目安90〜120文字） … WARNING / INFO(文字数)
+ *  6. JSON-LD（Article/BreadcrumbList/FAQPage）の必須項目・型チェック … ERROR
+ *  7. OGP画像（og:image）の欠落 … WARNING
+ *  8. 内部リンク（href="/..."）が実在ルートを指しているか（404チェック） … ERROR
+ *  9. robots.txtとの整合性 … WARNING
+ *  10. [--server指定時のみ] canonical/OGP画像/sitemap掲載URLが実際に200を返すか … ERROR
  */
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 
 const APP_DIR = path.join(process.cwd(), ".next/server/app");
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -31,11 +37,17 @@ const args = process.argv.slice(2);
 const serverFlagIndex = args.indexOf("--server");
 const SERVER_URL = serverFlagIndex !== -1 ? args[serverFlagIndex + 1] : null;
 
-// title/descriptionの文字数目安（外れは警告のみ、エラーにはしない）
+// title/descriptionの文字数目安（外れはINFOのみ）
 const TITLE_MIN = 30;
 const TITLE_MAX = 35;
 const DESC_MIN = 90;
 const DESC_MAX = 120;
+
+// findings: { level: "ERROR" | "WARNING" | "INFO", url, message }
+const findings = [];
+function report(level, url, message) {
+  findings.push({ level, url, message });
+}
 
 // ─── HTMLファイル収集 ────────────────────────────────────────────────────
 function collectHtmlFiles(dir, out = []) {
@@ -115,7 +127,45 @@ function toLocalUrl(absoluteOrRelativeUrl) {
   if (absoluteOrRelativeUrl.startsWith("/")) {
     return SERVER_URL + absoluteOrRelativeUrl;
   }
-  return null; // 外部URLは対象外
+  return null;
+}
+
+// ─── ③ 差分検出: 変更されたソースファイル → 影響を受けるURLの推定 ─────────
+function getChangedSourceFiles() {
+  const tryCmds = [
+    "git diff --name-only HEAD",           // 未コミットの変更
+    "git diff --name-only HEAD~1 HEAD",    // 直前のコミットとの差分
+  ];
+  for (const cmd of tryCmds) {
+    try {
+      const out = execSync(cmd, { cwd: process.cwd(), encoding: "utf-8" }).trim();
+      if (out) return out.split("\n").filter(Boolean);
+    } catch {
+      /* gitが使えない・履歴がない場合は次を試す */
+    }
+  }
+  return [];
+}
+
+function guessAffectedUrls(changedFiles, knownRoutes) {
+  const affected = new Set();
+  for (const f of changedFiles) {
+    let m;
+    if ((m = f.match(/^content\/articles\/([\w-]+)\.tsx$/))) {
+      affected.add(`/articles/${m[1]}`);
+    } else if ((m = f.match(/^app\/(.+)\/page\.tsx$/))) {
+      const routeGuess = "/" + m[1].replace(/\[.*?\]/g, "").replace(/\/+/g, "/").replace(/\/$/, "");
+      // 動的セグメントを含む場合は完全一致しないため、プレフィックス一致する既知ルートを拾う
+      for (const r of knownRoutes) {
+        if (r === routeGuess || r.startsWith(routeGuess + "/") || routeGuess === "") {
+          if (routeGuess !== "") affected.add(r);
+        }
+      }
+    } else if (f.startsWith("lib/") || f.startsWith("components/")) {
+      // 共有データ・共通コンポーネントの変更はサイト全体に影響しうるため個別ページには絞らない
+    }
+  }
+  return affected;
 }
 
 // ─── メイン ──────────────────────────────────────────────────────────────
@@ -131,27 +181,15 @@ async function main() {
   const known = buildKnownRoutes(files);
   const robots = readRobotsTxt();
 
-  const errors = [];
-  const warnings = [];
   const titleMap = new Map();
   const descMap = new Map();
   const canonicalMap = new Map();
-  const liveCheckTargets = new Set(); // --server 指定時にHTTPで検証するURL群
-
-  // カテゴリ別の合否（④サマリー用）
-  const categoryHasError = {
-    Metadata: false,
-    "JSON-LD": false,
-    "Internal Links": false,
-    Canonical: false,
-    OGP: false,
-  };
+  const liveCheckTargets = new Set();
 
   for (const file of files) {
     const html = fs.readFileSync(file, "utf-8");
     const url = urlFromFile(file);
 
-    // --- noindex判定 ---
     const isNoindex = /name="robots"\s+content="[^"]*noindex[^"]*"/.test(html);
 
     // --- 1・2. title チェック ---
@@ -160,16 +198,15 @@ async function main() {
     if (title) {
       const suffixCount = (title.match(/\s\|\s積立タイムマシン/g) || []).length;
       if (suffixCount >= 2) {
-        errors.push(`[title重複] ${url} : titleに「| 積立タイムマシン」サフィックスが${suffixCount}回出現 → "${title}"`);
-        categoryHasError.Metadata = true;
+        report("ERROR", url, `titleに「| 積立タイムマシン」サフィックスが${suffixCount}回出現 → "${title}"`);
       }
       if (!isNoindex && (title.length < TITLE_MIN || title.length > TITLE_MAX)) {
-        warnings.push(`[title文字数] ${url} : ${title.length}文字（目安${TITLE_MIN}〜${TITLE_MAX}文字）→ "${title}"`);
+        report("INFO", url, `title文字数 ${title.length}文字（目安${TITLE_MIN}〜${TITLE_MAX}文字）`);
       }
       if (!titleMap.has(title)) titleMap.set(title, []);
       titleMap.get(title).push(url);
     } else {
-      warnings.push(`[title欠落] ${url} : <title>タグが見つかりません`);
+      report("WARNING", url, `<title>タグが見つかりません`);
     }
 
     // --- 3・4. canonical チェック ---
@@ -177,14 +214,14 @@ async function main() {
     const canonical = canonicalMatch ? canonicalMatch[1] : null;
     if (!canonical) {
       if (isNoindex) {
-        warnings.push(`[noindex+canonical欠落] ${url} : noindexページにcanonicalがありません`);
+        report("WARNING", url, `noindexページにcanonicalがありません`);
       } else {
-        warnings.push(`[canonical欠落] ${url}`);
+        report("WARNING", url, `canonicalが見つかりません`);
       }
     } else {
       const expected = BASE_URL + (url === "/" ? "" : url);
       if (canonical !== expected && canonical !== expected + "/") {
-        warnings.push(`[canonical不一致] ${url} : canonical="${canonical}" (期待値="${expected}")`);
+        report("WARNING", url, `canonical不一致 canonical="${canonical}" (期待値="${expected}")`);
       }
       if (!canonicalMap.has(canonical)) canonicalMap.set(canonical, []);
       canonicalMap.get(canonical).push(url);
@@ -205,54 +242,46 @@ async function main() {
       }
     }
     if (jsonLdBlocks.length === 0 && rawJsonLdMatches.length === 0) {
-      warnings.push(`[JSON-LD欠落の可能性] ${url} : ld+json ブロックが検出できません`);
+      report("WARNING", url, `ld+json ブロックが検出できません`);
     }
     for (const block of jsonLdBlocks) {
       const type = block["@type"];
       if (typeof type !== "string") {
-        errors.push(`[JSON-LD型エラー] ${url} : @type が文字列ではありません`);
-        categoryHasError["JSON-LD"] = true;
+        report("ERROR", url, `JSON-LD: @type が文字列ではありません`);
         continue;
       }
       if (type === "Article") {
-        if (!block.headline) { errors.push(`[JSON-LD不備] ${url} : Article.headline が欠落`); categoryHasError["JSON-LD"] = true; }
-        if (!block.description) { errors.push(`[JSON-LD不備] ${url} : Article.description が欠落`); categoryHasError["JSON-LD"] = true; }
-        if (!block.datePublished) { errors.push(`[JSON-LD不備] ${url} : Article.datePublished が欠落`); categoryHasError["JSON-LD"] = true; }
+        if (!block.headline) report("ERROR", url, `JSON-LD: Article.headline が欠落`);
+        if (!block.description) report("ERROR", url, `JSON-LD: Article.description が欠落`);
+        if (!block.datePublished) report("ERROR", url, `JSON-LD: Article.datePublished が欠落`);
         if (block.image && typeof block.image !== "string" && typeof block.image !== "object") {
-          errors.push(`[JSON-LD型エラー] ${url} : Article.image の型が不正`);
-          categoryHasError["JSON-LD"] = true;
+          report("ERROR", url, `JSON-LD: Article.image の型が不正`);
         }
       }
       if (type === "BreadcrumbList") {
         if (!Array.isArray(block.itemListElement) || block.itemListElement.length === 0) {
-          errors.push(`[JSON-LD不備] ${url} : BreadcrumbList.itemListElement が空`);
-          categoryHasError["JSON-LD"] = true;
+          report("ERROR", url, `JSON-LD: BreadcrumbList.itemListElement が空`);
         } else {
           block.itemListElement.forEach((item, i) => {
             if (item["@type"] !== "ListItem") {
-              errors.push(`[JSON-LD型エラー] ${url} : BreadcrumbList.itemListElement[${i}].@type が "ListItem" ではありません`);
-              categoryHasError["JSON-LD"] = true;
+              report("ERROR", url, `JSON-LD: BreadcrumbList.itemListElement[${i}].@type が "ListItem" ではありません`);
             }
             if (typeof item.position !== "number") {
-              errors.push(`[JSON-LD型エラー] ${url} : BreadcrumbList.itemListElement[${i}].position が数値ではありません`);
-              categoryHasError["JSON-LD"] = true;
+              report("ERROR", url, `JSON-LD: BreadcrumbList.itemListElement[${i}].position が数値ではありません`);
             }
             if (!item.name || !item.item) {
-              errors.push(`[JSON-LD不備] ${url} : BreadcrumbList.itemListElement[${i}] に name/item が欠落`);
-              categoryHasError["JSON-LD"] = true;
+              report("ERROR", url, `JSON-LD: BreadcrumbList.itemListElement[${i}] に name/item が欠落`);
             }
           });
         }
       }
       if (type === "FAQPage") {
         if (!Array.isArray(block.mainEntity) || block.mainEntity.length === 0) {
-          errors.push(`[JSON-LD不備] ${url} : FAQPage.mainEntity が空`);
-          categoryHasError["JSON-LD"] = true;
+          report("ERROR", url, `JSON-LD: FAQPage.mainEntity が空`);
         } else {
           block.mainEntity.forEach((q, i) => {
             if (q["@type"] !== "Question" || !q.acceptedAnswer?.text) {
-              errors.push(`[JSON-LD型エラー] ${url} : FAQPage.mainEntity[${i}] の構造が不正`);
-              categoryHasError["JSON-LD"] = true;
+              report("ERROR", url, `JSON-LD: FAQPage.mainEntity[${i}] の構造が不正`);
             }
           });
         }
@@ -263,10 +292,10 @@ async function main() {
     const descMatch = html.match(/name="description"\s+content="([^"]*)"/);
     const desc = descMatch ? descMatch[1] : null;
     if (!desc) {
-      warnings.push(`[description欠落] ${url}`);
+      report("WARNING", url, `descriptionが見つかりません`);
     } else {
       if (!isNoindex && (desc.length < DESC_MIN || desc.length > DESC_MAX)) {
-        warnings.push(`[description文字数] ${url} : ${desc.length}文字（目安${DESC_MIN}〜${DESC_MAX}文字）`);
+        report("INFO", url, `description文字数 ${desc.length}文字（目安${DESC_MIN}〜${DESC_MAX}文字）`);
       }
       if (!descMap.has(desc)) descMap.set(desc, []);
       descMap.get(desc).push(url);
@@ -275,10 +304,7 @@ async function main() {
     // --- 7. OGP画像チェック ---
     const ogImageMatch = html.match(/property="og:image"\s+content="([^"]*)"/);
     if (!ogImageMatch) {
-      if (!isNoindex) {
-        warnings.push(`[OGP画像欠落] ${url}`);
-        categoryHasError.OGP = categoryHasError.OGP; // noindex以外の欠落のみ将来的にエラー化検討
-      }
+      if (!isNoindex) report("WARNING", url, `OGP画像（og:image）が見つかりません`);
     } else {
       liveCheckTargets.add(ogImageMatch[1]);
     }
@@ -288,58 +314,53 @@ async function main() {
     const brokenLinks = new Set();
     for (const hm of hrefMatches) {
       const href = hm[1];
-      if (!isKnownRoute(href, known)) {
-        brokenLinks.add(href);
-      }
+      if (!isKnownRoute(href, known)) brokenLinks.add(href);
     }
     for (const bl of brokenLinks) {
-      errors.push(`[内部リンク404疑い] ${url} : href="${bl}" に対応するページが見つかりません`);
-      categoryHasError["Internal Links"] = true;
+      report("ERROR", url, `内部リンク404疑い: href="${bl}" に対応するページが見つかりません`);
     }
 
-    // --- 9. robots.txt整合性: Disallow配下のページがnoindexになっているか ---
+    // --- 9. robots.txt整合性 ---
     if (robots) {
       const disallowed = robots.disallows.some((d) => d !== "" && url.startsWith(d));
       if (disallowed && !isNoindex) {
-        warnings.push(`[robots整合性] ${url} : robots.txtでDisallowされていますが、noindexメタタグがありません`);
+        report("WARNING", url, `robots.txtでDisallowされていますが、noindexメタタグがありません`);
       }
     }
   }
 
-  // --- title/description/canonical 重複チェック（異なるURL間） ---
+  // --- title/description/canonical 重複チェック ---
   for (const [title, urls] of titleMap) {
     const uniqueUrls = [...new Set(urls)];
     if (uniqueUrls.length > 1) {
-      warnings.push(`[title重複] 「${title}」が複数ページで重複: ${uniqueUrls.join(", ")}`);
+      report("WARNING", uniqueUrls[0], `title重複「${title}」: ${uniqueUrls.join(", ")}`);
     }
   }
   for (const [desc, urls] of descMap) {
     const uniqueUrls = [...new Set(urls)];
     if (uniqueUrls.length > 1) {
-      warnings.push(`[description重複] 複数ページで同一description: ${uniqueUrls.join(", ")}`);
+      report("WARNING", uniqueUrls[0], `description重複: ${uniqueUrls.join(", ")}`);
     }
   }
   for (const [canonical, urls] of canonicalMap) {
     const uniqueUrls = [...new Set(urls)];
     if (uniqueUrls.length > 1) {
-      errors.push(`[canonical重複] "${canonical}" が複数ページから参照: ${uniqueUrls.join(", ")}`);
-      categoryHasError.Canonical = true;
+      report("ERROR", uniqueUrls[0], `canonical重複 "${canonical}": ${uniqueUrls.join(", ")}`);
     }
   }
 
-  // --- 9b. robots.txt の Sitemap 行の整合性 ---
+  // --- robots.txt の Sitemap 行の整合性 ---
   if (robots) {
     if (!robots.sitemap) {
-      warnings.push(`[robots整合性] robots.txtにSitemap行がありません`);
+      report("WARNING", "/robots.txt", `Sitemap行がありません`);
     } else if (robots.sitemap !== `${BASE_URL}/sitemap.xml`) {
-      warnings.push(`[robots整合性] robots.txtのSitemap行が想定と異なります: "${robots.sitemap}"`);
+      report("WARNING", "/robots.txt", `Sitemap行が想定と異なります: "${robots.sitemap}"`);
     }
   } else {
-    warnings.push(`[robots整合性] robots.txtが見つかりません`);
+    report("WARNING", "/robots.txt", `robots.txtが見つかりません`);
   }
 
-  // --- 10. --server 指定時: canonical / OGP画像 / sitemap掲載URL の実HTTPステータス確認 ---
-  let seoLiveCheckOk = true;
+  // --- --server 指定時: canonical / OGP画像 / sitemap掲載URL の実HTTPステータス確認 ---
   if (SERVER_URL) {
     console.log(`\n--server 指定あり。${SERVER_URL} に対してライブHTTPチェックを実行します...`);
 
@@ -348,14 +369,10 @@ async function main() {
       if (!local) continue;
       const status = await fetchStatus(local);
       if (status === null || status >= 400) {
-        errors.push(`[HTTP確認NG] "${target}" → ステータス: ${status ?? "取得失敗"}`);
-        categoryHasError.OGP = true;
-        categoryHasError.Canonical = true;
-        seoLiveCheckOk = false;
+        report("ERROR", target, `HTTP確認NG → ステータス: ${status ?? "取得失敗"}`);
       }
     }
 
-    // sitemap.xml 掲載URLの確認
     const sitemapStatus = await fetchStatus(`${SERVER_URL}/sitemap.xml`);
     if (sitemapStatus === 200) {
       const sitemapRes = await fetch(`${SERVER_URL}/sitemap.xml`);
@@ -366,24 +383,67 @@ async function main() {
         if (!local) continue;
         const status = await fetchStatus(local);
         if (status === null || status >= 400) {
-          errors.push(`[sitemap URL NG] "${loc}" → ステータス: ${status ?? "取得失敗"}`);
-          seoLiveCheckOk = false;
+          report("ERROR", loc, `sitemap URL NG → ステータス: ${status ?? "取得失敗"}`);
         }
       }
     } else {
-      errors.push(`[sitemap.xml NG] ステータス: ${sitemapStatus ?? "取得失敗"}`);
-      seoLiveCheckOk = false;
+      report("ERROR", "/sitemap.xml", `ステータス: ${sitemapStatus ?? "取得失敗"}`);
     }
   }
 
-  // --- 結果出力（詳細） ---
-  console.log(`\n検査対象ページ数: ${files.length}`);
-  console.log(`\n=== エラー（要修正） : ${errors.length}件 ===`);
-  errors.forEach((e) => console.log("✗ " + e));
-  console.log(`\n=== 警告（要確認） : ${warnings.length}件 ===`);
-  warnings.forEach((w) => console.log("△ " + w));
+  // ─── ③ 差分表示: 変更されたページを先頭にまとめる ────────────────────
+  const changedFiles = getChangedSourceFiles();
+  const affectedUrls = guessAffectedUrls(changedFiles, known.routes);
+  if (affectedUrls.size > 0) {
+    console.log("\n━━━━━━━━━━━━━━━");
+    console.log(`変更されたページ（推定 ${affectedUrls.size}件）`);
+    console.log("━━━━━━━━━━━━━━━");
+    for (const u of affectedUrls) {
+      const related = findings.filter((f) => f.url === u || f.url.startsWith(BASE_URL + u));
+      const errCount = related.filter((f) => f.level === "ERROR").length;
+      const warnCount = related.filter((f) => f.level === "WARNING").length;
+      const status = errCount > 0 ? "FAIL" : warnCount > 0 ? "CHECK" : "OK";
+      console.log(`  ${status.padEnd(5)} ${u}${related.length ? `  (E:${errCount} W:${warnCount})` : ""}`);
+      related.forEach((f) => console.log(`         └ [${f.level}] ${f.message}`));
+    }
+  } else if (changedFiles.length > 0) {
+    console.log("\n（変更ファイルは検出されましたが、個別ページへの紐付けは推定できませんでした。共通データ/コンポーネントの変更の可能性があります）");
+  }
 
-  // --- ④ サマリー出力 ---
+  // ─── 結果出力（詳細・レベル別） ─────────────────────────────────────
+  const errors = findings.filter((f) => f.level === "ERROR");
+  const warnings = findings.filter((f) => f.level === "WARNING");
+  const infos = findings.filter((f) => f.level === "INFO");
+
+  console.log(`\n検査対象ページ数: ${files.length}`);
+  console.log(`\n=== ERROR（要修正） : ${errors.length}件 ===`);
+  errors.forEach((f) => console.log(`✗ [${f.url}] ${f.message}`));
+  console.log(`\n=== WARNING（要確認） : ${warnings.length}件 ===`);
+  warnings.forEach((f) => console.log(`△ [${f.url}] ${f.message}`));
+  console.log(`\n=== INFO（参考・目安からの逸脱） : ${infos.length}件 ===`);
+  if (infos.length > 20) {
+    console.log(`  ${infos.length}件検出（詳細は割愛。--verbose相当が必要なら本スクリプトを拡張してください）`);
+  } else {
+    infos.forEach((f) => console.log(`・[${f.url}] ${f.message}`));
+  }
+
+  // ─── ② QA SCORE 算出 ────────────────────────────────────────────────
+  // ERRORは重く減点、WARNINGは軽く減点、INFOは減点しない（あくまで参考情報のため）
+  const rawScore = 100 - errors.length * 8 - warnings.length * 1;
+  const score = Math.max(0, Math.min(100, rawScore));
+
+  // ─── カテゴリ別 PASS/FAIL ────────────────────────────────────────────
+  const categoryError = (keyword) => errors.some((f) => f.message.includes(keyword));
+  const categories = {
+    Metadata: categoryError("title") || categoryError("サフィックス"),
+    "JSON-LD": categoryError("JSON-LD"),
+    "Internal Links": categoryError("内部リンク404"),
+    Canonical: categoryError("canonical") || categoryError("HTTP確認NG"),
+    OGP: categoryError("HTTP確認NG"),
+  };
+  const seoLive = SERVER_URL ? !categoryError("HTTP確認NG") && !categoryError("sitemap URL NG") : null;
+
+  // ─── ④ サマリー出力 ──────────────────────────────────────────────────
   const pass = (v) => (v ? "FAIL" : "PASS");
   const overallPass = errors.length === 0;
   console.log("\n━━━━━━━━━━━━━━━");
@@ -393,15 +453,19 @@ async function main() {
   console.log("");
   console.log(`Errors   : ${errors.length}`);
   console.log(`Warnings : ${warnings.length}`);
+  console.log(`Info     : ${infos.length}`);
   console.log("");
-  console.log(`SEO             : ${pass(!seoLiveCheckOk)}`);
-  console.log(`Metadata        : ${pass(categoryHasError.Metadata)}`);
-  console.log(`JSON-LD         : ${pass(categoryHasError["JSON-LD"])}`);
-  console.log(`Internal Links  : ${pass(categoryHasError["Internal Links"])}`);
-  console.log(`Canonical       : ${pass(categoryHasError.Canonical)}`);
-  console.log(`OGP             : ${pass(categoryHasError.OGP)}`);
+  console.log(`SEO             : ${seoLive === null ? "SKIP（--server未指定）" : pass(!seoLive)}`);
+  console.log(`Metadata        : ${pass(categories.Metadata)}`);
+  console.log(`JSON-LD         : ${pass(categories["JSON-LD"])}`);
+  console.log(`Internal Links  : ${pass(categories["Internal Links"])}`);
+  console.log(`Canonical       : ${pass(categories.Canonical)}`);
+  console.log(`OGP             : ${pass(categories.OGP)}`);
   console.log("");
-  console.log(overallPass ? "READY FOR DEPLOYMENT" : "NOT READY — エラーを修正してください");
+  console.log("QA SCORE");
+  console.log(`${score} / 100`);
+  console.log("");
+  console.log(overallPass ? "READY FOR DEPLOYMENT" : "NOT READY — ERRORを修正してください");
   console.log("━━━━━━━━━━━━━━━");
 
   process.exit(overallPass ? 0 : 1);
