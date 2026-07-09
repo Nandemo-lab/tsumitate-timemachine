@@ -9,7 +9,8 @@
     "lint": "eslint",
     "qa": "node scripts/qa-check.mjs",
     "qa:live": "node scripts/qa-check.mjs --server http://localhost:3000",
-    "new-article": "node scripts/new-article.mjs"
+    "new-article": "node scripts/new-article.mjs",
+    "system-check-audit": "node scripts/system-check-audit.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

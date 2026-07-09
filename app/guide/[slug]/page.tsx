@@ -10,6 +10,7 @@ import {
   ExternalLink,
   BarChart2,
   FileText,
+  ShieldCheck,
 } from "lucide-react";
 import { getGuidePage, GUIDE_PAGES } from "@/lib/guide-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
@@ -186,6 +187,44 @@ export default async function GuidePage({ params }: Props) {
 
           {/* ── E-E-A-T 編集部情報 ───────────────────────────── */}
           {page.lastUpdated && <GuideEeat lastUpdated={page.lastUpdated} />}
+
+          {/* ── 制度確認情報（制度・税制記事のみ表示）─────────────
+              data-system-check-date は scripts/system-check-audit.mjs が
+              ビルド後のHTMLから読み取り、1年以上未確認の記事を機械的に
+              抽出するために使う。デザイン変更時もこの属性は残すこと。 */}
+          {page.systemCheck && page.systemCheck.length > 0 && (
+            <section className="rounded-xl bg-emerald-500/[0.04] border border-emerald-500/15 p-4 space-y-2.5">
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+                <p className="text-xs font-bold text-emerald-200">制度情報の確認状況</p>
+              </div>
+              <ul className="space-y-1.5">
+                {page.systemCheck.map((sc, i) => (
+                  <li
+                    key={i}
+                    data-system-check-date={sc.lastConfirmed}
+                    className="text-[11px] text-zinc-400 leading-relaxed"
+                  >
+                    「{sc.topic}」を{sc.lastConfirmed}に{sc.source}で確認
+                    {sc.sourceUrl && (
+                      <>
+                        （
+                        <a
+                          href={sc.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer nofollow"
+                          className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2"
+                        >
+                          出典を見る
+                        </a>
+                        ）
+                      </>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {/* ── 目次 ────────────────────────────────────────── */}
           {page.sections && page.sections.length > 0 && (

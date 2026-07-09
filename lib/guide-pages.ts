@@ -37,6 +37,24 @@ export interface GuideSimRow {
   amount: number;
 }
 
+/**
+ * 制度・税制など、公式情報源に基づく数値を扱う記事の確認履歴。
+ * 「この記事は1年以上制度確認していない」を機械的に抽出できるよう、
+ * ISO日付（YYYY-MM-DD）で管理する。
+ * scripts/system-check-audit.mjs がビルド後のHTMLからこの情報を読み取り、
+ * 1年以上経過した記事をリライト候補として一覧化する。
+ */
+export interface GuideSystemCheck {
+  /** 何を確認したか（例: "つみたて投資枠・成長投資枠の年間投資枠"） */
+  topic: string;
+  /** 最終確認日（ISO 8601, YYYY-MM-DD）。公式情報源と照合した日付 */
+  lastConfirmed: string;
+  /** 確認元（例: "金融庁 NISA特設ウェブサイト"） */
+  source: string;
+  /** 確認元のURL（あれば） */
+  sourceUrl?: string;
+}
+
 export interface GuidePage {
   slug: string;
   metaTitle: string;
@@ -44,6 +62,8 @@ export interface GuidePage {
   h1: string;
   intro: string;
   lastUpdated?: string;
+  /** 制度・税制記事のみ設定する。数値・ルールを公式情報源と最後に照合した記録 */
+  systemCheck?: GuideSystemCheck[];
   points: GuidePoint[];
   sections?: GuideSection[];
   fundCards: GuideFundCard[];
@@ -1105,6 +1125,14 @@ export const GUIDE_PAGES: GuidePage[] = [
     intro:
       "積立投資は「増やす」情報が中心になりがちですが、実際に資産を使う段階になったときの「取り崩し方」も同じくらい重要です。この記事では、積み立てた資産をどのように取り崩していくか、代表的な考え方を整理します。",
     lastUpdated: "2026年7月",
+    systemCheck: [
+      {
+        topic: "NISA売却時の非課税枠復活ルール",
+        lastConfirmed: "2026-07-06",
+        source: "金融庁 NISA特設ウェブサイト",
+        sourceUrl: "https://www.fsa.go.jp/policy/nisa2/index.html",
+      },
+    ],
     points: [
       {
         title: "取り崩しにも複数の方法がある",
@@ -1178,6 +1206,14 @@ export const GUIDE_PAGES: GuidePage[] = [
     intro:
       "新NISA（2024年〜）には「つみたて投資枠」と「成長投資枠」という2種類の非課税投資枠があります。名前が似ているため混同されやすいですが、対象商品や枠の大きさに違いがあります。この記事では2つの枠の違いと、組み合わせ方の考え方を整理します。",
     lastUpdated: "2026年7月",
+    systemCheck: [
+      {
+        topic: "つみたて投資枠・成長投資枠の年間投資枠と生涯非課税保有限度額",
+        lastConfirmed: "2026-07-06",
+        source: "金融庁 NISA特設ウェブサイト",
+        sourceUrl: "https://www.fsa.go.jp/policy/nisa2/index.html",
+      },
+    ],
     points: [
       {
         title: `つみたて投資枠は年${formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠は年${formatManEn(NISA_LIMITS.growthAnnual)}`,

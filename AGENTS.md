@@ -38,6 +38,21 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 制度上の数値（年間投資枠・生涯投資枠など）は `lib/nisa.ts` の `NISA_LIMITS` を
   参照し、直接数値を書かない。
 - 出典（金融庁等の公式情報へのリンク）を `sourceLinks` に明記すること。
+- **制度・税制・公式基準に基づく数値を扱う記事には、必ず `GuidePage.systemCheck`
+  を設定する。** 何を（`topic`）・いつ（`lastConfirmed`, ISO日付）・どこで
+  （`source` / `sourceUrl`）確認したかを記録する。この情報は
+  `app/guide/[slug]/page.tsx` が記事内に表示すると同時に、
+  `data-system-check-date` 属性としてHTMLに出力する。
+  ```ts
+  systemCheck: [
+    {
+      topic: "つみたて投資枠・成長投資枠の年間投資枠",
+      lastConfirmed: "2026-07-06",
+      source: "金融庁 NISA特設ウェブサイト",
+      sourceUrl: "https://www.fsa.go.jp/policy/nisa2/index.html",
+    },
+  ],
+  ```
 
 ## 既存記事のリライト管理（SEO運用の一部）
 
@@ -51,6 +66,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - `lib/funds.ts` の実データが更新されている場合、記事内の数値が追随しているか
   - 内部リンク切れ・関連記事の追加漏れがないか（`npm run qa` で機械的に確認）
   - 制度記事の場合、`lib/nisa.ts` の制度数値・注意書きが最新かどうか
+- 制度・税制記事については、`npm run system-check-audit`（ビルド後に実行）で
+  `systemCheck.lastConfirmed` から**365日以上経過した記事を機械的に抽出**できる。
+  180日以上経過はWATCH、365日以上経過はREWRITE CANDIDATEとして報告される。
+  定期レビュー時はこのコマンドの結果を確認し、対象記事があれば公式情報源と
+  再照合した上で `lastConfirmed` を更新すること。
 - リライトの際も、通常の記事追加と同じ手順（build → qa → PC/スマホ確認 →
   Search Console確認）を実施してから完了とする。
 
