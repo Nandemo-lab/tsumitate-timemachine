@@ -1,3 +1,5 @@
+import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
+
 export interface GuidePoint {
   title: string;
   body: string;
@@ -1178,8 +1180,8 @@ export const GUIDE_PAGES: GuidePage[] = [
     lastUpdated: "2026年7月",
     points: [
       {
-        title: "つみたて投資枠は年120万円、成長投資枠は年240万円",
-        body: "つみたて投資枠は年間120万円、成長投資枠は年間240万円まで非課税で投資できます。両方を使うと年間360万円、生涯の非課税保有限度額は合計1,800万円（うち成長投資枠は1,200万円まで）です。",
+        title: `つみたて投資枠は年${formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠は年${formatManEn(NISA_LIMITS.growthAnnual)}`,
+        body: `つみたて投資枠は年間${formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠は年間${formatManEn(NISA_LIMITS.growthAnnual)}まで非課税で投資できます。両方を使うと年間${formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は合計${formatManEn(NISA_LIMITS.lifetimeTotal)}（うち成長投資枠は${formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}まで）です。${NISA_SYSTEM_DISCLAIMER}`,
       },
       {
         title: "つみたて投資枠は金融庁が定めた基準を満たす投資信託のみ",
@@ -1199,8 +1201,8 @@ export const GUIDE_PAGES: GuidePage[] = [
       { label: "2020年から月3万円 S&P500（つみたて投資枠の代表例）", fundSlug: "sp500", year: 2020, month: 1, amount: 30000 },
     ],
     faqs: [
-      { q: "つみたて投資枠と成長投資枠の違いは何ですか？", a: "つみたて投資枠（年120万円）は金融庁の基準を満たした投資信託・ETFに限定されます。成長投資枠（年240万円）は個別株やより幅広いETF・投資信託も対象になります。対象商品の広さと非課税枠の大きさが主な違いです。" },
-      { q: "つみたて投資枠だけで1,800万円の非課税枠を使い切れますか？", a: "使い切ることは可能です。つみたて投資枠のみの利用の場合、年120万円ずつ積み立てると15年で1,800万円に到達します。成長投資枠の非課税保有限度額は1,200万円までのため、つみたて投資枠だけで生涯上限（1,800万円）を使い切ることもできます。" },
+      { q: "つみたて投資枠と成長投資枠の違いは何ですか？", a: `つみたて投資枠（年${formatManEn(NISA_LIMITS.tsumitateAnnual)}）は金融庁の基準を満たした投資信託・ETFに限定されます。成長投資枠（年${formatManEn(NISA_LIMITS.growthAnnual)}）は個別株やより幅広いETF・投資信託も対象になります。対象商品の広さと非課税枠の大きさが主な違いです。${NISA_SYSTEM_DISCLAIMER}` },
+      { q: `つみたて投資枠だけで${formatManEn(NISA_LIMITS.lifetimeTotal)}の非課税枠を使い切れますか？`, a: `使い切ることは可能です。つみたて投資枠のみの利用の場合、年${formatManEn(NISA_LIMITS.tsumitateAnnual)}ずつ積み立てると${Math.round(NISA_LIMITS.lifetimeTotal / NISA_LIMITS.tsumitateAnnual)}年で${formatManEn(NISA_LIMITS.lifetimeTotal)}に到達します。成長投資枠の非課税保有限度額は${formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}までのため、つみたて投資枠だけで生涯上限（${formatManEn(NISA_LIMITS.lifetimeTotal)}）を使い切ることもできます。` },
       { q: "オルカンやS&P500はどちらの枠で買えますか？", a: "オルカン（eMAXIS Slim全世界株式）・S&P500（eMAXIS Slim米国株式）は金融庁の基準を満たしているため、つみたて投資枠・成長投資枠のどちらでも購入できます。" },
       { q: "SCHDやVYMなど高配当ETFはどちらの枠で買えますか？", a: "楽天SCHD・VYMなどの高配当ETF・ファンドは、つみたて投資枠の対象外となっている商品が多く、成長投資枠での購入が一般的です。個別の商品がどちらの枠に対応しているかは、証券会社の商品ページで確認できます。" },
       { q: "2つの枠はどちらから使うのが一般的ですか？", a: "「まずつみたて投資枠で長期積立の土台を作り、余裕資金ができたら成長投資枠を追加する」という順序が紹介されることが多いです。ただしこれは一つの考え方であり、資産状況や投資目的によって異なります。" },
@@ -1210,7 +1212,7 @@ export const GUIDE_PAGES: GuidePage[] = [
     sections: [
       {
         h2: "つみたて投資枠の対象商品の基準",
-        body: "つみたて投資枠の対象商品は、金融庁が定めた基準（販売手数料無料・信託報酬の上限設定・頻繁な分配金の禁止・信託契約期間が無期限または20年以上等）を満たす投資信託・ETFに限定されています（出典：金融庁「つみたて投資枠対象商品」）。2024年時点で対象となっている商品は金融庁のウェブサイトで一覧公開されています。オルカン・S&P500など主要なインデックスファンドの多くはこの基準を満たしています。",
+        body: `つみたて投資枠の対象商品は、金融庁が定めた基準（販売手数料無料・信託報酬の上限設定・頻繁な分配金の禁止・信託契約期間が無期限または20年以上等）を満たす投資信託・ETFに限定されています（出典：金融庁「つみたて投資枠対象商品」）。2024年時点で対象となっている商品は金融庁のウェブサイトで一覧公開されています。オルカン・S&P500など主要なインデックスファンドの多くはこの基準を満たしています。${NISA_SYSTEM_DISCLAIMER}`,
         sourceLinks: [
           { label: "金融庁 NISA特設ウェブサイト（つみたて投資枠対象商品）", href: "https://www.fsa.go.jp/policy/nisa2/index.html" },
         ],
