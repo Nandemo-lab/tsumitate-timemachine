@@ -30,6 +30,27 @@ export function formatManEn(yen: number): string {
 }
 
 /**
+ * 課税口座（特定口座・一般口座）における税率のSingle Source of Truth。
+ * 出典: 国税庁「株式・配当・利子と税」
+ * https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm
+ */
+export const TAX_RATES = {
+  /** 所得税（円ベースではなく税率、15%） */
+  incomeTax: 0.15,
+  /** 復興特別所得税（所得税額の2.1% ≒ 額面0.315%） */
+  reconstructionSurtax: 0.00315,
+  /** 住民税（5%） */
+  residentTax: 0.05,
+  /** 上記合計（源泉分離課税における譲渡益・配当への合計税率） */
+  totalOnGainsAndDividends: 0.20315,
+} as const;
+
+/** 税率の表示用文字列（例: "20.315%"） */
+export function formatTaxRate(rate: number): string {
+  return `${(rate * 100).toFixed(3).replace(/0+$/, "").replace(/\.$/, "")}%`;
+}
+
+/**
  * 制度記事の末尾・本文中で必ず表示する定型の注意書き。
  * NISA・税制など制度を扱う記事はこの文言を必ずどこかに含めること。
  */

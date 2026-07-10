@@ -1,4 +1,4 @@
-import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
+import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER, TAX_RATES, formatTaxRate } from "@/lib/nisa";
 
 export interface GuidePoint {
   title: string;
@@ -1276,6 +1276,96 @@ export const GUIDE_PAGES: GuidePage[] = [
       {
         label: "欲しい商品がどちらの枠の対象か確認せずに注文する",
         body: "商品によってはつみたて投資枠の対象外（成長投資枠のみ対応）の場合があります。注文前に証券会社の商品ページで対応する投資枠を確認しておくと、意図しない枠の消費を避けやすくなります。",
+      },
+    ],
+  },
+  {
+    slug: "nisa-vs-tokutei-tax",
+    metaTitle: "新NISAと課税口座（特定口座）の違い。税金の仕組みを整理",
+    metaDescription:
+      "新NISA口座と課税口座（特定口座）では、利益にかかる税金の扱いが異なります。20.315%の税率の内訳や非課税になる仕組みを、公式情報をもとに整理します。",
+    h1: "新NISAと課税口座（特定口座）の違い。税金の仕組みを整理",
+    intro:
+      "投資信託・ETFの運用益には原則として税金がかかりますが、新NISA口座で得た利益は非課税になります。この記事では、課税口座（特定口座・一般口座）にかかる税率の内訳と、新NISA口座との違いを整理します。",
+    lastUpdated: "2026年7月",
+    systemCheck: [
+      {
+        topic: "上場株式等の譲渡益・配当にかかる税率（20.315%）の内訳",
+        lastConfirmed: "2026-07-10",
+        source: "国税庁「株式・配当・利子と税」",
+        sourceUrl: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm",
+      },
+      {
+        topic: "新NISA制度の非課税措置",
+        lastConfirmed: "2026-07-10",
+        source: "金融庁 NISA特設ウェブサイト",
+        sourceUrl: "https://www.fsa.go.jp/policy/nisa2/index.html",
+      },
+    ],
+    points: [
+      {
+        title: `課税口座の利益には合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}の税金がかかる`,
+        body: `特定口座・一般口座（課税口座）で得た譲渡益・配当には、所得税${formatTaxRate(TAX_RATES.incomeTax)}・復興特別所得税${formatTaxRate(TAX_RATES.reconstructionSurtax)}・住民税${formatTaxRate(TAX_RATES.residentTax)}の合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}が源泉徴収（または申告納税）されます。`,
+      },
+      {
+        title: "新NISA口座の利益は非課税",
+        body: `新NISA口座（つみたて投資枠 年${formatManEn(NISA_LIMITS.tsumitateAnnual)}・成長投資枠 年${formatManEn(NISA_LIMITS.growthAnnual)}、生涯非課税保有限度額${formatManEn(NISA_LIMITS.lifetimeTotal)}）内で得た譲渡益・配当には、この${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}の税金がかかりません。${NISA_SYSTEM_DISCLAIMER}`,
+      },
+      {
+        title: "特定口座（源泉徴収あり）は原則確定申告が不要",
+        body: "特定口座（源泉徴収あり）を選んでいる場合、証券会社が税金を計算して源泉徴収するため、原則として確定申告は不要です。一般口座や特定口座（源泉徴収なし）の場合は、自分で年間の損益を計算し確定申告する必要があります。",
+      },
+    ],
+    fundCards: [
+      { fundSlug: "orukan", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" },
+      { fundSlug: "sp500", monthlyAmount: 30000, compareSlug: "schd-vs-sp500" },
+    ],
+    simRows: [
+      { label: "2020年から月3万円 オルカン（NISAなら非課税になる運用益の例）", fundSlug: "orukan", year: 2020, month: 1, amount: 30000 },
+      { label: "2020年から月3万円 S&P500（NISAなら非課税になる運用益の例）", fundSlug: "sp500", year: 2020, month: 1, amount: 30000 },
+    ],
+    faqs: [
+      { q: "課税口座の税率20.315%の内訳は何ですか？", a: `所得税${formatTaxRate(TAX_RATES.incomeTax)}、復興特別所得税${formatTaxRate(TAX_RATES.reconstructionSurtax)}、住民税${formatTaxRate(TAX_RATES.residentTax)}の合計です。復興特別所得税は2037年まで課される時限的な税とされています。${NISA_SYSTEM_DISCLAIMER}` },
+      { q: "新NISA口座なら確定申告は不要ですか？", a: "新NISA口座内の譲渡益・配当は非課税のため、その分については確定申告の対象になりません。ただし課税口座での取引がある場合や、他の所得がある場合は、それぞれの制度に応じた申告が必要になることがあります。" },
+      { q: "特定口座と一般口座の違いは何ですか？", a: "特定口座は証券会社が年間の損益を計算した「年間取引報告書」を作成してくれる口座です。さらに「源泉徴収あり」を選ぶと税金の納付も証券会社が代行するため、原則確定申告が不要になります。一般口座は自分で損益を計算する必要があります。" },
+      { q: "NISA口座で損失が出た場合、課税口座の利益と損益通算できますか？", a: "NISA口座内の損失は、税制上「なかったもの」として扱われるため、課税口座（特定口座・一般口座）の利益と損益通算することはできません。この点は課税口座同士の損益通算とは異なる扱いです。" },
+      { q: "配当金にも20.315%の税金がかかりますか？", a: "課税口座で受け取る上場株式・投資信託の分配金・配当金にも、譲渡益と同じ合計20.315%の税率が適用されます。新NISA口座内で受け取る分配金・配当金は非課税です。" },
+    ],
+    relatedGuides: ["nisa-tsumitate-vs-seicho", "nisa-beginner", "nisa-tsumitate-ikura", "how-to-start"],
+    sections: [
+      {
+        h2: "課税口座（特定口座・一般口座）の税金の仕組み",
+        body: `課税口座で得た上場株式・投資信託の譲渡益や配当・分配金には、所得税${formatTaxRate(TAX_RATES.incomeTax)}・復興特別所得税${formatTaxRate(TAX_RATES.reconstructionSurtax)}・住民税${formatTaxRate(TAX_RATES.residentTax)}を合わせた${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}が課税されます（出典：国税庁「株式・配当・利子と税」）。特定口座（源泉徴収あり）ではこの税額が売却時・受取時に自動的に源泉徴収されます。${NISA_SYSTEM_DISCLAIMER}`,
+        sourceLinks: [
+          { label: "国税庁「株式・配当・利子と税」", href: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm" },
+        ],
+      },
+      {
+        h2: "新NISA口座が非課税になる仕組み",
+        body: `新NISA口座内で得た譲渡益・配当・分配金は、この${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}の税金がかからず、全額を受け取れます。非課税で投資できる金額には上限（年間投資枠・生涯非課税保有限度額）が設けられており、上限を超える分は課税口座での投資となります（出典：金融庁 NISA特設ウェブサイト）。`,
+        sourceLinks: [
+          { label: "金融庁 NISA特設ウェブサイト", href: "https://www.fsa.go.jp/policy/nisa2/index.html" },
+        ],
+        simCallout: 0,
+      },
+      {
+        h2: "課税口座とNISA口座、どちらを優先して使うか",
+        body: "非課税枠が使える範囲では新NISA口座を優先し、非課税枠を使い切った分やNISA対象外の商品を課税口座で保有する、という順序が一つの考え方として紹介されています。どちらをどの程度使うかは、投資額・投資対象・非課税枠の残り具合によって個人差があります。",
+      },
+    ],
+    recommendFor: [
+      "新NISA口座と課税口座（特定口座）で税金の扱いがどう違うのか整理したい方",
+      "20.315%という税率の内訳を確認したい方",
+      "確定申告が必要になるケースを把握しておきたい方",
+    ],
+    commonMistakes: [
+      {
+        label: "NISA口座の損失を課税口座の利益と損益通算できると誤解する",
+        body: "NISA口座内の損失は税制上「なかったもの」として扱われるため、課税口座の利益と相殺（損益通算）することはできません。課税口座同士の損益通算とは扱いが異なります。",
+      },
+      {
+        label: "特定口座（源泉徴収あり）でも確定申告が必須だと誤解する",
+        body: "特定口座（源泉徴収あり）を選んでいる場合、証券会社が税金の計算・納付を代行するため、その口座内の取引のみであれば原則として確定申告は不要です。",
       },
     ],
   },
