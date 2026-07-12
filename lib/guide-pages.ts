@@ -1369,6 +1369,96 @@ export const GUIDE_PAGES: GuidePage[] = [
       },
     ],
   },
+  {
+    slug: "nisa-waku-tsukaikitta-ato",
+    metaTitle: "新NISAの非課税枠を使い切ったらどうなる？課税口座との使い分け",
+    metaDescription:
+      "新NISAの生涯非課税保有限度額に達した後、追加の投資はどうなるのか。課税口座への切り替えの考え方と、非課税枠が復活するケースを整理します。",
+    h1: "新NISAの非課税枠を使い切ったらどうなる？",
+    intro:
+      "新NISAには生涯非課税保有限度額が設定されており、上限まで投資すると新たな非課税投資はできなくなります。この記事では、非課税枠を使い切った後の投資の考え方と、枠が復活する仕組みを整理します。",
+    lastUpdated: "2026年7月",
+    systemCheck: [
+      {
+        topic: "生涯非課税保有限度額と非課税枠の復活ルール",
+        lastConfirmed: "2026-07-12",
+        source: "金融庁 NISA特設ウェブサイト",
+        sourceUrl: "https://www.fsa.go.jp/policy/nisa2/index.html",
+      },
+      {
+        topic: "課税口座（特定口座）にかかる税率の内訳",
+        lastConfirmed: "2026-07-12",
+        source: "国税庁「株式・配当・利子と税」",
+        sourceUrl: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm",
+      },
+    ],
+    points: [
+      {
+        title: `生涯非課税保有限度額は${formatManEn(NISA_LIMITS.lifetimeTotal)}`,
+        body: `新NISAの生涯非課税保有限度額は${formatManEn(NISA_LIMITS.lifetimeTotal)}（うち成長投資枠は${formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}まで）です。この金額に達すると、新たな非課税枠での買付はできなくなります。${NISA_SYSTEM_DISCLAIMER}`,
+      },
+      {
+        title: "枠を使い切った後の追加投資は課税口座になる",
+        body: `非課税保有限度額に達した後も追加で投資すること自体は可能ですが、その投資は特定口座・一般口座（課税口座）で行うことになり、譲渡益・配当には合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}の税金がかかります。`,
+      },
+      {
+        title: "保有商品を売却すると、その分の非課税枠は翌年以降に復活する",
+        body: "新NISAは「保有残高（簿価）」ベースで非課税枠を管理する仕組みのため、保有商品を売却すると、その売却した分の非課税枠（簿価分）が翌年以降に再利用できるようになります。ただし当年中に再利用することはできません。",
+      },
+    ],
+    fundCards: [
+      { fundSlug: "orukan", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" },
+      { fundSlug: "sp500", monthlyAmount: 30000, compareSlug: "schd-vs-sp500" },
+    ],
+    simRows: [
+      { label: "2020年から月3万円 オルカン（非課税枠内で積み立てた場合の運用例）", fundSlug: "orukan", year: 2020, month: 1, amount: 30000 },
+      { label: "2020年から月3万円 S&P500（非課税枠内で積み立てた場合の運用例）", fundSlug: "sp500", year: 2020, month: 1, amount: 30000 },
+    ],
+    faqs: [
+      { q: `非課税保有限度額の${formatManEn(NISA_LIMITS.lifetimeTotal)}に達したら、それ以上NISA口座で投資できませんか？`, a: `${formatManEn(NISA_LIMITS.lifetimeTotal)}に達した時点で、新たな非課税枠での買付はできなくなります。追加の投資は課税口座（特定口座・一般口座）で行うことになります。${NISA_SYSTEM_DISCLAIMER}` },
+      { q: "非課税枠を使い切った後、保有商品を売却すると枠は戻りますか？", a: "売却した商品の簿価分の非課税枠は、翌年以降に復活し再利用できます。ただし売却した年の当年中に、その分の枠を使って再度買い付けることはできません。" },
+      { q: "枠が復活した分は、つみたて投資枠・成長投資枠のどちらに戻りますか？", a: "売却した商品を購入した際に使った枠の区分（つみたて投資枠・成長投資枠）に応じて、それぞれの枠が復活します。売却前の保有区分がそのまま復活先になるという理解が基本です。" },
+      { q: "課税口座に切り替わった後の運用は非課税口座と何が違いますか？", a: "商品の運用方法自体は変わりませんが、課税口座では譲渡益・配当に合計20.315%の税金がかかる点が異なります。特定口座（源泉徴収あり）を選んでいれば、税金の計算・納付は証券会社が代行します。" },
+      { q: "非課税枠を使い切る前に、何を優先して投資すればよいですか？", a: "非課税枠の使い切り方に決まった正解はありませんが、非課税枠を優先的に埋め、枠を使い切った後の投資を課税口座で行う、という順序が一つの考え方として紹介されています。" },
+    ],
+    relatedGuides: ["nisa-vs-tokutei-tax", "nisa-tsumitate-vs-seicho", "tsumitate-torikuzushi", "nisa-tsumitate-ikura"],
+    sections: [
+      {
+        h2: "生涯非課税保有限度額に達するとどうなるか",
+        body: `新NISAの生涯非課税保有限度額は${formatManEn(NISA_LIMITS.lifetimeTotal)}（うち成長投資枠は${formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}まで）で管理されています（出典：金融庁 NISA特設ウェブサイト）。この上限（簿価残高ベース）に達すると、新たな非課税枠での買付はできなくなります。${NISA_SYSTEM_DISCLAIMER}`,
+        sourceLinks: [
+          { label: "金融庁 NISA特設ウェブサイト", href: "https://www.fsa.go.jp/policy/nisa2/index.html" },
+        ],
+        simCallout: 0,
+      },
+      {
+        h2: "枠を使い切った後、追加投資は課税口座で行う",
+        body: `非課税枠を使い切った後も投資を続ける場合、追加分は特定口座・一般口座（課税口座）での買付になります。課税口座では譲渡益・配当に合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}（所得税${formatTaxRate(TAX_RATES.incomeTax)}・復興特別所得税${formatTaxRate(TAX_RATES.reconstructionSurtax)}・住民税${formatTaxRate(TAX_RATES.residentTax)}）が課税されます（出典：国税庁「株式・配当・利子と税」）。`,
+        sourceLinks: [
+          { label: "国税庁「株式・配当・利子と税」", href: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm" },
+        ],
+      },
+      {
+        h2: "売却すると非課税枠が復活する仕組み",
+        body: "新NISAは、保有商品を売却すると、その売却した分の簿価（購入時の金額）に相当する非課税枠が翌年以降に復活する仕組みです。当年中の再利用はできず、復活のタイミングは翌年以降になる点に注意が必要です。",
+      },
+    ],
+    recommendFor: [
+      "新NISAの非課税保有限度額に近づいており、その後の投資方法を知りたい方",
+      "非課税枠を使い切った後、課税口座でどう税金がかかるか整理したい方",
+      "非課税枠の復活の仕組みを確認したい方",
+    ],
+    commonMistakes: [
+      {
+        label: "非課税枠を使い切ったら投資自体ができなくなると誤解する",
+        body: "非課税枠を使い切っても、課税口座（特定口座・一般口座）での投資自体は継続できます。非課税の適用がなくなるだけで、投資が禁止されるわけではありません。",
+      },
+      {
+        label: "売却すればすぐに同じ年で非課税枠を再利用できると誤解する",
+        body: "非課税枠の復活は翌年以降になります。売却した年の当年中に、その売却分の枠を使って再度非課税で買い付けることはできません。",
+      },
+    ],
+  },
 ];
 
 export function getGuidePage(slug: string): GuidePage | undefined {
