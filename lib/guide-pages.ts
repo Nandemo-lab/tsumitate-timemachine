@@ -1459,6 +1459,96 @@ export const GUIDE_PAGES: GuidePage[] = [
       },
     ],
   },
+  {
+    slug: "bunpaikin-to-zeikin",
+    metaTitle: "投資信託の分配金と税金。普通分配金と特別分配金の違い",
+    metaDescription:
+      "投資信託・ETFの分配金には課税されるものとされないものがあります。普通分配金と特別分配金（元本払戻金）の違いと、新NISA口座での扱いを整理します。",
+    h1: "投資信託の分配金と税金。普通分配金と特別分配金の違い",
+    intro:
+      "投資信託・ETFの分配金は、すべてが課税対象というわけではありません。この記事では「普通分配金」と「特別分配金（元本払戻金）」の違いと、それぞれの税金の扱い、新NISA口座での分配金課税について整理します。",
+    lastUpdated: "2026年7月",
+    systemCheck: [
+      {
+        topic: "普通分配金・特別分配金（元本払戻金）の課税区分",
+        lastConfirmed: "2026-07-16",
+        source: "国税庁「投資信託の分配金にかかる税金」",
+        sourceUrl: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1937.htm",
+      },
+      {
+        topic: "課税口座（特定口座）にかかる税率の内訳",
+        lastConfirmed: "2026-07-16",
+        source: "国税庁「株式・配当・利子と税」",
+        sourceUrl: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm",
+      },
+    ],
+    points: [
+      {
+        title: "普通分配金は課税対象、特別分配金（元本払戻金）は非課税",
+        body: `投資信託の分配金は「普通分配金」と「特別分配金（元本払戻金）」に分かれます。普通分配金は運用益から支払われるため課税対象（課税口座では合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}）となりますが、特別分配金は元本の一部払い戻しにあたるため非課税です。`,
+      },
+      {
+        title: "特別分配金が出ると、その分だけ取得価額（元本）が下がる",
+        body: "特別分配金を受け取った場合、その金額分だけ保有商品の取得価額（元本）が引き下げられます。将来売却する際の譲渡益の計算に影響するため、非課税だからといって「得をした」というわけではありません。",
+      },
+      {
+        title: "新NISA口座の分配金は普通分配金であっても非課税",
+        body: `新NISA口座で受け取る分配金は、普通分配金・特別分配金のいずれも非課税です。課税口座では普通分配金に${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}が課税されるため、この点が非課税口座との大きな違いになります。${NISA_SYSTEM_DISCLAIMER}`,
+      },
+    ],
+    fundCards: [
+      { fundSlug: "orukan", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" },
+      { fundSlug: "sp500", monthlyAmount: 30000, compareSlug: "schd-vs-sp500" },
+    ],
+    simRows: [
+      { label: "2020年から月3万円 オルカン（分配金再投資型の運用例）", fundSlug: "orukan", year: 2020, month: 1, amount: 30000 },
+      { label: "2020年から月3万円 S&P500（分配金再投資型の運用例）", fundSlug: "sp500", year: 2020, month: 1, amount: 30000 },
+    ],
+    faqs: [
+      { q: "普通分配金と特別分配金はどう見分けられますか？", a: "証券会社が発行する取引報告書・分配金明細に、普通分配金・特別分配金（元本払戻金）の内訳が記載されています。分配金の全額が同じ税区分とは限らないため、明細で確認するのが確実です。" },
+      { q: "特別分配金（元本払戻金）は本当に得ですか？", a: "特別分配金は元本の一部が払い戻される形のため、非課税ではありますが運用益が増えたわけではありません。受け取った分だけ取得価額が下がり、将来の売却時の譲渡益計算に影響します。" },
+      { q: "新NISA口座なら分配金にかかる税金を気にしなくていいですか？", a: `新NISA口座内で受け取る分配金（普通分配金・特別分配金）はいずれも非課税です。課税口座で受け取る普通分配金には合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}が課税される点が異なります。` },
+      { q: "オルカン・S&P500（eMAXIS Slimシリーズ）の分配金はどう扱われますか？", a: "オルカン・S&P500（eMAXIS Slimシリーズ）は分配金を出さず自動的に再投資する方針のファンドのため、保有中に分配金を受け取る場面自体がありません。分配金にかかる税金を考える必要があるのは、SCHD・VYMなど定期的に分配金を出すファンドを保有している場合です。" },
+      { q: "外国籍ETF（SCHD・VYMなど）の分配金にも同じ税率がかかりますか？", a: "SCHD・VYMなど米国籍ETFの分配金は、米国での源泉徴収と日本国内の課税が両方関わるため、国内の投資信託の分配金とは扱いが異なります（詳細は外国税額控除に関するガイドを参照）。" },
+    ],
+    relatedGuides: ["nisa-vs-tokutei-tax", "nisa-waku-tsukaikitta-ato", "nisa-tsumitate-vs-seicho", "orukan-ippon-de-ii"],
+    sections: [
+      {
+        h2: "普通分配金と特別分配金（元本払戻金）の違い",
+        body: "投資信託の分配金は、決算時の基準価額と個々の受益者の個別元本（取得価額）を比較して区分されます。基準価額が個別元本を上回る部分から支払われるのが普通分配金（課税対象）、個別元本を下回る部分（元本の取り崩しにあたる部分）から支払われるのが特別分配金・元本払戻金（非課税）です（出典：国税庁「投資信託の分配金にかかる税金」）。",
+        sourceLinks: [
+          { label: "国税庁「投資信託の分配金にかかる税金」", href: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1937.htm" },
+        ],
+      },
+      {
+        h2: "課税口座での分配金課税の仕組み",
+        body: `課税口座（特定口座・一般口座）で受け取る普通分配金には、上場株式等の譲渡益・配当と同様に、所得税${formatTaxRate(TAX_RATES.incomeTax)}・復興特別所得税${formatTaxRate(TAX_RATES.reconstructionSurtax)}・住民税${formatTaxRate(TAX_RATES.residentTax)}を合わせた${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}が源泉徴収されます（出典：国税庁「株式・配当・利子と税」）。`,
+        sourceLinks: [
+          { label: "国税庁「株式・配当・利子と税」", href: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm" },
+        ],
+        simCallout: 0,
+      },
+      {
+        h2: "新NISA口座での分配金の扱い",
+        body: `新NISA口座で保有する投資信託・ETFの分配金は、普通分配金・特別分配金のいずれも非課税です。ただしオルカン・S&P500（eMAXIS Slimシリーズ）のように分配金を出さず自動再投資する方針のファンドでは、そもそも分配金を受け取る場面がありません。${NISA_SYSTEM_DISCLAIMER}`,
+      },
+    ],
+    recommendFor: [
+      "SCHD・VYMなど分配金を出すファンドを保有・検討している方",
+      "普通分配金と特別分配金（元本払戻金）の違いを整理したい方",
+      "新NISA口座での分配金課税の扱いを確認したい方",
+    ],
+    commonMistakes: [
+      {
+        label: "特別分配金（元本払戻金）を「非課税でお得な分配金」と誤解する",
+        body: "特別分配金は元本の一部払い戻しにあたるため非課税ですが、運用益が生まれたわけではありません。受け取った分だけ取得価額が下がる点に注意が必要です。",
+      },
+      {
+        label: "オルカン・S&P500でも分配金課税を心配してしまう",
+        body: "eMAXIS Slimシリーズなど自動再投資型のインデックスファンドは分配金自体を出さない方針のため、普通分配金・特別分配金の課税区分を意識する場面はほとんどありません。",
+      },
+    ],
+  },
 ];
 
 export function getGuidePage(slug: string): GuidePage | undefined {
