@@ -2007,6 +2007,96 @@ export const GUIDE_PAGES: GuidePage[] = [
       },
     ],
   },
+  {
+    slug: "kyuu-nisa-kara-ikou",
+    metaTitle: "旧NISAから新NISAへの移行はどうなる？ロールオーバーの扱い",
+    metaDescription:
+      "2023年までの旧NISA（一般NISA・つみたてNISA）と新NISAは別枠で管理されます。ロールオーバーの可否や非課税期間終了後の扱いを整理します。",
+    h1: "旧NISAから新NISAへの移行はどうなる？",
+    intro:
+      "2024年に始まった新NISAと、2023年までの旧NISA（一般NISA・つみたてNISA）は、制度上別の非課税枠として管理されています。この記事では、旧NISAで保有していた商品が新NISAへ自動的に移行するのか、非課税期間が終了した後どうなるのかを整理します。",
+    lastUpdated: "2026年7月",
+    systemCheck: [
+      {
+        topic: "旧NISA（一般NISA・つみたてNISA）と新NISAの制度上の関係",
+        lastConfirmed: "2026-07-28",
+        source: "金融庁 NISA特設ウェブサイト",
+        sourceUrl: "https://www.fsa.go.jp/policy/nisa2/index.html",
+      },
+      {
+        topic: "旧NISAの非課税期間終了後の取り扱い",
+        lastConfirmed: "2026-07-28",
+        source: "国税庁「NISA及びつみたてNISAの非課税措置」",
+        sourceUrl: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/joto/1932.htm",
+      },
+    ],
+    points: [
+      {
+        title: "旧NISAと新NISAは別枠で、自動的な移行はない",
+        body: "旧NISA（一般NISA・つみたてNISA）で保有していた商品は、新NISAの非課税枠には含まれません。旧NISA口座は旧NISA口座のまま非課税期間満了まで別枠で管理され、新NISAの生涯非課税保有限度額にも影響しません。",
+      },
+      {
+        title: "新NISAへのロールオーバーはできない",
+        body: "旧制度では非課税期間満了時に翌年の非課税枠へ商品を移す「ロールオーバー」が可能でしたが、新NISAではこのロールオーバーの仕組みは設けられていません。旧NISAの商品を新NISAの非課税枠に移すには、一度売却して新NISA枠内で買い直す必要があります。",
+      },
+      {
+        title: "旧NISAの非課税期間が終了すると、課税口座へ移管される",
+        body: "旧NISAの非課税期間（一般NISAは5年、つみたてNISAは20年）が終了すると、保有商品は自動的に特定口座・一般口座（課税口座）へ移管されます。移管後は、その時点の時価が新たな取得価額となります。",
+      },
+    ],
+    fundCards: [
+      { fundSlug: "orukan", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" },
+      { fundSlug: "sp500", monthlyAmount: 30000, compareSlug: "schd-vs-sp500" },
+    ],
+    simRows: [
+      { label: "2020年から月3万円 オルカン（旧NISA制度下での積立を想定した例）", fundSlug: "orukan", year: 2020, month: 1, amount: 30000 },
+      { label: "2020年から月3万円 S&P500（旧NISA制度下での積立を想定した例）", fundSlug: "sp500", year: 2020, month: 1, amount: 30000 },
+    ],
+    faqs: [
+      { q: "旧NISAで保有している商品は自動的に新NISA口座に移りますか？", a: "移りません。旧NISA（一般NISA・つみたてNISA）と新NISAは別枠で管理されており、自動的な移行は行われません。新NISA枠で保有したい場合は、旧NISA内の商品を売却し、新NISA枠で改めて買い付ける必要があります。" },
+      { q: "旧NISAの非課税期間が終了したらどうなりますか？", a: "非課税期間（一般NISAは5年、つみたてNISAは20年）が終了すると、保有商品は自動的に特定口座・一般口座（課税口座）に移管されます。移管時点の時価が新たな取得価額として引き継がれます。" },
+      { q: "旧NISAの非課税期間中に売却した場合、新NISAの非課税枠は増えますか？", a: "増えません。旧NISA口座と新NISA口座は別の非課税枠として管理されているため、旧NISA内での売却は新NISAの生涯非課税保有限度額（1,800万円）に影響しません。" },
+      { q: "つみたてNISAと一般NISAで非課税期間は違いますか？", a: "異なります。一般NISAの非課税期間は5年、つみたてNISAの非課税期間は20年です。それぞれの非課税期間が終了するタイミングで、保有商品は課税口座へ移管されます。" },
+      { q: "旧NISA口座で保有中の商品も、新NISAの非課税枠を使い切ったら影響しますか？", a: "影響しません。新NISAの非課税枠（年間投資枠・生涯非課税保有限度額）の計算には、旧NISA口座で保有している商品は含まれません。" },
+    ],
+    relatedGuides: ["nisa-tsumitate-vs-seicho", "nisa-waku-tsukaikitta-ato", "nisa-vs-tokutei-tax", "nisa-beginner"],
+    sections: [
+      {
+        h2: "旧NISAと新NISAが別枠で管理される仕組み",
+        body: "2024年に始まった新NISAは、2023年までの旧NISA（一般NISA・つみたてNISA）とは別の制度として設計されています。旧NISA口座で保有していた商品は新NISAの非課税枠には含まれず、旧NISA口座はそのまま非課税期間満了まで存続します（出典：金融庁 NISA特設ウェブサイト）。",
+        sourceLinks: [
+          { label: "金融庁 NISA特設ウェブサイト", href: "https://www.fsa.go.jp/policy/nisa2/index.html" },
+        ],
+        simCallout: 0,
+      },
+      {
+        h2: "新NISAにロールオーバーの仕組みがない理由",
+        body: "旧制度（一般NISA）では非課税期間満了時にロールオーバーという移行の仕組みがありましたが、新NISAの生涯非課税保有限度額は「簿価残高」で管理される方式に変わったため、ロールオーバーという仕組み自体が設けられていません。新NISA枠で保有し直したい場合は、旧NISA内の商品を売却し、新NISA枠で改めて買い付ける必要があります。",
+      },
+      {
+        h2: "非課税期間終了後の課税口座への移管",
+        body: `旧NISAの非課税期間（一般NISAは5年、つみたてNISAは20年）が終了すると、保有商品は自動的に特定口座・一般口座（課税口座）に移管されます。移管時点の時価が新たな取得価額として引き継がれ、以後の譲渡益・配当には課税口座の税率（合計${formatTaxRate(TAX_RATES.totalOnGainsAndDividends)}）が適用されます（出典：国税庁「NISA及びつみたてNISAの非課税措置」）。${NISA_SYSTEM_DISCLAIMER}`,
+        sourceLinks: [
+          { label: "国税庁「NISA及びつみたてNISAの非課税措置」", href: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/joto/1932.htm" },
+        ],
+      },
+    ],
+    recommendFor: [
+      "旧NISA（一般NISA・つみたてNISA）の口座を保有しており、新NISAとの関係を確認したい方",
+      "旧NISAの非課税期間終了後にどうなるかを知りたい方",
+      "旧NISAから新NISAへの移行方法を整理したい方",
+    ],
+    commonMistakes: [
+      {
+        label: "旧NISAの商品が自動的に新NISA枠に移ると誤解する",
+        body: "旧NISAと新NISAは別枠で管理されており、自動的な移行は行われません。新NISA枠で保有し直すには、売却して新NISA枠内で買い直す必要があります。",
+      },
+      {
+        label: "旧NISAにも新NISAと同じロールオーバーの仕組みがあると誤解する",
+        body: "新NISAにはロールオーバーの仕組みがありません。旧NISAの非課税期間が終了すると、保有商品は自動的に課税口座へ移管されます。",
+      },
+    ],
+  },
 ];
 
 export function getGuidePage(slug: string): GuidePage | undefined {
