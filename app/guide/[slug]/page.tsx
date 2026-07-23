@@ -61,6 +61,8 @@ const GUIDE_LABELS: Record<string, string> = {
   "kyuu-nisa-kara-ikou":        "旧NISAから新NISAへの移行",
   "junior-nisa-shuuryou-go":    "ジュニアNISA廃止後の扱い",
   "nisa-kinyuukikan-henkou":    "NISA口座の金融機関変更",
+  "booraku-tsumitate-yameru":   "暴落したら積立はやめるべき？",
+  "shinnisa-booraku-dousuru":   "新NISAで暴落したらどうする？",
 };
 
 interface Props {
