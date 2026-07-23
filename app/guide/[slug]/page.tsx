@@ -46,6 +46,19 @@ const GUIDE_LABELS: Record<string, string> = {
   "tsumitate-nansnen-keizoku":  "積立は何年続けるべき？",
   "index-shippai-pattern":      "インデックス投資の失敗パターン",
   "tsumitate-vs-ikkatu":        "積立vs一括投資",
+  "tsumitate-torikuzushi":      "積立の取り崩し方",
+  "nisa-tsumitate-vs-seicho":   "つみたて投資枠 vs 成長投資枠",
+  "nisa-vs-tokutei-tax":        "新NISAと課税口座の違い",
+  "nisa-waku-tsukaikitta-ato":  "非課税枠を使い切ったら",
+  "bunpaikin-to-zeikin":        "分配金と税金",
+  "songai-tsuusan-kurikoshi-koujo": "損益通算・繰越控除",
+  "gaikoku-zeigaku-koujo":      "外国税額控除",
+  "tokutei-ippan-nisa-kouza-chigai": "特定口座・一般口座・NISA口座の違い",
+  "haitoukin-uketori-houhou":   "配当金の受け取り方式",
+  "toushi-kakuteishinkoku-necessary-cases": "確定申告が必要になるケース",
+  "kyuu-nisa-kara-ikou":        "旧NISAから新NISAへの移行",
+  "junior-nisa-shuuryou-go":    "ジュニアNISA廃止後の扱い",
+  "nisa-kinyuukikan-henkou":    "NISA口座の金融機関変更",
 };
 
 interface Props {
