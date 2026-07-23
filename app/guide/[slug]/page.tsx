@@ -5,14 +5,16 @@ import {
   ChevronRight,
   TrendingUp,
   ArrowRight,
+  ArrowLeft,
   CheckCircle2,
   BookOpen,
   ExternalLink,
   BarChart2,
   FileText,
   ShieldCheck,
+  ListOrdered,
 } from "lucide-react";
-import { getGuidePage, GUIDE_PAGES } from "@/lib/guide-pages";
+import { getGuidePage, GUIDE_PAGES, getGuideSeriesForSlug } from "@/lib/guide-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { getArticlesRelatedToGuide } from "@/lib/article-pages";
 import { FUNDS } from "@/lib/funds";
@@ -125,6 +127,14 @@ export default async function GuidePage({ params }: Props) {
     label: GUIDE_LABELS[s] ?? s,
   }));
 
+  // クラスタ内シリーズナビ（前へ・次へ）
+  const seriesInfo = getGuideSeriesForSlug(slug);
+  const seriesPrev = seriesInfo && seriesInfo.index > 0 ? seriesInfo.series.slugs[seriesInfo.index - 1] : undefined;
+  const seriesNext =
+    seriesInfo && seriesInfo.index < seriesInfo.series.slugs.length - 1
+      ? seriesInfo.series.slugs[seriesInfo.index + 1]
+      : undefined;
+
   // JSON-LD
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -236,6 +246,50 @@ export default async function GuidePage({ params }: Props) {
                   </li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {/* ── クラスタ内シリーズナビ（前へ・次へ）───────────── */}
+          {seriesInfo && (
+            <section className="rounded-xl border border-white/[0.08] p-4 space-y-3">
+              <div className="flex items-center gap-1.5">
+                <ListOrdered className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
+                <p className="text-xs font-bold text-indigo-300">
+                  {seriesInfo.series.label}（{seriesInfo.index + 1}/{seriesInfo.series.slugs.length}）
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {seriesPrev ? (
+                  <Link
+                    href={`/guide/${seriesPrev}`}
+                    className="flex items-center gap-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors px-3 py-2.5 min-w-0"
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                    <span className="text-xs text-zinc-400 truncate">{GUIDE_LABELS[seriesPrev] ?? seriesPrev}</span>
+                  </Link>
+                ) : (
+                  <span />
+                )}
+                {seriesNext ? (
+                  <Link
+                    href={`/guide/${seriesNext}`}
+                    className="flex items-center justify-end gap-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors px-3 py-2.5 min-w-0 text-right"
+                  >
+                    <span className="text-xs text-zinc-400 truncate">{GUIDE_LABELS[seriesNext] ?? seriesNext}</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                  </Link>
+                ) : (
+                  seriesInfo.series.hubSlug && (
+                    <Link
+                      href={`/guide/${seriesInfo.series.hubSlug}`}
+                      className="flex items-center justify-end gap-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors px-3 py-2.5 min-w-0 text-right"
+                    >
+                      <span className="text-xs text-zinc-400 truncate">一覧に戻る</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                    </Link>
+                  )
+                )}
+              </div>
             </section>
           )}
 

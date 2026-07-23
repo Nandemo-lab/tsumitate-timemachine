@@ -2352,3 +2352,60 @@ export const GUIDE_PAGES: GuidePage[] = [
 export function getGuidePage(slug: string): GuidePage | undefined {
   return GUIDE_PAGES.find((p) => p.slug === slug);
 }
+
+/**
+ * クラスタ内のシリーズ順序。記事ページに「前へ・次へ」ナビを表示するために使う。
+ * クラスタが完成したら、対応するハブページ（/guide/tax, /guide/system 等）を
+ * 作成し、hubSlug にそのパスを設定すること。
+ */
+export interface GuideSeries {
+  label: string;
+  hubSlug?: string; // 例: "tax" → /guide/tax
+  slugs: string[];
+}
+
+export const GUIDE_SERIES: Record<string, GuideSeries> = {
+  tax: {
+    label: "税金ガイド",
+    hubSlug: "tax",
+    slugs: [
+      "nisa-vs-tokutei-tax",
+      "nisa-waku-tsukaikitta-ato",
+      "bunpaikin-to-zeikin",
+      "songai-tsuusan-kurikoshi-koujo",
+      "gaikoku-zeigaku-koujo",
+      "tokutei-ippan-nisa-kouza-chigai",
+      "haitoukin-uketori-houhou",
+      "toushi-kakuteishinkoku-necessary-cases",
+    ],
+  },
+  system: {
+    label: "制度ガイド",
+    hubSlug: "system",
+    slugs: [
+      "nisa-tsumitate-vs-seicho",
+      "nisa-tsumitate-ikura",
+      "nisa-wariate-osusume",
+      "kyuu-nisa-kara-ikou",
+      "junior-nisa-shuuryou-go",
+      "nisa-kinyuukikan-henkou",
+    ],
+  },
+  booraku: {
+    label: "暴落ガイド",
+    // クラスタ完成後にハブページ（/guide/booraku）を作成し、hubSlugを設定する
+    slugs: [
+      "sp500-booraku-taisho",
+      "booraku-tsumitate-yameru",
+      // 今後追加: 新NISAで暴落したらどうする？ / リーマンショックで積立した結果 / 一括投資と積立、暴落に強いのは？
+    ],
+  },
+};
+
+export function getGuideSeriesForSlug(slug: string): { series: GuideSeries; index: number } | undefined {
+  for (const series of Object.values(GUIDE_SERIES)) {
+    const index = series.slugs.indexOf(slug);
+    if (index !== -1) return { series, index };
+  }
+  return undefined;
+}
