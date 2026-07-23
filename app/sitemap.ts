@@ -107,6 +107,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/guide/tax`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
   ];
 
+  // 制度ガイド一覧（/guide/system）
+  const systemGuideIndexPage: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/guide/system`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
+  ];
+
   // コラム一覧（/articles）
   const articleIndexPage: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
@@ -130,6 +135,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...monthlyAmountPages,
     ...guideArticlePages,
     ...taxGuideIndexPage,
+    ...systemGuideIndexPage,
     ...articleIndexPage,
     ...articlePages,
     ...rankingPages,
