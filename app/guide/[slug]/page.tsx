@@ -207,6 +207,18 @@ export default async function GuidePage({ params }: Props) {
                 <span className="text-indigo-300">⏱ {page.tldr.readTime}</span>
                 <span className="text-zinc-500 font-normal"> ・ {page.tldr.forWho}</span>
               </p>
+
+              {page.tldr.forWhoBullets && page.tldr.forWhoBullets.length > 0 && (
+                <div className="space-y-1 pt-0.5">
+                  <p className="text-xs font-bold text-white">こんな人向け</p>
+                  <ul className="space-y-0.5">
+                    {page.tldr.forWhoBullets.map((b, i) => (
+                      <li key={i} className="text-sm text-zinc-300">・{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <p className="text-xs font-bold text-white pt-0.5">この記事で分かること</p>
               <ul className="space-y-1">
                 {page.tldr.bullets.map((b, i) => (

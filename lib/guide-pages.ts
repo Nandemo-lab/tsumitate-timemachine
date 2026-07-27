@@ -59,6 +59,8 @@ export interface GuideSystemCheck {
 export interface GuideTldr {
   readTime: string; // 例: "約3分"
   forWho: string;   // 例: "初心者向け"
+  /** 「こんな人向け」1〜2行。読者が「自分のことだ」と気づくための短い箇条書き */
+  forWhoBullets?: string[];
   bullets: string[]; // 「結局どう考えればいいか」が伝わる短い箇条書き（2〜3個）
 }
 
@@ -2300,6 +2302,10 @@ export const GUIDE_PAGES: GuidePage[] = [
     tldr: {
       readTime: "約3分",
       forWho: "初心者向け",
+      forWhoBullets: [
+        "相場の下落が続いて不安になっている",
+        "積立を続けるか、一度やめるか迷っている",
+      ],
       bullets: [
         "「暴落したかどうか」ではなく「資金をいつ使うか」が判断基準",
         "10年以上先の目標なら、暴落は積立をやめる理由になりにくい",
@@ -2384,6 +2390,10 @@ export const GUIDE_PAGES: GuidePage[] = [
     tldr: {
       readTime: "約3分",
       forWho: "新NISA利用者向け",
+      forWhoBullets: [
+        "新NISAで積立中に相場が下落して不安になっている",
+        "非課税枠をどう使えばいいか迷っている",
+      ],
       bullets: [
         "非課税枠が残っているなら、暴落は枠を使うタイミングの一つ",
         "枠を使い切っていれば、追加投資は課税口座になる",
