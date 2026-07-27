@@ -29,6 +29,12 @@ const SECTIONS = [
     ],
   },
   {
+    title: "コラム",
+    links: [
+      { href: "/articles/orukan-vs-sp500", label: "オルカン vs S&P500 どっち？" },
+    ],
+  },
+  {
     title: "人気比較",
     links: [
       { href: "/compare/orukan-vs-sp500",       label: "オルカン vs S&P500" },
@@ -54,6 +60,8 @@ const SECTIONS = [
       { href: "/about/data-sources", label: "データソース・計算方法" },
       { href: "/terms",              label: "利用規約" },
       { href: "/privacy",            label: "プライバシーポリシー" },
+      { href: "/disclaimer",         label: "免責事項" },
+      { href: "/ad-policy",          label: "広告掲載ポリシー" },
       { href: "/contact",            label: "お問い合わせ" },
     ],
   },

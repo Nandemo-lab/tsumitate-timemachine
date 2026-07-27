@@ -129,9 +129,9 @@ export default function AboutPage() {
           </h2>
           <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-4">
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">個人開発・広告なし</p>
+              <p className="text-xs font-bold text-zinc-300">個人開発・運営</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                本サービスは個人が開発・運営しています。特定の金融機関・証券会社とは提携しておらず、広告収益やアフィリエイトを目的とした誘導は行いません。
+                本サービスは個人が開発・運営しています。サイト運営の継続のため、Google AdSense等の第三者配信広告や、証券会社等の紹介リンク（アフィリエイト）を設置する場合があります。広告掲載の有無によって、比較・評価の内容が変わることはありません。詳しくは<Link href="/ad-policy" className="mx-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">広告掲載ポリシー</Link>をご覧ください。
               </p>
             </div>
             <div className="space-y-1.5">
@@ -167,6 +167,32 @@ export default function AboutPage() {
             </Link>
             をご覧ください。
           </p>
+        </section>
+
+        {/* 運営者情報 */}
+        <section className="space-y-3">
+          <h2
+            className="text-base font-bold text-white"
+            style={{ fontFamily: "var(--font-serif-jp), serif" }}
+          >
+            運営者情報
+          </h2>
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-2">
+            <div className="flex items-start gap-2 text-sm">
+              <span className="text-zinc-500 w-20 flex-shrink-0">運営形態</span>
+              <span className="text-zinc-300">個人開発・運営</span>
+            </div>
+            <div className="flex items-start gap-2 text-sm">
+              <span className="text-zinc-500 w-20 flex-shrink-0">運営開始</span>
+              <span className="text-zinc-300">2025年</span>
+            </div>
+            <div className="flex items-start gap-2 text-sm">
+              <span className="text-zinc-500 w-20 flex-shrink-0">お問い合わせ</span>
+              <Link href="/contact" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">
+                お問い合わせフォーム
+              </Link>
+            </div>
+          </div>
         </section>
 
         {/* お問い合わせ */}
