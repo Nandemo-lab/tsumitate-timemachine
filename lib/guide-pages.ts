@@ -55,6 +55,13 @@ export interface GuideSystemCheck {
   sourceUrl?: string;
 }
 
+/** 記事冒頭の「この記事で分かること」ボックス。結論ファースト構成の入口。 */
+export interface GuideTldr {
+  readTime: string; // 例: "3分で読めます"
+  forWho: string;   // 例: "初心者向け"
+  bullets: string[]; // 「結局どう考えればいいか」が伝わる短い箇条書き（2〜3個）
+}
+
 export interface GuidePage {
   slug: string;
   metaTitle: string;
@@ -62,6 +69,10 @@ export interface GuidePage {
   h1: string;
   intro: string;
   lastUpdated?: string;
+  /** この記事で分かることボックス（結論ファースト構成用。任意項目） */
+  tldr?: GuideTldr;
+  /** 結論（3行程度）。pointsより前、intro直後に表示する。任意項目 */
+  conclusion?: string[];
   /** 制度・税制記事のみ設定する。数値・ルールを公式情報源と最後に照合した記録 */
   systemCheck?: GuideSystemCheck[];
   points: GuidePoint[];
@@ -2286,6 +2297,20 @@ export const GUIDE_PAGES: GuidePage[] = [
     intro:
       "相場が大きく下落すると、「このまま積立を続けていいのか」という不安が生まれます。この記事では、特定の銘柄に限定せず、暴落時に積立を続けるか・見直すかを考える上での一般的な判断基準を整理します。",
     lastUpdated: "2026年8月",
+    tldr: {
+      readTime: "3分で読めます",
+      forWho: "初心者向け",
+      bullets: [
+        "「暴落したかどうか」ではなく「資金をいつ使うか」が判断基準",
+        "10年以上先の目標なら、暴落は積立をやめる理由になりにくい",
+        "NISA口座での売却は非課税枠の面でも不利になりやすい",
+      ],
+    },
+    conclusion: [
+      "多くの場合、「暴落したから」という理由だけで積立をやめる必要はありません。",
+      "ただし、5年以内に使う予定の資金であれば、見直しを検討する考え方もあります。",
+      "NISA口座での売却は、非課税枠の復活が翌年以降になる点にも注意が必要です。",
+    ],
     points: [
       {
         title: "ドルコスト平均法では、下落時ほど多くの口数を買える",
@@ -2356,6 +2381,20 @@ export const GUIDE_PAGES: GuidePage[] = [
     intro:
       "新NISAには非課税で投資できる上限（生涯非課税保有限度額）があります。この記事では、暴落局面において非課税枠がまだ残っている場合と、すでに使い切っている場合とで、非課税枠の使い方の考え方がどう変わるかを整理します。",
     lastUpdated: "2026年8月",
+    tldr: {
+      readTime: "3分で読めます",
+      forWho: "新NISA利用者向け",
+      bullets: [
+        "非課税枠が残っているなら、暴落は枠を使うタイミングの一つ",
+        "枠を使い切っていれば、追加投資は課税口座になる",
+        "新NISAにロールオーバーはなく、売却で枠を失いやすい",
+      ],
+    },
+    conclusion: [
+      "非課税枠が残っている場合、暴落は非課税枠を使って買い付ける一つの機会と捉える考え方もあります。",
+      "非課税枠を使い切っている場合は、追加投資は課税口座になりますが、既存の保有分は非課税のままです。",
+      "新NISAには旧NISAのようなロールオーバーがないため、暴落時の売却は非課税の機会を狭めやすい点に注意が必要です。",
+    ],
     systemCheck: [
       {
         topic: "新NISAの生涯非課税保有限度額と非課税枠の復活ルール",

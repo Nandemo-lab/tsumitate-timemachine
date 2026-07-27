@@ -188,7 +188,39 @@ export default async function GuidePage({ params }: Props) {
             <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
           </section>
 
-          {/* ── 要点3つ ──────────────────────────────────────── */}
+          {/* ── この記事で分かること（結論ファースト構成の入口）───── */}
+          {page.tldr && (
+            <section className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2">
+              <p className="text-xs font-bold text-indigo-300">この記事で分かること</p>
+              <ul className="space-y-1">
+                {page.tldr.bullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-1.5 text-sm text-zinc-200">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center gap-2 pt-1 text-[11px] text-zinc-500">
+                <span>{page.tldr.readTime}</span>
+                <span>・</span>
+                <span>{page.tldr.forWho}</span>
+              </div>
+            </section>
+          )}
+
+          {/* ── 結論（3行程度、詳細解説より先に表示）───────────── */}
+          {page.conclusion && page.conclusion.length > 0 && (
+            <section className="rounded-xl bg-white/[0.04] border border-white/[0.1] p-4 space-y-2">
+              <p className="text-xs font-bold text-white">結論</p>
+              <div className="space-y-1.5">
+                {page.conclusion.map((line, i) => (
+                  <p key={i} className="text-sm text-zinc-200 leading-relaxed">{line}</p>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── 要点3つ（判断基準・理由の詳細）─────────────────── */}
           <section className="space-y-4">
             <h2
               className="text-base font-bold text-white"
