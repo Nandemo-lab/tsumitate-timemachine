@@ -188,27 +188,7 @@ export default async function GuidePage({ params }: Props) {
             <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
           </section>
 
-          {/* ── この記事で分かること（結論ファースト構成の入口）───── */}
-          {page.tldr && (
-            <section className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2">
-              <p className="text-xs font-bold text-indigo-300">この記事で分かること</p>
-              <ul className="space-y-1">
-                {page.tldr.bullets.map((b, i) => (
-                  <li key={i} className="flex items-start gap-1.5 text-sm text-zinc-200">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-center gap-2 pt-1 text-[11px] text-zinc-500">
-                <span>{page.tldr.readTime}</span>
-                <span>・</span>
-                <span>{page.tldr.forWho}</span>
-              </div>
-            </section>
-          )}
-
-          {/* ── 結論（3行程度、詳細解説より先に表示）───────────── */}
+          {/* ── 結論（最初に表示。検索から来た読者が数秒で要点を掴む）─ */}
           {page.conclusion && page.conclusion.length > 0 && (
             <section className="rounded-xl bg-white/[0.04] border border-white/[0.1] p-4 space-y-2">
               <p className="text-xs font-bold text-white">結論</p>
@@ -217,6 +197,25 @@ export default async function GuidePage({ params }: Props) {
                   <p key={i} className="text-sm text-zinc-200 leading-relaxed">{line}</p>
                 ))}
               </div>
+            </section>
+          )}
+
+          {/* ── ◯分で分かること（読了時間を前面に出す）───────────── */}
+          {page.tldr && (
+            <section className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2">
+              <p className="text-xs font-bold text-indigo-300">
+                <span className="text-indigo-300">⏱ {page.tldr.readTime}</span>
+                <span className="text-zinc-500 font-normal"> ・ {page.tldr.forWho}</span>
+              </p>
+              <p className="text-xs font-bold text-white pt-0.5">この記事で分かること</p>
+              <ul className="space-y-1">
+                {page.tldr.bullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-1.5 text-sm text-zinc-200">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
             </section>
           )}
 

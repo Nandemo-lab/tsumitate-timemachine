@@ -57,7 +57,7 @@ export interface GuideSystemCheck {
 
 /** 記事冒頭の「この記事で分かること」ボックス。結論ファースト構成の入口。 */
 export interface GuideTldr {
-  readTime: string; // 例: "3分で読めます"
+  readTime: string; // 例: "約3分"
   forWho: string;   // 例: "初心者向け"
   bullets: string[]; // 「結局どう考えればいいか」が伝わる短い箇条書き（2〜3個）
 }
@@ -2298,7 +2298,7 @@ export const GUIDE_PAGES: GuidePage[] = [
       "相場が大きく下落すると、「このまま積立を続けていいのか」という不安が生まれます。この記事では、特定の銘柄に限定せず、暴落時に積立を続けるか・見直すかを考える上での一般的な判断基準を整理します。",
     lastUpdated: "2026年8月",
     tldr: {
-      readTime: "3分で読めます",
+      readTime: "約3分",
       forWho: "初心者向け",
       bullets: [
         "「暴落したかどうか」ではなく「資金をいつ使うか」が判断基準",
@@ -2382,7 +2382,7 @@ export const GUIDE_PAGES: GuidePage[] = [
       "新NISAには非課税で投資できる上限（生涯非課税保有限度額）があります。この記事では、暴落局面において非課税枠がまだ残っている場合と、すでに使い切っている場合とで、非課税枠の使い方の考え方がどう変わるかを整理します。",
     lastUpdated: "2026年8月",
     tldr: {
-      readTime: "3分で読めます",
+      readTime: "約3分",
       forWho: "新NISA利用者向け",
       bullets: [
         "非課税枠が残っているなら、暴落は枠を使うタイミングの一つ",
