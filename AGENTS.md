@@ -132,6 +132,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 6. X投稿文の作成
 ```
 
+**X投稿文は、提出前に必ず `node scripts/x-post-length.mjs <ファイル>` で加重文字数
+（上限280）を機械的に検証すること。** 目視・暗算・過去の投稿からの類推による文字数
+申告は禁止する（実際に何度も280字超過が発生したため）。「✓ OK」の出力を確認してから
+提出する。超過していた場合は本文を短縮し、再度スクリプトで確認する。
+
 `npm run qa`（内部で `node scripts/qa-check.mjs` を実行）が1件でもERRORを出している状態、
 または実機確認前の状態で「完了しました」と報告してはならない。ローカルにサーバーを
 起動できる場合は `npm run qa:live` でcanonical/OGP画像/sitemap掲載URLの実HTTPステータス
