@@ -157,6 +157,11 @@ export default function ComparisonChart({ planA, planB }: Props) {
         </div>
       </div>
 
+      {/* KNOWN ISSUE: Rechartsの初期描画時、モバイルでResponsiveContainerが
+          親要素の幅を正しく測定する前に描画され、一時的に横スクロールが
+          発生することがある（再読み込み・再ナビゲーションでは再現しない
+          一過性の事象）。実害は確認できていないため現時点で修正は保留。
+          再発・悪化が確認された場合はここを起点に調査すること。 */}
       <div className="h-60 sm:h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
