@@ -173,7 +173,7 @@ export const FUNDS: Record<FundId, Fund> = {
       beginnerScore: 3,
       volatility: "低",
       expectedHorizon: "10年以上",
-      nisaSupport: { tsumitate: true, growth: true },
+      nisaSupport: { tsumitate: false, growth: true },
     },
   },
 

@@ -64,6 +64,7 @@ const GUIDE_LABELS: Record<string, string> = {
   "booraku-tsumitate-yameru":   "暴落したら積立はやめるべき？",
   "shinnisa-booraku-dousuru":   "新NISAで暴落したらどうする？",
   "lehman-kyuu-tsumitate-kensho": "リーマンショック級の暴落が来たら？",
+  "shinnisa-schd-kaeru":        "新NISAでSCHDは買える？",
 };
 
 interface Props {
