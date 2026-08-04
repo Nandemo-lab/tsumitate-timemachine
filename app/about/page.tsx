@@ -149,6 +149,36 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* 更新方針 */}
+        <section className="space-y-3">
+          <h2
+            className="text-base font-bold text-white"
+            style={{ fontFamily: "var(--font-serif-jp), serif" }}
+          >
+            記事の更新方針
+          </h2>
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-4">
+            <div className="space-y-1.5">
+              <p className="text-xs font-bold text-zinc-300">新規記事の追加基準</p>
+              <p className="text-sm text-zinc-500 leading-relaxed">
+                既存記事との重複状況やサイト全体のテーマバランスを踏まえて追加しています。銘柄比較・NISA制度・税金・暴落対応など、テーマごとに関連記事をまとめて整理することを重視しています。
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <p className="text-xs font-bold text-zinc-300">既存記事の見直し（リライト）</p>
+              <p className="text-sm text-zinc-500 leading-relaxed">
+                公開後、一定期間が経過した記事は内容と実データの整合性を確認しています。特にNISA制度・税金に関する記事は、記事内に公式情報源との最終確認日を明記し、確認から一定期間が経過したものを優先的に再確認する運用にしています。
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <p className="text-xs font-bold text-zinc-300">数値データの取り扱い</p>
+              <p className="text-sm text-zinc-500 leading-relaxed">
+                年間リターン・信託報酬などの数値は記事ごとに個別管理せず、サイト内の共通データを全ページで参照する仕組みにしています。これにより、データ更新時に記事間で数値がずれることを防いでいます。
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* データの考え方 */}
         <section className="space-y-3">
           <h2
@@ -192,6 +222,31 @@ export default function AboutPage() {
                 お問い合わせフォーム
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* 更新履歴 */}
+        <section className="space-y-3">
+          <h2
+            className="text-base font-bold text-white"
+            style={{ fontFamily: "var(--font-serif-jp), serif" }}
+          >
+            更新履歴
+          </h2>
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5">
+            <ul className="space-y-3">
+              {[
+                { date: "2026年8月", text: "比較記事「VTIとオルカン」を公開。投資ガイド一覧・比較一覧・銘柄解説一覧のページを新設し、サイト内の回遊導線を整理" },
+                { date: "2026年7月", text: "比較記事を複数追加（オルカン vs VYM、VTI vs NASDAQ100、SCHD関連 等）。Google AdSense審査への対応、暴落クラスタの記事を追加" },
+                { date: "2026年7月", text: "税金ガイド・制度ガイドの一覧ページを新設。クラスタ内の記事を前へ・次へで読み進められるナビを追加" },
+                { date: "2025年", text: "積立タイムマシンを個人開発でリリース" },
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <span className="text-zinc-500 w-16 flex-shrink-0">{item.date}</span>
+                  <span className="text-zinc-400 leading-relaxed">{item.text}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
