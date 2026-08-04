@@ -1,13 +1,28 @@
 import Link from "next/link";
+import { ARTICLE_PAGES } from "@/lib/article-pages";
+import { FUNDS } from "@/lib/funds";
+import type { FundId } from "@/types";
+
+// コラム記事一覧は ARTICLE_PAGES（content/articles/index.ts の ARTICLE_REGISTRY）から
+// 自動生成する。新しい記事を追加してもフッターの更新漏れが起きない。
+const articleLinks = ARTICLE_PAGES.map((a) => {
+  const [fundAId, fundBId] = (a.relatedFunds ?? []) as FundId[];
+  const label =
+    fundAId && fundBId && FUNDS[fundAId] && FUNDS[fundBId]
+      ? `${FUNDS[fundAId].shortName} vs ${FUNDS[fundBId].shortName} どっち？`
+      : a.h1;
+  return { href: `/articles/${a.slug}`, label };
+});
 
 const SECTIONS = [
   {
     title: "人気ページ",
     links: [
-      { href: "/",           label: "積立シミュレーション" },
-      { href: "/fund/orukan", label: "銘柄図鑑" },
-      { href: "/compare/orukan-vs-sp500", label: "比較" },
-      { href: "/ranking",    label: "ランキング一覧" },
+      { href: "/",        label: "積立シミュレーション" },
+      { href: "/guide",   label: "投資ガイド一覧" },
+      { href: "/compare", label: "比較一覧" },
+      { href: "/fund",    label: "銘柄解説一覧" },
+      { href: "/ranking", label: "ランキング一覧" },
     ],
   },
   {
@@ -31,7 +46,8 @@ const SECTIONS = [
   {
     title: "コラム",
     links: [
-      { href: "/articles/orukan-vs-sp500", label: "オルカン vs S&P500 どっち？" },
+      ...articleLinks,
+      { href: "/articles", label: "コラム一覧を見る" },
     ],
   },
   {
