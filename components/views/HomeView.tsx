@@ -448,6 +448,12 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
             </Link>
           ))}
+          <Link
+            href="/guide"
+            className="flex items-center justify-center gap-1 rounded-xl px-4 py-3 text-xs font-bold text-indigo-300 hover:text-indigo-200 transition-colors"
+          >
+            投資ガイドをもっと見る <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </motion.section>
 
@@ -513,6 +519,12 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               </Link>
             );
           })}
+          <Link
+            href="/compare"
+            className="flex items-center justify-center gap-1 rounded-xl px-4 py-3 text-xs font-bold text-violet-300 hover:text-violet-200 transition-colors"
+          >
+            比較をもっと見る <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </motion.section>
 

@@ -104,6 +104,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  // 投資ガイド一覧（/guide）
+  const guideIndexPage: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/guide`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+  ];
+
   // 税金ガイド一覧（/guide/tax）
   const taxGuideIndexPage: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/guide/tax`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
@@ -112,6 +117,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 制度ガイド一覧（/guide/system）
   const systemGuideIndexPage: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/guide/system`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
+  ];
+
+  // 暴落ガイド一覧（/guide/booraku）
+  const boorakuGuideIndexPage: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/guide/booraku`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
+  ];
+
+  // 比較一覧（/compare）
+  const compareIndexPage: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/compare`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+  ];
+
+  // 銘柄解説一覧（/fund）
+  const fundIndexPage: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/fund`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
   ];
 
   // コラム一覧（/articles）
@@ -136,8 +156,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fromYearPages,
     ...monthlyAmountPages,
     ...guideArticlePages,
+    ...guideIndexPage,
     ...taxGuideIndexPage,
     ...systemGuideIndexPage,
+    ...boorakuGuideIndexPage,
+    ...compareIndexPage,
+    ...fundIndexPage,
     ...articleIndexPage,
     ...articlePages,
     ...rankingPages,

@@ -2708,7 +2708,7 @@ export const GUIDE_SERIES: Record<string, GuideSeries> = {
   },
   booraku: {
     label: "暴落ガイド",
-    // クラスタ完成後にハブページ（/guide/booraku）を作成し、hubSlugを設定する
+    hubSlug: "booraku",
     slugs: [
       "sp500-booraku-taisho",
       "booraku-tsumitate-yameru",
