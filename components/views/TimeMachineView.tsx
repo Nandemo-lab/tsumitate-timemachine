@@ -12,6 +12,7 @@ import RankingView from "@/components/simulation/RankingView";
 import QuickScenarios from "@/components/simulation/QuickScenarios";
 import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
 import { QuickScenario } from "@/lib/scenarios";
+import { trackCalculate, trackCompareClick } from "@/lib/analytics";
 import { ChevronDown, Zap, Trophy, Settings2, GitCompareArrows, Share2, ShieldCheck, Clock3, Target } from "lucide-react";
 
 type SubMode = "single" | "ranking";
@@ -46,6 +47,7 @@ export default function TimeMachineView({
   const [subMode, setSubMode] = useState<SubMode>("single");
 
   const handleScenario = useCallback((s: QuickScenario) => {
+    trackCalculate({ mode: "quick_scenario", fund_id: s.fundId, start_year: s.startYear, monthly_amount: s.monthlyAmount });
     setFund(s.fundId);
     setStartYear(s.startYear);
     setStartMonth(s.startMonth);
@@ -74,6 +76,7 @@ export default function TimeMachineView({
   }, [startYear, startMonth]);
 
   const run = () => {
+    trackCalculate({ mode: subMode, fund_id: subMode === "single" ? fund : undefined, start_year: startYear, monthly_amount: monthlyAmount });
     setShowResult(true);
     setShowShare(false);
     setTimeout(() => {
@@ -331,7 +334,7 @@ export default function TimeMachineView({
 
             {/* 比較モード誘導（圧縮・控えめ） */}
             <button
-              onClick={() => onCompare(fund)}
+              onClick={() => { trackCompareClick({ fund_id: fund }); onCompare(fund); }}
               className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors py-1"
             >
               <GitCompareArrows className="h-3.5 w-3.5" />

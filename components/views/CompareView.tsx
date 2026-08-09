@@ -12,6 +12,7 @@ import ComparisonChart from "@/components/simulation/ComparisonChart";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
 import { ChevronDown, Zap, Share2, ShieldCheck, GitCompareArrows } from "lucide-react";
+import { trackCalculate } from "@/lib/analytics";
 
 const MONTHLY_AMOUNTS = [10000, 20000, 30000, 50000, 100000];
 
@@ -30,12 +31,13 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   const [showCalcDetails, setShowCalcDetails] = useState(false);
 
   const run = useCallback(() => {
+    trackCalculate({ mode: "compare", fund_id: `${fundA}_vs_${fundB}`, start_year: startYear, monthly_amount: monthlyAmount });
     setShowResult(true);
     setShowShare(false);
     setTimeout(() => {
       document.getElementById("compare-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 150);
-  }, []);
+  }, [fundA, fundB, startYear, monthlyAmount]);
 
   const resultA = useMemo(
     () => (showResult ? simulate({ fundId: fundA, startYear, startMonth, monthlyAmount }) : null),

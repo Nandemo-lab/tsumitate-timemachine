@@ -6,6 +6,7 @@ import { formatCurrency } from "@/lib/simulation";
 import { Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { trackShareClick } from "@/lib/analytics";
 
 interface Props {
   planA: SimulationResult;
@@ -53,11 +54,13 @@ ${url}
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareText);
+    trackShareClick({ method: "copy", context: planB ? "compare" : "single" });
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
 
   const handleXShare = () => {
+    trackShareClick({ method: "x", context: planB ? "compare" : "single" });
     const encoded = encodeURIComponent(shareText);
     window.open(`https://twitter.com/intent/tweet?text=${encoded}`, "_blank", "noopener,noreferrer");
   };
