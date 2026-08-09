@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags, FUND_SHORT_DESC } from "@/lib/funds";
@@ -26,6 +26,14 @@ interface Props {
 }
 
 export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props) {
+  // SSR/初期hydrationは固定値にし、閲覧環境の日付はマウント後に反映する。
+  // サーバーUTCと日本時間の日付境界によるテキスト不一致を防ぐ。
+  const [todayPickIndex, setTodayPickIndex] = useState(0);
+
+  useEffect(() => {
+    setTodayPickIndex(new Date().getDate() % FUND_LIST.length);
+  }, []);
+
   const taraeba = useMemo(
     () =>
       TARAEBA.map((p) => ({
@@ -38,11 +46,10 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
 
   // 今日のおすすめ（日付ベースで日替わり）
   const todayPick = useMemo(() => {
-    const dayIndex = new Date().getDate() % FUND_LIST.length;
-    const fund = FUND_LIST[dayIndex];
+    const fund = FUND_LIST[todayPickIndex];
     const result = simulate({ fundId: fund.id, startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
     return { fund, result };
-  }, []);
+  }, [todayPickIndex]);
 
   // 全銘柄2020年〜月3万円の成績（上位5件）
   const topFunds = useMemo(
