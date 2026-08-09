@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Noto_Sans_JP, Noto_Serif_JP, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import InteractionSpark from "@/components/effects/InteractionSpark";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -136,6 +137,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-dvh bg-zinc-950 text-zinc-50 antialiased">
         {children}
+        <InteractionSpark />
       </body>
       {process.env.NODE_ENV === "production" && (
         <GoogleAnalytics gaId="G-0MWMWGWGBT" />

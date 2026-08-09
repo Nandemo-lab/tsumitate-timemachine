@@ -189,3 +189,84 @@ html {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
 }
+
+/* Interaction spark — a restrained time-ripple for intentional taps/clicks. */
+.interaction-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.interaction-burst {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 1px solid rgb(129 140 248 / 55%);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 2px rgb(99 102 241 / 8%),
+    0 0 16px rgb(129 140 248 / 24%);
+  animation: interaction-ripple 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: width, height, margin, opacity;
+}
+
+.interaction-burst::after {
+  content: "";
+  position: absolute;
+  inset: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+  border-radius: 999px;
+  background: #fbbf24;
+  box-shadow: 0 0 10px rgb(251 191 36 / 70%);
+  animation: interaction-core 420ms ease-out forwards;
+}
+
+.interaction-burst > i {
+  --angle: calc((var(--particle-index) * 120deg) - 90deg);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, #fbbf24 72%, #c7d2fe);
+  transform: rotate(var(--angle)) translateX(5px);
+  animation: interaction-particle 500ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(var(--particle-index) * 18ms);
+}
+
+@keyframes interaction-ripple {
+  0% { opacity: 0; }
+  12% { opacity: 1; }
+  100% {
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    opacity: 0;
+  }
+}
+
+@keyframes interaction-core {
+  0% { transform: scale(0.45); opacity: 0; }
+  25% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(0.2); opacity: 0; }
+}
+
+@keyframes interaction-particle {
+  0% { opacity: 0; transform: rotate(var(--angle)) translateX(4px) scale(0.5); }
+  24% { opacity: 0.85; }
+  100% { opacity: 0; transform: rotate(var(--angle)) translateX(22px) scale(0.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interaction-layer {
+    display: none;
+  }
+}
