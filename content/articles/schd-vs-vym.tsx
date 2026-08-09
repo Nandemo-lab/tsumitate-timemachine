@@ -139,7 +139,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "約100銘柄"],
           ["配当利回り", "約3.5〜4.0%（目安）"],
           ["増配率（10年平均）", "約11〜12%"],
-          ["経費率", "年0.192%（投資信託）"],
+          ["経費率", "年0.1238%（投資信託）"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           銘柄数を絞ることで「配当を増やし続けられる質の高い企業」に的を絞っているのが特徴です。その分、個別銘柄への集中度はVYMよりやや高くなります。
@@ -157,7 +157,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "約400銘柄"],
           ["配当利回り", "約2.8〜3.2%（目安）"],
           ["増配率（10年平均）", "約6〜7%"],
-          ["経費率", "年0.06%"],
+          ["経費率", "年0.04%"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           幅広い銘柄に分散するため、SCHDと比べて安定感のある値動きが期待できます。一方で、増配率という点ではSCHDに一歩譲る傾向があります。
@@ -187,7 +187,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["配当利回り", "約3.5〜4.0%",              "約2.8〜3.2%"],
                 ["増配率（10年平均）", "約11〜12%",         "約6〜7%"],
                 ["分散度",     "△ やや集中",               "◎ 広く分散"],
-                ["経費率",     "0.192%（投信）",            "0.06%"],
+                ["経費率",     "0.1238%（投信）",           "0.04%"],
                 ["NISA対応",   "○ 成長投資枠（ETF）",       "○ 成長投資枠（ETF）"],
               ].map(([k, a, b]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
