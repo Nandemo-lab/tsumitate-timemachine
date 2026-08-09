@@ -26,12 +26,13 @@ const SECTIONS = [
   { key: "exit",       label: "出口戦略・家計クラスタ", slugs: EXIT_SLUGS },
 ] as const;
 
-const TITLE = "投資ガイド一覧｜積立タイムマシン";
+const PAGE_TITLE = "投資ガイド一覧";
+const TITLE = `${PAGE_TITLE}｜${SITE_NAME}`;
 const DESCRIPTION =
   "新NISA・税金・制度・暴落対応から、初心者向けの始め方、運用中の判断基準、出口戦略まで、積立投資に関するガイド記事をテーマ別にまとめています。";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: PAGE_TITLE,
   description: DESCRIPTION,
   alternates: { canonical: `${BASE_URL}/guide` },
   openGraph: {

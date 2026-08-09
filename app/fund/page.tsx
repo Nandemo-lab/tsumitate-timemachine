@@ -8,12 +8,13 @@ import SiteFooter from "@/components/layout/SiteFooter";
 
 const BASE_URL = SITE_URL;
 
-const TITLE = "銘柄解説一覧｜積立タイムマシン";
+const PAGE_TITLE = "銘柄解説一覧";
+const TITLE = `${PAGE_TITLE}｜${SITE_NAME}`;
 const DESCRIPTION =
   "オルカン・S&P500・NASDAQ100・SCHD・VYM・VTI・FANG+など、人気銘柄の特徴・信託報酬・NISA対応・積立実績を解説したページ一覧です。";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: PAGE_TITLE,
   description: DESCRIPTION,
   alternates: { canonical: `${BASE_URL}/fund` },
   openGraph: {

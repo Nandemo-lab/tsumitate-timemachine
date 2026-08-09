@@ -196,9 +196,9 @@ async function main() {
     const titleMatch = html.match(/<title>([^<]*)<\/title>/);
     const title = titleMatch ? titleMatch[1] : "";
     if (title) {
-      const suffixCount = (title.match(/\s\|\s積立タイムマシン/g) || []).length;
+      const suffixCount = (title.match(/(?:\s\|\s|｜)積立タイムマシン/g) || []).length;
       if (suffixCount >= 2) {
-        report("ERROR", url, `titleに「| 積立タイムマシン」サフィックスが${suffixCount}回出現 → "${title}"`);
+        report("ERROR", url, `titleにサイト名サフィックスが${suffixCount}回出現 → "${title}"`);
       }
       if (!isNoindex && (title.length < TITLE_MIN || title.length > TITLE_MAX)) {
         report("INFO", url, `title文字数 ${title.length}文字（目安${TITLE_MIN}〜${TITLE_MAX}文字）`);

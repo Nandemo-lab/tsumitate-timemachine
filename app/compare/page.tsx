@@ -8,12 +8,13 @@ import SiteFooter from "@/components/layout/SiteFooter";
 
 const BASE_URL = SITE_URL;
 
-const TITLE = "銘柄比較一覧｜積立タイムマシン";
+const PAGE_TITLE = "銘柄比較一覧";
+const TITLE = `${PAGE_TITLE}｜${SITE_NAME}`;
 const DESCRIPTION =
   "オルカン・S&P500・NASDAQ100・SCHD・VYM・VTIなど、人気銘柄同士の過去実績・コスト・NISA対応を比較したページ一覧です。";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: PAGE_TITLE,
   description: DESCRIPTION,
   alternates: { canonical: `${BASE_URL}/compare` },
   openGraph: {
