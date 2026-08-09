@@ -55,7 +55,7 @@ const FUND_SOURCES = [
     fund: "Vanguard Total World Stock ETF（VT）",
     index: "FTSE Global All Cap Index",
     source: "Vanguard社公開データ・ファクトシート",
-    fee: "0.07%（年率）",
+    fee: "0.06%（年率）",
     link: { label: "VT", href: "https://investor.vanguard.com/investment-products/etfs/profile/vt" },
   },
   {
@@ -69,7 +69,7 @@ const FUND_SOURCES = [
     fund: "VYM（Vanguard High Dividend Yield ETF）",
     index: "FTSE High Dividend Yield Index",
     source: "Vanguard社公開データ・ファクトシート",
-    fee: "0.06%（年率）",
+    fee: "0.04%（年率）",
     link: { label: "VYM", href: "https://investor.vanguard.com/investment-products/etfs/profile/vym" },
   },
 ];

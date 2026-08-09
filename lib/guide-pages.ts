@@ -524,7 +524,7 @@ export const GUIDE_PAGES: GuidePage[] = [
       },
       {
         title: "信託報酬0.05775%は業界最安クラス——コスト面の懸念は根拠なし",
-        body: "100万円投資で年間コスト約578円（0.05775%）。同カテゴリのETFであるVT（0.07%）より安く、アクティブファンドの年1〜2%と比較すれば30分の1以下のコストです。「手数料が高い」という批判はオルカンに対しては根拠が薄く、コスト面でやめる理由にはなりません。",
+        body: "100万円投資で年間コスト約578円（0.05775%）。同カテゴリのETFであるVT（0.06%）とほぼ同水準で、アクティブファンドの年1〜2%と比べても低コストです。「手数料が高い」という批判はオルカンに対しては根拠が薄く、コスト面でやめる理由にはなりません。",
       },
     ],
     fundCards: [
@@ -2595,9 +2595,9 @@ export const GUIDE_PAGES: GuidePage[] = [
     systemCheck: [
       {
         topic: "楽天SCHDの新NISA区分（成長投資枠のみ対応）と取扱証券会社",
-        lastConfirmed: "2026-08-11",
-        source: "楽天証券・楽天投信投資顧問 プレスリリース",
-        sourceUrl: "https://www.nikkei.com/article/DGXZRSP678534_X10C24A9000000/",
+        lastConfirmed: "2026-08-08",
+        source: "楽天投信投資顧問 商品情報",
+        sourceUrl: "https://www.rakuten-toushin.co.jp/fund/nav/risude/",
       },
     ],
     points: [
@@ -2796,7 +2796,7 @@ export const GUIDE_SERIES: Record<string, GuideSeries> = {
   },
   booraku: {
     label: "暴落ガイド",
-    // クラスタ完成後にハブページ（/guide/booraku）を作成し、hubSlugを設定する
+    hubSlug: "booraku",
     slugs: [
       "sp500-booraku-taisho",
       "booraku-tsumitate-yameru",

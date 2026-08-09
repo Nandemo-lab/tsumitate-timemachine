@@ -8,6 +8,7 @@ import { simulate, formatCurrency } from "@/lib/simulation";
 import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3, BarChart2, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
+import { GUIDE_SERIES } from "@/lib/guide-pages";
 import { MainTab } from "@/components/layout/BottomNav";
 import SiteFooter from "@/components/layout/SiteFooter";
 
@@ -59,6 +60,20 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
   // 初心者向けランキング
   const beginnerRanking = useMemo(
     () => [...FUND_LIST].sort((a, b) => b.encyclopedia.beginnerScore - a.encyclopedia.beginnerScore).slice(0, 4),
+    []
+  );
+
+  // クラスタガイド一覧（GUIDE_SERIES から自動生成。hubSlug が設定されたクラスタのみ表示）
+  // 新しいクラスタのハブページ（例: /guide/booraku）が追加されても、ここは自動で反映される。
+  const clusterHubs = useMemo(
+    () =>
+      Object.values(GUIDE_SERIES)
+        .filter((series) => series.hubSlug)
+        .map((series) => ({
+          href: `/guide/${series.hubSlug}`,
+          label: `${series.label}一覧`,
+          sub: `${series.slugs.length}記事をまとめて読む`,
+        })),
     []
   );
 
@@ -433,8 +448,44 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
             </Link>
           ))}
+          <Link
+            href="/guide"
+            className="flex items-center justify-center gap-1 rounded-xl px-4 py-3 text-xs font-bold text-indigo-300 hover:text-indigo-200 transition-colors"
+          >
+            投資ガイドをもっと見る <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </motion.section>
+
+      {/* ── まとめて読む（クラスタガイド） ── */}
+      {clusterHubs.length > 0 && (
+        <motion.section
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.34 }}
+          className="px-4 space-y-3"
+        >
+          <div className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4 text-emerald-400" />
+            <p className="font-heading text-sm font-semibold text-white">まとめて読む</p>
+          </div>
+          <div className="grid grid-cols-1 gap-2">
+            {clusterHubs.map(({ label, href, sub }) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex items-center justify-between rounded-xl bg-emerald-500/[0.04] border border-emerald-500/15 px-4 py-3 hover:bg-emerald-500/[0.08] transition-colors"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white">{label}</p>
+                  <p className="text-[11px] text-zinc-500 mt-0.5">{sub}</p>
+                </div>
+                <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+              </Link>
+            ))}
+          </div>
+        </motion.section>
+      )}
 
       {/* ── 人気比較ランキング ── */}
       <motion.section
@@ -468,6 +519,12 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               </Link>
             );
           })}
+          <Link
+            href="/compare"
+            className="flex items-center justify-center gap-1 rounded-xl px-4 py-3 text-xs font-bold text-violet-300 hover:text-violet-200 transition-colors"
+          >
+            比較をもっと見る <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </motion.section>
 
