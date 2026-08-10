@@ -3,11 +3,11 @@ import { FUND_LIST } from "@/lib/funds";
 import { FUND_SEO_PAGES } from "@/lib/fund-seo";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
-import { YEAR_PAGES } from "@/lib/year-pages";
 import { MONTHLY_PAGES } from "@/lib/monthly-pages";
 import { GUIDE_PAGES } from "@/lib/guide-pages";
 import { RANKING_CATEGORY_SLUGS } from "@/lib/ranking-pages";
 import { ARTICLE_PAGES } from "@/lib/article-pages";
+import { isProgrammaticIndexException } from "@/lib/index-policy";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 const YEARS = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
@@ -61,14 +61,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  // 年別たられば記事（/[fundSlug]/[year]）
-  const yearArticlePages: MetadataRoute.Sitemap = YEAR_PAGES.map((p) => ({
-    url: `${BASE_URL}/${p.fundSlug}/${p.year}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.9,
-  }));
-
   // 年別総合ランキングページ（/from/[year]）
   const fromYearPages: MetadataRoute.Sitemap = [2019, 2020, 2021, 2022, 2023, 2024].map((y) => ({
     url: `${BASE_URL}/from/${y}`,
@@ -78,12 +70,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // 月額別シミュレーションページ（/[slug]/monthly/[amount]）
-  const monthlyAmountPages: MetadataRoute.Sitemap = MONTHLY_PAGES.map((p) => ({
-    url: `${BASE_URL}/${p.fundSlug}/monthly/${p.amount}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
-  }));
+  const monthlyAmountPages: MetadataRoute.Sitemap = MONTHLY_PAGES
+    .filter((p) => isProgrammaticIndexException(`/${p.fundSlug}/monthly/${p.amount}`))
+    .map((p) => ({
+      url: `${BASE_URL}/${p.fundSlug}/monthly/${p.amount}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    }));
 
   // ランキングページ（/ranking, /ranking/[category]）
   const rankingPages: MetadataRoute.Sitemap = [
@@ -151,7 +145,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticPages,
     ...fundLandingPages,
     ...fundArticlePages,
-    ...yearArticlePages,
     ...comparePages,
     ...fromYearPages,
     ...monthlyAmountPages,

@@ -38,7 +38,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: page.metaTitle,
     description: page.metaDescription,
-    alternates: { canonical: `${BASE_URL}/${page.fundSlug}/${page.year}` },
+    robots: { index: false, follow: true },
+    alternates: { canonical: null },
     openGraph: {
       title: page.metaTitle,
       description: page.metaDescription,

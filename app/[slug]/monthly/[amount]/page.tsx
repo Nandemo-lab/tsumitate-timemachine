@@ -14,6 +14,7 @@ import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import { isProgrammaticIndexException } from "@/lib/index-policy";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -33,12 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = getMonthlyPage(slug, amount);
   if (!page) return {};
   const fund = FUNDS[page.fundId];
+  const pathname = `/${page.fundSlug}/monthly/${page.amount}`;
+  const keepIndexed = isProgrammaticIndexException(pathname);
   return {
     title: page.metaTitle,
     description: page.metaDescription,
-    alternates: {
-      canonical: `${BASE_URL}/${page.fundSlug}/monthly/${page.amount}`,
-    },
+    robots: { index: keepIndexed, follow: true },
+    alternates: { canonical: keepIndexed ? `${BASE_URL}${pathname}` : null },
     openGraph: {
       title: page.metaTitle,
       description: page.metaDescription,

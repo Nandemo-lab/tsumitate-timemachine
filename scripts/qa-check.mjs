@@ -18,7 +18,7 @@
  *  1. titleにサイト名サフィックスの重複がないか（回帰チェック） … ERROR
  *  2. titleの文字数（目安30〜35文字） … INFO
  *  3. canonicalの欠落・自ページURLとの不一致・重複 … WARNING / ERROR(重複)
- *  4. noindexページにcanonicalがあるか … WARNING
+ *  4. indexページにcanonicalがあるか … WARNING（noindexは省略可）
  *  5. meta descriptionの欠落・重複・文字数（目安90〜120文字） … WARNING / INFO(文字数)
  *  6. JSON-LD（Article/BreadcrumbList/FAQPage）の必須項目・型チェック … ERROR
  *  7. OGP画像（og:image）の欠落 … WARNING
@@ -213,9 +213,7 @@ async function main() {
     const canonicalMatch = html.match(/rel="canonical"\s+href="([^"]+)"/);
     const canonical = canonicalMatch ? canonicalMatch[1] : null;
     if (!canonical) {
-      if (isNoindex) {
-        report("WARNING", url, `noindexページにcanonicalがありません`);
-      } else {
+      if (!isNoindex) {
         report("WARNING", url, `canonicalが見つかりません`);
       }
     } else {
