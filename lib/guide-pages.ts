@@ -1,5 +1,5 @@
-import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER, TAX_RATES, formatTaxRate } from "@/lib/nisa";
-import { FUNDS, formatAnnualReturn } from "@/lib/funds";
+import { KODOMO_NISA_LIMITS, NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER, TAX_RATES, formatTaxRate } from "@/lib/nisa";
+import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 
 export interface GuidePoint {
   title: string;
@@ -2762,6 +2762,149 @@ export const GUIDE_PAGES: GuidePage[] = [
       },
     ],
   },
+  {
+    slug: "kodomo-nisa",
+    metaTitle: `こどもNISAとは？${KODOMO_NISA_LIMITS.startYear}年開始・年${formatManEn(KODOMO_NISA_LIMITS.annual)}・${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}を解説`,
+    metaDescription: `2027年から始まる未成年者向けNISAを一次情報で整理。0〜17歳、年間60万円、非課税保有限度額600万円、対象商品、払出し条件、18歳以降の扱いを解説します。`,
+    h1: `こどもNISAとは？${KODOMO_NISA_LIMITS.startYear}年からの未成年者向けNISAを解説`,
+    intro: `結論からいうと、いわゆる「こどもNISA」は、${KODOMO_NISA_LIMITS.startYear}年から0〜17歳もNISAのつみたて投資枠を利用できる制度改正です。年間投資枠は${formatManEn(KODOMO_NISA_LIMITS.annual)}、非課税保有限度額は${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}です。制度の骨格は法律で成立していますが、口座開設の受付時期や必要書類など金融機関ごとの実務は今後の案内確認が必要です。`,
+    lastUpdated: "2026年8月",
+    tldr: {
+      readTime: "約7分",
+      forWho: "子どもの将来資金を長期で準備する制度を調べている家庭",
+      bullets: [
+        `${KODOMO_NISA_LIMITS.startYear}年以後、0〜17歳が対象`,
+        `年${formatManEn(KODOMO_NISA_LIMITS.annual)}・非課税保有限度額${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}`,
+        `${KODOMO_NISA_LIMITS.conditionalWithdrawalAge}歳以降の払出しには子の同意など一定の要件`,
+      ],
+    },
+    conclusion: [
+      "利用対象は口座名義人である0〜17歳の子ども",
+      "対象商品は成人のつみたて投資枠と同じ長期・積立・分散投資向けの一定の投資信託",
+      "18歳到達後は成人向けNISAへ自動的に移行する制度設計",
+    ],
+    systemCheck: [
+      {
+        topic: "未成年者向けNISAの開始年・対象年齢・投資枠・払出し・18歳以降の扱い",
+        lastConfirmed: "2026-08-14",
+        source: "財務省 令和8年度税制改正の大綱・税制改正解説",
+        sourceUrl: "https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm",
+      },
+      {
+        topic: "令和8年度所得税法等改正法の成立・公布",
+        lastConfirmed: "2026-08-14",
+        source: "衆議院 議案審議経過情報（法律第12号）",
+        sourceUrl: "https://www.shugiin.go.jp/internet/itdb_gian.nsf/html/gian/keika/1DE14D6.htm",
+      },
+    ],
+    points: [
+      { title: "いつから？", body: `未成年者特定累積投資勘定は${KODOMO_NISA_LIMITS.startYear}年以後の各年に設けられます。「2027年4月開始」とは限らないため、本記事では年単位で記載します。` },
+      { title: "いくらまで？", body: `0〜17歳の間は年間${formatManEn(KODOMO_NISA_LIMITS.annual)}、非課税保有限度額${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}です。毎月均等なら月5万円で年間枠に達します。` },
+      { title: "何を買える？", body: "長期の積立・分散投資に適した一定の公募投資信託が対象です。個別株など成人向けの成長投資枠の商品は未成年者向け枠の対象ではありません。" },
+    ],
+    sections: [
+      {
+        h2: "ジュニアNISAとの違い",
+        body: "旧ジュニアNISAは2023年で新規買付けを終了しました。今回の制度は既存NISAのつみたて投資枠の対象年齢を広げるもので、旧制度の単純な再開ではありません。",
+        sourceLinks: [
+          { label: "金融庁 ジュニアNISAの概要", href: "https://www.fsa.go.jp/policy/nisa2/about/juniornisa/overview/index.html" },
+        ],
+      },
+      {
+        h2: "払出しと18歳以降の扱い",
+        body: `${KODOMO_NISA_LIMITS.conditionalWithdrawalAge}歳以降は、資金の使途が子どものためであり、子どもの同意を示す書面とともに親権者等が金融機関へ申し出るなど、一定の要件の下で払出しが可能です。${KODOMO_NISA_LIMITS.adultTransitionAge}歳に達すると成人向けNISAへ移行します。具体的な書式・受付時期は利用する金融機関の正式案内を確認してください。`,
+        sourceLinks: [
+          { label: "財務省 令和8年度税制改正（NISAの拡充）", href: "https://www.mof.go.jp/public_relations/finance/202604/202604c.html" },
+          { label: "金融庁 令和8年度税制改正の主要項目", href: "https://www.fsa.go.jp/news/r7/sonota/20251226-2/01.pdf" },
+        ],
+      },
+      { h2: "利用前に確認すること", body: `口座名義は子どもで、親権者等が管理します。家計の生活防衛資金、教育費を使う時期、価格下落時にも積立を続けられる金額を分けて考える必要があります。${NISA_SYSTEM_DISCLAIMER}` },
+    ],
+    fundCards: [
+      { fundSlug: "orukan", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" },
+      { fundSlug: "sp500", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" },
+    ],
+    simRows: [],
+    faqs: [
+      { q: "こどもNISAは2027年4月からですか？", a: `法律上は${KODOMO_NISA_LIMITS.startYear}年以後の各年に未成年者向け勘定を設ける内容です。口座開設の受付開始日などは金融機関の正式案内を確認してください。` },
+      { q: "0歳から利用できますか？", a: "出生した日の属する年を含め、0〜17歳が対象です。" },
+      { q: "途中で自由に引き出せますか？", a: `${KODOMO_NISA_LIMITS.conditionalWithdrawalAge}歳以降は、子どものための資金使途、子どもの同意、親権者等による金融機関への申出など一定の要件があります。` },
+      { q: "制度の詳細はすべて確定していますか？", a: "制度の骨格は成立・公布済みですが、各金融機関の取扱商品、受付時期、必要書類などの実務は今後の正式案内を確認する必要があります。" },
+    ],
+    relatedGuides: ["kodomo-nisa-tsumitate-ikura", "kodomo-nisa-orukan-vs-sp500", "junior-nisa-shuuryou-go", "nisa-tsumitate-vs-seicho"],
+    recommendFor: ["0〜17歳の子どもがいる家庭", "教育費など成人後の資金を長期で準備したい家庭"],
+    commonMistakes: [
+      { label: "開始日を2027年4月と断定する", body: "一次情報は2027年以後の各年としています。金融機関の受付時期とは分けて確認します。" },
+      { label: "旧ジュニアNISAと同じ制度と考える", body: "今回は現行NISAのつみたて投資枠を未成年者へ拡張する仕組みです。" },
+      { label: "近い時期に使う教育費まで投資する", body: "投資信託は元本割れがあります。使用時期が近い資金と長期運用資金は分けて整理します。" },
+    ],
+  },
+  {
+    slug: "kodomo-nisa-tsumitate-ikura",
+    metaTitle: "こどもNISAは月いくら？月1万・3万・5万円を18年間積み立てた試算",
+    metaDescription: "こどもNISAで月1万円・3万円・5万円を18年間積み立てるといくらになるか、元本と年3%・5%・7%の仮定を分けて試算。制度上限と元本割れリスクも解説します。",
+    h1: "こどもNISAは月いくら？月1万・3万・5万円を18年間積み立てた試算",
+    intro: `毎月の積立額は、制度上限よりも家計から継続できる金額で考える必要があります。${KODOMO_NISA_LIMITS.startYear}年からの年間枠は${formatManEn(KODOMO_NISA_LIMITS.annual)}なので、月5万円が年間枠を均等に使う目安です。以下は0歳から18年間、毎月末に積み立てた単純試算で、将来の成果を保証するものではありません。`,
+    lastUpdated: "2026年8月",
+    tldr: {
+      readTime: "約6分",
+      forWho: "月々の積立額ごとに元本と仮定上の結果を比べたい家庭",
+      bullets: ["月1万円の元本は18年で216万円", "月3万円の元本は18年で648万円", "月5万円の元本は18年で1,080万円。ただし未成年者枠の非課税保有限度額は600万円"],
+    },
+    conclusion: ["家計から無理なく継続できる金額を先に決める", "試算結果は想定利回りで大きく変わる", "非課税保有限度額600万円を超える買付けは未成年者向け枠ではできない"],
+    systemCheck: [{ topic: "未成年者向けNISAの年間投資枠・非課税保有限度額", lastConfirmed: "2026-08-14", source: "財務省 令和8年度税制改正の大綱", sourceUrl: "https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm" }],
+    points: [
+      { title: "月1万円", body: "元本216万円。年3%なら約286万円、年5%なら約349万円、年7%なら約431万円という仮定上の結果です。" },
+      { title: "月3万円", body: "元本648万円。年3%なら約858万円、年5%なら約1,048万円、年7%なら約1,292万円という仮定上の結果です。未成年者向け枠だけでは元本600万円に達した時点で新規買付けが止まります。" },
+      { title: "月5万円", body: "元本1,080万円。年3%なら約1,430万円、年5%なら約1,746万円、年7%なら約2,154万円という数学上の比較です。月5万円なら10年で非課税保有限度額600万円に達します。" },
+    ],
+    sections: [
+      { h2: "試算条件", body: "積立期間18年、毎月末積立、年率3%・5%・7%を月次複利として計算し、手数料・税金・物価変動は考慮していません。実際の投資信託は毎月一定の利回りでは動かず、途中で元本を下回ることがあります。" },
+      { h2: "制度上限と試算を混同しない", body: `月3万円を18年、または月5万円を18年続ける元本は、未成年者向け枠の非課税保有限度額${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}を超えます。上限到達後も同額を投資する試算は、課税口座や18歳以降の成人向けNISAを含む純粋な長期比較です。${NISA_SYSTEM_DISCLAIMER}`, sourceLinks: [{ label: "財務省 令和8年度税制改正の大綱", href: "https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm" }] },
+      { h2: "積立額を決める順番", body: "生活費や緊急資金、使う時期が決まった教育費を先に分け、残った長期資金の範囲で月額を検討します。金額を増やすほど将来の評価額だけでなく、下落時の含み損も大きくなります。" },
+    ],
+    fundCards: [{ fundSlug: "orukan", monthlyAmount: 30000 }, { fundSlug: "sp500", monthlyAmount: 30000 }],
+    simRows: [{ label: "オルカンの過去実績で月3万円を確認", fundSlug: "orukan", year: 2020, month: 1, amount: 30000 }],
+    faqs: [
+      { q: "月5万円なら18年間ずっとこどもNISAで積み立てられますか？", a: `いいえ。月5万円は年間枠${formatManEn(KODOMO_NISA_LIMITS.annual)}に相当し、10年で非課税保有限度額${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}に達します。` },
+      { q: "年5%で必ず増えますか？", a: "いいえ。年5%は比較用の仮定で、実際のリターンは年ごとに変動し、元本割れもあります。" },
+      { q: "月1万円では少なすぎますか？", a: "金額の適否は家計と目的で異なります。18年の元本は216万円で、継続可能性と使用時期を併せて考えます。" },
+    ],
+    relatedGuides: ["kodomo-nisa", "kodomo-nisa-orukan-vs-sp500", "nisa-tsumitate-ikura", "dollar-cost-averaging"],
+    recommendFor: ["積立額別の差を数字で確認したい家庭", "制度上限と家計の積立可能額を分けて考えたい家庭"],
+    commonMistakes: [{ label: "想定利回りを確定リターンとして扱う", body: "試算は一定利回りを仮定した数学上の比較であり、実際の市場価格は上下します。" }, { label: "600万円を運用後の評価額上限と考える", body: "非課税保有限度額は買付額ベースです。運用で評価額が600万円を超えること自体は上限超過ではありません。" }],
+  },
+  {
+    slug: "kodomo-nisa-orukan-vs-sp500",
+    metaTitle: "こどもNISAはオルカンとS&P500どっち？長期積立で比較",
+    metaDescription: "こどもNISAでオルカンとS&P500のどちらを積み立てるか、分散範囲、米国集中度、コスト、過去実績、値動きの違いを事実ベースで比較します。",
+    h1: "こどもNISAはオルカンとS&P500どっち？長期積立で比較",
+    intro: `結論は一つではありません。世界の株式へ広く分散する範囲を重視するならオルカン、米国大型株への集中を受け入れるならS&P500という違いがあります。どちらも株式型の投資信託で元本割れがあり、子どもの口座だから値動きが小さくなるわけではありません。`,
+    lastUpdated: "2026年8月",
+    tldr: { readTime: "約7分", forWho: "こどもNISAの積立先として2商品を比較したい家庭", bullets: ["オルカンは全世界株式へ分散", "S&P500は米国大型株へ集中", "信託報酬と過去リターンはlib/funds.tsの最新データを表示"] },
+    conclusion: ["地域分散の広さを重視 → オルカン", "米国大型株への集中を選ぶ → S&P500", "教育費を使う直前まで株式100%を維持するかは別に検討"],
+    systemCheck: [{ topic: "未成年者向けNISAの対象商品", lastConfirmed: "2026-08-14", source: "金融庁 令和8年度税制改正の主要項目", sourceUrl: "https://www.fsa.go.jp/news/r7/sonota/20251226-2/01.pdf" }],
+    points: [
+      { title: "分散範囲", body: `オルカンは先進国・新興国を含む全世界の約${FUNDS.orcan.shareCount}銘柄、S&P500は米国の約${FUNDS.sp500.shareCount}銘柄が対象です。` },
+      { title: "信託報酬", body: `オルカンは${formatExpenseRatio("orcan")}、S&P500は${formatExpenseRatio("sp500")}です。いずれも保有中に継続して差し引かれます。` },
+      { title: "過去実績", body: `2022年の暦年リターンはオルカン${formatAnnualReturn("orcan", 2022)}、S&P500${formatAnnualReturn("sp500", 2022)}でした。過去実績は将来の成果を示すものではありません。` },
+    ],
+    sections: [
+      { h2: "長期積立との相性をどう見るか", body: "18年程度の期間があっても、開始直後や取り崩し直前に株価が下落する可能性はあります。商品選択と同時に、使う時期が近づいた資金を現金へ移すか、積立額を調整するかを別の判断として考えます。" },
+      { h2: "NISA制度上の扱い", body: `両商品が金融庁のつみたて投資枠対象商品として利用金融機関で取り扱われる場合、未成年者向け枠の候補になります。実際の取扱商品は金融機関の正式発表を確認してください。${NISA_SYSTEM_DISCLAIMER}`, sourceLinks: [{ label: "金融庁 つみたて投資枠対象商品", href: "https://www.fsa.go.jp/policy/nisa2/products/index.html" }, { label: "金融庁 令和8年度税制改正の主要項目", href: "https://www.fsa.go.jp/news/r7/sonota/20251226-2/01.pdf" }] },
+      { h2: "既存の積立シミュレーションで差を確認", body: "このサイトのシミュレーションは過去の実データを使います。開始年月と毎月額をそろえて比較すると、同じ期間でも値動きと評価額が異なることを確認できます。" },
+    ],
+    fundCards: [{ fundSlug: "orukan", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" }, { fundSlug: "sp500", monthlyAmount: 30000, compareSlug: "orukan-vs-sp500" }],
+    simRows: [{ label: "オルカン：2020年から月3万円", fundSlug: "orukan", year: 2020, month: 1, amount: 30000 }, { label: "S&P500：2020年から月3万円", fundSlug: "sp500", year: 2020, month: 1, amount: 30000 }],
+    faqs: [
+      { q: "こどもNISAならオルカンが正解ですか？", a: "一律の正解はありません。全世界への分散範囲を重視するか、米国大型株への集中を選ぶかで判断軸が異なります。" },
+      { q: "S&P500のほうが必ず高リターンですか？", a: "いいえ。過去の特定期間では差がありますが、将来のリターンは確定していません。" },
+      { q: "両方を半分ずつ買うと分散になりますか？", a: "オルカンにも米国株が多く含まれるため、半分ずつにすると米国比率をさらに高める組み合わせです。重複を理解した上で比率を考えます。" },
+    ],
+    relatedGuides: ["kodomo-nisa", "kodomo-nisa-tsumitate-ikura", "orukan-ippon-de-ii", "nisa-tsumitate-vs-seicho"],
+    recommendFor: ["オルカンとS&P500の違いを整理したい家庭", "長期積立でも元本割れがあることを踏まえて比較したい家庭"],
+    commonMistakes: [{ label: "直近のリターンだけで選ぶ", body: "比較期間を変えると順位が変わる可能性があります。分散範囲・コスト・値動きも併せて確認します。" }, { label: "2本なら地域分散が倍になると考える", body: "構成銘柄が重複するため、保有本数ではなく実質的な地域配分を見ます。" }],
+  },
 ];
 
 export function getGuidePage(slug: string): GuidePage | undefined {
@@ -2780,6 +2923,14 @@ export interface GuideSeries {
 }
 
 export const GUIDE_SERIES: Record<string, GuideSeries> = {
+  kodomoNisa: {
+    label: "こどもNISAガイド",
+    slugs: [
+      "kodomo-nisa",
+      "kodomo-nisa-tsumitate-ikura",
+      "kodomo-nisa-orukan-vs-sp500",
+    ],
+  },
   tax: {
     label: "税金ガイド",
     hubSlug: "tax",

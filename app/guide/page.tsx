@@ -19,8 +19,10 @@ const OPERATION_SLUGS = [
   "shinnisa-schd-kaeru",
 ] as const;
 const EXIT_SLUGS = ["tsumitate-torikuzushi", "retirement-investing"] as const;
+const KODOMO_NISA_SLUGS = ["kodomo-nisa", "kodomo-nisa-tsumitate-ikura", "kodomo-nisa-orukan-vs-sp500"] as const;
 
 const SECTIONS = [
+  { key: "kodomo-nisa", label: "こどもNISAクラスタ", slugs: KODOMO_NISA_SLUGS },
   { key: "beginner",  label: "初心者クラスタ",       slugs: BEGINNER_SLUGS },
   { key: "operation",  label: "運用クラスタ",         slugs: OPERATION_SLUGS },
   { key: "exit",       label: "出口戦略・家計クラスタ", slugs: EXIT_SLUGS },

@@ -35,6 +35,9 @@ const SLUG_TO_FUND_ID: Record<string, FundId> = {
 };
 
 const GUIDE_LABELS: Record<string, string> = {
+  "kodomo-nisa":               "こどもNISAとは？",
+  "kodomo-nisa-tsumitate-ikura": "こどもNISAは月いくら？",
+  "kodomo-nisa-orukan-vs-sp500": "こどもNISA：オルカン vs S&P500",
   "nisa-beginner":              "新NISAおすすめ",
   "index-investing":            "インデックス投資とは",
   "how-to-start":               "積立投資の始め方",

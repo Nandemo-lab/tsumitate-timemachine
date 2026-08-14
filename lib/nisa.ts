@@ -21,6 +21,20 @@ export const NISA_LIMITS = {
   lifetimeGrowthOnly: 12_000_000,
 } as const;
 
+/**
+ * 2027年から設けられる未成年者向けつみたて投資枠の制度数値。
+ * 出典: 令和8年法律第12号、財務省「令和8年度税制改正の大綱」。
+ */
+export const KODOMO_NISA_LIMITS = {
+  startYear: 2027,
+  minAge: 0,
+  maxAge: 17,
+  annual: 600_000,
+  lifetimeTotal: 6_000_000,
+  conditionalWithdrawalAge: 12,
+  adultTransitionAge: 18,
+} as const;
+
 /** 制度の最終確認日（このファイルの内容をいつ時点の制度情報として書いたか） */
 export const NISA_INFO_LAST_CONFIRMED = "2024年制度開始時点";
 
