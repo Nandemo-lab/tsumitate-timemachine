@@ -123,7 +123,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "新NISAで人気なのはS&P500とNASDAQ100どちらですか？",
-        a: "残高・購入額ともにS&P500（eMAXIS Slim 米国株式）が上位。NASDAQ100（eMAXIS Slim NASDAQ100など）も成長投資枠で人気ですが、積立投資枠・成長投資枠合計ではS&P500が大きくリードしています。",
+        a: "残高・購入額ともにS&P500（eMAXIS Slim 米国株式）が上位。NASDAQ100（eMAXIS Slim NASDAQ100など）も成長投資枠で人気ですが、つみたて投資枠・成長投資枠合計ではS&P500が大きくリードしています。",
       },
       {
         q: "リスクが高いのはS&P500とNASDAQ100のどちらですか？",
@@ -237,7 +237,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "新NISAならVTIとオルカンどちらが向いていますか？",
-        a: "積立投資枠で毎月コツコツ積み立てるならオルカンが使いやすいです。VTIはNISAの成長投資枠でETFとして購入できますが、つみたて投資枠には対応していません。自動積立・100円から・手間なしならオルカン、ETFとして自分のタイミングで買いたいならVTIを選びましょう。",
+        a: "つみたて投資枠で毎月積み立てるならオルカンが利用できます。VTIはNISAの成長投資枠でETFとして購入できますが、つみたて投資枠には対応していません。商品形式と利用できる枠を確認して比較する必要があります。",
       },
       {
         q: "手数料はVTIとオルカンのどちらが安いですか？",
@@ -330,7 +330,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "過去の年平均リターン", a: "約+20%（2015〜2025年平均）", b: "約+25%（2015〜2025年平均）" },
       { label: "最大下落幅",    a: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）`,   b: `${formatAnnualReturn("fangplus", 2022)}（2022年）` },
       { label: "信託報酬",      a: formatExpenseRatio("nasdaq100"), b: formatExpenseRatio("fangplus") },
-      { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ 成長投資枠のみ" },
+      { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ つみたて・成長両対応" },
     ],
     faqs: [
       {
@@ -606,7 +606,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+25%（2015〜2025年平均）" },
       { label: "最大下落率（年間）",   a: "約-18%（2022年）",            b: "約-44%（2022年）" },
       { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("fangplus") },
-      { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ 成長投資枠対応" },
+      { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
     ],
     faqs: [
       {
@@ -661,7 +661,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "リスク",      a: "中（★★★）",                  b: "中（★★★）" },
       { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+14%（2015〜2025年平均）" },
       { label: "信託報酬",    a: formatExpenseRatio("vt"),       b: formatExpenseRatio("sp500") },
-      { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
+      { label: "NISA対応",    a: "○ 成長投資枠（ETF）",          b: "○ つみたて・成長両対応" },
     ],
     faqs: [
       {
@@ -682,7 +682,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "VTはNISAのどちらの枠で買えますか？",
-        a: "VTは金融庁の基準を満たしているため、つみたて投資枠・成長投資枠のどちらでも購入できます（証券会社によって取扱いが異なる場合があるため、事前に確認するのが確実です）。",
+        a: "VT（米国ETF）はNISAの成長投資枠で購入できます。つみたて投資枠の対象ではありません。証券会社によって取扱いが異なるため、購入前に確認してください。",
       },
       {
         q: "VTとS&P500を両方持つのはありですか？",
@@ -771,7 +771,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "過去の年平均リターン", a: "約+13%（2015〜2025年平均）",  b: "約+20%（2015〜2025年平均）" },
       { label: "最大下落率（年間）",   a: "約-19%（2022年）",            b: "約-33%（2022年）" },
       { label: "信託報酬",    a: formatExpenseRatio("vti"),      b: formatExpenseRatio("nasdaq100") },
-      { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
+      { label: "NISA対応",    a: "○ 成長投資枠（ETF）",          b: "○ つみたて・成長両対応" },
     ],
     faqs: [
       {

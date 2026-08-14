@@ -223,7 +223,7 @@ export default function DataSourcesPage() {
               { label: "MSCI ACWI Index（MSCI公式）", href: "https://www.msci.com/our-solutions/indexes/acwi" },
               { label: "S&P 500 Index（S&P Dow Jones）", href: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/" },
               { label: "SPIVA Japan Scorecard", href: "https://www.spglobal.com/spdji/en/research-insights/spiva/" },
-              { label: "三菱UFJアセットマネジメント eMAXIS Slim", href: "https://emaxis.jp/lp/slim/index.html" },
+              { label: "三菱UFJアセットマネジメント eMAXIS Slim", href: "https://emaxis.am.mufg.jp/lp/slim/pr3/" },
             ].map((link) => (
               <a
                 key={link.href}

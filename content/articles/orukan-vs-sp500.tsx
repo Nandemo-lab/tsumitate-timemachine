@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
@@ -140,7 +141,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "約3,000銘柄（2025年時点）"],
           ["米国比率", "約62%（最大だが1国ではない）"],
           ["信託報酬", "年0.05775%（業界最安水準）"],
-          ["新NISA対応", "積立投資枠・成長投資枠ともに対象"],
+          ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           米国の比率が最も高い（約62%）のは、現在の世界の時価総額で米国企業が最大シェアを占めているためです。将来的に別の国や地域が台頭すれば、自動的にその比率が上昇します。いわば「世界経済全体に乗る」インデックスです。
@@ -158,7 +159,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "約500銘柄"],
           ["米国比率", "100%"],
           ["信託報酬", "年0.09372%"],
-          ["新NISA対応", "積立投資枠・成長投資枠ともに対象"],
+          ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           過去20年以上にわたり、世界の主要指数の中でも高いリターンを誇ってきた実績があります。一方で、米国1カ国への集中という点では分散が効いておらず、米国経済が低迷した際の影響を受けやすい構造でもあります。
@@ -295,7 +296,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="新NISAではどちらが向いているか" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          新NISA（2024年〜）の積立投資枠では、どちらも年間120万円まで非課税で積み立てられます。成長投資枠も合わせると年間360万円、生涯1,800万円の非課税枠を活用できます。
+          新NISA（2024年〜）のつみたて投資枠は年間{formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠と合わせた年間投資枠は{formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は{formatManEn(NISA_LIMITS.lifetimeTotal)}です。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
           金融庁は「長期・積立・分散」の原則を推奨しています。この観点からは、47カ国・約3,000銘柄に分散するオルカンは原則に沿った選択といえます。
@@ -304,7 +305,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
           <ul className="space-y-2">
             {[
-              "どちらも積立投資枠・成長投資枠で購入可能",
+              "どちらもつみたて投資枠・成長投資枠で購入可能",
               "毎月定額の積立ならどちらもドルコスト平均法の効果を受けられる",
               "「迷ったらオルカン」が多くのFPが挙げるシンプルな答え",
               "S&P500への強い確信があれば、それも合理的な選択",

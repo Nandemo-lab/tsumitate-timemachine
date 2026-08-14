@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
@@ -159,7 +160,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "500銘柄"],
           ["配当利回り", "約1.2〜1.5%（目安）"],
           ["信託報酬", "年0.09372%"],
-          ["新NISA対応", "積立投資枠・成長投資枠ともに対象"],
+          ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           配当よりも企業の成長・値上がり益を反映する設計のため、配当利回りはSCHDより低めです。過去数十年にわたり世界の主要指数の中でも高いトータルリターンを記録してきた実績があります。
@@ -323,7 +324,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <ul className="space-y-2">
             {[
               "S&P500はつみたて投資枠・成長投資枠の両方で積立設定が可能",
-              "SCHD（楽天SCHD）は成長投資枠（年240万円）内での購入となる",
+              `SCHD（楽天SCHD）は成長投資枠（年${formatManEn(NISA_LIMITS.growthAnnual)}）内での購入となる。${NISA_SYSTEM_DISCLAIMER}`,
               "資産形成期はS&P500、取り崩し期にSCHDを組み合わせる段階的な使い分けもある",
               "両方を組み合わせ、コアをS&P500・配当ポケットをSCHDとする配分も見られる",
             ].map((t, i) => (

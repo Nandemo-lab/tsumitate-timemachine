@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
@@ -294,7 +295,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="新NISAではどちらが向いているか" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          新NISA（2024年〜）では、SCHD・VYMともに成長投資枠（年240万円）で購入できます。楽天SCHDのように投資信託化された商品であれば積立設定も可能です。
+          新NISA（2024年〜）では、楽天SCHDとVYMは成長投資枠（年{formatManEn(NISA_LIMITS.growthAnnual)}）の対象です。楽天SCHDのような投資信託は積立設定に対応する金融機関があります。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
           NISA口座では国内課税が非課税になりますが、米国側の外国源泉税（10%）は控除される点に注意が必要です。配当を非課税で受け取れることは変わらず、長期の配当投資との相性は良好です。
