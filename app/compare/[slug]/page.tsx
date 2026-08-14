@@ -179,6 +179,63 @@ export default async function ComparePage({ params }: Props) {
             </div>
           </section>
 
+          {page.mixExamples && page.mixExamples.length > 0 && (
+            <section className="space-y-4">
+              <div className="space-y-2">
+                <h2
+                  className="text-base font-bold text-white"
+                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                >
+                  {fundA.shortName}と{fundB.shortName}を両方持つ場合の割合
+                </h2>
+                <p className="text-sm text-zinc-400 leading-relaxed">
+                  2本を組み合わせても投資先が完全に分かれるわけではありません。
+                  重複する銘柄への集中度と値動きがどう変わるかを確認して割合を考えます。
+                </p>
+              </div>
+              <div className="space-y-3">
+                {page.mixExamples.map((example) => {
+                  const bWeight = 1 - example.aWeight;
+                  const mixedValue = resultA.finalValue * example.aWeight + resultB.finalValue * bWeight;
+                  const mixedProfit = resultA.profit * example.aWeight + resultB.profit * bWeight;
+                  const mixedReturn = resultA.returnRate * example.aWeight + resultB.returnRate * bWeight;
+                  return (
+                    <div
+                      key={example.label}
+                      className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-3"
+                    >
+                      <h3 className="text-sm font-bold text-white">{example.label}</h3>
+                      <p className="text-xs text-zinc-400 leading-relaxed">{example.description}</p>
+                      <div className="rounded-lg bg-white/[0.03] px-3 py-2.5 space-y-1">
+                        <p className="text-[10px] text-zinc-500">
+                          2020年から月{page.simAmount / 10000}万円を同じ割合で積み立てた過去実績
+                        </p>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                          <span className="text-zinc-400">
+                            評価額 <strong className="text-zinc-200">{formatCurrency(mixedValue)}</strong>
+                          </span>
+                          <span className="text-zinc-400">
+                            利益 <strong className={mixedProfit >= 0 ? "text-emerald-400" : "text-red-400"}>
+                              {mixedProfit >= 0 ? "+" : ""}{formatCurrency(mixedProfit)}
+                            </strong>
+                          </span>
+                          <span className="text-zinc-400">
+                            リターン <strong className={mixedReturn >= 0 ? "text-emerald-400" : "text-red-400"}>
+                              {mixedReturn >= 0 ? "+" : ""}{mixedReturn.toFixed(1)}%
+                            </strong>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-[11px] text-zinc-500 leading-relaxed">
+                表示値は過去データによる試算で、将来の成果を示すものではありません。配分は投資期間・目的・許容できる値動きによって異なります。
+              </p>
+            </section>
+          )}
+
           {/* ── CTA ────────────────────────────────────────────── */}
           <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">

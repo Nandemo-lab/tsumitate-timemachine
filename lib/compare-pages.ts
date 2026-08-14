@@ -12,6 +12,12 @@ export interface CompareSpec {
   b: string;
 }
 
+export interface CompareMixExample {
+  label: string;
+  aWeight: number;
+  description: string;
+}
+
 export interface ComparePage {
   slug: string;               // e.g. "orukan-vs-sp500"
   fundAId: FundId;
@@ -28,6 +34,7 @@ export interface ComparePage {
   simAmount: number;
   specs: CompareSpec[];
   faqs: CompareFaq[];
+  mixExamples?: CompareMixExample[];
 }
 
 export const COMPARE_PAGES: ComparePage[] = [
@@ -166,6 +173,18 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "最大下落幅（2022年）", a: formatAnnualReturn("orcan", 2022),  b: formatAnnualReturn("nasdaq100", 2022) },
       { label: "信託報酬",      a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
+    ],
+    mixExamples: [
+      {
+        label: "オルカン50%＋NASDAQ100 50%",
+        aWeight: 0.5,
+        description: "全世界株式を半分持ちながら、残り半分をNASDAQ100へ配分する形です。オルカンにも米国大型グロース株が含まれるため、銘柄の重複が生じ、見た目の50:50以上に米国・大型グロース株の影響を受けやすくなります。",
+      },
+      {
+        label: "オルカン70%＋NASDAQ100 30%",
+        aWeight: 0.7,
+        description: "全世界株式を中心にしつつ、NASDAQ100を30%加える形です。50:50より世界分散を残しやすい一方、オルカン100%と比べれば米国・大型グロース株への集中度と値動きは大きくなります。",
+      },
     ],
     faqs: [
       {
