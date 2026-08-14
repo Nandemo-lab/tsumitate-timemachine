@@ -19,7 +19,14 @@ const OPERATION_SLUGS = [
   "shinnisa-schd-kaeru",
 ] as const;
 const EXIT_SLUGS = ["tsumitate-torikuzushi", "retirement-investing"] as const;
-const KODOMO_NISA_SLUGS = ["kodomo-nisa", "kodomo-nisa-tsumitate-ikura", "kodomo-nisa-orukan-vs-sp500"] as const;
+const KODOMO_NISA_SLUGS = [
+  "kodomo-nisa",
+  "kodomo-nisa-tsumitate-ikura",
+  "kodomo-nisa-orukan-vs-sp500",
+  "kodomo-nisa-vs-gakushi-hoken",
+  "kodomo-nisa-hikidashi",
+  "kodomo-nisa-daigaku-shikin-deguchi",
+] as const;
 
 const SECTIONS = [
   { key: "kodomo-nisa", label: "こどもNISAクラスタ", slugs: KODOMO_NISA_SLUGS },
