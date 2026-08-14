@@ -6,6 +6,7 @@ import { FUNDS, FUND_LIST } from "@/lib/funds";
 import { FundId } from "@/types";
 import SimulatePageClient from "./SimulatePageClient";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import { isProgrammaticIndexException } from "@/lib/index-policy";
 
 interface Props {
   params: Promise<{ fund: string; year: string }>;
@@ -35,6 +36,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
   const fundData = FUNDS[fund];
   const startYear = parseInt(year);
+  const pathname = `/simulate/${fund}/${year}`;
+  const keepIndexed = isProgrammaticIndexException(pathname);
   const monthlyAmount = parseInt(amount ?? "30000");
   const result = simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount });
   const elapsed = calcElapsedYears(startYear, 1).toFixed(0);
@@ -50,6 +53,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
+    robots: { index: keepIndexed, follow: true },
     openGraph: {
       title,
       description,
@@ -63,7 +67,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       images: [ogUrl.toString()],
     },
     alternates: {
-      canonical: `https://tsumitate-timemachine.com/simulate/${fund}/${year}`,
+      canonical: keepIndexed ? `https://tsumitate-timemachine.com${pathname}` : null,
     },
   };
 }

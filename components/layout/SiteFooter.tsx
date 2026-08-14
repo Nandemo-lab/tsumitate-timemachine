@@ -116,7 +116,7 @@ export default function SiteFooter() {
           <p className="text-[10px] text-zinc-600 leading-relaxed">
             ※過去の実績に基づくシミュレーションです。将来の運用成果を保証しません。
           </p>
-          <p className="text-[10px] text-zinc-700">© 2025 積立タイムマシン</p>
+          <p className="text-[10px] text-zinc-700">© {new Date().getFullYear()} 積立タイムマシン</p>
         </div>
       </div>
     </footer>

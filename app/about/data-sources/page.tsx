@@ -128,9 +128,9 @@ export default function DataSourcesPage() {
               </p>
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">当年（2025年）のデータ</p>
+              <p className="text-xs font-bold text-zinc-300">収録最終年（2025年）のデータ</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                当年分は年途中の実績（1月〜直近月）を使用しています。年末までのデータが確定次第、更新します。
+                収録期間と更新日は各データセットの注記をご確認ください。データ更新時には、このページの記載もあわせて更新します。
               </p>
             </div>
             <div className="space-y-1.5">

@@ -212,6 +212,18 @@ async function main() {
     // --- 3・4. canonical チェック ---
     const canonicalMatch = html.match(/rel="canonical"\s+href="([^"]+)"/);
     const canonical = canonicalMatch ? canonicalMatch[1] : null;
+
+    // AdSense quality safeguard: thin programmatic simulator result pages stay
+    // usable for visitors, but must not be indexable or self-canonicalized.
+    if (url.startsWith("/simulate/")) {
+      if (!isNoindex) {
+        report("ERROR", url, "programmatic simulator page must be noindex,follow");
+      }
+      if (canonical) {
+        report("ERROR", url, "noindex simulator page must not emit a canonical URL");
+      }
+    }
+
     if (!canonical) {
       if (!isNoindex) {
         report("WARNING", url, `canonicalが見つかりません`);

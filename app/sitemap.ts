@@ -1,5 +1,4 @@
 import { MetadataRoute } from "next";
-import { FUND_LIST } from "@/lib/funds";
 import { FUND_SEO_PAGES } from "@/lib/fund-seo";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
@@ -10,7 +9,6 @@ import { ARTICLE_PAGES } from "@/lib/article-pages";
 import { isProgrammaticIndexException } from "@/lib/index-policy";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
-const YEARS = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -31,19 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
-
-  // シミュレーション個別ページ
-  const simPages: MetadataRoute.Sitemap = [];
-  for (const fund of FUND_LIST) {
-    for (const year of YEARS) {
-      simPages.push({
-        url: `${BASE_URL}/simulate/${fund.id}/${year}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.7,
-      });
-    }
-  }
 
   // 比較ページ
   const comparePages: MetadataRoute.Sitemap = COMPARE_PAGES.map((p) => ({
@@ -158,6 +143,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...articleIndexPage,
     ...articlePages,
     ...rankingPages,
-    ...simPages,
   ];
 }
