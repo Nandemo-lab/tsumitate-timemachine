@@ -1,4 +1,5 @@
 import { FundId } from "@/types";
+import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 
 export interface FundPageFaq {
   q: string;
@@ -203,15 +204,15 @@ export const FUND_PAGES: FundPage[] = [
     faqs: [
       {
         q: "VYMとはどんなETFですか？",
-        a: "VYMはバンガードが運用する米国高配当ETFで、配当利回りが市場平均を上回る約400銘柄に投資します。銘柄数が多く幅広く分散されているため、個別銘柄リスクを抑えながら配当収入を目指せます。経費率は年0.04%です。",
+        a: `VYMはバンガードが運用する米国高配当ETFで、配当利回りが市場平均を上回る${FUNDS.vym.shareCount}に投資します。銘柄数は指数の入替えで変動します。経費率は${formatExpenseRatio("vym")}です。`,
       },
       {
         q: "VYMの配当利回りはどのくらいですか？",
-        a: "VYMの配当利回りは概ね2.8〜3.2%程度（目安）です。SCHDより利回りは低めですが、約400銘柄への幅広い分散と安定した配当が特徴です。増配も継続しており、長期保有で取得利回りが向上します。",
+        a: `VYMの分配利回りは市場価格と分配実績により変動します。固定的な利回りではなく、Vanguard公式の最新値と分配履歴を確認してください。${FUNDS.vym.shareCount}への分散が特徴です。`,
       },
       {
         q: "VYMとSCHDの違いは何ですか？",
-        a: "VYMは約400銘柄に幅広く分散し安定配当重視。SCHDは財務優良株約100銘柄に厳選し増配率重視です。「とにかく分散・安定」ならVYM、「増配による利回り向上と成長」ならSCHDが向いています。",
+        a: `VYMは${FUNDS.vym.shareCount}へ幅広く分散し、SCHDは財務指標等で選定した約100銘柄で構成されます。指数の選定方法、分散範囲、分配方針、コストが主な違いです。`,
       },
       {
         q: "VYMは新NISAで買えますか？",
@@ -305,7 +306,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "FANG+の信託報酬はいくらですか？",
-        a: "iFreeNEXT FANG+インデックスの信託報酬は年率0.7755%です。オルカン（0.05775%）やS&P500（0.09372%）と比べると高め。高リターンへの対価として許容できるか、長期積立に向けてよく検討が必要です。",
+        a: `iFreeNEXT FANG+インデックスの信託報酬は${formatExpenseRatio("fangplus")}です。オルカン（${formatExpenseRatio("orcan")}）やeMAXIS Slim米国株式（S&P500、${formatExpenseRatio("sp500")}）より高い水準です。`,
       },
     ],
   },

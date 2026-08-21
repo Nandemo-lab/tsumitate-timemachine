@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -139,12 +140,12 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SpecCard rows={[
           ["対象", "先進国23カ国＋新興国24カ国（約47カ国）"],
           ["銘柄数", "約3,000銘柄（2025年時点）"],
-          ["米国比率", "約62%（最大だが1国ではない）"],
+          ["米国比率", "構成国で最大（比率は月次で変動）"],
           ["信託報酬", "年0.05775%（業界最安水準）"],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          米国の比率が最も高い（約62%）のは、現在の世界の時価総額で米国企業が最大シェアを占めているためです。将来的に別の国や地域が台頭すれば、自動的にその比率が上昇します。いわば「世界経済全体に乗る」インデックスです。
+          米国の比率が最も高いのは、世界の株式時価総額で米国企業が最大の割合を占めるためです。国別比率は市場の値動きに応じて変わるため、最新値は運用会社の月次レポートで確認する必要があります。
         </p>
       </section>
 
@@ -158,7 +159,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["対象", "米国企業500社のみ"],
           ["銘柄数", "約500銘柄"],
           ["米国比率", "100%"],
-          ["信託報酬", "年0.09372%"],
+          ["信託報酬", formatExpenseRatio("sp500")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
@@ -188,7 +189,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["銘柄数",     "約3,000銘柄",           "約500銘柄"],
                 ["分散度",     "◎ 地域・国際分散",      "△ 米国集中"],
                 ["過去リターン", "○ 高水準",             "◎ さらに高水準"],
-                ["信託報酬",   "0.05775%",              "0.09372%"],
+                ["信託報酬",   formatExpenseRatio("orcan"), formatExpenseRatio("sp500")],
                 ["暴落リスク", "やや緩和（米国外分散）",  "米国に連動"],
                 ["シンプルさ", "◎ 1本で世界完結",        "◎ 米国特化で明快"],
               ].map(([k, o, s]) => (
@@ -374,7 +375,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
         <p className="text-xs font-bold text-zinc-300">まとめ：どちらも「正解」</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
-          オルカンもS&P500も、長期積立に適した低コストのインデックスファンドです。どちらが絶対に優れているという答えはなく、自分のリスク観・投資観に合った方を選び、<strong className="text-zinc-200">長期で続けること</strong>が最も大切です。よく分からなければ、金融庁も推奨する分散投資の観点からオルカン1本が無難な出発点です。
+          オルカンもS&P500も低コストのインデックスファンドですが、対象地域と値動きが異なります。どちらが絶対に優れているという答えはなく、投資期間やリスク許容度に合わせて判断する必要があります。金融庁は長期・積立・分散投資の意義を案内していますが、個別商品を推奨しているわけではありません。
         </p>
       </div>
 

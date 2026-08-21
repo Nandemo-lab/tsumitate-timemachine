@@ -6,7 +6,7 @@ import { FUNDS, FUND_LIST } from "./funds";
 
 export const CURRENT_YEAR = 2025;
 export const CURRENT_MONTH = 6;
-export const DATA_SOURCE = "過去の実績データ（各指数・投資信託の運用報告書をもとに推計）";
+export const DATA_SOURCE = "公開情報から整理した年次参考リターンを月次換算した簡易モデル";
 export const DATA_UPDATED = "2025年6月";
 
 function getMonthlyReturn(annualReturns: Record<number, number>, year: number): number {

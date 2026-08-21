@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight, ExternalLink, AlertCircle } from "lucide-react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { formatExpenseRatio } from "@/lib/funds";
 
 const BASE_URL = SITE_URL;
 
@@ -34,18 +35,18 @@ const FUND_SOURCES = [
     fund: "eMAXIS Slim 全世界株式（オルカン）",
     index: "MSCI ACWI（全世界株式指数）",
     source: "MSCI社公開データ・三菱UFJアセットマネジメント月次レポート",
-    fee: "0.05775%（税込）",
+    fee: `${formatExpenseRatio("orcan")}（税込）`,
     link: { label: "MSCI ACWI", href: "https://www.msci.com/our-solutions/indexes/acwi" },
   },
   {
     fund: "eMAXIS Slim 米国株式（S&P500）",
     index: "S&P 500指数",
     source: "S&P Dow Jones Indices公開データ・三菱UFJアセットマネジメント月次レポート",
-    fee: "0.09372%（税込）",
+    fee: `${formatExpenseRatio("sp500")}（税込）`,
     link: { label: "S&P 500", href: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/" },
   },
   {
-    fund: "eMAXIS Slim 米国株式（NASDAQ100）",
+    fund: "eMAXIS NASDAQ100インデックス",
     index: "NASDAQ-100指数",
     source: "Nasdaq公開データ・三菱UFJアセットマネジメント月次レポート",
     fee: "0.2035%（税込）",
@@ -118,25 +119,25 @@ export default function DataSourcesPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">基本的な計算ロジック</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                毎月一定額を投資し、各年の年間リターンを12等分した月次リターンを複利で適用します。信託報酬は年次リターンデータに既に反映された形で使用しています（純資産ベースの実績リターン）。
+                毎月一定額を投資し、銘柄ごとに収録した年次参考リターンから、複利計算で同じ年率になる一定の月次率を算出して適用します。実際の各月の基準価額や取引価格を再現する計算ではありません。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">年次リターンデータの取得</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                各ファンドの1月〜12月の年間トータルリターン（円ベース）を使用しています。為替変動・分配金再投資を含む実績値をもとに構成しています。
+                年次参考リターンは、各指数・運用会社・ETF運用会社の公開情報を参照して独自に整理しています。投資信託、ETF、指数では通貨・配当・費用の扱いが異なるため、個別商品の円建て基準価額による厳密な運用実績とは一致しません。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">収録最終年（2025年）のデータ</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                収録期間と更新日は各データセットの注記をご確認ください。データ更新時には、このページの記載もあわせて更新します。
+                現在のシミュレーション収録期間は2025年6月までです。2025年の値は通年実績ではなく、収録時点までの参考値として扱っています。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">税金・手数料について</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                シミュレーション結果には売却時の税金（約20.315%）は含まれていません。信託報酬は年次リターンデータに内包されています。実際の手取り額は税率や口座種別（NISA等）によって異なります。
+                シミュレーション結果には売却時の税金、売買手数料、為替コストを個別に反映していません。参照データに含まれる費用・配当の扱いもデータ種別により異なります。実際の手取り額は商品や口座種別（NISA等）によって異なります。
               </p>
             </div>
           </div>

@@ -143,7 +143,7 @@ export default function AboutPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">過去データの限界について</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                シミュレーションはすべて過去の実績データに基づいています。過去のリターンは将来の結果を保証するものではありません。あくまで参考情報としてご活用ください。
+                シミュレーションは、公開情報から整理した年次参考リターンを一定の月次率に換算する簡易モデルです。実際の各月の基準価額・取引価格とは一致せず、将来の結果も保証しません。計算条件は<Link href="/about/data-sources" className="mx-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">データソース・計算方法</Link>で公開しています。
               </p>
             </div>
           </div>

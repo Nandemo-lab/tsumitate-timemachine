@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { FUNDS } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -151,11 +152,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="VYMとは？特徴と仕組み" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          VYM（Vanguard High Dividend Yield ETF）は、バンガードが運用する米国高配当ETFです。配当利回りが平均以上の米国株、約400銘柄に幅広く分散投資します。SCHDより銘柄数が多く、1社あたりの影響を受けにくい構造です。
+          VYM（Vanguard High Dividend Yield ETF）は、バンガードが運用する米国高配当ETFです。配当利回りが平均以上の米国株、{FUNDS.vym.shareCount}に幅広く分散投資します。SCHDより銘柄数が多く、1社あたりの影響を受けにくい構造です。
         </p>
         <SpecCard rows={[
           ["対象", "米国高配当株（約400社）"],
-          ["銘柄数", "約400銘柄"],
+          ["銘柄数", FUNDS.vym.shareCount],
           ["配当利回り", "約2.8〜3.2%（目安）"],
           ["増配率（10年平均）", "約6〜7%"],
           ["経費率", "年0.04%"],
@@ -184,7 +185,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             <tbody className="divide-y divide-white/[0.05]">
               {[
                 ["投資対象",   "財務優良な高配当株100社",   "高配当株約400社"],
-                ["銘柄数",     "約100銘柄",                "約400銘柄"],
+                ["銘柄数",     "約100銘柄",                FUNDS.vym.shareCount],
                 ["配当利回り", "約3.5〜4.0%",              "約2.8〜3.2%"],
                 ["増配率（10年平均）", "約11〜12%",         "約6〜7%"],
                 ["分散度",     "△ やや集中",               "◎ 広く分散"],
@@ -271,7 +272,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               event: "銘柄集中度によるリスク",
-              body: "SCHDは約100銘柄への集中のため、個別銘柄の業績悪化の影響を受けやすい面があります。VYMは約400銘柄と幅広く、1社の影響が相対的に小さくなります。",
+              body: `SCHDは約100銘柄への集中のため、個別銘柄の業績悪化の影響を受けやすい面があります。VYMは${FUNDS.vym.shareCount}と幅広く、1社の影響が相対的に小さくなります。`,
               diff: "VYMの方が分散効果は大きい",
               diffColor: "text-sky-400",
             },

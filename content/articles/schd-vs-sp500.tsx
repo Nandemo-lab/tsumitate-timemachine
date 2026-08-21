@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -159,7 +160,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["対象", "米国大型株500社（全業種）"],
           ["銘柄数", "500銘柄"],
           ["配当利回り", "約1.2〜1.5%（目安）"],
-          ["信託報酬", "年0.09372%"],
+          ["信託報酬", formatExpenseRatio("sp500")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
@@ -190,7 +191,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["配当利回り",   "約3.5〜4.0%",                    "約1.2〜1.5%"],
                 ["リターン特性", "配当中心・値上がりやや低め",       "値上がり重視・配当は低め"],
                 ["リスク",       "中低",                            "中"],
-                ["信託報酬",     "0.1238%（投信）",                 "0.09372%"],
+                ["信託報酬",     "0.1238%（投信）",                 formatExpenseRatio("sp500")],
                 ["NISA対応",     "○ 成長投資枠（投信もあり）",       "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">

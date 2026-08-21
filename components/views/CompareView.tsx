@@ -194,7 +194,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             {/* 信頼性の根拠（常時表示） */}
             <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 -mt-2">
               <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-              <span>2015〜2025年の実データ使用・配当再投資込み・手数料・税金は考慮外</span>
+              <span>2015〜2025年6月の年次参考リターンを月次換算・手数料・税金は個別計算なし</span>
             </div>
 
             {/* なぜ差が出たか */}

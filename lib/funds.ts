@@ -86,7 +86,7 @@ export const FUNDS: Record<FundId, Fund> = {
       features: ["🇺🇸 米国集中", "💰 NISA向き", "📈 高リターン実績", "💼 低コスト"],
       pros: ["過去10年で最も安定した高リターン", "米国を代表する大型成長企業が主力", "信託報酬が超低コスト"],
       cons: ["米国のみへの集中リスク", "円安時に有利だが円高時は注意"],
-      managementFee: "0.09372%（年率）",
+      managementFee: "0.08140%（年率）",
       beginnerScore: 4,
       volatility: "中",
       expectedHorizon: "10年以上",
@@ -128,7 +128,7 @@ export const FUNDS: Record<FundId, Fund> = {
     shortName: "VYM", ticker: "vym.us",
     color: "#10b981", riskLevel: 2,
     description: "アメリカの配当が多い企業に投資できる",
-    shareCount: "約400銘柄",
+    shareCount: "約600銘柄",
     annualReturns: {
       2015: -0.001, 2016: 0.175, 2017: 0.196, 2018: -0.085,
       2019: 0.267, 2020: 0.024, 2021: 0.281, 2022: -0.001,

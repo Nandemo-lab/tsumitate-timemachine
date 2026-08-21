@@ -417,7 +417,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       </motion.section>
 
       <p className="text-center text-xs text-zinc-400 px-6 leading-relaxed">
-        2015年以降の実績データを使用したシミュレーションです。手数料・税金は考慮していません。
+        2015年以降の年次参考リターンを一定の月次率に換算した簡易シミュレーションです。実際の月次価格とは一致せず、手数料・税金は個別計算していません。
       </p>
 
       {/* ── 人気ガイド ── */}

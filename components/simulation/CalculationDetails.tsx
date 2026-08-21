@@ -73,7 +73,7 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
             </p>
             <p className="text-[10px] text-zinc-400 mt-0.5">最終更新：{DATA_UPDATED}</p>
             <p className="text-[10px] text-zinc-400 mt-0.5">
-              ※ 手数料・税金・為替コストは含みません。過去の実績であり将来を保証しません。
+              ※ 実際の月次価格を再現するものではなく、手数料・税金・為替コストも個別計算していません。将来の成果を保証しません。
             </p>
           </div>
         </div>
