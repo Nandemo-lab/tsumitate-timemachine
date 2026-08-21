@@ -145,7 +145,7 @@ export async function GET(req: NextRequest) {
             }}
           >
             <span style={{ color: "#3f3f46", fontSize: "13px", display: "flex" }}>
-              ※過去の実績に基づくシミュレーション。将来を保証しません
+              ※年次参考系列による簡易計算。実際の商品実績・将来の成果ではありません
             </span>
             <span style={{ color: "#6366f1", fontSize: "16px", fontWeight: 900, display: "flex" }}>
               tsumitate-timemachine.com
@@ -298,7 +298,7 @@ export async function GET(req: NextRequest) {
           }}
         >
           <div style={{ color: "#3f3f46", fontSize: "13px", display: "flex" }}>
-            ※過去の実績に基づくシミュレーション。将来を保証しません
+            ※年次参考系列による簡易計算。実際の商品実績・将来の成果ではありません
           </div>
           <div style={{ color: "#6366f1", fontSize: "17px", fontWeight: 900, display: "flex" }}>
             tsumitate-timemachine.com

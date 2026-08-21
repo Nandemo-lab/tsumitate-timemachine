@@ -246,7 +246,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </ul>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※過去の実績データに基づくシミュレーションです。配当再投資込み・手数料・税金は考慮外。将来の成果を保証するものではありません。
+          ※原典未特定の年次参考系列による簡易計算です。配当・費用・為替処理は未特定で、実際の商品実績や将来の成果を示すものではありません。
         </p>
       </section>
 

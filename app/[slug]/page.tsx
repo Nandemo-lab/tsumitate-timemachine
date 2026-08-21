@@ -210,7 +210,7 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── Simulation Result ─────────────────────────────────── */}
           <section className="mb-12">
-            <SectionHeading>過去実績シミュレーション</SectionHeading>
+            <SectionHeading>年次参考系列によるシミュレーション</SectionHeading>
             <p className="text-xs text-zinc-400 mb-4">
               {page.simYear}年{page.simMonth}月から毎月{formatCurrency(page.simAmount)}を積み立てた場合（2025年6月時点）
             </p>
@@ -257,7 +257,7 @@ export default async function FundLandingPage({ params }: Props) {
               {/* Trust line */}
               <div className="mt-4 pt-3 border-t border-white/8 flex items-center gap-1.5 text-[10px] text-zinc-500">
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-                <span>2015〜2025年の実データ使用・配当再投資込み・手数料・税金は考慮外</span>
+                <span>2015〜2025年6月の年次参考系列を月次換算・原典や配当処理は未特定</span>
               </div>
             </div>
 
@@ -378,7 +378,7 @@ export default async function FundLandingPage({ params }: Props) {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <p className="text-[10px] text-zinc-500 mt-4">
-              ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。
+              ※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。
             </p>
           </section>
           <DisclaimerBar />

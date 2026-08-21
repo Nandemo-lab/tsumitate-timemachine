@@ -318,7 +318,7 @@ export default function AdvancedSimulation() {
             )}
 
             <p className="text-[10px] text-zinc-400 text-center">
-              ※ 手数料・税金は含みません。過去の実績であり将来を保証しません。
+              ※ 原典未特定の年次参考系列を用い、手数料・税金は個別計算していません。実際の商品実績や将来の成果を示すものではありません。
             </p>
           </motion.div>
         )}

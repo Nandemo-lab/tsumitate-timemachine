@@ -366,7 +366,7 @@ export default function TimeMachineView({
             </AnimatePresence>
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
-              ※ 過去実績に基づくシミュレーションです。将来の運用成果を保証しません。
+              ※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。
             </p>
           </motion.div>
         )}
@@ -386,7 +386,7 @@ export default function TimeMachineView({
               startMonth={startMonth}
             />
             <p className="mt-4 text-center text-xs text-zinc-400 px-4 leading-relaxed">
-              ※ 過去実績に基づくシミュレーションです。将来を保証しません。
+              ※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の成果を示すものではありません。
             </p>
           </motion.div>
         )}
