@@ -7,6 +7,7 @@ import { FundId } from "@/types";
 import SimulatePageClient from "./SimulatePageClient";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { isProgrammaticIndexException } from "@/lib/index-policy";
+import { getReturnDataSource } from "@/lib/return-data-sources";
 
 interface Props {
   params: Promise<{ fund: string; year: string }>;
@@ -162,9 +163,11 @@ export default async function SimulatePage({ params, searchParams }: Props) {
                "高リターンの可能性がありますが、価格変動も大きいです"}。
             </p>
             <p>
-              ※ このシミュレーションは原典未特定の年次参考系列を月次換算した簡易計算で、
-              実際の商品実績や将来の運用成果を示すものではありません。
-              配当・費用・為替処理は未特定です。
+              {getReturnDataSource(fund).sourceStatus === "verified" ? (
+                <>※ VT公式NAV Total Return（USD、分配金込み・費用控除後）を一定月次率へ換算した簡易計算です。円換算後の実際の月次推移や将来の運用成果を示すものではありません。</>
+              ) : (
+                <>※ このシミュレーションは原典未特定の年次参考系列を月次換算した簡易計算で、実際の商品実績や将来の運用成果を示すものではありません。配当・費用・為替処理は未特定です。</>
+              )}{" "}
               投資は自己責任でお願いします。
             </p>
           </section>

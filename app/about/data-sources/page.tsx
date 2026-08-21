@@ -59,7 +59,7 @@ export default function DataSourcesPage() {
             データソース・計算方法
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed">
-            シミュレーションは10系列・各11年分の年次参考リターンを使用しています。現行値には値ごとの取得記録が残っていないため、実商品や公式指数の確定実績とは表示せず、監査状況も含めて公開します。
+            シミュレーションは10系列・各11年分の年次リターンを使用しています。VTは公式NAV Total Returnを値ごとに照合済みです。その他9系列は取得記録が残っていないため、公式実績とは表示せず監査状況も含めて公開します。
           </p>
         </header>
 
@@ -87,7 +87,7 @@ export default function DataSourcesPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">収録最終年（2025年）のデータ</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                現在のシミュレーション収録期間は2025年6月までです。2025年の値は通年実績ではなく、収録時点までの参考値として扱っています。
+                現在のシミュレーション収録期間は2025年6月までです。VTは2025年の公式通年率、その他9系列は収録時点までの原典未特定の参考値です。いずれも年率を一定月次率へ換算するため、実際の2025年上期実績を再現しません。
               </p>
             </div>
             <div className="space-y-1.5">
@@ -104,8 +104,8 @@ export default function DataSourcesPage() {
             先に確認してほしいこと
           </h2>
           <div className="rounded-xl bg-amber-500/[0.06] border border-amber-500/20 p-5 space-y-2 text-xs text-zinc-400 leading-relaxed">
-            <p>現在の110個の年次値は、原典・通貨・配当・費用・為替処理を値ごとに遡れる記録がありません。</p>
-            <p>そのため全系列を「G：原典未特定」と分類しています。下記の公式URLは今後照合する候補であり、現行値の直接根拠として確認済みという意味ではありません。</p>
+            <p>VTの11個の年次値は一次情報まで追跡できます。残る99個は、原典・通貨・配当・費用・為替処理を値ごとに遡れる記録がありません。</p>
+            <p>そのためVTは「A：公式商品実績」、その他9系列は「G：原典未特定」です。G系列の公式URLは今後照合する候補であり、現行値の直接根拠ではありません。</p>
             <p>商品設定前の年を含む系列は、商品の基準価額実績ではなく参考系列です。</p>
           </div>
         </section>
@@ -128,7 +128,9 @@ export default function DataSourcesPage() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-sm font-bold text-zinc-200">{source.displayedProduct}</p>
-                  <span className="rounded bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-400">G：原典未特定</span>
+                  <span className={`rounded px-2 py-0.5 text-[10px] font-bold ${source.sourceStatus === "verified" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"}`}>
+                    {source.sourceStatus === "verified" ? "A：公式商品実績" : "G：原典未特定"}
+                  </span>
                 </div>
                 <div className="grid grid-cols-1 gap-1.5 text-[11px]">
                   <div className="flex gap-2">
@@ -161,7 +163,9 @@ export default function DataSourcesPage() {
                   </div>
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">表示コスト</span>
-                    <span className="text-zinc-400">{formatExpenseRatio(fund.id)}（シミュレーションへの反映は未特定）</span>
+                    <span className="text-zinc-400">
+                      {formatExpenseRatio(fund.id)}（{source.sourceStatus === "verified" ? "公式NAVリターンに反映済み" : "シミュレーションへの反映は未特定"}）
+                    </span>
                   </div>
                 </div>
                 <a
@@ -239,7 +243,7 @@ export default function DataSourcesPage() {
             <AlertCircle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
             <div className="space-y-2 text-xs text-zinc-400 leading-relaxed">
               <p>本シミュレーションは教育・情報提供を目的としており、投資助言ではありません。</p>
-              <p>数値は入手可能な公開情報をもとに独自に構成したものであり、公式の運用成績と完全に一致しない場合があります。</p>
+              <p>VT以外の参考系列は、公式の運用成績と完全に一致しない場合があります。VTも円換算後の実際の購入結果や月次推移を再現するものではありません。</p>
               <p>将来の運用成果を保証・示唆するものではありません。投資判断は必ずご自身でお願いします。</p>
             </div>
           </div>

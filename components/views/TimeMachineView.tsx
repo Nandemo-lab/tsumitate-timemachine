@@ -13,6 +13,7 @@ import QuickScenarios from "@/components/simulation/QuickScenarios";
 import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
 import { QuickScenario } from "@/lib/scenarios";
 import { trackCalculate, trackCompareClick } from "@/lib/analytics";
+import { getReturnDataSource } from "@/lib/return-data-sources";
 import { ChevronDown, Zap, Trophy, Settings2, GitCompareArrows, Share2, ShieldCheck, Clock3, Target } from "lucide-react";
 
 type SubMode = "single" | "ranking";
@@ -366,7 +367,9 @@ export default function TimeMachineView({
             </AnimatePresence>
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
-              ※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。
+              {getReturnDataSource(fund).sourceStatus === "verified"
+                ? "※ VT公式NAV Total Return（USD、分配金込み・費用控除後）を月次換算した簡易計算です。実際の円換算後の月次推移や将来の成果を示すものではありません。"
+                : "※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。"}
             </p>
           </motion.div>
         )}

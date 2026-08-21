@@ -55,6 +55,9 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
         {/* Per-fund */}
         <div className="space-y-2">
           {[resultA, ...(resultB ? [resultB] : [])].map((r) => (
+            (() => {
+              const source = getReturnDataSource(r.fundId);
+              return (
             <div key={r.fundId} className="space-y-1">
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
@@ -63,10 +66,14 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
                   +{r.returnRate.toFixed(1)}% （{months}ヶ月）
                 </p>
               </div>
-              <p className="pl-3.5 text-[10px] text-amber-500/80">
-                {getReturnDataSource(r.fundId).storedSeries}／原典・通貨・配当処理は未特定
+              <p className={`pl-3.5 text-[10px] ${source.sourceStatus === "verified" ? "text-emerald-500/80" : "text-amber-500/80"}`}>
+                {source.sourceStatus === "verified"
+                  ? `${source.storedSeries}（${source.currency}、分配金込み・費用控除後）`
+                  : `${source.storedSeries}／原典・通貨・配当処理は未特定`}
               </p>
             </div>
+              );
+            })()
           ))}
         </div>
 

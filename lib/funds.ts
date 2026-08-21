@@ -1,4 +1,5 @@
 import { Fund, FundId, FundCategory, FundCategoryMeta } from "@/types";
+import { VT_ANNUAL_RETURNS } from "@/lib/verified-return-series";
 
 export const FUND_CATEGORIES: Record<FundCategory, FundCategoryMeta> = {
   global:   { id: "global",   label: "全世界",   emoji: "🌍", description: "世界中の株式に分散投資" },
@@ -44,11 +45,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#818cf8", riskLevel: 3,
     description: "世界中へETFで分散投資できる",
     shareCount: "約10,000銘柄",
-    annualReturns: {
-      2015: 0.009, 2016: 0.080, 2017: 0.244, 2018: -0.096,
-      2019: 0.266, 2020: 0.161, 2021: 0.299, 2022: -0.183,
-      2023: 0.228, 2024: 0.187, 2025: 0.079,
-    },
+    annualReturns: VT_ANNUAL_RETURNS,
     encyclopedia: {
       nickname: "VT",
       formalName: "Vanguard Total World Stock ETF（VT）",
