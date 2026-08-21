@@ -301,7 +301,7 @@ export default function TimeMachineView({
               {/* 信頼性の根拠（常時表示） */}
               <div className="mt-4 pt-3 border-t border-white/8 flex items-center justify-center gap-1.5 text-[10px] text-zinc-400">
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-                <span>2015〜2025年6月の年次参考リターンを月次換算・手数料・税金は個別計算なし</span>
+                <span>{fund === "vt" ? "VT公式月次NAVリターン＋日銀月末為替・税金等は個別計算なし" : "年次参考リターンを月次換算・手数料・税金は個別計算なし"}</span>
               </div>
             </div>
 
@@ -368,7 +368,7 @@ export default function TimeMachineView({
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
               {getReturnDataSource(fund).sourceStatus === "verified"
-                ? "※ VT公式NAV Total Return（USD、分配金込み・費用控除後）を月次換算した簡易計算です。実際の円換算後の月次推移や将来の成果を示すものではありません。"
+                ? "※ VT公式月次NAV Total Returnを日本銀行の月末為替で円換算した計算です。売買手数料・税金・為替スプレッドは含みません。"
                 : "※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。"}
             </p>
           </motion.div>

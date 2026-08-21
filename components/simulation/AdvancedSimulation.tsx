@@ -318,7 +318,7 @@ export default function AdvancedSimulation() {
             )}
 
             <p className="text-[10px] text-zinc-400 text-center">
-              ※ 原典未特定の年次参考系列を用い、手数料・税金は個別計算していません。実際の商品実績や将来の成果を示すものではありません。
+              ※ VTは公式月次NAVリターンを日銀月末為替で円換算し、その他は原典未特定の年次参考系列を用いています。手数料・税金は個別計算していません。
             </p>
           </motion.div>
         )}

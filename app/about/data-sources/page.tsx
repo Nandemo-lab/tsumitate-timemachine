@@ -59,7 +59,7 @@ export default function DataSourcesPage() {
             データソース・計算方法
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed">
-            シミュレーションは10系列・各11年分の年次リターンを使用しています。VTは公式NAV Total Returnを値ごとに照合済みです。その他9系列は取得記録が残っていないため、公式実績とは表示せず監査状況も含めて公開します。
+            シミュレーションは10系列のリターンを使用しています。VTは公式月次NAV Total Returnを日本銀行の月末為替で円換算し、値ごとに照合済みです。その他9系列は取得記録が残っていないため、公式実績とは表示せず監査状況も含めて公開します。
           </p>
         </header>
 
@@ -75,19 +75,19 @@ export default function DataSourcesPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">基本的な計算ロジック</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                毎月一定額を投資し、銘柄ごとに収録した年次参考リターンから、複利計算で同じ年率になる一定の月次率を算出して適用します。実際の各月の基準価額や取引価格を再現する計算ではありません。
+                毎月月初に一定額を加えた後、その月のリターンを適用します。VTは公式月次NAV Total Returnを月末為替で円換算し、その他9系列は年次参考値から算出した一定月次率を適用します。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">年次リターンデータの取得</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                年次参考リターンは、各指数・運用会社・ETF運用会社の公開情報を参照して独自に整理しています。投資信託、ETF、指数では通貨・配当・費用の扱いが異なるため、個別商品の円建て基準価額による厳密な運用実績とは一致しません。
+                VTはVanguard公式の月次NAV Total Returnと日本銀行の月末USD/JPYを使用します。その他9系列は原典未特定の参考値です。売買手数料、税金、実際の為替スプレッドは個別計算していません。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">収録最終年（2025年）のデータ</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                現在のシミュレーション収録期間は2025年6月までです。VTは2025年の公式通年率、その他9系列は収録時点までの原典未特定の参考値です。いずれも年率を一定月次率へ換算するため、実際の2025年上期実績を再現しません。
+                現在の収録期間は2025年6月までです。VTは各月の公式NAV Total Returnと同月までの為替だけを使用します。その他9系列は原典未特定の年次参考値を一定月次率へ換算しており、実際の月次実績ではありません。
               </p>
             </div>
             <div className="space-y-1.5">
@@ -104,7 +104,7 @@ export default function DataSourcesPage() {
             先に確認してほしいこと
           </h2>
           <div className="rounded-xl bg-amber-500/[0.06] border border-amber-500/20 p-5 space-y-2 text-xs text-zinc-400 leading-relaxed">
-            <p>VTの11個の年次値は一次情報まで追跡できます。残る99個は、原典・通貨・配当・費用・為替処理を値ごとに遡れる記録がありません。</p>
+            <p>VTの月次126件は、VTリターンと為替の両方を一次情報まで追跡できます。その他9系列の99個の年次値は、原典・通貨・配当・費用・為替処理を値ごとに遡れる記録がありません。</p>
             <p>そのためVTは「A：公式商品実績」、その他9系列は「G：原典未特定」です。G系列の公式URLは今後照合する候補であり、現行値の直接根拠ではありません。</p>
             <p>商品設定前の年を含む系列は、商品の基準価額実績ではなく参考系列です。</p>
           </div>
@@ -137,6 +137,26 @@ export default function DataSourcesPage() {
                     <span className="text-zinc-600 flex-shrink-0 w-20">使用系列</span>
                     <span className="text-zinc-400">{source.storedSeries}</span>
                   </div>
+                  {source.sourceStatus === "verified" && (
+                    <>
+                      <div className="flex gap-2">
+                        <span className="text-zinc-600 flex-shrink-0 w-20">データ粒度</span>
+                        <span className="text-zinc-400">{source.granularity}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="text-zinc-600 flex-shrink-0 w-20">計算式</span>
+                        <span className="text-zinc-400">{source.calculationMethod}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="text-zinc-600 flex-shrink-0 w-20">積立時点</span>
+                        <span className="text-zinc-400">{source.investmentTiming}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="text-zinc-600 flex-shrink-0 w-20">欠損処理</span>
+                        <span className="text-zinc-400">{source.missingValueTreatment}</span>
+                      </div>
+                    </>
+                  )}
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">識別情報</span>
                     <span className="text-zinc-400">{source.identifier}</span>
@@ -177,6 +197,12 @@ export default function DataSourcesPage() {
                   <ExternalLink className="h-2.5 w-2.5" />
                   {source.sourceName}
                 </a>
+                {source.fxSourceUrl && (
+                  <a href={source.fxSourceUrl} target="_blank" rel="noopener noreferrer" className="ml-3 inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors">
+                    <ExternalLink className="h-2.5 w-2.5" />
+                    {source.fxSourceName}
+                  </a>
+                )}
                 <p className="text-[10px] text-zinc-600 leading-relaxed">{source.notes}</p>
               </div>
             )})}

@@ -164,7 +164,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
             </p>
             <p>
               {getReturnDataSource(fund).sourceStatus === "verified" ? (
-                <>※ VT公式NAV Total Return（USD、分配金込み・費用控除後）を一定月次率へ換算した簡易計算です。円換算後の実際の月次推移や将来の運用成果を示すものではありません。</>
+                <>※ VT公式月次NAV Total Returnを日本銀行の月末為替で円換算した計算です。売買手数料・税金・為替スプレッドは含まず、将来の運用成果を示すものではありません。</>
               ) : (
                 <>※ このシミュレーションは原典未特定の年次参考系列を月次換算した簡易計算で、実際の商品実績や将来の運用成果を示すものではありません。配当・費用・為替処理は未特定です。</>
               )}{" "}

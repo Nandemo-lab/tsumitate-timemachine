@@ -18,6 +18,12 @@ export interface ReturnDataSource {
   dataThrough: string;
   retrievedAt: string;
   notes: string;
+  fxSourceName?: string;
+  fxSourceUrl?: string;
+  granularity?: string;
+  calculationMethod?: string;
+  investmentTiming?: string;
+  missingValueTreatment?: string;
 }
 
 const COMMON_UNKNOWN = {
@@ -50,19 +56,25 @@ export const RETURN_DATA_SOURCES: Record<FundId, ReturnDataSource> = {
   vt: {
     classification: "A",
     sourceStatus: "verified",
-    currency: "USD",
-    returnType: "ETF公式 Total return by NAV（税引前）",
+    currency: "JPY（USD公式月次リターンを円換算）",
+    returnType: "ETF公式 月次Total return by NAV（税引前）",
     dividendTreatment: "Income returnを含む（分配金を含むTotal Return）",
     feeTreatment: "ファンド費用控除後",
-    fxTreatment: "為替換算なし（USD）",
-    dataThrough: "2025年（暦年）",
+    fxTreatment: "日本銀行の前月末・当月末USD/JPYで月次円換算",
+    dataThrough: "2025年6月（月次）",
     retrievedAt: "2026-08-21",
     displayedProduct: "Vanguard Total World Stock ETF（VT）",
     storedSeries: "VT公式NAV Total Return",
     identifier: "NYSE Arca: VT / CUSIP 922042742",
-    sourceName: "Vanguard VT product page（年次Total return by NAV）",
-    sourceUrl: "https://investor.vanguard.com/investment-products/etfs/profile/vt",
-    notes: "2015〜2025年を同一の公式年次表で照合済み。VTは2008年設定のため全収録年が設定後。円換算、売買手数料、税金は含まない。2025年6月までの画面では、2025年通年率を一定月次率へ換算した簡易モデルであり、実際の2025年上期実績ではない。",
+    sourceName: "Vanguard VT product page（月次Total return by NAV）",
+    sourceUrl: "https://advisors.vanguard.com/investments/products/vt/vanguard-total-world-stock-etf",
+    fxSourceName: "日本銀行 外国為替市況 FM08'FXERM06",
+    fxSourceUrl: "https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html",
+    granularity: "2015年1月〜2025年6月の月次126件",
+    calculationMethod: "(1＋USD月次NAV Total Return) × (当月末USD/JPY÷前月末USD/JPY) − 1",
+    investmentTiming: "毎月月初に円で積立後、その月の円換算リターンを適用",
+    missingValueTreatment: "欠損なし。欠損時は推測補完せず計算を停止する設計",
+    notes: "VTは2008年設定のため全収録月が設定後でproxyなし。Vanguard画面の月次値は0.01%単位の表示値。売買手数料・税金・実際の為替スプレッドは含まない。",
   },
   sp500: {
     ...COMMON_UNKNOWN,

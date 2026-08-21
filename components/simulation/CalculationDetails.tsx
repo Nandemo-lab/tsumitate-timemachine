@@ -68,7 +68,7 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
               </div>
               <p className={`pl-3.5 text-[10px] ${source.sourceStatus === "verified" ? "text-emerald-500/80" : "text-amber-500/80"}`}>
                 {source.sourceStatus === "verified"
-                  ? `${source.storedSeries}（${source.currency}、分配金込み・費用控除後）`
+                  ? `${source.storedSeries}（月次・円換算、分配金込み・費用控除後）`
                   : `${source.storedSeries}／原典・通貨・配当処理は未特定`}
               </p>
             </div>

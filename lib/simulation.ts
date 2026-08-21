@@ -3,13 +3,19 @@ import {
   RankingItem, FundId, InvestmentEvent, AdvancedSimulationResult, AdvancedDataPoint
 } from "@/types";
 import { FUNDS, FUND_LIST } from "./funds";
+import { getVerifiedVtMonthlyJpyReturn } from "./verified-monthly-return-series";
 
 export const CURRENT_YEAR = 2025;
 export const CURRENT_MONTH = 6;
 export const DATA_SOURCE = "公開情報から整理した年次参考リターンを月次換算した簡易モデル";
 export const DATA_UPDATED = "2025年6月";
 
-function getMonthlyReturn(annualReturns: Record<number, number>, year: number): number {
+function getMonthlyReturn(fundId: FundId, annualReturns: Record<number, number>, year: number, month: number): number {
+  if (fundId === "vt") {
+    const verifiedMonthlyReturn = getVerifiedVtMonthlyJpyReturn(year, month);
+    if (verifiedMonthlyReturn !== undefined) return verifiedMonthlyReturn;
+    throw new Error(`Verified VT monthly return is missing for ${year}-${String(month).padStart(2, "0")}`);
+  }
   const annual = annualReturns[year] ?? annualReturns[CURRENT_YEAR] ?? 0.10;
   return Math.pow(1 + annual, 1 / 12) - 1;
 }
@@ -30,7 +36,7 @@ export function simulate(params: SimulationParams): SimulationResult {
   while (year < CURRENT_YEAR || (year === CURRENT_YEAR && month <= CURRENT_MONTH)) {
     totalPrincipal += monthlyAmount;
     currentValue += monthlyAmount;
-    currentValue *= 1 + getMonthlyReturn(fund.annualReturns, year);
+    currentValue *= 1 + getMonthlyReturn(fundId, fund.annualReturns, year, month);
 
     dataPoints.push({
       date: `${year}/${String(month).padStart(2, "0")}`,
@@ -141,7 +147,7 @@ export function simulateAdvanced(events: InvestmentEvent[]): AdvancedSimulationR
       state.value += state.monthlyAmount;
       const fund = FUNDS[fundId];
       if (fund) {
-        state.value *= 1 + getMonthlyReturn(fund.annualReturns, year);
+        state.value *= 1 + getMonthlyReturn(fundId, fund.annualReturns, year, month);
       }
       breakdown[fundId] = Math.round(state.value);
     }

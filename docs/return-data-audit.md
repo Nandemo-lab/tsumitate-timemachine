@@ -46,14 +46,18 @@
 1. 公式資料から年ごとの値、通貨、Price/NAV、配当、費用、為替処理を確認する。
 2. `lib/return-data-sources.ts` の `sourceStatus` を `verified` にする前に、全収録年を同一基準で照合する。
 
-## VTパイロット再構築（2026-08-21）
+## VTパイロット再構築（2026-08-21、月次円換算へ更新）
 
-- 採用系列: Vanguard Total World Stock ETF（VT）の公式 `Total return by NAV`
-- 期間: 2015〜2025年（全期間が2008年6月24日の設定後）
-- 通貨: USD（円換算なし）
+- 採用系列: Vanguard Total World Stock ETF（VT）の公式月次 `Total return by NAV`
+- 期間: 2015年1月〜2025年6月（全期間が2008年6月24日の設定後）
+- 通貨: USD月次リターンを日本銀行の月末USD/JPYでJPY換算
 - リターン: 税引前Total Return。Income returnを含み、ファンド費用控除後
-- 一次情報: https://investor.vanguard.com/investment-products/etfs/profile/vt
-- 値ごとの監査台帳: `lib/verified-return-series.ts`
+- VT一次情報: https://advisors.vanguard.com/investments/products/vt/vanguard-total-world-stock-etf
+- 為替一次情報: https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html
+- 値ごとの監査台帳: `lib/verified-monthly-return-series.ts`
+- 円換算式: `(1 + USD月次NAV Total Return) × (当月末USD/JPY ÷ 前月末USD/JPY) - 1`
+- 積立時点: 月初に入金後、その月のリターンを適用
+- 年途中: 当月までの月次値だけを使用し、通年値を遡及適用しない
 
 | 年 | 旧値 | 公式NAV Total Return | 差 |
 |---:|---:|---:|---:|
@@ -71,6 +75,6 @@
 
 旧値の原典は特定できずGのまま保存履歴として扱う。特に2021年と2025年の差は、市場価格/NAV、Price/Total、通貨等のいずれかだけでは説明できず、旧値の系列を断定しない。
 
-代表条件（月3万円、2020年1月〜2025年6月）の簡易モデル結果は、元本1,980,000円、旧評価額2,723,610円、公式値適用後2,755,757円（+32,147円）。旧利益率37.6%、新利益率39.2%。2025年は通年率を一定月次率に換算して6か月適用するため、実際の2025年上期実績ではない。
+年次公式値は監査比較用として維持するが、VTのシミュレーション計算には使用しない。2025年1〜6月の結果には同期間の月次リターンと月末為替だけを使用する。
 3. 商品設定前は商品実績と呼ばず、代理指数・バックテストであることを明示する。
 4. 数値変更時は旧値、新値、一次情報、代表シミュレーションへの影響を記録する。

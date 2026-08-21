@@ -194,7 +194,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             {/* 信頼性の根拠（常時表示） */}
             <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 -mt-2">
               <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-              <span>2015〜2025年6月の年次参考リターンを月次換算・手数料・税金は個別計算なし</span>
+              <span>{fundA === "vt" || fundB === "vt" ? "VTは公式月次NAVリターン＋日銀月末為替、他系列は年次参考値・税金等は個別計算なし" : "年次参考リターンを月次換算・手数料・税金は個別計算なし"}</span>
             </div>
 
             {/* なぜ差が出たか */}
@@ -280,7 +280,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             </AnimatePresence>
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
-              ※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。
+              ※ VTは公式月次NAVリターンを日銀月末為替で円換算し、その他は原典未特定の年次参考系列を月次換算しています。将来の運用成果を示すものではありません。
             </p>
           </motion.div>
         )}

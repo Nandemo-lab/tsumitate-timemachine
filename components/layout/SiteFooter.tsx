@@ -114,7 +114,7 @@ export default function SiteFooter() {
         <div className="border-t border-white/[0.06] pt-6 text-center space-y-1">
           <p className="text-xs font-bold text-zinc-500">積立タイムマシン</p>
           <p className="text-[10px] text-zinc-600 leading-relaxed">
-            ※年次参考系列を月次換算した簡易シミュレーションです。実際の商品実績や将来の運用成果を示すものではありません。
+            ※VTは公式月次NAVリターンを日銀月末為替で円換算し、その他は年次参考系列を月次換算しています。将来の成果を示すものではありません。
           </p>
           <p className="text-[10px] text-zinc-700">© {new Date().getFullYear()} 積立タイムマシン</p>
         </div>
