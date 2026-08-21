@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { SimulationResult } from "@/types";
 import { formatCurrencyFull, DATA_SOURCE, DATA_UPDATED, formatYearMonth, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { Info, Database } from "lucide-react";
+import { getReturnDataSource } from "@/lib/return-data-sources";
 
 interface Props {
   resultA: SimulationResult;
@@ -54,11 +55,16 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
         {/* Per-fund */}
         <div className="space-y-2">
           {[resultA, ...(resultB ? [resultB] : [])].map((r) => (
-            <div key={r.fundId} className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
-              <p className="text-[10px] text-zinc-400 flex-1">{r.fundName}</p>
-              <p className="text-[10px] text-zinc-400 font-bold">
-                +{r.returnRate.toFixed(1)}% （{months}ヶ月）
+            <div key={r.fundId} className="space-y-1">
+              <div className="flex items-center gap-2">
+                <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
+                <p className="text-[10px] text-zinc-400 flex-1">{r.fundName}</p>
+                <p className="text-[10px] text-zinc-400 font-bold">
+                  +{r.returnRate.toFixed(1)}% （{months}ヶ月）
+                </p>
+              </div>
+              <p className="pl-3.5 text-[10px] text-amber-500/80">
+                {getReturnDataSource(r.fundId).storedSeries}／原典・通貨・配当処理は未特定
               </p>
             </div>
           ))}

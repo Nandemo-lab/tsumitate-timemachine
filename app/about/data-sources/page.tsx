@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ChevronRight, ExternalLink, AlertCircle } from "lucide-react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
-import { formatExpenseRatio } from "@/lib/funds";
+import { FUND_LIST, formatExpenseRatio } from "@/lib/funds";
+import { RETURN_DATA_SOURCES } from "@/lib/return-data-sources";
 
 const BASE_URL = SITE_URL;
 
@@ -29,51 +30,6 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
 };
-
-const FUND_SOURCES = [
-  {
-    fund: "eMAXIS Slim 全世界株式（オルカン）",
-    index: "MSCI ACWI（全世界株式指数）",
-    source: "MSCI社公開データ・三菱UFJアセットマネジメント月次レポート",
-    fee: `${formatExpenseRatio("orcan")}（税込）`,
-    link: { label: "MSCI ACWI", href: "https://www.msci.com/our-solutions/indexes/acwi" },
-  },
-  {
-    fund: "eMAXIS Slim 米国株式（S&P500）",
-    index: "S&P 500指数",
-    source: "S&P Dow Jones Indices公開データ・三菱UFJアセットマネジメント月次レポート",
-    fee: `${formatExpenseRatio("sp500")}（税込）`,
-    link: { label: "S&P 500", href: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/" },
-  },
-  {
-    fund: "eMAXIS NASDAQ100インデックス",
-    index: "NASDAQ-100指数",
-    source: "Nasdaq公開データ・三菱UFJアセットマネジメント月次レポート",
-    fee: "0.2035%（税込）",
-    link: { label: "NASDAQ-100", href: "https://www.nasdaq.com/nasdaq-100" },
-  },
-  {
-    fund: "Vanguard Total World Stock ETF（VT）",
-    index: "FTSE Global All Cap Index",
-    source: "Vanguard社公開データ・ファクトシート",
-    fee: "0.06%（年率）",
-    link: { label: "VT", href: "https://investor.vanguard.com/investment-products/etfs/profile/vt" },
-  },
-  {
-    fund: "SCHD（Schwab US Dividend Equity ETF）",
-    index: "Dow Jones U.S. Dividend 100 Index",
-    source: "Charles Schwab公開データ・ファクトシート",
-    fee: "0.06%（年率）",
-    link: { label: "SCHD", href: "https://www.schwabassetmanagement.com/products/schd" },
-  },
-  {
-    fund: "VYM（Vanguard High Dividend Yield ETF）",
-    index: "FTSE High Dividend Yield Index",
-    source: "Vanguard社公開データ・ファクトシート",
-    fee: "0.04%（年率）",
-    link: { label: "VYM", href: "https://investor.vanguard.com/investment-products/etfs/profile/vym" },
-  },
-];
 
 export default function DataSourcesPage() {
   return (
@@ -103,7 +59,7 @@ export default function DataSourcesPage() {
             データソース・計算方法
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed">
-            積立タイムマシンで使用しているシミュレーションデータの出典・計算ロジック・更新方針を公開しています。「この数字はどこから？」という疑問にお答えします。
+            シミュレーションは10系列・各11年分の年次参考リターンを使用しています。現行値には値ごとの取得記録が残っていないため、実商品や公式指数の確定実績とは表示せず、監査状況も含めて公開します。
           </p>
         </header>
 
@@ -143,6 +99,17 @@ export default function DataSourcesPage() {
           </div>
         </section>
 
+        <section className="space-y-3">
+          <h2 className="text-base font-bold text-white" style={{ fontFamily: "var(--font-serif-jp), serif" }}>
+            先に確認してほしいこと
+          </h2>
+          <div className="rounded-xl bg-amber-500/[0.06] border border-amber-500/20 p-5 space-y-2 text-xs text-zinc-400 leading-relaxed">
+            <p>現在の110個の年次値は、原典・通貨・配当・費用・為替処理を値ごとに遡れる記録がありません。</p>
+            <p>そのため全系列を「G：原典未特定」と分類しています。下記の公式URLは今後照合する候補であり、現行値の直接根拠として確認済みという意味ではありません。</p>
+            <p>商品設定前の年を含む系列は、商品の基準価額実績ではなく参考系列です。</p>
+          </div>
+        </section>
+
         {/* 銘柄別データソース */}
         <section className="space-y-4">
           <h2
@@ -152,37 +119,63 @@ export default function DataSourcesPage() {
             銘柄別データソース
           </h2>
           <div className="space-y-3">
-            {FUND_SOURCES.map((s, i) => (
+            {FUND_LIST.map((fund) => {
+              const source = RETURN_DATA_SOURCES[fund.id];
+              return (
               <div
-                key={i}
+                key={fund.id}
                 className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-2.5"
               >
-                <p className="text-sm font-bold text-zinc-200">{s.fund}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-sm font-bold text-zinc-200">{source.displayedProduct}</p>
+                  <span className="rounded bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-400">G：原典未特定</span>
+                </div>
                 <div className="grid grid-cols-1 gap-1.5 text-[11px]">
                   <div className="flex gap-2">
-                    <span className="text-zinc-600 flex-shrink-0 w-16">連動指数</span>
-                    <span className="text-zinc-400">{s.index}</span>
+                    <span className="text-zinc-600 flex-shrink-0 w-20">使用系列</span>
+                    <span className="text-zinc-400">{source.storedSeries}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span className="text-zinc-600 flex-shrink-0 w-16">データ元</span>
-                    <span className="text-zinc-400">{s.source}</span>
+                    <span className="text-zinc-600 flex-shrink-0 w-20">識別情報</span>
+                    <span className="text-zinc-400">{source.identifier}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span className="text-zinc-600 flex-shrink-0 w-16">信託報酬</span>
-                    <span className="text-zinc-400">{s.fee}</span>
+                    <span className="text-zinc-600 flex-shrink-0 w-20">通貨・配当</span>
+                    <span className="text-zinc-400">{source.currency}／{source.dividendTreatment}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-zinc-600 flex-shrink-0 w-20">リターン種別</span>
+                    <span className="text-zinc-400">{source.returnType}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-zinc-600 flex-shrink-0 w-20">費用・為替</span>
+                    <span className="text-zinc-400">{source.feeTreatment}／{source.fxTreatment}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-zinc-600 flex-shrink-0 w-20">収録期間</span>
+                    <span className="text-zinc-400">2015年〜{source.dataThrough}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-zinc-600 flex-shrink-0 w-20">台帳確認日</span>
+                    <span className="text-zinc-400">{source.retrievedAt}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-zinc-600 flex-shrink-0 w-20">表示コスト</span>
+                    <span className="text-zinc-400">{formatExpenseRatio(fund.id)}（シミュレーションへの反映は未特定）</span>
                   </div>
                 </div>
                 <a
-                  href={s.link.href}
+                  href={source.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors"
                 >
                   <ExternalLink className="h-2.5 w-2.5" />
-                  {s.link.label}（公式）
+                  {source.sourceName}
                 </a>
+                <p className="text-[10px] text-zinc-600 leading-relaxed">{source.notes}</p>
               </div>
-            ))}
+            )})}
           </div>
         </section>
 
