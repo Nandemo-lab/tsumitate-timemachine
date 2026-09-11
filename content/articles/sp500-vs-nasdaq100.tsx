@@ -159,7 +159,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["対象", "米国ナスダック非金融上位100社"],
           ["銘柄数", "約100銘柄"],
           ["業種分散", "IT・ハイテク偏重（約60%）"],
-          ["信託報酬", "年0.2035%"],
+          ["信託報酬", formatExpenseRatio("nasdaq100")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
@@ -190,7 +190,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["業種分散",   "○ 全業種に分散",           "△ IT・ハイテク偏重（約60%）"],
                 ["リスク",     "中",                       "やや高"],
                 ["最大下落幅（2022年）", "約-18%",         "約-33%"],
-                ["信託報酬",   formatExpenseRatio("sp500"), "年0.2035%"],
+                ["信託報酬",   formatExpenseRatio("sp500"), formatExpenseRatio("nasdaq100")],
                 ["NISA対応",   "○ つみたて・成長両対応",    "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
