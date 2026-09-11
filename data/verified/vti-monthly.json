@@ -1,0 +1,1035 @@
+{
+  "schemaVersion": 1,
+  "fundId": "vti",
+  "formalProductName": "Vanguard Morningstar Total Stock Market ETF",
+  "identifier": "VTI / fund 0970",
+  "manager": "The Vanguard Group",
+  "inceptionDate": "2001-05-24",
+  "sourceName": "Vanguard Advisors",
+  "sourceUrl": "https://advisors.vanguard.com/investments/products/vti/vanguard-morningstar-total-stock-market-etf",
+  "sourceSeriesDefinition": "Monthly NAV Total Return (1MTH)",
+  "currency": "USD",
+  "returnType": "total-return",
+  "priceBasis": "NAV",
+  "dividendTreatment": "included",
+  "feeTreatment": "net of fund expenses",
+  "fxTreatment": "converted with BOJ month-end USD/JPY",
+  "firstMonth": "2015-01",
+  "lastMonth": "2025-06",
+  "rawDataUrl": "https://advisors.vanguard.com/investments/products/api/funds/0970/performance/nav",
+  "retrievedAt": "2026-09-12",
+  "observationCount": 126,
+  "missingMonths": [],
+  "inceptionTreatment": "product observations only; no pre-inception backfill",
+  "notes": "No interpolation or fallback.",
+  "observations": [
+    {
+      "month": "2015-01",
+      "monthlyReturn": -0.04315573125058669,
+      "usdNavTotalReturn": -0.027735849057,
+      "previousMonthEndYenPerUsd": 119.8,
+      "monthEndYenPerUsd": 117.9,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-02",
+      "monthlyReturn": 0.07020366768381958,
+      "usdNavTotalReturn": 0.057733359208000004,
+      "previousMonthEndYenPerUsd": 117.9,
+      "monthEndYenPerUsd": 119.29,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-03",
+      "monthlyReturn": -0.0024475645244130817,
+      "usdNavTotalReturn": -0.010082106082,
+      "previousMonthEndYenPerUsd": 119.29,
+      "monthEndYenPerUsd": 120.21,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-04",
+      "monthlyReturn": -0.006577672809120361,
+      "usdNavTotalReturn": 0.004283054004,
+      "previousMonthEndYenPerUsd": 120.21,
+      "monthEndYenPerUsd": 118.91,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-05",
+      "monthlyReturn": 0.055176023052381895,
+      "usdNavTotalReturn": 0.013906916373,
+      "previousMonthEndYenPerUsd": 118.91,
+      "monthEndYenPerUsd": 123.75,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-06",
+      "monthlyReturn": -0.0289268533335576,
+      "usdNavTotalReturn": -0.017011845399,
+      "previousMonthEndYenPerUsd": 123.75,
+      "monthEndYenPerUsd": 122.25,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-07",
+      "monthlyReturn": 0.032727004564189865,
+      "usdNavTotalReturn": 0.016349028401000002,
+      "previousMonthEndYenPerUsd": 122.25,
+      "monthEndYenPerUsd": 124.22,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-08",
+      "monthlyReturn": -0.08295199123098895,
+      "usdNavTotalReturn": -0.060023899255,
+      "previousMonthEndYenPerUsd": 124.22,
+      "monthEndYenPerUsd": 121.19,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-09",
+      "monthlyReturn": -0.03858997706683842,
+      "usdNavTotalReturn": -0.029298669672,
+      "previousMonthEndYenPerUsd": 121.19,
+      "monthEndYenPerUsd": 120.03,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-10",
+      "monthlyReturn": 0.08495429133162635,
+      "usdNavTotalReturn": 0.078574321588,
+      "previousMonthEndYenPerUsd": 120.03,
+      "monthEndYenPerUsd": 120.74,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-11",
+      "monthlyReturn": 0.022944665425981725,
+      "usdNavTotalReturn": 0.005538865941,
+      "previousMonthEndYenPerUsd": 120.74,
+      "monthEndYenPerUsd": 122.83,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2015-12",
+      "monthlyReturn": -0.03957512461813706,
+      "usdNavTotalReturn": -0.020353866108999998,
+      "previousMonthEndYenPerUsd": 122.83,
+      "monthEndYenPerUsd": 120.42,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-01",
+      "monthlyReturn": -0.05499662910681402,
+      "usdNavTotalReturn": -0.056641748131,
+      "previousMonthEndYenPerUsd": 120.42,
+      "monthEndYenPerUsd": 120.63,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-02",
+      "monthlyReturn": -0.06361964412987431,
+      "usdNavTotalReturn": -0.000304785126,
+      "previousMonthEndYenPerUsd": 120.63,
+      "monthEndYenPerUsd": 112.99,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-03",
+      "monthlyReturn": 0.06504376670693124,
+      "usdNavTotalReturn": 0.070348618698,
+      "previousMonthEndYenPerUsd": 112.99,
+      "monthEndYenPerUsd": 112.43,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-04",
+      "monthlyReturn": -0.029682318405407804,
+      "usdNavTotalReturn": 0.0063913002,
+      "previousMonthEndYenPerUsd": 112.43,
+      "monthEndYenPerUsd": 108.4,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-05",
+      "monthlyReturn": 0.043547087318937416,
+      "usdNavTotalReturn": 0.017819905213,
+      "previousMonthEndYenPerUsd": 108.4,
+      "monthEndYenPerUsd": 111.14,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-06",
+      "monthlyReturn": -0.07375139047017443,
+      "usdNavTotalReturn": 0.002368748424,
+      "previousMonthEndYenPerUsd": 111.14,
+      "monthEndYenPerUsd": 102.7,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-07",
+      "monthlyReturn": 0.04907496657044241,
+      "usdNavTotalReturn": 0.039660321015,
+      "previousMonthEndYenPerUsd": 102.7,
+      "monthEndYenPerUsd": 103.63,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-08",
+      "monthlyReturn": -0.0007831937968726388,
+      "usdNavTotalReturn": 0.002602997936,
+      "previousMonthEndYenPerUsd": 103.63,
+      "monthEndYenPerUsd": 103.28,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-09",
+      "monthlyReturn": -0.021376043285666224,
+      "usdNavTotalReturn": 0.001707455396,
+      "previousMonthEndYenPerUsd": 103.28,
+      "monthEndYenPerUsd": 100.9,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-10",
+      "monthlyReturn": 0.016960059304611752,
+      "usdNavTotalReturn": -0.022004670379000002,
+      "previousMonthEndYenPerUsd": 100.9,
+      "monthEndYenPerUsd": 104.92,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-11",
+      "monthlyReturn": 0.12209616555975722,
+      "usdNavTotalReturn": 0.044356690238,
+      "previousMonthEndYenPerUsd": 104.92,
+      "monthEndYenPerUsd": 112.73,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2016-12",
+      "monthlyReturn": 0.059013966148307784,
+      "usdNavTotalReturn": 0.019406066125,
+      "previousMonthEndYenPerUsd": 112.73,
+      "monthEndYenPerUsd": 117.11,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-01",
+      "monthlyReturn": -0.012057728192108819,
+      "usdNavTotalReturn": 0.019095564621,
+      "previousMonthEndYenPerUsd": 117.11,
+      "monthEndYenPerUsd": 113.53,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-02",
+      "monthlyReturn": 0.026073971714402067,
+      "usdNavTotalReturn": 0.037219998297,
+      "previousMonthEndYenPerUsd": 113.53,
+      "monthEndYenPerUsd": 112.31,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-03",
+      "monthlyReturn": -0.00382570958362205,
+      "usdNavTotalReturn": 0.000718555963,
+      "previousMonthEndYenPerUsd": 112.31,
+      "monthEndYenPerUsd": 111.8,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-04",
+      "monthlyReturn": 0.006022814337031557,
+      "usdNavTotalReturn": 0.010633036597,
+      "previousMonthEndYenPerUsd": 111.8,
+      "monthEndYenPerUsd": 111.29,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-05",
+      "monthlyReturn": 0.007199470755358206,
+      "usdNavTotalReturn": 0.010194927004000001,
+      "previousMonthEndYenPerUsd": 111.29,
+      "monthEndYenPerUsd": 110.96,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-06",
+      "monthlyReturn": 0.01923815728966849,
+      "usdNavTotalReturn": 0.00923314236,
+      "previousMonthEndYenPerUsd": 110.96,
+      "monthEndYenPerUsd": 112.06,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-07",
+      "monthlyReturn": 0.005725411822004478,
+      "usdNavTotalReturn": 0.018725387768,
+      "previousMonthEndYenPerUsd": 112.06,
+      "monthEndYenPerUsd": 110.63,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-08",
+      "monthlyReturn": 0.00031030860930214565,
+      "usdNavTotalReturn": 0.00157778479,
+      "previousMonthEndYenPerUsd": 110.63,
+      "monthEndYenPerUsd": 110.49,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-09",
+      "monthlyReturn": 0.04290625911501622,
+      "usdNavTotalReturn": 0.024637316109,
+      "previousMonthEndYenPerUsd": 110.49,
+      "monthEndYenPerUsd": 112.46,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-10",
+      "monthlyReturn": 0.027339701825609852,
+      "usdNavTotalReturn": 0.021616613912,
+      "previousMonthEndYenPerUsd": 112.46,
+      "monthEndYenPerUsd": 113.09,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-11",
+      "monthlyReturn": 0.02316472261949931,
+      "usdNavTotalReturn": 0.030454167610999998,
+      "previousMonthEndYenPerUsd": 113.09,
+      "monthEndYenPerUsd": 112.29,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2017-12",
+      "monthlyReturn": 0.013290638626033857,
+      "usdNavTotalReturn": 0.010052426199,
+      "previousMonthEndYenPerUsd": 112.29,
+      "monthEndYenPerUsd": 112.65,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-01",
+      "monthlyReturn": 0.016329411846828235,
+      "usdNavTotalReturn": 0.053261345396,
+      "previousMonthEndYenPerUsd": 112.65,
+      "monthEndYenPerUsd": 108.7,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-02",
+      "monthlyReturn": -0.051547687053756786,
+      "usdNavTotalReturn": -0.037198669992,
+      "previousMonthEndYenPerUsd": 108.7,
+      "monthEndYenPerUsd": 107.08,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-03",
+      "monthlyReturn": -0.027824651986451787,
+      "usdNavTotalReturn": -0.019676652554,
+      "previousMonthEndYenPerUsd": 107.08,
+      "monthEndYenPerUsd": 106.19,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-04",
+      "monthlyReturn": 0.034176944726221015,
+      "usdNavTotalReturn": 0.003832264721,
+      "previousMonthEndYenPerUsd": 106.19,
+      "monthEndYenPerUsd": 109.4,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-05",
+      "monthlyReturn": 0.022124745006900648,
+      "usdNavTotalReturn": 0.028044930622000003,
+      "previousMonthEndYenPerUsd": 109.4,
+      "monthEndYenPerUsd": 108.77,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-06",
+      "monthlyReturn": 0.024126787597827493,
+      "usdNavTotalReturn": 0.006817341712,
+      "previousMonthEndYenPerUsd": 108.77,
+      "monthEndYenPerUsd": 110.64,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-07",
+      "monthlyReturn": 0.040577258774904035,
+      "usdNavTotalReturn": 0.033478167961,
+      "previousMonthEndYenPerUsd": 110.64,
+      "monthEndYenPerUsd": 111.4,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-08",
+      "monthlyReturn": 0.029051181381326785,
+      "usdNavTotalReturn": 0.034530291543,
+      "previousMonthEndYenPerUsd": 111.4,
+      "monthEndYenPerUsd": 110.81,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-09",
+      "monthlyReturn": 0.02546805261355911,
+      "usdNavTotalReturn": 0.001693537642,
+      "previousMonthEndYenPerUsd": 110.81,
+      "monthEndYenPerUsd": 113.44,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-10",
+      "monthlyReturn": -0.07587000526691468,
+      "usdNavTotalReturn": -0.073910719059,
+      "previousMonthEndYenPerUsd": 113.44,
+      "monthEndYenPerUsd": 113.2,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-11",
+      "monthlyReturn": 0.023144614966844834,
+      "usdNavTotalReturn": 0.020710059172,
+      "previousMonthEndYenPerUsd": 113.2,
+      "monthEndYenPerUsd": 113.47,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2018-12",
+      "monthlyReturn": -0.1173047786042054,
+      "usdNavTotalReturn": -0.092758815473,
+      "previousMonthEndYenPerUsd": 113.47,
+      "monthEndYenPerUsd": 110.4,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-01",
+      "monthlyReturn": 0.06957104727043695,
+      "usdNavTotalReturn": 0.085998745688,
+      "previousMonthEndYenPerUsd": 110.4,
+      "monthEndYenPerUsd": 108.73,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-02",
+      "monthlyReturn": 0.05440775048458124,
+      "usdNavTotalReturn": 0.035082653577,
+      "previousMonthEndYenPerUsd": 108.73,
+      "monthEndYenPerUsd": 110.76,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-03",
+      "monthlyReturn": 0.014363856664048269,
+      "usdNavTotalReturn": 0.01445544708,
+      "previousMonthEndYenPerUsd": 110.76,
+      "monthEndYenPerUsd": 110.75,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-04",
+      "monthlyReturn": 0.04854360303821159,
+      "usdNavTotalReturn": 0.039811998894,
+      "previousMonthEndYenPerUsd": 110.75,
+      "monthEndYenPerUsd": 111.68,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-05",
+      "monthlyReturn": -0.08864079883345177,
+      "usdNavTotalReturn": -0.064344589205,
+      "previousMonthEndYenPerUsd": 111.68,
+      "monthEndYenPerUsd": 108.78,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-06",
+      "monthlyReturn": 0.05867585280055043,
+      "usdNavTotalReturn": 0.069888138867,
+      "previousMonthEndYenPerUsd": 108.78,
+      "monthEndYenPerUsd": 107.64,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-07",
+      "monthlyReturn": 0.023133432223982897,
+      "usdNavTotalReturn": 0.014462809916999999,
+      "previousMonthEndYenPerUsd": 107.64,
+      "monthEndYenPerUsd": 108.56,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-08",
+      "monthlyReturn": -0.03858194015705352,
+      "usdNavTotalReturn": -0.020169502660999997,
+      "previousMonthEndYenPerUsd": 108.56,
+      "monthEndYenPerUsd": 106.52,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-09",
+      "monthlyReturn": 0.029845856916302704,
+      "usdNavTotalReturn": 0.017051554596,
+      "previousMonthEndYenPerUsd": 106.52,
+      "monthEndYenPerUsd": 107.86,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-10",
+      "monthlyReturn": 0.028227592444864502,
+      "usdNavTotalReturn": 0.021127226969,
+      "previousMonthEndYenPerUsd": 107.86,
+      "monthEndYenPerUsd": 108.61,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-11",
+      "monthlyReturn": 0.046317259707361114,
+      "usdNavTotalReturn": 0.037812945906999997,
+      "previousMonthEndYenPerUsd": 108.61,
+      "monthEndYenPerUsd": 109.5,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2019-12",
+      "monthlyReturn": 0.025317130674304078,
+      "usdNavTotalReturn": 0.028604908922000002,
+      "previousMonthEndYenPerUsd": 109.5,
+      "monthEndYenPerUsd": 109.15,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-01",
+      "monthlyReturn": -0.0016790711587004736,
+      "usdNavTotalReturn": -0.0006719609040000001,
+      "previousMonthEndYenPerUsd": 109.15,
+      "monthEndYenPerUsd": 109.04,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-02",
+      "monthlyReturn": -0.08335197907430414,
+      "usdNavTotalReturn": -0.081667583593,
+      "previousMonthEndYenPerUsd": 109.04,
+      "monthEndYenPerUsd": 108.84,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-03",
+      "monthlyReturn": -0.14129839573365222,
+      "usdNavTotalReturn": -0.137971936835,
+      "previousMonthEndYenPerUsd": 108.84,
+      "monthEndYenPerUsd": 108.42,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-04",
+      "monthlyReturn": 0.1135712066499519,
+      "usdNavTotalReturn": 0.132583397983,
+      "previousMonthEndYenPerUsd": 108.42,
+      "monthEndYenPerUsd": 106.6,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-05",
+      "monthlyReturn": 0.05986971658993445,
+      "usdNavTotalReturn": 0.053839304062,
+      "previousMonthEndYenPerUsd": 106.6,
+      "monthEndYenPerUsd": 107.21,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-06",
+      "monthlyReturn": 0.027870588438079436,
+      "usdNavTotalReturn": 0.022909178375999997,
+      "previousMonthEndYenPerUsd": 107.21,
+      "monthEndYenPerUsd": 107.73,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-07",
+      "monthlyReturn": 0.024259922161112613,
+      "usdNavTotalReturn": 0.056424331397,
+      "previousMonthEndYenPerUsd": 107.73,
+      "monthEndYenPerUsd": 104.45,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-08",
+      "monthlyReturn": 0.08599975838096063,
+      "usdNavTotalReturn": 0.071838559604,
+      "previousMonthEndYenPerUsd": 104.45,
+      "monthEndYenPerUsd": 105.83,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-09",
+      "monthlyReturn": -0.03760874254936797,
+      "usdNavTotalReturn": -0.035695258701,
+      "previousMonthEndYenPerUsd": 105.83,
+      "monthEndYenPerUsd": 105.62,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-10",
+      "monthlyReturn": -0.033096697605285,
+      "usdNavTotalReturn": -0.021422702194999997,
+      "previousMonthEndYenPerUsd": 105.62,
+      "monthEndYenPerUsd": 104.36,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-11",
+      "monthlyReturn": 0.11838596388926992,
+      "usdNavTotalReturn": 0.121933665207,
+      "previousMonthEndYenPerUsd": 104.36,
+      "monthEndYenPerUsd": 104.03,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2020-12",
+      "monthlyReturn": 0.03754883629409278,
+      "usdNavTotalReturn": 0.044577619661999995,
+      "previousMonthEndYenPerUsd": 104.03,
+      "monthEndYenPerUsd": 103.33,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-01",
+      "monthlyReturn": 0.008531367166196624,
+      "usdNavTotalReturn": -0.003237243718,
+      "previousMonthEndYenPerUsd": 103.33,
+      "monthEndYenPerUsd": 104.55,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-02",
+      "monthlyReturn": 0.04711033578947332,
+      "usdNavTotalReturn": 0.031910506238,
+      "previousMonthEndYenPerUsd": 104.55,
+      "monthEndYenPerUsd": 106.09,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-03",
+      "monthlyReturn": 0.08013948170585672,
+      "usdNavTotalReturn": 0.034784157614,
+      "previousMonthEndYenPerUsd": 106.09,
+      "monthEndYenPerUsd": 110.74,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-04",
+      "monthlyReturn": 0.03382823746391961,
+      "usdNavTotalReturn": 0.051392589004999996,
+      "previousMonthEndYenPerUsd": 110.74,
+      "monthEndYenPerUsd": 108.89,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-05",
+      "monthlyReturn": 0.011939559098499197,
+      "usdNavTotalReturn": 0.004284529623,
+      "previousMonthEndYenPerUsd": 108.89,
+      "monthEndYenPerUsd": 109.72,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-06",
+      "monthlyReturn": 0.03325929218027346,
+      "usdNavTotalReturn": 0.025501669271999997,
+      "previousMonthEndYenPerUsd": 109.72,
+      "monthEndYenPerUsd": 110.55,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-07",
+      "monthlyReturn": 0.007710843108951648,
+      "usdNavTotalReturn": 0.017095167586,
+      "previousMonthEndYenPerUsd": 110.55,
+      "monthEndYenPerUsd": 109.53,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-08",
+      "monthlyReturn": 0.031442613675524145,
+      "usdNavTotalReturn": 0.028718898888000003,
+      "previousMonthEndYenPerUsd": 109.53,
+      "monthEndYenPerUsd": 109.82,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-09",
+      "monthlyReturn": -0.02693682447857615,
+      "usdNavTotalReturn": -0.044853432823,
+      "previousMonthEndYenPerUsd": 109.82,
+      "monthEndYenPerUsd": 111.88,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-10",
+      "monthlyReturn": 0.08370020681013779,
+      "usdNavTotalReturn": 0.067198126379,
+      "previousMonthEndYenPerUsd": 111.88,
+      "monthEndYenPerUsd": 113.61,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-11",
+      "monthlyReturn": -0.018455346928648808,
+      "usdNavTotalReturn": -0.014813251741,
+      "previousMonthEndYenPerUsd": 113.61,
+      "monthEndYenPerUsd": 113.19,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2021-12",
+      "monthlyReturn": 0.05584575277466697,
+      "usdNavTotalReturn": 0.038144377663,
+      "previousMonthEndYenPerUsd": 113.19,
+      "monthEndYenPerUsd": 115.12,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-01",
+      "monthlyReturn": -0.05776186719040577,
+      "usdNavTotalReturn": -0.06029235165,
+      "previousMonthEndYenPerUsd": 115.12,
+      "monthEndYenPerUsd": 115.43,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-02",
+      "monthlyReturn": -0.024879427211673688,
+      "usdNavTotalReturn": -0.025470409377,
+      "previousMonthEndYenPerUsd": 115.43,
+      "monthEndYenPerUsd": 115.5,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-03",
+      "monthlyReturn": 0.08730329696046879,
+      "usdNavTotalReturn": 0.032419687594000005,
+      "previousMonthEndYenPerUsd": 115.5,
+      "monthEndYenPerUsd": 121.64,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-04",
+      "monthlyReturn": -0.02313924115010857,
+      "usdNavTotalReturn": -0.090158172232,
+      "previousMonthEndYenPerUsd": 121.64,
+      "monthEndYenPerUsd": 130.6,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-05",
+      "monthlyReturn": -0.02424952988814566,
+      "usdNavTotalReturn": -0.0025593973339999997,
+      "previousMonthEndYenPerUsd": 130.6,
+      "monthEndYenPerUsd": 127.76,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-06",
+      "monthlyReturn": -0.02319582617694449,
+      "usdNavTotalReturn": -0.08372612887200001,
+      "previousMonthEndYenPerUsd": 127.76,
+      "monthEndYenPerUsd": 136.2,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-07",
+      "monthlyReturn": 0.06652982571229882,
+      "usdNavTotalReturn": 0.094000318286,
+      "previousMonthEndYenPerUsd": 136.2,
+      "monthEndYenPerUsd": 132.78,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-08",
+      "monthlyReturn": 0.0048583987904835535,
+      "usdNavTotalReturn": -0.037336953886,
+      "previousMonthEndYenPerUsd": 132.78,
+      "monthEndYenPerUsd": 138.6,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-09",
+      "monthlyReturn": -0.05521130786412687,
+      "usdNavTotalReturn": -0.09265720115000001,
+      "previousMonthEndYenPerUsd": 138.6,
+      "monthEndYenPerUsd": 144.32,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-10",
+      "monthlyReturn": 0.10933587731157113,
+      "usdNavTotalReturn": 0.081679304193,
+      "previousMonthEndYenPerUsd": 144.32,
+      "monthEndYenPerUsd": 148.01,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-11",
+      "monthlyReturn": -0.015083718033352733,
+      "usdNavTotalReturn": 0.052316890882,
+      "previousMonthEndYenPerUsd": 148.01,
+      "monthEndYenPerUsd": 138.53,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2022-12",
+      "monthlyReturn": -0.10207636065276138,
+      "usdNavTotalReturn": -0.058654746793,
+      "previousMonthEndYenPerUsd": 138.53,
+      "monthEndYenPerUsd": 132.14,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-01",
+      "monthlyReturn": 0.052868902164137754,
+      "usdNavTotalReturn": 0.068967320261,
+      "previousMonthEndYenPerUsd": 132.14,
+      "monthEndYenPerUsd": 130.15,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-02",
+      "monthlyReturn": 0.02627054721352806,
+      "usdNavTotalReturn": -0.023332028956999998,
+      "previousMonthEndYenPerUsd": 130.15,
+      "monthEndYenPerUsd": 136.76,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-03",
+      "monthlyReturn": -0.0008513648993966338,
+      "usdNavTotalReturn": 0.026392002827,
+      "previousMonthEndYenPerUsd": 136.76,
+      "monthEndYenPerUsd": 133.13,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-04",
+      "monthlyReturn": 0.03021856273249579,
+      "usdNavTotalReturn": 0.010484029003,
+      "previousMonthEndYenPerUsd": 133.13,
+      "monthEndYenPerUsd": 135.73,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-05",
+      "monthlyReturn": 0.03391060856094441,
+      "usdNavTotalReturn": 0.004169494812,
+      "previousMonthEndYenPerUsd": 135.73,
+      "monthEndYenPerUsd": 139.75,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-06",
+      "monthlyReturn": 0.10749398388444131,
+      "usdNavTotalReturn": 0.068500409029,
+      "previousMonthEndYenPerUsd": 139.75,
+      "monthEndYenPerUsd": 144.85,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-07",
+      "monthlyReturn": 0.016651729958302663,
+      "usdNavTotalReturn": 0.035743445522999996,
+      "previousMonthEndYenPerUsd": 144.85,
+      "monthEndYenPerUsd": 142.18,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-08",
+      "monthlyReturn": 0.00636943083216801,
+      "usdNavTotalReturn": -0.019357099063,
+      "previousMonthEndYenPerUsd": 142.18,
+      "monthEndYenPerUsd": 145.91,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-09",
+      "monthlyReturn": -0.02915490125780318,
+      "usdNavTotalReturn": -0.047818724491,
+      "previousMonthEndYenPerUsd": 145.91,
+      "monthEndYenPerUsd": 148.77,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-10",
+      "monthlyReturn": -0.01627243215500762,
+      "usdNavTotalReturn": -0.026221636381,
+      "previousMonthEndYenPerUsd": 148.77,
+      "monthEndYenPerUsd": 150.29,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-11",
+      "monthlyReturn": 0.07018570961009107,
+      "usdNavTotalReturn": 0.093691080493,
+      "previousMonthEndYenPerUsd": 150.29,
+      "monthEndYenPerUsd": 147.06,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2023-12",
+      "monthlyReturn": 0.01262820695700273,
+      "usdNavTotalReturn": 0.053161981012,
+      "previousMonthEndYenPerUsd": 147.06,
+      "monthEndYenPerUsd": 141.4,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-01",
+      "monthlyReturn": 0.05593572032247218,
+      "usdNavTotalReturn": 0.011169652266,
+      "previousMonthEndYenPerUsd": 141.4,
+      "monthEndYenPerUsd": 147.66,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-02",
+      "monthlyReturn": 0.06844161725483366,
+      "usdNavTotalReturn": 0.054022509379,
+      "previousMonthEndYenPerUsd": 147.66,
+      "monthEndYenPerUsd": 149.68,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-03",
+      "monthlyReturn": 0.04362291038553612,
+      "usdNavTotalReturn": 0.032175744856,
+      "previousMonthEndYenPerUsd": 149.68,
+      "monthEndYenPerUsd": 151.34,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-04",
+      "monthlyReturn": -0.009315931782741593,
+      "usdNavTotalReturn": -0.044178714242000004,
+      "previousMonthEndYenPerUsd": 151.34,
+      "monthEndYenPerUsd": 156.86,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-05",
+      "monthlyReturn": 0.04920275151024267,
+      "usdNavTotalReturn": 0.047266583531,
+      "previousMonthEndYenPerUsd": 156.86,
+      "monthEndYenPerUsd": 157.15,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-06",
+      "monthlyReturn": 0.056197811051794666,
+      "usdNavTotalReturn": 0.031389337021000004,
+      "previousMonthEndYenPerUsd": 157.15,
+      "monthEndYenPerUsd": 160.93,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-07",
+      "monthlyReturn": -0.04505466325574625,
+      "usdNavTotalReturn": 0.018351024069,
+      "previousMonthEndYenPerUsd": 160.93,
+      "monthEndYenPerUsd": 150.91,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-08",
+      "monthlyReturn": -0.018762865408440965,
+      "usdNavTotalReturn": 0.021653760047000002,
+      "previousMonthEndYenPerUsd": 150.91,
+      "monthEndYenPerUsd": 144.94,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-09",
+      "monthlyReturn": 0.0024667610267836704,
+      "usdNavTotalReturn": 0.0204911669,
+      "previousMonthEndYenPerUsd": 144.94,
+      "monthEndYenPerUsd": 142.38,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-10",
+      "monthlyReturn": 0.06127896730129079,
+      "usdNavTotalReturn": -0.0075211864409999996,
+      "previousMonthEndYenPerUsd": 142.38,
+      "monthEndYenPerUsd": 152.25,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-11",
+      "monthlyReturn": 0.05048956769300017,
+      "usdNavTotalReturn": 0.066317999075,
+      "previousMonthEndYenPerUsd": 152.25,
+      "monthEndYenPerUsd": 149.99,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2024-12",
+      "monthlyReturn": 0.020769741616213144,
+      "usdNavTotalReturn": -0.030304303344,
+      "previousMonthEndYenPerUsd": 149.99,
+      "monthEndYenPerUsd": 157.89,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2025-01",
+      "monthlyReturn": 0.009872364747725682,
+      "usdNavTotalReturn": 0.03096306524,
+      "previousMonthEndYenPerUsd": 157.89,
+      "monthEndYenPerUsd": 154.66,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2025-02",
+      "monthlyReturn": -0.045849531180393366,
+      "usdNavTotalReturn": -0.019084608431000002,
+      "previousMonthEndYenPerUsd": 154.66,
+      "monthEndYenPerUsd": 150.44,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2025-03",
+      "monthlyReturn": -0.06697758178140878,
+      "usdNavTotalReturn": -0.058844759308,
+      "previousMonthEndYenPerUsd": 150.44,
+      "monthEndYenPerUsd": 149.14,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2025-04",
+      "monthlyReturn": -0.048855862757270274,
+      "usdNavTotalReturn": -0.00669675353,
+      "previousMonthEndYenPerUsd": 149.14,
+      "monthEndYenPerUsd": 142.81,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2025-05",
+      "monthlyReturn": 0.07254733648802336,
+      "usdNavTotalReturn": 0.063388538766,
+      "previousMonthEndYenPerUsd": 142.81,
+      "monthEndYenPerUsd": 144.04,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    },
+    {
+      "month": "2025-06",
+      "monthlyReturn": 0.05145665036777625,
+      "usdNavTotalReturn": 0.050800082696000004,
+      "previousMonthEndYenPerUsd": 144.04,
+      "monthEndYenPerUsd": 144.13,
+      "sourceBasis": "Vanguard monthly annualizedReturns.1MTH (NAV)"
+    }
+  ]
+}

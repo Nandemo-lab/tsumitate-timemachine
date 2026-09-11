@@ -1,0 +1,1035 @@
+{
+  "schemaVersion": 1,
+  "fundId": "emerging",
+  "formalProductName": "iShares MSCI Emerging Markets ETF",
+  "identifier": "EEM / 239637",
+  "manager": "BlackRock Fund Advisors",
+  "inceptionDate": "2003-04-07",
+  "sourceName": "iShares",
+  "sourceUrl": "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf",
+  "sourceSeriesDefinition": "Growth of Hypothetical $10,000, NAV total return",
+  "currency": "USD",
+  "returnType": "total-return",
+  "priceBasis": "NAV",
+  "dividendTreatment": "dividends and capital gains reinvested",
+  "feeTreatment": "fund expenses deducted",
+  "fxTreatment": "converted with BOJ month-end USD/JPY",
+  "firstMonth": "2015-01",
+  "lastMonth": "2025-06",
+  "rawDataUrl": "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf",
+  "retrievedAt": "2026-09-12",
+  "observationCount": 126,
+  "missingMonths": [],
+  "inceptionTreatment": "product observations only; no pre-inception backfill",
+  "notes": "No interpolation or fallback.",
+  "observations": [
+    {
+      "month": "2015-01",
+      "monthlyReturn": -0.010643823038397171,
+      "usdNavTotalReturn": 0.005300000000000082,
+      "previousMonthEndYenPerUsd": 119.8,
+      "monthEndYenPerUsd": 117.9,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-02",
+      "monthlyReturn": 0.04204216284987261,
+      "usdNavTotalReturn": 0.029899999999999816,
+      "previousMonthEndYenPerUsd": 117.9,
+      "monthEndYenPerUsd": 119.29,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-03",
+      "monthlyReturn": -0.0072018442451169395,
+      "usdNavTotalReturn": -0.014799999999999924,
+      "previousMonthEndYenPerUsd": 119.29,
+      "monthEndYenPerUsd": 120.21,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-04",
+      "monthlyReturn": 0.06475937110057406,
+      "usdNavTotalReturn": 0.07640000000000002,
+      "previousMonthEndYenPerUsd": 120.21,
+      "monthEndYenPerUsd": 118.91,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-05",
+      "monthlyReturn": -0.0020698427382055407,
+      "usdNavTotalReturn": -0.041100000000000136,
+      "previousMonthEndYenPerUsd": 118.91,
+      "monthEndYenPerUsd": 123.75,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-06",
+      "monthlyReturn": -0.03780606060606062,
+      "usdNavTotalReturn": -0.026000000000000023,
+      "previousMonthEndYenPerUsd": 123.75,
+      "monthEndYenPerUsd": 122.25,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-07",
+      "monthlyReturn": -0.05663928016359909,
+      "usdNavTotalReturn": -0.07159999999999989,
+      "previousMonthEndYenPerUsd": 122.25,
+      "monthEndYenPerUsd": 124.22,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-08",
+      "monthlyReturn": -0.11170910481403962,
+      "usdNavTotalReturn": -0.08950000000000002,
+      "previousMonthEndYenPerUsd": 124.22,
+      "monthEndYenPerUsd": 121.19,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-09",
+      "monthlyReturn": -0.03948268008911604,
+      "usdNavTotalReturn": -0.030199999999999894,
+      "previousMonthEndYenPerUsd": 121.19,
+      "monthEndYenPerUsd": 120.03,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-10",
+      "monthlyReturn": 0.07773753228359581,
+      "usdNavTotalReturn": 0.07140000000000013,
+      "previousMonthEndYenPerUsd": 120.03,
+      "monthEndYenPerUsd": 120.74,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-11",
+      "monthlyReturn": -0.02297555077024993,
+      "usdNavTotalReturn": -0.03959999999999986,
+      "previousMonthEndYenPerUsd": 120.74,
+      "monthEndYenPerUsd": 122.83,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2015-12",
+      "monthlyReturn": -0.041581112106162776,
+      "usdNavTotalReturn": -0.022399999999999864,
+      "previousMonthEndYenPerUsd": 122.83,
+      "monthEndYenPerUsd": 120.42,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-01",
+      "monthlyReturn": -0.06397050323866482,
+      "usdNavTotalReturn": -0.06559999999999999,
+      "previousMonthEndYenPerUsd": 120.42,
+      "monthEndYenPerUsd": 120.63,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-02",
+      "monthlyReturn": -0.06520749398988657,
+      "usdNavTotalReturn": -0.002000000000000113,
+      "previousMonthEndYenPerUsd": 120.63,
+      "monthEndYenPerUsd": 112.99,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-03",
+      "monthlyReturn": 0.1261905832374548,
+      "usdNavTotalReturn": 0.13179999999999992,
+      "previousMonthEndYenPerUsd": 112.99,
+      "monthEndYenPerUsd": 112.43,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-04",
+      "monthlyReturn": -0.031023748109935023,
+      "usdNavTotalReturn": 0.0050000000000001155,
+      "previousMonthEndYenPerUsd": 112.43,
+      "monthEndYenPerUsd": 108.4,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-05",
+      "monthlyReturn": -0.013683763837638252,
+      "usdNavTotalReturn": -0.03799999999999992,
+      "previousMonthEndYenPerUsd": 108.4,
+      "monthEndYenPerUsd": 111.14,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-06",
+      "monthlyReturn": -0.03916267770379689,
+      "usdNavTotalReturn": 0.03980000000000006,
+      "previousMonthEndYenPerUsd": 111.14,
+      "monthEndYenPerUsd": 102.7,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-07",
+      "monthlyReturn": 0.0592055598831549,
+      "usdNavTotalReturn": 0.04970000000000008,
+      "previousMonthEndYenPerUsd": 102.7,
+      "monthEndYenPerUsd": 103.63,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-08",
+      "monthlyReturn": 0.020840528804400238,
+      "usdNavTotalReturn": 0.02429999999999999,
+      "previousMonthEndYenPerUsd": 103.63,
+      "monthEndYenPerUsd": 103.28,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-09",
+      "monthlyReturn": -0.01112529047250188,
+      "usdNavTotalReturn": 0.012199999999999989,
+      "previousMonthEndYenPerUsd": 103.28,
+      "monthEndYenPerUsd": 100.9,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-10",
+      "monthlyReturn": 0.041817125867195104,
+      "usdNavTotalReturn": 0.0018999999999997907,
+      "previousMonthEndYenPerUsd": 100.9,
+      "monthEndYenPerUsd": 104.92,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-11",
+      "monthlyReturn": 0.024261427754479703,
+      "usdNavTotalReturn": -0.046699999999999964,
+      "previousMonthEndYenPerUsd": 104.92,
+      "monthEndYenPerUsd": 112.73,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2016-12",
+      "monthlyReturn": 0.040931606493391115,
+      "usdNavTotalReturn": 0.0020000000000000018,
+      "previousMonthEndYenPerUsd": 112.73,
+      "monthEndYenPerUsd": 117.11,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-01",
+      "monthlyReturn": 0.022070523439501555,
+      "usdNavTotalReturn": 0.05430000000000024,
+      "previousMonthEndYenPerUsd": 117.11,
+      "monthEndYenPerUsd": 113.53,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-02",
+      "monthlyReturn": 0.019129410728441876,
+      "usdNavTotalReturn": 0.030200000000000005,
+      "previousMonthEndYenPerUsd": 113.53,
+      "monthEndYenPerUsd": 112.31,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-03",
+      "monthlyReturn": 0.020245926453566154,
+      "usdNavTotalReturn": 0.024900000000000144,
+      "previousMonthEndYenPerUsd": 112.31,
+      "monthEndYenPerUsd": 111.8,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-04",
+      "monthlyReturn": 0.016740661896243347,
+      "usdNavTotalReturn": 0.021400000000000086,
+      "previousMonthEndYenPerUsd": 111.8,
+      "monthEndYenPerUsd": 111.29,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-05",
+      "monthlyReturn": 0.025948782460238906,
+      "usdNavTotalReturn": 0.029000000000000137,
+      "previousMonthEndYenPerUsd": 111.29,
+      "monthEndYenPerUsd": 110.96,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-06",
+      "monthlyReturn": 0.01950766041816876,
+      "usdNavTotalReturn": 0.009500000000000064,
+      "previousMonthEndYenPerUsd": 110.96,
+      "monthEndYenPerUsd": 112.06,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-07",
+      "monthlyReturn": 0.04518990719257543,
+      "usdNavTotalReturn": 0.058700000000000196,
+      "previousMonthEndYenPerUsd": 112.06,
+      "monthEndYenPerUsd": 110.63,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-08",
+      "monthlyReturn": 0.02060680647202373,
+      "usdNavTotalReturn": 0.02190000000000003,
+      "previousMonthEndYenPerUsd": 110.63,
+      "monthEndYenPerUsd": 110.49,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-09",
+      "monthlyReturn": 0.0130458684043806,
+      "usdNavTotalReturn": -0.0046999999999999265,
+      "previousMonthEndYenPerUsd": 110.49,
+      "monthEndYenPerUsd": 112.46,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-10",
+      "monthlyReturn": 0.0398930197403522,
+      "usdNavTotalReturn": 0.03410000000000002,
+      "previousMonthEndYenPerUsd": 112.46,
+      "monthEndYenPerUsd": 113.09,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-11",
+      "monthlyReturn": -0.005783208064373602,
+      "usdNavTotalReturn": 0.0012999999999998568,
+      "previousMonthEndYenPerUsd": 113.09,
+      "monthEndYenPerUsd": 112.29,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2017-12",
+      "monthlyReturn": 0.03922107934811647,
+      "usdNavTotalReturn": 0.03590000000000004,
+      "previousMonthEndYenPerUsd": 112.29,
+      "monthEndYenPerUsd": 112.65,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-01",
+      "monthlyReturn": 0.04463932534398607,
+      "usdNavTotalReturn": 0.08260000000000023,
+      "previousMonthEndYenPerUsd": 112.65,
+      "monthEndYenPerUsd": 108.7,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-02",
+      "monthlyReturn": -0.06090741490340401,
+      "usdNavTotalReturn": -0.046700000000000075,
+      "previousMonthEndYenPerUsd": 108.7,
+      "monthEndYenPerUsd": 107.08,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-03",
+      "monthlyReturn": -0.02814531191632419,
+      "usdNavTotalReturn": -0.020000000000000018,
+      "previousMonthEndYenPerUsd": 107.08,
+      "monthEndYenPerUsd": 106.19,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-04",
+      "monthlyReturn": 0.026107919766456433,
+      "usdNavTotalReturn": -0.004000000000000115,
+      "previousMonthEndYenPerUsd": 106.19,
+      "monthEndYenPerUsd": 109.4,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-05",
+      "monthlyReturn": -0.041451946983546595,
+      "usdNavTotalReturn": -0.03589999999999993,
+      "previousMonthEndYenPerUsd": 109.4,
+      "monthEndYenPerUsd": 108.77,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-06",
+      "monthlyReturn": -0.025428114369770993,
+      "usdNavTotalReturn": -0.04189999999999994,
+      "previousMonthEndYenPerUsd": 108.77,
+      "monthEndYenPerUsd": 110.64,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-07",
+      "monthlyReturn": 0.02881887201735367,
+      "usdNavTotalReturn": 0.02180000000000004,
+      "previousMonthEndYenPerUsd": 110.64,
+      "monthEndYenPerUsd": 111.4,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-08",
+      "monthlyReturn": -0.03284952423698373,
+      "usdNavTotalReturn": -0.027699999999999836,
+      "previousMonthEndYenPerUsd": 111.4,
+      "monthEndYenPerUsd": 110.81,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-09",
+      "monthlyReturn": 0.01830852811118122,
+      "usdNavTotalReturn": -0.005300000000000082,
+      "previousMonthEndYenPerUsd": 110.81,
+      "monthEndYenPerUsd": 113.44,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-10",
+      "monthlyReturn": -0.08893159379407622,
+      "usdNavTotalReturn": -0.08700000000000008,
+      "previousMonthEndYenPerUsd": 113.44,
+      "monthEndYenPerUsd": 113.2,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-11",
+      "monthlyReturn": 0.042981757950530275,
+      "usdNavTotalReturn": 0.0405000000000002,
+      "previousMonthEndYenPerUsd": 113.2,
+      "monthEndYenPerUsd": 113.47,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2018-12",
+      "monthlyReturn": -0.053325107958050455,
+      "usdNavTotalReturn": -0.027000000000000024,
+      "previousMonthEndYenPerUsd": 113.47,
+      "monthEndYenPerUsd": 110.4,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-01",
+      "monthlyReturn": 0.07065564311594219,
+      "usdNavTotalReturn": 0.08710000000000018,
+      "previousMonthEndYenPerUsd": 110.4,
+      "monthEndYenPerUsd": 108.73,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-02",
+      "monthlyReturn": 0.020096238388669363,
+      "usdNavTotalReturn": 0.0014000000000000679,
+      "previousMonthEndYenPerUsd": 108.73,
+      "monthEndYenPerUsd": 110.76,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-03",
+      "monthlyReturn": 0.0076090195016251805,
+      "usdNavTotalReturn": 0.00770000000000004,
+      "previousMonthEndYenPerUsd": 110.76,
+      "monthEndYenPerUsd": 110.75,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-04",
+      "monthlyReturn": 0.029069435665914245,
+      "usdNavTotalReturn": 0.020499999999999963,
+      "previousMonthEndYenPerUsd": 110.75,
+      "monthEndYenPerUsd": 111.68,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-05",
+      "monthlyReturn": -0.09707145415472773,
+      "usdNavTotalReturn": -0.07299999999999995,
+      "previousMonthEndYenPerUsd": 111.68,
+      "monthEndYenPerUsd": 108.78,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-06",
+      "monthlyReturn": 0.051266188637617116,
+      "usdNavTotalReturn": 0.06240000000000001,
+      "previousMonthEndYenPerUsd": 108.78,
+      "monthEndYenPerUsd": 107.64,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-07",
+      "monthlyReturn": -0.004160683760683792,
+      "usdNavTotalReturn": -0.012600000000000056,
+      "previousMonthEndYenPerUsd": 107.64,
+      "monthEndYenPerUsd": 108.56,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-08",
+      "monthlyReturn": -0.0674593957258659,
+      "usdNavTotalReturn": -0.04959999999999998,
+      "previousMonthEndYenPerUsd": 108.56,
+      "monthEndYenPerUsd": 106.52,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-09",
+      "monthlyReturn": 0.031211265490048934,
+      "usdNavTotalReturn": 0.018399999999999972,
+      "previousMonthEndYenPerUsd": 106.52,
+      "monthEndYenPerUsd": 107.86,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-10",
+      "monthlyReturn": 0.04894341739291663,
+      "usdNavTotalReturn": 0.04170000000000007,
+      "previousMonthEndYenPerUsd": 107.86,
+      "monthEndYenPerUsd": 108.61,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-11",
+      "monthlyReturn": 0.00587560998066472,
+      "usdNavTotalReturn": -0.0022999999999999687,
+      "previousMonthEndYenPerUsd": 108.61,
+      "monthEndYenPerUsd": 109.5,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2019-12",
+      "monthlyReturn": 0.07116520547945226,
+      "usdNavTotalReturn": 0.0746,
+      "previousMonthEndYenPerUsd": 109.5,
+      "monthEndYenPerUsd": 109.15,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-01",
+      "monthlyReturn": -0.04826011910215311,
+      "usdNavTotalReturn": -0.04730000000000012,
+      "previousMonthEndYenPerUsd": 109.15,
+      "monthEndYenPerUsd": 109.04,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-02",
+      "monthlyReturn": -0.054736977256052866,
+      "usdNavTotalReturn": -0.05300000000000005,
+      "previousMonthEndYenPerUsd": 109.04,
+      "monthEndYenPerUsd": 108.84,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-03",
+      "monthlyReturn": -0.1574638368246969,
+      "usdNavTotalReturn": -0.1542,
+      "previousMonthEndYenPerUsd": 108.84,
+      "monthEndYenPerUsd": 108.42,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-04",
+      "monthlyReturn": 0.06658992805755393,
+      "usdNavTotalReturn": 0.08479999999999999,
+      "previousMonthEndYenPerUsd": 108.42,
+      "monthEndYenPerUsd": 106.6,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-05",
+      "monthlyReturn": 0.019802439024390495,
+      "usdNavTotalReturn": 0.014000000000000234,
+      "previousMonthEndYenPerUsd": 106.6,
+      "monthEndYenPerUsd": 107.21,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-06",
+      "monthlyReturn": 0.07719951497061839,
+      "usdNavTotalReturn": 0.07199999999999984,
+      "previousMonthEndYenPerUsd": 107.21,
+      "monthEndYenPerUsd": 107.73,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-07",
+      "monthlyReturn": 0.05545595470156872,
+      "usdNavTotalReturn": 0.08860000000000001,
+      "previousMonthEndYenPerUsd": 107.73,
+      "monthEndYenPerUsd": 104.45,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-08",
+      "monthlyReturn": 0.03509744375299184,
+      "usdNavTotalReturn": 0.021600000000000064,
+      "previousMonthEndYenPerUsd": 104.45,
+      "monthEndYenPerUsd": 105.83,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-09",
+      "monthlyReturn": -0.0183517717093451,
+      "usdNavTotalReturn": -0.01639999999999997,
+      "previousMonthEndYenPerUsd": 105.83,
+      "monthEndYenPerUsd": 105.62,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-10",
+      "monthlyReturn": 0.007436621851921954,
+      "usdNavTotalReturn": 0.019600000000000062,
+      "previousMonthEndYenPerUsd": 105.62,
+      "monthEndYenPerUsd": 104.36,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-11",
+      "monthlyReturn": 0.0885469528555003,
+      "usdNavTotalReturn": 0.09200000000000008,
+      "previousMonthEndYenPerUsd": 104.36,
+      "monthEndYenPerUsd": 104.03,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2020-12",
+      "monthlyReturn": 0.06548198596558685,
+      "usdNavTotalReturn": 0.07269999999999999,
+      "previousMonthEndYenPerUsd": 104.03,
+      "monthEndYenPerUsd": 103.33,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-01",
+      "monthlyReturn": 0.04246457950256466,
+      "usdNavTotalReturn": 0.030299999999999994,
+      "previousMonthEndYenPerUsd": 103.33,
+      "monthEndYenPerUsd": 104.55,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-02",
+      "monthlyReturn": 0.02081817312290779,
+      "usdNavTotalReturn": 0.006000000000000005,
+      "previousMonthEndYenPerUsd": 104.55,
+      "monthEndYenPerUsd": 106.09,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-03",
+      "monthlyReturn": 0.02806886605712111,
+      "usdNavTotalReturn": -0.015100000000000002,
+      "previousMonthEndYenPerUsd": 106.09,
+      "monthEndYenPerUsd": 110.74,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-04",
+      "monthlyReturn": 0.0070899223406177825,
+      "usdNavTotalReturn": 0.0242,
+      "previousMonthEndYenPerUsd": 110.74,
+      "monthEndYenPerUsd": 108.89,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-05",
+      "monthlyReturn": 0.019109266231977173,
+      "usdNavTotalReturn": 0.011400000000000077,
+      "previousMonthEndYenPerUsd": 108.89,
+      "monthEndYenPerUsd": 109.72,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-06",
+      "monthlyReturn": 0.02046153846153831,
+      "usdNavTotalReturn": 0.012799999999999923,
+      "previousMonthEndYenPerUsd": 109.72,
+      "monthEndYenPerUsd": 110.55,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-07",
+      "monthlyReturn": -0.0773918046132972,
+      "usdNavTotalReturn": -0.06880000000000008,
+      "previousMonthEndYenPerUsd": 110.55,
+      "monthEndYenPerUsd": 109.53,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-08",
+      "monthlyReturn": 0.024505395781977635,
+      "usdNavTotalReturn": 0.02180000000000004,
+      "previousMonthEndYenPerUsd": 109.53,
+      "monthEndYenPerUsd": 109.82,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-09",
+      "monthlyReturn": -0.022094226916772652,
+      "usdNavTotalReturn": -0.040099999999999913,
+      "previousMonthEndYenPerUsd": 109.82,
+      "monthEndYenPerUsd": 111.88,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-10",
+      "monthlyReturn": 0.024500616732213043,
+      "usdNavTotalReturn": 0.008899999999999908,
+      "previousMonthEndYenPerUsd": 111.88,
+      "monthEndYenPerUsd": 113.61,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-11",
+      "monthlyReturn": -0.04554158964879862,
+      "usdNavTotalReturn": -0.04200000000000004,
+      "previousMonthEndYenPerUsd": 113.61,
+      "monthEndYenPerUsd": 113.19,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2021-12",
+      "monthlyReturn": 0.035764714197367375,
+      "usdNavTotalReturn": 0.018399999999999972,
+      "previousMonthEndYenPerUsd": 113.19,
+      "monthEndYenPerUsd": 115.12,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-01",
+      "monthlyReturn": -0.00021496699096601457,
+      "usdNavTotalReturn": -0.0029000000000000137,
+      "previousMonthEndYenPerUsd": 115.12,
+      "monthEndYenPerUsd": 115.43,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-02",
+      "monthlyReturn": -0.0494238932686476,
+      "usdNavTotalReturn": -0.04999999999999993,
+      "previousMonthEndYenPerUsd": 115.43,
+      "monthEndYenPerUsd": 115.5,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-03",
+      "monthlyReturn": 0.02514611255411281,
+      "usdNavTotalReturn": -0.026599999999999846,
+      "previousMonthEndYenPerUsd": 115.5,
+      "monthEndYenPerUsd": 121.64,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-04",
+      "monthlyReturn": 0.012139263400197109,
+      "usdNavTotalReturn": -0.05730000000000013,
+      "previousMonthEndYenPerUsd": 121.64,
+      "monthEndYenPerUsd": 130.6,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-05",
+      "monthlyReturn": -0.012843675344563543,
+      "usdNavTotalReturn": 0.009099999999999886,
+      "previousMonthEndYenPerUsd": 130.6,
+      "monthEndYenPerUsd": 127.76,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-06",
+      "monthlyReturn": 0.003803381340012235,
+      "usdNavTotalReturn": -0.05840000000000012,
+      "previousMonthEndYenPerUsd": 127.76,
+      "monthEndYenPerUsd": 136.2,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-07",
+      "monthlyReturn": -0.02998458149779737,
+      "usdNavTotalReturn": -0.0050000000000001155,
+      "previousMonthEndYenPerUsd": 136.2,
+      "monthEndYenPerUsd": 132.78,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-08",
+      "monthlyReturn": 0.03882150926344341,
+      "usdNavTotalReturn": -0.0047999999999999154,
+      "previousMonthEndYenPerUsd": 132.78,
+      "monthEndYenPerUsd": 138.6,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-09",
+      "monthlyReturn": -0.07951746031746021,
+      "usdNavTotalReturn": -0.11599999999999999,
+      "previousMonthEndYenPerUsd": 138.6,
+      "monthEndYenPerUsd": 144.32,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-10",
+      "monthlyReturn": -0.001609375000000024,
+      "usdNavTotalReturn": -0.02650000000000008,
+      "previousMonthEndYenPerUsd": 144.32,
+      "monthEndYenPerUsd": 148.01,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-11",
+      "monthlyReturn": 0.0860766975204379,
+      "usdNavTotalReturn": 0.1604000000000001,
+      "previousMonthEndYenPerUsd": 148.01,
+      "monthEndYenPerUsd": 138.53,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2022-12",
+      "monthlyReturn": -0.07207253302533756,
+      "usdNavTotalReturn": -0.027200000000000002,
+      "previousMonthEndYenPerUsd": 138.53,
+      "monthEndYenPerUsd": 132.14,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-01",
+      "monthlyReturn": 0.06905410927803857,
+      "usdNavTotalReturn": 0.08539999999999992,
+      "previousMonthEndYenPerUsd": 132.14,
+      "monthEndYenPerUsd": 130.15,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-02",
+      "monthlyReturn": -0.023608205916250347,
+      "usdNavTotalReturn": -0.07079999999999986,
+      "previousMonthEndYenPerUsd": 130.15,
+      "monthEndYenPerUsd": 136.76,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-03",
+      "monthlyReturn": 0.005094508628253891,
+      "usdNavTotalReturn": 0.03249999999999997,
+      "previousMonthEndYenPerUsd": 136.76,
+      "monthEndYenPerUsd": 133.13,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-04",
+      "monthlyReturn": 0.011271591677307846,
+      "usdNavTotalReturn": -0.008099999999999996,
+      "previousMonthEndYenPerUsd": 133.13,
+      "monthEndYenPerUsd": 135.73,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-05",
+      "monthlyReturn": 0.006966035511677626,
+      "usdNavTotalReturn": -0.02199999999999991,
+      "previousMonthEndYenPerUsd": 135.73,
+      "monthEndYenPerUsd": 139.75,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-06",
+      "monthlyReturn": 0.07878268336314842,
+      "usdNavTotalReturn": 0.04079999999999995,
+      "previousMonthEndYenPerUsd": 139.75,
+      "monthEndYenPerUsd": 144.85,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-07",
+      "monthlyReturn": 0.041639047290300546,
+      "usdNavTotalReturn": 0.06120000000000014,
+      "previousMonthEndYenPerUsd": 144.85,
+      "monthEndYenPerUsd": 142.18,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-08",
+      "monthlyReturn": -0.04129186946124641,
+      "usdNavTotalReturn": -0.06579999999999997,
+      "previousMonthEndYenPerUsd": 142.18,
+      "monthEndYenPerUsd": 145.91,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-09",
+      "monthlyReturn": -0.009049667603317046,
+      "usdNavTotalReturn": -0.028100000000000014,
+      "previousMonthEndYenPerUsd": 145.91,
+      "monthEndYenPerUsd": 148.77,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-10",
+      "monthlyReturn": -0.025746615581098364,
+      "usdNavTotalReturn": -0.035599999999999965,
+      "previousMonthEndYenPerUsd": 148.77,
+      "monthEndYenPerUsd": 150.29,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-11",
+      "monthlyReturn": 0.05267914032869769,
+      "usdNavTotalReturn": 0.07579999999999987,
+      "previousMonthEndYenPerUsd": 150.29,
+      "monthEndYenPerUsd": 147.06,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2023-12",
+      "monthlyReturn": -0.0035847953216373574,
+      "usdNavTotalReturn": 0.0363,
+      "previousMonthEndYenPerUsd": 147.06,
+      "monthEndYenPerUsd": 141.4,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-01",
+      "monthlyReturn": -0.004391485148514951,
+      "usdNavTotalReturn": -0.046600000000000086,
+      "previousMonthEndYenPerUsd": 141.4,
+      "monthEndYenPerUsd": 147.66,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-02",
+      "monthlyReturn": 0.06112030339970209,
+      "usdNavTotalReturn": 0.04679999999999995,
+      "previousMonthEndYenPerUsd": 147.66,
+      "monthEndYenPerUsd": 149.68,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-03",
+      "monthlyReturn": 0.03545760288615707,
+      "usdNavTotalReturn": 0.02410000000000001,
+      "previousMonthEndYenPerUsd": 149.68,
+      "monthEndYenPerUsd": 151.34,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-04",
+      "monthlyReturn": 0.03460851063829806,
+      "usdNavTotalReturn": -0.0018000000000000238,
+      "previousMonthEndYenPerUsd": 151.34,
+      "monthEndYenPerUsd": 156.86,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-05",
+      "monthlyReturn": 0.01757780823664401,
+      "usdNavTotalReturn": 0.015699999999999825,
+      "previousMonthEndYenPerUsd": 156.86,
+      "monthEndYenPerUsd": 157.15,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-06",
+      "monthlyReturn": 0.05579910913140296,
+      "usdNavTotalReturn": 0.030999999999999917,
+      "previousMonthEndYenPerUsd": 157.15,
+      "monthEndYenPerUsd": 160.93,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-07",
+      "monthlyReturn": -0.05569893742621035,
+      "usdNavTotalReturn": 0.006999999999999895,
+      "previousMonthEndYenPerUsd": 160.93,
+      "monthEndYenPerUsd": 150.91,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-08",
+      "monthlyReturn": -0.03005164667682725,
+      "usdNavTotalReturn": 0.00990000000000002,
+      "previousMonthEndYenPerUsd": 150.91,
+      "monthEndYenPerUsd": 144.94,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-09",
+      "monthlyReturn": 0.03862545881054236,
+      "usdNavTotalReturn": 0.05730000000000013,
+      "previousMonthEndYenPerUsd": 144.94,
+      "monthEndYenPerUsd": 142.38,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-10",
+      "monthlyReturn": 0.031039823008849554,
+      "usdNavTotalReturn": -0.035800000000000054,
+      "previousMonthEndYenPerUsd": 142.38,
+      "monthEndYenPerUsd": 152.25,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-11",
+      "monthlyReturn": -0.03917735960591118,
+      "usdNavTotalReturn": -0.024699999999999944,
+      "previousMonthEndYenPerUsd": 152.25,
+      "monthEndYenPerUsd": 149.99,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2024-12",
+      "monthlyReturn": 0.0420382092139473,
+      "usdNavTotalReturn": -0.010099999999999998,
+      "previousMonthEndYenPerUsd": 149.99,
+      "monthEndYenPerUsd": 157.89,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-01",
+      "monthlyReturn": -0.002237785800240588,
+      "usdNavTotalReturn": 0.01859999999999995,
+      "previousMonthEndYenPerUsd": 157.89,
+      "monthEndYenPerUsd": 154.66,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-02",
+      "monthlyReturn": -0.020476658476658582,
+      "usdNavTotalReturn": 0.006999999999999895,
+      "previousMonthEndYenPerUsd": 154.66,
+      "monthEndYenPerUsd": 150.44,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-03",
+      "monthlyReturn": 0.003948936453070928,
+      "usdNavTotalReturn": 0.012699999999999934,
+      "previousMonthEndYenPerUsd": 150.44,
+      "monthEndYenPerUsd": 149.14,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-04",
+      "monthlyReturn": -0.037655558535604206,
+      "usdNavTotalReturn": 0.004999999999999893,
+      "previousMonthEndYenPerUsd": 149.14,
+      "monthEndYenPerUsd": 142.81,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-05",
+      "monthlyReturn": 0.04744443666409892,
+      "usdNavTotalReturn": 0.03849999999999998,
+      "previousMonthEndYenPerUsd": 142.81,
+      "monthEndYenPerUsd": 144.04,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-06",
+      "monthlyReturn": 0.06686618994723714,
+      "usdNavTotalReturn": 0.06620000000000004,
+      "previousMonthEndYenPerUsd": 144.04,
+      "monthEndYenPerUsd": 144.13,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    }
+  ]
+}

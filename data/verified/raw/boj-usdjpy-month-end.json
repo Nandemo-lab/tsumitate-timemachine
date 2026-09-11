@@ -1,0 +1,516 @@
+{
+  "sourceUrl": "https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html",
+  "seriesCode": "FM08'FXERM06",
+  "definition": "Spot Rate at 17:00 JST, End of Month, Tokyo Market",
+  "retrievedAt": "2026-09-12",
+  "observations": [
+    {
+      "month": "2014-12",
+      "yenPerUsd": 119.8
+    },
+    {
+      "month": "2015-01",
+      "yenPerUsd": 117.9
+    },
+    {
+      "month": "2015-02",
+      "yenPerUsd": 119.29
+    },
+    {
+      "month": "2015-03",
+      "yenPerUsd": 120.21
+    },
+    {
+      "month": "2015-04",
+      "yenPerUsd": 118.91
+    },
+    {
+      "month": "2015-05",
+      "yenPerUsd": 123.75
+    },
+    {
+      "month": "2015-06",
+      "yenPerUsd": 122.25
+    },
+    {
+      "month": "2015-07",
+      "yenPerUsd": 124.22
+    },
+    {
+      "month": "2015-08",
+      "yenPerUsd": 121.19
+    },
+    {
+      "month": "2015-09",
+      "yenPerUsd": 120.03
+    },
+    {
+      "month": "2015-10",
+      "yenPerUsd": 120.74
+    },
+    {
+      "month": "2015-11",
+      "yenPerUsd": 122.83
+    },
+    {
+      "month": "2015-12",
+      "yenPerUsd": 120.42
+    },
+    {
+      "month": "2016-01",
+      "yenPerUsd": 120.63
+    },
+    {
+      "month": "2016-02",
+      "yenPerUsd": 112.99
+    },
+    {
+      "month": "2016-03",
+      "yenPerUsd": 112.43
+    },
+    {
+      "month": "2016-04",
+      "yenPerUsd": 108.4
+    },
+    {
+      "month": "2016-05",
+      "yenPerUsd": 111.14
+    },
+    {
+      "month": "2016-06",
+      "yenPerUsd": 102.7
+    },
+    {
+      "month": "2016-07",
+      "yenPerUsd": 103.63
+    },
+    {
+      "month": "2016-08",
+      "yenPerUsd": 103.28
+    },
+    {
+      "month": "2016-09",
+      "yenPerUsd": 100.9
+    },
+    {
+      "month": "2016-10",
+      "yenPerUsd": 104.92
+    },
+    {
+      "month": "2016-11",
+      "yenPerUsd": 112.73
+    },
+    {
+      "month": "2016-12",
+      "yenPerUsd": 117.11
+    },
+    {
+      "month": "2017-01",
+      "yenPerUsd": 113.53
+    },
+    {
+      "month": "2017-02",
+      "yenPerUsd": 112.31
+    },
+    {
+      "month": "2017-03",
+      "yenPerUsd": 111.8
+    },
+    {
+      "month": "2017-04",
+      "yenPerUsd": 111.29
+    },
+    {
+      "month": "2017-05",
+      "yenPerUsd": 110.96
+    },
+    {
+      "month": "2017-06",
+      "yenPerUsd": 112.06
+    },
+    {
+      "month": "2017-07",
+      "yenPerUsd": 110.63
+    },
+    {
+      "month": "2017-08",
+      "yenPerUsd": 110.49
+    },
+    {
+      "month": "2017-09",
+      "yenPerUsd": 112.46
+    },
+    {
+      "month": "2017-10",
+      "yenPerUsd": 113.09
+    },
+    {
+      "month": "2017-11",
+      "yenPerUsd": 112.29
+    },
+    {
+      "month": "2017-12",
+      "yenPerUsd": 112.65
+    },
+    {
+      "month": "2018-01",
+      "yenPerUsd": 108.7
+    },
+    {
+      "month": "2018-02",
+      "yenPerUsd": 107.08
+    },
+    {
+      "month": "2018-03",
+      "yenPerUsd": 106.19
+    },
+    {
+      "month": "2018-04",
+      "yenPerUsd": 109.4
+    },
+    {
+      "month": "2018-05",
+      "yenPerUsd": 108.77
+    },
+    {
+      "month": "2018-06",
+      "yenPerUsd": 110.64
+    },
+    {
+      "month": "2018-07",
+      "yenPerUsd": 111.4
+    },
+    {
+      "month": "2018-08",
+      "yenPerUsd": 110.81
+    },
+    {
+      "month": "2018-09",
+      "yenPerUsd": 113.44
+    },
+    {
+      "month": "2018-10",
+      "yenPerUsd": 113.2
+    },
+    {
+      "month": "2018-11",
+      "yenPerUsd": 113.47
+    },
+    {
+      "month": "2018-12",
+      "yenPerUsd": 110.4
+    },
+    {
+      "month": "2019-01",
+      "yenPerUsd": 108.73
+    },
+    {
+      "month": "2019-02",
+      "yenPerUsd": 110.76
+    },
+    {
+      "month": "2019-03",
+      "yenPerUsd": 110.75
+    },
+    {
+      "month": "2019-04",
+      "yenPerUsd": 111.68
+    },
+    {
+      "month": "2019-05",
+      "yenPerUsd": 108.78
+    },
+    {
+      "month": "2019-06",
+      "yenPerUsd": 107.64
+    },
+    {
+      "month": "2019-07",
+      "yenPerUsd": 108.56
+    },
+    {
+      "month": "2019-08",
+      "yenPerUsd": 106.52
+    },
+    {
+      "month": "2019-09",
+      "yenPerUsd": 107.86
+    },
+    {
+      "month": "2019-10",
+      "yenPerUsd": 108.61
+    },
+    {
+      "month": "2019-11",
+      "yenPerUsd": 109.5
+    },
+    {
+      "month": "2019-12",
+      "yenPerUsd": 109.15
+    },
+    {
+      "month": "2020-01",
+      "yenPerUsd": 109.04
+    },
+    {
+      "month": "2020-02",
+      "yenPerUsd": 108.84
+    },
+    {
+      "month": "2020-03",
+      "yenPerUsd": 108.42
+    },
+    {
+      "month": "2020-04",
+      "yenPerUsd": 106.6
+    },
+    {
+      "month": "2020-05",
+      "yenPerUsd": 107.21
+    },
+    {
+      "month": "2020-06",
+      "yenPerUsd": 107.73
+    },
+    {
+      "month": "2020-07",
+      "yenPerUsd": 104.45
+    },
+    {
+      "month": "2020-08",
+      "yenPerUsd": 105.83
+    },
+    {
+      "month": "2020-09",
+      "yenPerUsd": 105.62
+    },
+    {
+      "month": "2020-10",
+      "yenPerUsd": 104.36
+    },
+    {
+      "month": "2020-11",
+      "yenPerUsd": 104.03
+    },
+    {
+      "month": "2020-12",
+      "yenPerUsd": 103.33
+    },
+    {
+      "month": "2021-01",
+      "yenPerUsd": 104.55
+    },
+    {
+      "month": "2021-02",
+      "yenPerUsd": 106.09
+    },
+    {
+      "month": "2021-03",
+      "yenPerUsd": 110.74
+    },
+    {
+      "month": "2021-04",
+      "yenPerUsd": 108.89
+    },
+    {
+      "month": "2021-05",
+      "yenPerUsd": 109.72
+    },
+    {
+      "month": "2021-06",
+      "yenPerUsd": 110.55
+    },
+    {
+      "month": "2021-07",
+      "yenPerUsd": 109.53
+    },
+    {
+      "month": "2021-08",
+      "yenPerUsd": 109.82
+    },
+    {
+      "month": "2021-09",
+      "yenPerUsd": 111.88
+    },
+    {
+      "month": "2021-10",
+      "yenPerUsd": 113.61
+    },
+    {
+      "month": "2021-11",
+      "yenPerUsd": 113.19
+    },
+    {
+      "month": "2021-12",
+      "yenPerUsd": 115.12
+    },
+    {
+      "month": "2022-01",
+      "yenPerUsd": 115.43
+    },
+    {
+      "month": "2022-02",
+      "yenPerUsd": 115.5
+    },
+    {
+      "month": "2022-03",
+      "yenPerUsd": 121.64
+    },
+    {
+      "month": "2022-04",
+      "yenPerUsd": 130.6
+    },
+    {
+      "month": "2022-05",
+      "yenPerUsd": 127.76
+    },
+    {
+      "month": "2022-06",
+      "yenPerUsd": 136.2
+    },
+    {
+      "month": "2022-07",
+      "yenPerUsd": 132.78
+    },
+    {
+      "month": "2022-08",
+      "yenPerUsd": 138.6
+    },
+    {
+      "month": "2022-09",
+      "yenPerUsd": 144.32
+    },
+    {
+      "month": "2022-10",
+      "yenPerUsd": 148.01
+    },
+    {
+      "month": "2022-11",
+      "yenPerUsd": 138.53
+    },
+    {
+      "month": "2022-12",
+      "yenPerUsd": 132.14
+    },
+    {
+      "month": "2023-01",
+      "yenPerUsd": 130.15
+    },
+    {
+      "month": "2023-02",
+      "yenPerUsd": 136.76
+    },
+    {
+      "month": "2023-03",
+      "yenPerUsd": 133.13
+    },
+    {
+      "month": "2023-04",
+      "yenPerUsd": 135.73
+    },
+    {
+      "month": "2023-05",
+      "yenPerUsd": 139.75
+    },
+    {
+      "month": "2023-06",
+      "yenPerUsd": 144.85
+    },
+    {
+      "month": "2023-07",
+      "yenPerUsd": 142.18
+    },
+    {
+      "month": "2023-08",
+      "yenPerUsd": 145.91
+    },
+    {
+      "month": "2023-09",
+      "yenPerUsd": 148.77
+    },
+    {
+      "month": "2023-10",
+      "yenPerUsd": 150.29
+    },
+    {
+      "month": "2023-11",
+      "yenPerUsd": 147.06
+    },
+    {
+      "month": "2023-12",
+      "yenPerUsd": 141.4
+    },
+    {
+      "month": "2024-01",
+      "yenPerUsd": 147.66
+    },
+    {
+      "month": "2024-02",
+      "yenPerUsd": 149.68
+    },
+    {
+      "month": "2024-03",
+      "yenPerUsd": 151.34
+    },
+    {
+      "month": "2024-04",
+      "yenPerUsd": 156.86
+    },
+    {
+      "month": "2024-05",
+      "yenPerUsd": 157.15
+    },
+    {
+      "month": "2024-06",
+      "yenPerUsd": 160.93
+    },
+    {
+      "month": "2024-07",
+      "yenPerUsd": 150.91
+    },
+    {
+      "month": "2024-08",
+      "yenPerUsd": 144.94
+    },
+    {
+      "month": "2024-09",
+      "yenPerUsd": 142.38
+    },
+    {
+      "month": "2024-10",
+      "yenPerUsd": 152.25
+    },
+    {
+      "month": "2024-11",
+      "yenPerUsd": 149.99
+    },
+    {
+      "month": "2024-12",
+      "yenPerUsd": 157.89
+    },
+    {
+      "month": "2025-01",
+      "yenPerUsd": 154.66
+    },
+    {
+      "month": "2025-02",
+      "yenPerUsd": 150.44
+    },
+    {
+      "month": "2025-03",
+      "yenPerUsd": 149.14
+    },
+    {
+      "month": "2025-04",
+      "yenPerUsd": 142.81
+    },
+    {
+      "month": "2025-05",
+      "yenPerUsd": 144.04
+    },
+    {
+      "month": "2025-06",
+      "yenPerUsd": 144.13
+    }
+  ]
+}
