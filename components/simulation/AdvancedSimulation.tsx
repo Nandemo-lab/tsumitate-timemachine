@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FundId, EventType, InvestmentEvent, AdvancedSimulationResult } from "@/types";
 import { FUNDS, FUND_LIST } from "@/lib/funds";
 import { simulateAdvanced, formatCurrency, START_YEAR_OPTIONS, MONTH_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
-import { Plus, Trash2, ChevronDown, PlayCircle, BarChart3 } from "lucide-react";
+import { Plus, Trash2, PlayCircle, BarChart3 } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 const EVENT_LABELS: Record<EventType, string> = {
@@ -196,6 +196,7 @@ export default function AdvancedSimulation() {
   const [events, setEvents] = useState<InvestmentEvent[]>(DEFAULT_EVENTS);
   const [result, setResult] = useState<AdvancedSimulationResult | null>(null);
   const [showChart, setShowChart] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const addEvent = () => {
     const last = events[events.length - 1];
@@ -213,9 +214,16 @@ export default function AdvancedSimulation() {
   }, []);
 
   const run = () => {
-    const r = simulateAdvanced(events);
-    setResult(r);
-    setShowChart(true);
+    try {
+      const r = simulateAdvanced(events);
+      setResult(r);
+      setShowChart(true);
+      setValidationError(null);
+    } catch (error) {
+      setResult(null);
+      setShowChart(false);
+      setValidationError(error instanceof Error ? error.message : "指定期間のデータを確認できませんでした");
+    }
   };
 
   const chartData = result?.monthlyDataPoints.filter((_, i) => i % 6 === 0) ?? [];
@@ -261,6 +269,11 @@ export default function AdvancedSimulation() {
         <PlayCircle className="h-4 w-4" />
         シミュレーション実行
       </motion.button>
+      {validationError && (
+        <p className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-3 text-xs leading-relaxed text-amber-200">
+          {validationError}
+        </p>
+      )}
 
       {/* Result */}
       <AnimatePresence>

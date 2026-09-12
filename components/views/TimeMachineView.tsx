@@ -3,7 +3,8 @@
 import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
-import { simulate, simulateAll, formatCurrency, START_YEAR_OPTIONS, MONTH_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
+import { simulate, simulateAll, formatCurrency, MONTH_OPTIONS } from "@/lib/simulation";
+import { VERIFIED_FUND_IDS, getAvailableStartMonth, getCommonStartMonth, getStartYearOptions } from "@/lib/return-series";
 import FundSelector from "@/components/simulation/FundSelector";
 import EmotionalMessage from "@/components/simulation/EmotionalMessage";
 import ShareCard from "@/components/simulation/ShareCard";
@@ -46,6 +47,31 @@ export default function TimeMachineView({
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
   const [subMode, setSubMode] = useState<SubMode>("single");
+  const effectiveStart = subMode === "ranking" ? getCommonStartMonth(VERIFIED_FUND_IDS) : getAvailableStartMonth(fund);
+  const availableYears = subMode === "ranking"
+    ? Array.from({ length: 2025 - Number(effectiveStart.slice(0, 4)) + 1 }, (_, i) => Number(effectiveStart.slice(0, 4)) + i)
+    : getStartYearOptions(fund);
+  const minimumMonth = startYear === Number(effectiveStart.slice(0, 4)) ? Number(effectiveStart.slice(5, 7)) : 1;
+
+  const selectMode = (mode: SubMode) => {
+    setSubMode(mode);
+    const minimum = mode === "ranking" ? getCommonStartMonth(VERIFIED_FUND_IDS) : getAvailableStartMonth(fund);
+    if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
+      setStartYear(Number(minimum.slice(0, 4)));
+      setStartMonth(Number(minimum.slice(5, 7)));
+    }
+    setShowResult(false);
+  };
+
+  const selectFund = (id: FundId) => {
+    setFund(id);
+    const minimum = getAvailableStartMonth(id);
+    if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
+      setStartYear(Number(minimum.slice(0, 4)));
+      setStartMonth(Number(minimum.slice(5, 7)));
+    }
+    setShowResult(false);
+  };
 
   const handleScenario = useCallback((s: QuickScenario) => {
     trackCalculate({ mode: "quick_scenario", fund_id: s.fundId, start_year: s.startYear, monthly_amount: s.monthlyAmount });
@@ -107,13 +133,13 @@ export default function TimeMachineView({
       {/* Sub mode */}
       <div className="flex rounded-xl border border-white/10 bg-white/[0.04] p-1 gap-1">
         <button
-          onClick={() => setSubMode("single")}
+          onClick={() => selectMode("single")}
           className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
           <span className="inline-flex items-center gap-1"><Target className="h-3.5 w-3.5" />銘柄ひとつ</span>
         </button>
         <button
-          onClick={() => setSubMode("ranking")}
+          onClick={() => selectMode("ranking")}
           className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "ranking" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
           <Trophy className="h-3.5 w-3.5" />
@@ -132,7 +158,7 @@ export default function TimeMachineView({
             </p>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scroll-touch" style={{ scrollbarWidth: "none" }}>
-            {START_YEAR_OPTIONS.map((y) => (
+            {availableYears.map((y) => (
               <button
                 key={y}
                 onClick={() => { setStartYear(y); setShowResult(false); }}
@@ -149,7 +175,7 @@ export default function TimeMachineView({
           </div>
           {/* Month — small, secondary */}
           <div className="flex gap-2 mt-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            {MONTH_OPTIONS.map((m) => (
+            {MONTH_OPTIONS.filter((m) => m >= minimumMonth).map((m) => (
               <button
                 key={m}
                 onClick={() => { setStartMonth(m); setShowResult(false); }}
@@ -204,7 +230,7 @@ export default function TimeMachineView({
             <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
               <FundSelector
                 value={fund}
-                onChange={(id) => { setFund(id); setShowResult(false); }}
+                onChange={selectFund}
                 label="銘柄"
                 accentColor="#6366f1"
               />
@@ -301,7 +327,7 @@ export default function TimeMachineView({
               {/* 信頼性の根拠（常時表示） */}
               <div className="mt-4 pt-3 border-t border-white/8 flex items-center justify-center gap-1.5 text-[10px] text-zinc-400">
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-                <span>{fund === "vt" ? "VT公式月次NAVリターン＋日銀月末為替・税金等は個別計算なし" : "年次参考リターンを月次換算・手数料・税金は個別計算なし"}</span>
+                <span>{getReturnDataSource(fund).sourceStatus === "verified" ? "公式月次データ・税金等は個別計算なし" : "参考データ・原典未検証"}</span>
               </div>
             </div>
 
@@ -368,7 +394,7 @@ export default function TimeMachineView({
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
               {getReturnDataSource(fund).sourceStatus === "verified"
-                ? "※ VT公式月次NAV Total Returnを日本銀行の月末為替で円換算した計算です。売買手数料・税金・為替スプレッドは含みません。"
+                ? "※ 一次情報から検証した月次データによる計算です。売買手数料・税金・為替スプレッドは個別計算していません。"
                 : "※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。"}
             </p>
           </motion.div>

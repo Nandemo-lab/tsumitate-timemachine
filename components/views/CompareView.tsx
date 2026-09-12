@@ -3,7 +3,8 @@
 import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
-import { simulate, formatCurrency, START_YEAR_OPTIONS, MONTH_OPTIONS } from "@/lib/simulation";
+import { simulate, formatCurrency } from "@/lib/simulation";
+import { getCommonStartMonth, getCommonStartOptions, getReturnSeriesDefinition } from "@/lib/return-series";
 import { FUNDS } from "@/lib/funds";
 import FundSelector from "@/components/simulation/FundSelector";
 import ResultCard from "@/components/simulation/ResultCard";
@@ -29,6 +30,15 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   const [showResult, setShowResult] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
+  const startYearOptions = getCommonStartOptions([fundA, fundB]);
+  const normalizeStartForFunds = (first: FundId, second: FundId) => {
+    const minimum = getCommonStartMonth([first, second]);
+    if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
+      setStartYear(Number(minimum.slice(0, 4)));
+      setStartMonth(Number(minimum.slice(5, 7)));
+    }
+    setShowResult(false);
+  };
 
   const run = useCallback(() => {
     trackCalculate({ mode: "compare", fund_id: `${fundA}_vs_${fundB}`, start_year: startYear, monthly_amount: monthlyAmount });
@@ -52,10 +62,6 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   const loserResult  = resultA && resultB ? (resultA.profit >= resultB.profit ? resultB : resultA) : null;
   const difference   = resultA && resultB ? Math.abs(resultA.profit - resultB.profit) : 0;
 
-  const yearsElapsed = useMemo(() => {
-    return Math.max(1, (2025 + 5 / 12) - (startYear + (startMonth - 1) / 12));
-  }, [startYear, startMonth]);
-
   return (
     <div className="pt-6 pb-28 px-4 space-y-4">
       {/* Header */}
@@ -78,7 +84,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
         <div>
           <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">積立開始年</p>
           <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
-            {START_YEAR_OPTIONS.map((y) => (
+            {startYearOptions.map((y) => (
               <button
                 key={y}
                 onClick={() => { setStartYear(y); setShowResult(false); }}
@@ -124,7 +130,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
       <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
         <FundSelector
           value={fundA}
-          onChange={(id) => { setFundA(id); setShowResult(false); }}
+          onChange={(id) => { setFundA(id); normalizeStartForFunds(id, fundB); }}
           label="1つ目の銘柄"
           accentColor="#6366f1"
         />
@@ -140,7 +146,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
       <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
         <FundSelector
           value={fundB}
-          onChange={(id) => { setFundB(id); setShowResult(false); }}
+          onChange={(id) => { setFundB(id); normalizeStartForFunds(fundA, id); }}
           label="2つ目の銘柄"
           accentColor="#f59e0b"
         />
@@ -194,7 +200,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             {/* 信頼性の根拠（常時表示） */}
             <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 -mt-2">
               <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-              <span>{fundA === "vt" || fundB === "vt" ? "VTは公式月次NAVリターン＋日銀月末為替、他系列は年次参考値・税金等は個別計算なし" : "年次参考リターンを月次換算・手数料・税金は個別計算なし"}</span>
+              <span>{getReturnSeriesDefinition(fundA).quality === "A" && getReturnSeriesDefinition(fundB).quality === "A" ? "両系列とも公式月次データ・共通期間で比較" : "参考データを含む比較（原典未検証）"}</span>
             </div>
 
             {/* なぜ差が出たか */}

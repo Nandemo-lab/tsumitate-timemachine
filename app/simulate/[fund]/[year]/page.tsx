@@ -8,6 +8,7 @@ import SimulatePageClient from "./SimulatePageClient";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { isProgrammaticIndexException } from "@/lib/index-policy";
 import { getReturnDataSource } from "@/lib/return-data-sources";
+import { getAvailableStartMonth, isReturnMonthAvailable } from "@/lib/return-series";
 
 interface Props {
   params: Promise<{ fund: string; year: string }>;
@@ -40,6 +41,15 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const pathname = `/simulate/${fund}/${year}`;
   const keepIndexed = isProgrammaticIndexException(pathname);
   const monthlyAmount = parseInt(amount ?? "30000");
+  if (!isReturnMonthAvailable(fund, startYear, 1)) {
+    const available = getAvailableStartMonth(fund);
+    return {
+      title: `${fundData.shortName}の公式実績は${available.replace("-", "年")}月から`,
+      description: `${fundData.shortName}の検証済み実績を利用できる開始時期をご案内します。商品設定前の架空実績は表示しません。`,
+      robots: { index: false, follow: true },
+      alternates: { canonical: null },
+    };
+  }
   const result = simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount });
   const elapsed = calcElapsedYears(startYear, 1).toFixed(0);
 
@@ -84,6 +94,28 @@ export default async function SimulatePage({ params, searchParams }: Props) {
 
   const monthlyAmount = parseInt(amount ?? "30000");
   const fundData = FUNDS[fund];
+  if (!isReturnMonthAvailable(fund, startYear, 1)) {
+    const available = getAvailableStartMonth(fund);
+    const firstYear = Number(available.slice(0, 4));
+    const firstMonth = Number(available.slice(5, 7));
+    const availableYear = firstMonth === 1 ? firstYear : firstYear + 1;
+    return (
+      <main className="min-h-dvh bg-zinc-950 text-zinc-50">
+        <div className="max-w-2xl mx-auto px-4 py-16">
+          <nav className="text-xs text-zinc-400 mb-8"><Link href="/">トップ</Link> / {fundData.shortName}</nav>
+          <div className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.06] p-6 space-y-4">
+            <h1 className="text-2xl font-bold">この期間は商品実績を計算できません</h1>
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              {fundData.encyclopedia.formalName}の公式実績は{firstYear}年{firstMonth}月からです。商品設定前の指数や別商品で補完した結果は表示していません。
+            </p>
+            <Link href={`/simulate/${fund}/${availableYear}?amount=${monthlyAmount}`} className="inline-flex rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
+              最初の利用可能年から確認する
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
   const result = simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount });
   const elapsed = calcElapsedYears(startYear, 1);
 
@@ -164,7 +196,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
             </p>
             <p>
               {getReturnDataSource(fund).sourceStatus === "verified" ? (
-                <>※ VT公式月次NAV Total Returnを日本銀行の月末為替で円換算した計算です。売買手数料・税金・為替スプレッドは含まず、将来の運用成果を示すものではありません。</>
+                <>※ 一次情報から検証した商品設定後の月次実績を使用しています。売買手数料・税金・為替スプレッドは個別計算せず、将来の運用成果を示すものではありません。</>
               ) : (
                 <>※ このシミュレーションは原典未特定の年次参考系列を月次換算した簡易計算で、実際の商品実績や将来の運用成果を示すものではありません。配当・費用・為替処理は未特定です。</>
               )}{" "}
@@ -176,7 +208,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
           <section className="mt-12">
             <h3 className="text-sm font-bold text-zinc-400 mb-4 tracking-widest uppercase">他の条件でも試す</h3>
             <div className="grid grid-cols-2 gap-3">
-              {[2015, 2018, 2019, 2020, 2021, 2022].filter(y => y !== startYear).slice(0, 4).map((y) => {
+              {[2015, 2018, 2019, 2020, 2021, 2022].filter(y => y !== startYear && isReturnMonthAvailable(fund, y, 1)).slice(0, 4).map((y) => {
                 const r = simulate({ fundId: fund, startYear: y, startMonth: 1, monthlyAmount });
                 return (
                   <Link
@@ -199,7 +231,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
           <section className="mt-8">
             <h3 className="text-sm font-bold text-zinc-400 mb-4 tracking-widest uppercase">同期間で他の銘柄と比べる</h3>
             <div className="grid grid-cols-2 gap-3">
-              {FUND_LIST.filter((f) => f.id !== fund).slice(0, 4).map((f) => {
+              {FUND_LIST.filter((f) => f.id !== fund && isReturnMonthAvailable(f.id, startYear, 1)).slice(0, 4).map((f) => {
                 const r = simulate({ fundId: f.id, startYear, startMonth: 1, monthlyAmount });
                 return (
                   <Link

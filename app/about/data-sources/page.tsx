@@ -11,11 +11,11 @@ const BASE_URL = SITE_URL;
 export const metadata: Metadata = {
   title: "データソース・計算方法",
   description:
-    "積立タイムマシンで使用している年率リターンデータの取得元・計算方法・更新頻度・注意事項を公開しています。",
+    "積立タイムマシンで使用する検証済み月次リターンの取得元・計算方法・利用可能期間を公開しています。",
   alternates: { canonical: `${BASE_URL}/about/data-sources` },
   openGraph: {
     title: `データソース・計算方法 | ${SITE_NAME}`,
-    description: "シミュレーションに使用する年率リターンの出典・計算方法を公開しています。",
+    description: "シミュレーションに使用する月次リターンの出典・計算方法を公開しています。",
     url: `${BASE_URL}/about/data-sources`,
     type: "article",
     siteName: SITE_NAME,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `データソース・計算方法 | ${SITE_NAME}`,
-    description: "シミュレーションに使用する年率リターンの出典・計算方法を公開しています。",
+    description: "シミュレーションに使用する月次リターンの出典・計算方法を公開しています。",
     images: [`${BASE_URL}/api/og?static=1`],
   },
   robots: { index: true, follow: true },
@@ -59,7 +59,7 @@ export default function DataSourcesPage() {
             データソース・計算方法
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed">
-            シミュレーションは10系列のリターンを使用しています。VTは公式月次NAV Total Returnを日本銀行の月末為替で円換算し、値ごとに照合済みです。その他9系列は取得記録が残っていないため、公式実績とは表示せず監査状況も含めて公開します。
+            9系列は一次情報から作成した検証済み月次データを使用します。米国ETFは公式NAV Total Returnを日本銀行の月末為替で円換算し、国内投信は商品設定後の分配金再投資基準価額を使用します。SCHDだけは月次原典の検証が未完了のため参考データとして分離しています。
           </p>
         </header>
 
@@ -75,19 +75,19 @@ export default function DataSourcesPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">基本的な計算ロジック</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                毎月月初に一定額を加えた後、その月のリターンを適用します。VTは公式月次NAV Total Returnを月末為替で円換算し、その他9系列は年次参考値から算出した一定月次率を適用します。
+                毎月月初に一定額を加えた後、前月末から当月末までの月次リターンを適用します。商品設定前や月次値が欠ける期間は計算しません。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">年次リターンデータの取得</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                VTはVanguard公式の月次NAV Total Returnと日本銀行の月末USD/JPYを使用します。その他9系列は原典未特定の参考値です。売買手数料、税金、実際の為替スプレッドは個別計算していません。
+                ETF5系列は運用会社公式の月次NAV Total Returnと日本銀行の月末USD/JPYを使用します。国内投信4系列は運用会社公式の分配金再投資基準価額を使用します。売買手数料、税金、実際の為替スプレッドは個別計算していません。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">収録最終年（2025年）のデータ</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                現在の収録期間は2025年6月までです。VTは各月の公式NAV Total Returnと同月までの為替だけを使用します。その他9系列は原典未特定の年次参考値を一定月次率へ換算しており、実際の月次実績ではありません。
+                現在の収録最終月は2025年6月です。各系列は同月までの値だけを使用し、未来データや年次値へのfallbackは行いません。
               </p>
             </div>
             <div className="space-y-1.5">
@@ -104,9 +104,9 @@ export default function DataSourcesPage() {
             先に確認してほしいこと
           </h2>
           <div className="rounded-xl bg-amber-500/[0.06] border border-amber-500/20 p-5 space-y-2 text-xs text-zinc-400 leading-relaxed">
-            <p>VTの月次126件は、VTリターンと為替の両方を一次情報まで追跡できます。その他9系列の99個の年次値は、原典・通貨・配当・費用・為替処理を値ごとに遡れる記録がありません。</p>
-            <p>そのためVTは「A：公式商品実績」、その他9系列は「G：原典未特定」です。G系列の公式URLは今後照合する候補であり、現行値の直接根拠ではありません。</p>
-            <p>商品設定前の年を含む系列は、商品の基準価額実績ではなく参考系列です。</p>
+            <p>VT・VTI・VYM・EEM・INDA・オルカン・S&amp;P500・NASDAQ100・FANG+は「A：公式月次データ」です。</p>
+            <p>国内投信は商品設定後だけを公式実績として扱います。設定前の指数や別商品による補完は行いません。</p>
+            <p>SCHDは商品定義を米国ETFへ統一していますが、月次原典の検証完了までは「G：参考データ・原典未検証」です。</p>
           </div>
         </section>
 
@@ -129,10 +129,14 @@ export default function DataSourcesPage() {
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-sm font-bold text-zinc-200">{source.displayedProduct}</p>
                   <span className={`rounded px-2 py-0.5 text-[10px] font-bold ${source.sourceStatus === "verified" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"}`}>
-                    {source.sourceStatus === "verified" ? "A：公式商品実績" : "G：原典未特定"}
+                    {source.sourceStatus === "verified" ? "A：公式月次データ" : "G：参考データ・原典未検証"}
                   </span>
                 </div>
                 <div className="grid grid-cols-1 gap-1.5 text-[11px]">
+                  <div className="flex gap-2">
+                    <span className="text-zinc-600 flex-shrink-0 w-20">運用会社</span>
+                    <span className="text-zinc-400">{source.manager}</span>
+                  </div>
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">使用系列</span>
                     <span className="text-zinc-400">{source.storedSeries}</span>
@@ -175,7 +179,7 @@ export default function DataSourcesPage() {
                   </div>
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">収録期間</span>
-                    <span className="text-zinc-400">2015年〜{source.dataThrough}</span>
+                    <span className="text-zinc-400">{source.startMonth}〜{source.endMonth}</span>
                   </div>
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">台帳確認日</span>
@@ -197,6 +201,12 @@ export default function DataSourcesPage() {
                   <ExternalLink className="h-2.5 w-2.5" />
                   {source.sourceName}
                 </a>
+                {source.rawDataUrl && source.rawDataUrl !== source.sourceUrl && (
+                  <a href={source.rawDataUrl} target="_blank" rel="noopener noreferrer" className="ml-3 inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors">
+                    <ExternalLink className="h-2.5 w-2.5" />
+                    元データ
+                  </a>
+                )}
                 {source.fxSourceUrl && (
                   <a href={source.fxSourceUrl} target="_blank" rel="noopener noreferrer" className="ml-3 inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors">
                     <ExternalLink className="h-2.5 w-2.5" />
@@ -269,7 +279,7 @@ export default function DataSourcesPage() {
             <AlertCircle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
             <div className="space-y-2 text-xs text-zinc-400 leading-relaxed">
               <p>本シミュレーションは教育・情報提供を目的としており、投資助言ではありません。</p>
-              <p>VT以外の参考系列は、公式の運用成績と完全に一致しない場合があります。VTも円換算後の実際の購入結果や月次推移を再現するものではありません。</p>
+              <p>A系列は公式商品実績を基にしていますが、実際の約定価格、税金、売買手数料、為替スプレッドは個別計算していません。SCHDは原典未検証の参考データです。</p>
               <p>将来の運用成果を保証・示唆するものではありません。投資判断は必ずご自身でお願いします。</p>
             </div>
           </div>

@@ -68,7 +68,7 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
               </div>
               <p className={`pl-3.5 text-[10px] ${source.sourceStatus === "verified" ? "text-emerald-500/80" : "text-amber-500/80"}`}>
                 {source.sourceStatus === "verified"
-                  ? `${source.storedSeries}（月次・円換算、分配金込み・費用控除後）`
+                  ? `公式月次データ｜${source.storedSeries}（${source.startMonth}〜${source.endMonth}）`
                   : `${source.storedSeries}／原典・通貨・配当処理は未特定`}
               </p>
             </div>
@@ -86,7 +86,7 @@ export default function CalculationDetails({ resultA, resultB }: Props) {
             </p>
             <p className="text-[10px] text-zinc-400 mt-0.5">最終更新：{DATA_UPDATED}</p>
             <p className="text-[10px] text-zinc-400 mt-0.5">
-              ※ 実際の月次価格を再現するものではなく、手数料・税金・為替コストも個別計算していません。将来の成果を保証しません。
+              ※ A系列は検証済み月次実績を使用します。売買手数料・税金・実際の為替コストは個別計算していません。将来の成果を保証しません。
             </p>
           </div>
         </div>

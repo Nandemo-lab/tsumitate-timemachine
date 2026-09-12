@@ -12,10 +12,9 @@ import { FUNDS } from "@/lib/funds";
 import { FUND_SEO_MAP } from "@/lib/fund-seo";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { getReturnSeriesDefinition } from "@/lib/return-series";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
-
-const MEDALS = ["🥇", "🥈", "🥉"];
 
 // /[fundSlug]/monthly/[amount] ページが実際に生成されている銘柄のみ（lib/monthly-pages.ts の FUND_MONTHLY_CONFIG と一致させる）
 const MONTHLY_PAGE_FUND_SLUGS = new Set(["orukan", "sp500", "nasdaq100"]);
@@ -125,18 +124,19 @@ export default function RankingView({ page }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              ランキング
+              編集評価ランキング
             </h2>
             {page.funds.map((entry) => {
               const fund = FUNDS[entry.fundId];
               const enc = fund.encyclopedia;
-              const result = simulate({
+              const verified = getReturnSeriesDefinition(entry.fundId).quality === "A";
+              const result = verified ? simulate({
                 fundId: entry.fundId,
                 startYear: page.simYear,
                 startMonth: page.simMonth,
                 monthlyAmount: page.simAmount,
-              });
-              const isProfit = result.profit >= 0;
+              }) : null;
+              const isProfit = (result?.profit ?? 0) >= 0;
               const fundPageSlug = entry.fundSlug ?? FUND_SLUG_MAP[entry.fundId];
 
               return (
@@ -168,7 +168,7 @@ export default function RankingView({ page }: Props) {
                   </div>
 
                   {/* シミュレーション結果 */}
-                  <div
+                  {result ? <div
                     className="mx-4 mb-3 rounded-xl px-3 py-2.5 space-y-1"
                     style={{ background: `${fund.color}12`, border: `1px solid ${fund.color}25` }}
                   >
@@ -192,7 +192,9 @@ export default function RankingView({ page }: Props) {
                         評価額 {formatCurrency(result.finalValue)}
                       </span>
                     </div>
-                  </div>
+                  </div> : <div className="mx-4 mb-3 rounded-xl border border-amber-500/20 bg-amber-500/[0.06] px-3 py-2.5 text-[10px] text-amber-300">
+                    G：参考データ・原典未検証のため、実績値による順位比較には使用していません。
+                  </div>}
 
                   {/* メリット・注意点 */}
                   <div className="px-4 pb-3 space-y-2">

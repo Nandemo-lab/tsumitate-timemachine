@@ -46,13 +46,13 @@ export const QUICK_SCENARIOS: QuickScenario[] = [
   },
   {
     id: "orcan-10yr",
-    label: "10年前にオルカンを",
+    label: "設定直後にオルカンを",
     emoji: "🌍",
     fundId: "orcan",
-    startYear: 2015, startMonth: 1,
+    startYear: 2018, startMonth: 11,
     monthlyAmount: 30000,
-    description: "2015年1月・オルカン・月3万円",
-    tag: "10年積立",
+    description: "2018年11月・オルカン・月3万円",
+    tag: "公式実績",
   },
   {
     id: "fang-2019",
