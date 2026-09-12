@@ -7,6 +7,9 @@ export type FundId =
 
 export type FundCategory = "global" | "us" | "dividend" | "hightech" | "emerging";
 
+export type ReturnSeriesQuality = "A" | "G";
+export type ReturnCalculationMode = "verified-monthly-jpy" | "legacy-annual-reference";
+
 export interface FundCategoryMeta {
   id: FundCategory;
   label: string;

@@ -1,6 +1,7 @@
 import { FundId } from "@/types";
+import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 
-export type ReturnSeriesClassification = "A" | "B" | "C" | "D" | "E" | "F" | "G";
+export type ReturnSeriesClassification = "A" | "G";
 
 export interface ReturnDataSource {
   classification: ReturnSeriesClassification;
@@ -9,146 +10,66 @@ export interface ReturnDataSource {
   identifier: string;
   sourceName: string;
   sourceUrl: string;
-  sourceStatus: "verified" | "reference-candidate" | "unknown";
+  rawDataUrl?: string;
+  fxSourceName?: string;
+  fxSourceUrl?: string;
+  sourceStatus: "verified" | "reference-candidate";
   currency: string;
   returnType: string;
+  priceBasis: string;
   dividendTreatment: string;
   feeTreatment: string;
   fxTreatment: string;
   dataThrough: string;
   retrievedAt: string;
   notes: string;
-  fxSourceName?: string;
-  fxSourceUrl?: string;
-  granularity?: string;
-  calculationMethod?: string;
-  investmentTiming?: string;
-  missingValueTreatment?: string;
+  granularity: string;
+  calculationMethod: string;
+  investmentTiming: string;
+  missingValueTreatment: string;
+  manager: string;
+  inceptionDate: string;
+  startMonth: string;
+  endMonth: string;
 }
 
-const COMMON_UNKNOWN = {
-  classification: "G" as const,
-  sourceStatus: "reference-candidate" as const,
-  currency: "未特定",
-  returnType: "未特定（Price Return / Total Return の監査証跡なし）",
-  dividendTreatment: "未特定",
-  feeTreatment: "未特定",
-  fxTreatment: "未特定",
-  dataThrough: "2025-06（2025年値は通年値ではない）",
-  retrievedAt: "2026-08-21",
-};
-
-/**
- * annualReturns の出典台帳。
- * sourceUrl は現行値との照合に使用する公式候補であり、sourceStatus が verified になるまで
- * 現行の各年値の直接根拠とは扱わない。値を推測で差し替えないこと。
- */
-export const RETURN_DATA_SOURCES: Record<FundId, ReturnDataSource> = {
-  orcan: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "eMAXIS Slim 全世界株式（オール・カントリー）",
-    storedSeries: "全世界株式の年次参考系列（商品設定前を含む）",
-    identifier: "0331418A / コード上のticker: vt.us",
-    sourceName: "三菱UFJアセットマネジメント 商品ページ（照合候補）",
-    sourceUrl: "https://emaxis.am.mufg.jp/fund/253425.html",
-    notes: "商品は2018年設定。2015〜2017年を含むため商品基準価額実績ではない。VTと同じtickerだが値も一致せず、現行系列の原典は未特定。",
-  },
-  vt: {
-    classification: "A",
-    sourceStatus: "verified",
-    currency: "JPY（USD公式月次リターンを円換算）",
-    returnType: "ETF公式 月次Total return by NAV（税引前）",
-    dividendTreatment: "Income returnを含む（分配金を含むTotal Return）",
-    feeTreatment: "ファンド費用控除後",
-    fxTreatment: "日本銀行の前月末・当月末USD/JPYで月次円換算",
-    dataThrough: "2025年6月（月次）",
-    retrievedAt: "2026-08-21",
-    displayedProduct: "Vanguard Total World Stock ETF（VT）",
-    storedSeries: "VT公式NAV Total Return",
-    identifier: "NYSE Arca: VT / CUSIP 922042742",
-    sourceName: "Vanguard VT product page（月次Total return by NAV）",
-    sourceUrl: "https://advisors.vanguard.com/investments/products/vt/vanguard-total-world-stock-etf",
-    fxSourceName: "日本銀行 外国為替市況 FM08'FXERM06",
-    fxSourceUrl: "https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html",
-    granularity: "2015年1月〜2025年6月の月次126件",
-    calculationMethod: "(1＋USD月次NAV Total Return) × (当月末USD/JPY÷前月末USD/JPY) − 1",
-    investmentTiming: "毎月月初に円で積立後、その月の円換算リターンを適用",
-    missingValueTreatment: "欠損なし。欠損時は推測補完せず計算を停止する設計",
-    notes: "VTは2008年設定のため全収録月が設定後でproxyなし。Vanguard画面の月次値は0.01%単位の表示値。売買手数料・税金・実際の為替スプレッドは含まない。",
-  },
-  sp500: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "eMAXIS Slim 米国株式（S&P500）",
-    storedSeries: "S&P 500の年次参考系列（商品設定前を含む）",
-    identifier: "03311187 / コード上のticker: ^spx",
-    sourceName: "S&P Dow Jones Indices S&P 500（照合候補）",
-    sourceUrl: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
-    notes: "商品は2018年設定。tickerは指数を示すが、Price/Total Return、USD/JPYの記録がなく商品実績ではない。",
-  },
-  vti: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "Vanguard Total Stock Market ETF（VTI）",
-    storedSeries: "VTIの年次参考系列",
-    identifier: "NYSE Arca: VTI / vti.us",
-    sourceName: "Vanguard VTI product page（照合候補）",
-    sourceUrl: "https://investor.vanguard.com/investment-products/etfs/profile/vti",
-    notes: "市場価格・NAV・分配金再投資のどの系列かを示す記録がなく、公式値との年別照合未完了。",
-  },
-  vym: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "Vanguard High Dividend Yield ETF（VYM）",
-    storedSeries: "VYMの年次参考系列",
-    identifier: "NYSE Arca: VYM / vym.us",
-    sourceName: "Vanguard VYM product page（照合候補）",
-    sourceUrl: "https://investor.vanguard.com/investment-products/etfs/profile/vym",
-    notes: "市場価格・NAV・分配金再投資のどの系列かを示す記録がなく、公式値との年別照合未完了。",
-  },
-  schd: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "楽天・高配当株式・米国ファンド（楽天SCHD）",
-    storedSeries: "米国ETF SCHDの年次参考系列（国内投信設定前を含む）",
-    identifier: "NYSE Arca: SCHD / schd.us",
-    sourceName: "Schwab SCHD product page（照合候補）",
-    sourceUrl: "https://www.schwabassetmanagement.com/products/schd",
-    notes: "国内投信は2024年設定。全期間を国内投信の基準価額実績として扱えず、ETFの市場価格/NAV/配当処理も未特定。",
-  },
-  nasdaq100: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "iFreeNEXT NASDAQ100インデックス",
-    storedSeries: "NASDAQ-100の年次参考系列（商品設定前を含む）",
-    identifier: "04317188 / コード上のticker: ^ndx",
-    sourceName: "Nasdaq-100 Index page（照合候補）",
-    sourceUrl: "https://www.nasdaq.com/products/global-indexes/nasdaq-100",
-    notes: "商品は2018年設定。指数のPrice/Total Return、USD/JPYの記録がなく、商品基準価額実績ではない。",
-  },
-  fangplus: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "iFreeNEXT FANG+インデックス",
-    storedSeries: "NYSE FANG+の年次参考系列（商品設定前を含む）",
-    identifier: "04311181 / コード上のticker: ^nyfang",
-    sourceName: "ICE NYSE FANG+ Index page（照合候補）",
-    sourceUrl: "https://www.ice.com/equity-derivatives/fangplus",
-    notes: "商品は2018年設定。指数のPrice/Total Return、USD/JPYの記録がなく、商品基準価額実績ではない。",
-  },
-  india: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "iShares MSCI India ETF（INDA）",
-    storedSeries: "INDAの年次参考系列",
-    identifier: "Cboe BZX: INDA / inda.us",
-    sourceName: "iShares INDA product page（照合候補）",
-    sourceUrl: "https://www.ishares.com/us/products/239659/ishares-msci-india-etf",
-    notes: "市場価格・NAV・分配金再投資のどの系列かを示す記録がなく、公式値との年別照合未完了。",
-  },
-  emerging: {
-    ...COMMON_UNKNOWN,
-    displayedProduct: "iShares MSCI Emerging Markets ETF（EEM）",
-    storedSeries: "EEMの年次参考系列",
-    identifier: "NYSE Arca: EEM / eem.us",
-    sourceName: "iShares EEM product page（照合候補）",
-    sourceUrl: "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf",
-    notes: "市場価格・NAV・分配金再投資のどの系列かを示す記録がなく、公式値との年別照合未完了。",
-  },
-};
+export const RETURN_DATA_SOURCES = Object.fromEntries(
+  (Object.keys(RETURN_SERIES_REGISTRY) as FundId[]).map((fundId) => {
+    const definition = RETURN_SERIES_REGISTRY[fundId];
+    const verified = definition.quality === "A";
+    return [fundId, {
+      classification: definition.quality,
+      displayedProduct: definition.formalProductName,
+      storedSeries: definition.seriesName,
+      identifier: definition.identifier,
+      sourceName: definition.sourceName,
+      sourceUrl: definition.sourceUrl,
+      rawDataUrl: definition.rawDataUrl,
+      fxSourceName: definition.fxTreatment.includes("日本銀行") || definition.currency.startsWith("JPY（USD") ? "日本銀行 USD/JPY" : undefined,
+      fxSourceUrl: definition.fxTreatment.includes("日本銀行") || definition.currency.startsWith("JPY（USD") ? "https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html" : undefined,
+      sourceStatus: verified ? "verified" : "reference-candidate",
+      currency: definition.currency,
+      returnType: definition.returnType,
+      priceBasis: definition.priceBasis,
+      dividendTreatment: definition.dividendTreatment,
+      feeTreatment: definition.feeTreatment,
+      fxTreatment: definition.fxTreatment,
+      dataThrough: definition.endMonth,
+      retrievedAt: definition.retrievedAt,
+      notes: verified
+        ? `${definition.inceptionTreatment}。${definition.missingValueTreatment}。`
+        : "米国ETF SCHDの商品定義のみ確認済み。月次リターンの原典検証完了までは参考系列として扱います。楽天SCHDとは別商品です。",
+      granularity: `${definition.startMonth}〜${definition.endMonth}の月次データ`,
+      calculationMethod: verified ? "検証済み月次リターンを月ごとに適用" : "年次参考値を一定月次率へ換算",
+      investmentTiming: definition.investmentTiming,
+      missingValueTreatment: definition.missingValueTreatment,
+      manager: definition.manager,
+      inceptionDate: definition.inceptionDate,
+      startMonth: definition.startMonth,
+      endMonth: definition.endMonth,
+    } satisfies ReturnDataSource];
+  }),
+) as Record<FundId, ReturnDataSource>;
 
 export function getReturnDataSource(fundId: FundId): ReturnDataSource {
   return RETURN_DATA_SOURCES[fundId];

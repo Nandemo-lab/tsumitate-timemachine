@@ -1,3 +1,13 @@
+import { VT_MONTHLY_JPY_TOTAL_RETURNS } from "@/lib/verified-monthly-return-series";
+import vti from "@/data/verified/vti-monthly.json";
+import vym from "@/data/verified/vym-monthly.json";
+import eem from "@/data/verified/eem-monthly.json";
+import inda from "@/data/verified/inda-monthly.json";
+import orcan from "@/data/verified/orcan-monthly.json";
+import sp500 from "@/data/verified/sp500-monthly.json";
+import nasdaq100 from "@/data/verified/nasdaq100-monthly.json";
+import fangplus from "@/data/verified/fangplus-monthly.json";
+
 export interface VerifiedAnnualReturnPoint {
   value: number;
   fundId: "vt";
@@ -64,3 +74,29 @@ export const VT_VERIFIED_ANNUAL_RETURNS: Record<number, VerifiedAnnualReturnPoin
 export const VT_ANNUAL_RETURNS: Record<number, number> = Object.fromEntries(
   Object.entries(VT_VERIFIED_ANNUAL_RETURNS).map(([year, point]) => [Number(year), point.value]),
 );
+
+type MonthlyPoint = { month: string; monthlyReturn: number };
+
+function calendarReturns(points: MonthlyPoint[]): Record<number, number> {
+  const byYear = new Map<number, number[]>();
+  for (const point of points) {
+    const year = Number(point.month.slice(0, 4));
+    byYear.set(year, [...(byYear.get(year) ?? []), point.monthlyReturn]);
+  }
+  return Object.fromEntries([...byYear].map(([year, returns]) => [
+    year,
+    returns.reduce((growth, monthlyReturn) => growth * (1 + monthlyReturn), 1) - 1,
+  ]));
+}
+
+export const VERIFIED_ANNUAL_JPY_RETURNS = {
+  vt: calendarReturns(Object.values(VT_MONTHLY_JPY_TOTAL_RETURNS).map((point) => ({ month: point.month, monthlyReturn: point.jpyTotalReturn }))),
+  vti: calendarReturns(vti.observations),
+  vym: calendarReturns(vym.observations),
+  emerging: calendarReturns(eem.observations),
+  india: calendarReturns(inda.observations),
+  orcan: calendarReturns(orcan.observations),
+  sp500: calendarReturns(sp500.observations),
+  nasdaq100: calendarReturns(nasdaq100.observations),
+  fangplus: calendarReturns(fangplus.observations),
+} as const;

@@ -1,5 +1,5 @@
 import { Fund, FundId, FundCategory, FundCategoryMeta } from "@/types";
-import { VT_ANNUAL_RETURNS } from "@/lib/verified-return-series";
+import { VERIFIED_ANNUAL_JPY_RETURNS } from "@/lib/verified-return-series";
 
 export const FUND_CATEGORIES: Record<FundCategory, FundCategoryMeta> = {
   global:   { id: "global",   label: "全世界",   emoji: "🌍", description: "世界中の株式に分散投資" },
@@ -18,11 +18,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#6366f1", riskLevel: 3,
     description: "世界中の企業へまとめて投資できる",
     shareCount: "約3,000銘柄",
-    annualReturns: {
-      2015: 0.014, 2016: 0.075, 2017: 0.241, 2018: -0.093,
-      2019: 0.271, 2020: 0.163, 2021: 0.305, 2022: -0.180,
-      2023: 0.234, 2024: 0.191, 2025: 0.082,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.orcan,
     encyclopedia: {
       nickname: "オルカン",
       formalName: "eMAXIS Slim 全世界株式（オール・カントリー）",
@@ -45,7 +41,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#818cf8", riskLevel: 3,
     description: "世界中へETFで分散投資できる",
     shareCount: "約10,000銘柄",
-    annualReturns: VT_ANNUAL_RETURNS,
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.vt,
     encyclopedia: {
       nickname: "VT",
       formalName: "Vanguard Total World Stock ETF（VT）",
@@ -70,11 +66,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#f59e0b", riskLevel: 3,
     description: "アメリカの代表企業500社に投資できる",
     shareCount: "500銘柄",
-    annualReturns: {
-      2015: 0.016, 2016: 0.121, 2017: 0.218, 2018: -0.045,
-      2019: 0.316, 2020: 0.186, 2021: 0.289, 2022: -0.184,
-      2023: 0.267, 2024: 0.234, 2025: 0.092,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.sp500,
     encyclopedia: {
       nickname: "S&P500",
       formalName: "eMAXIS Slim 米国株式（S&P500）",
@@ -97,11 +89,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#3b82f6", riskLevel: 3,
     description: "アメリカ株式市場全体に幅広く投資できる",
     shareCount: "約3,500銘柄",
-    annualReturns: {
-      2015: 0.008, 2016: 0.128, 2017: 0.215, 2018: -0.053,
-      2019: 0.311, 2020: 0.213, 2021: 0.258, 2022: -0.194,
-      2023: 0.263, 2024: 0.221, 2025: 0.087,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.vti,
     encyclopedia: {
       nickname: "VTI",
       formalName: "Vanguard Total Stock Market ETF（VTI）",
@@ -126,11 +114,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#10b981", riskLevel: 2,
     description: "アメリカの配当が多い企業に投資できる",
     shareCount: "約600銘柄",
-    annualReturns: {
-      2015: -0.001, 2016: 0.175, 2017: 0.196, 2018: -0.085,
-      2019: 0.267, 2020: 0.024, 2021: 0.281, 2022: -0.001,
-      2023: 0.107, 2024: 0.159, 2025: 0.072,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.vym,
     encyclopedia: {
       nickname: "VYM",
       formalName: "Vanguard High Dividend Yield ETF（VYM）",
@@ -148,7 +132,7 @@ export const FUNDS: Record<FundId, Fund> = {
   },
   schd: {
     id: "schd", category: "dividend",
-    name: "楽天・高配当株式・米国ファンド（SCHD）",
+    name: "Schwab U.S. Dividend Equity ETF",
     shortName: "SCHD", ticker: "schd.us",
     color: "#059669", riskLevel: 2,
     description: "配当を増やし続ける優良企業に投資できる",
@@ -159,14 +143,14 @@ export const FUNDS: Record<FundId, Fund> = {
       2023: 0.068, 2024: 0.141, 2025: 0.065,
     },
     encyclopedia: {
-      nickname: "SCHD（楽天SCHD）",
-      formalName: "楽天・高配当株式・米国ファンド（愛称：楽天SCHD）",
+      nickname: "SCHD",
+      formalName: "Schwab U.S. Dividend Equity ETF（SCHD）",
       catchCopy: "増配株に絞った、質の高い配当成長投資",
       forWhom: "VYMより質の高い配当株に投資したい人・配当成長を重視する人",
       features: ["💰 配当成長", "📈 高品質銘柄", "🛡️ 財務優良銘柄"],
-      pros: ["増配実績を持つ財務優良企業に絞込", "VYMより高い配当成長率", "投資信託形式で少額から積立可能"],
-      cons: ["高配当株全般より銘柄数が少なく集中リスクあり", "配当重視のため成長株より値上がり益は小さい"],
-      managementFee: "0.1238%（年率）",
+      pros: ["配当実績や財務指標等のルールで銘柄を選定", "約100銘柄へ分散", "Dow Jones U.S. Dividend 100 Indexへの連動を目指す"],
+      cons: ["米国上場ETFのため売買・為替の確認が必要", "配当重視のため成長株より値上がり益が小さい局面もある"],
+      managementFee: "0.060%（年率）",
       beginnerScore: 3,
       volatility: "低",
       expectedHorizon: "10年以上",
@@ -182,11 +166,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#8b5cf6", riskLevel: 4,
     description: "アメリカの主要テック企業100社に投資できる",
     shareCount: "約100銘柄",
-    annualReturns: {
-      2015: 0.097, 2016: 0.074, 2017: 0.331, 2018: -0.012,
-      2019: 0.397, 2020: 0.488, 2021: 0.271, 2022: -0.330,
-      2023: 0.538, 2024: 0.250, 2025: 0.072,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.nasdaq100,
     encyclopedia: {
       nickname: "NASDAQ100（ナスダック）",
       formalName: "iFreeNEXT NASDAQ100 インデックス",
@@ -209,11 +189,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#ef4444", riskLevel: 5,
     description: "世界を牽引する大型テクノロジー企業へ集中投資できる",
     shareCount: "10銘柄",
-    annualReturns: {
-      2015: 0.122, 2016: 0.056, 2017: 0.416, 2018: 0.064,
-      2019: 0.414, 2020: 0.628, 2021: 0.344, 2022: -0.443,
-      2023: 0.718, 2024: 0.325, 2025: 0.063,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.fangplus,
     encyclopedia: {
       nickname: "FANG+（ファング・プラス）",
       formalName: "iFreeNEXT FANG+インデックス",
@@ -238,11 +214,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#f97316", riskLevel: 5,
     description: "急成長中のインド企業に投資できる",
     shareCount: "約165銘柄",
-    annualReturns: {
-      2015: -0.062, 2016: -0.015, 2017: 0.381, 2018: -0.083,
-      2019: 0.126, 2020: 0.143, 2021: 0.418, 2022: 0.012,
-      2023: 0.192, 2024: -0.043, 2025: 0.081,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.india,
     encyclopedia: {
       nickname: "インド株",
       formalName: "iShares MSCI インド ETF（INDA）",
@@ -265,11 +237,7 @@ export const FUNDS: Record<FundId, Fund> = {
     color: "#ec4899", riskLevel: 4,
     description: "中国・台湾など新興国全体に分散投資できる",
     shareCount: "約1,200銘柄",
-    annualReturns: {
-      2015: -0.147, 2016: 0.113, 2017: 0.373, 2018: -0.146,
-      2019: 0.184, 2020: 0.182, 2021: -0.048, 2022: -0.201,
-      2023: 0.098, 2024: 0.057, 2025: 0.091,
-    },
+    annualReturns: VERIFIED_ANNUAL_JPY_RETURNS.emerging,
     encyclopedia: {
       nickname: "新興国株（EEM）",
       formalName: "iShares MSCI 新興国株式 ETF（EEM）",

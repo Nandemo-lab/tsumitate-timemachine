@@ -3,22 +3,12 @@ import {
   RankingItem, FundId, InvestmentEvent, AdvancedSimulationResult, AdvancedDataPoint
 } from "@/types";
 import { FUNDS, FUND_LIST } from "./funds";
-import { getVerifiedVtMonthlyJpyReturn } from "./verified-monthly-return-series";
+import { VERIFIED_FUND_IDS, getCommonStartMonth, getMonthlyJpyReturn } from "./return-series";
 
 export const CURRENT_YEAR = 2025;
 export const CURRENT_MONTH = 6;
-export const DATA_SOURCE = "公開情報から整理した年次参考リターンを月次換算した簡易モデル";
-export const DATA_UPDATED = "2025年6月";
-
-function getMonthlyReturn(fundId: FundId, annualReturns: Record<number, number>, year: number, month: number): number {
-  if (fundId === "vt") {
-    const verifiedMonthlyReturn = getVerifiedVtMonthlyJpyReturn(year, month);
-    if (verifiedMonthlyReturn !== undefined) return verifiedMonthlyReturn;
-    throw new Error(`Verified VT monthly return is missing for ${year}-${String(month).padStart(2, "0")}`);
-  }
-  const annual = annualReturns[year] ?? annualReturns[CURRENT_YEAR] ?? 0.10;
-  return Math.pow(1 + annual, 1 / 12) - 1;
-}
+export const DATA_SOURCE = "一次情報から検証した月次円建てリターン（A系列）と、原典未検証の年次参考モデル（G系列）";
+export const DATA_UPDATED = "2026年9月（収録最終月：2025年6月）";
 
 // ── 通常シミュレーション ─────────────────────────────────────────────
 
@@ -36,7 +26,7 @@ export function simulate(params: SimulationParams): SimulationResult {
   while (year < CURRENT_YEAR || (year === CURRENT_YEAR && month <= CURRENT_MONTH)) {
     totalPrincipal += monthlyAmount;
     currentValue += monthlyAmount;
-    currentValue *= 1 + getMonthlyReturn(fundId, fund.annualReturns, year, month);
+    currentValue *= 1 + getMonthlyJpyReturn(fundId, year, month);
 
     dataPoints.push({
       date: `${year}/${String(month).padStart(2, "0")}`,
@@ -147,7 +137,7 @@ export function simulateAdvanced(events: InvestmentEvent[]): AdvancedSimulationR
       state.value += state.monthlyAmount;
       const fund = FUNDS[fundId];
       if (fund) {
-        state.value *= 1 + getMonthlyReturn(fundId, fund.annualReturns, year, month);
+        state.value *= 1 + getMonthlyJpyReturn(fundId, year, month);
       }
       breakdown[fundId] = Math.round(state.value);
     }
@@ -181,8 +171,14 @@ export function simulateAdvanced(events: InvestmentEvent[]): AdvancedSimulationR
 // ── ランキング ──────────────────────────────────────────────────────
 
 export function simulateAll(startYear: number, startMonth: number, monthlyAmount: number): RankingItem[] {
+  const commonStart = getCommonStartMonth(VERIFIED_FUND_IDS);
+  const requested = `${startYear}-${String(startMonth).padStart(2, "0")}`;
+  const effective = requested < commonStart ? commonStart : requested;
+  const effectiveYear = Number(effective.slice(0, 4));
+  const effectiveMonth = Number(effective.slice(5, 7));
   return FUND_LIST
-    .map((fund) => simulate({ fundId: fund.id as FundId, startYear, startMonth, monthlyAmount }))
+    .filter((fund) => VERIFIED_FUND_IDS.includes(fund.id))
+    .map((fund) => simulate({ fundId: fund.id as FundId, startYear: effectiveYear, startMonth: effectiveMonth, monthlyAmount }))
     .sort((a, b) => b.profit - a.profit)
     .map((result, i) => ({ rank: i + 1, fund: FUNDS[result.fundId as FundId], result }));
 }
