@@ -22,7 +22,7 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "オルカン",
       formalName: "eMAXIS Slim 全世界株式（オール・カントリー）",
-      catchCopy: "世界中に一本で分散。最強の「ほったらかし投資」",
+      catchCopy: "世界中に一本で分散する、長期積立の選択肢",
       forWhom: "投資初心者・長期積立を始めたい人・NISA活用したい人",
       features: ["🌍 全世界分散", "💰 NISA向き", "📉 低コスト", "🏆 残高No.1"],
       pros: ["全世界の約3000銘柄に自動分散", "信託報酬が業界最低水準", "新NISAの人気ランキング1位", "三菱UFJアセットの運用実績"],

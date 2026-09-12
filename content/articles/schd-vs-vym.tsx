@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { FUNDS, formatExpenseRatio } from "@/lib/funds";
-import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
+import { NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
@@ -134,7 +134,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="SCHDとは？特徴と仕組み" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          SCHD（Schwab U.S. Dividend Equity ETF）は、シュワブが運用する米国高配当ETFです。単なる配当利回りだけでなく、財務健全性・増配継続実績を重視したスクリーニングで約100銘柄に絞り込んでいます。日本では「楽天・高配当株式・米国ファンド（楽天SCHD）」として投資信託化されています。
+          SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。財務健全性や増配実績などを基準に銘柄を選定します。SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
         </p>
         <SpecCard rows={[
           ["対象", "米国高配当株（財務優良100社）"],
@@ -210,7 +210,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          実際の運用成績データをもとに、積立タイムマシンのシミュレーション機能で計算した結果です。
+          VYMは検証済み月次実績、SCHDは原典未検証の参考系列を使った比較です。両者のデータ品質は同一ではありません。
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
@@ -246,7 +246,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </ul>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※原典未特定の年次参考系列による簡易計算です。配当・費用・為替処理は未特定で、実際の商品実績や将来の成果を示すものではありません。
+          ※SCHDは「G：参考データ・原典未検証」です。VYMの「A：公式月次データ」と同じ精度の実績としては扱えません。詳しくはデータ出典ページをご確認ください。
         </p>
       </section>
 
@@ -296,7 +296,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="新NISAではどちらが向いているか" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          新NISA（2024年〜）では、楽天SCHDとVYMは成長投資枠（年{formatManEn(NISA_LIMITS.growthAnnual)}）の対象です。楽天SCHDのような投資信託は積立設定に対応する金融機関があります。{NISA_SYSTEM_DISCLAIMER}
+          米国ETF SCHDとVYMは、取扱証券会社や商品区分を確認したうえで検討する必要があります。SCHDを主要投資対象とする国内投信は別商品で、積立設定・費用・NISA区分も異なります。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
           NISA口座では国内課税が非課税になりますが、米国側の外国源泉税（10%）は控除される点に注意が必要です。配当を非課税で受け取れることは変わらず、長期の配当投資との相性は良好です。
@@ -333,7 +333,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "増配率・トータルリターンを重視したい人",
               "財務優良企業に絞った質の高い配当株を持ちたい人",
               "長期保有で取得利回り（YOC）の向上を狙いたい人",
-              "楽天SCHDとして投資信託で積立設定したい人",
+              "米国ETFを外貨建てで保有する方法を理解している人",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-emerald-400 font-bold flex-shrink-0">→</span>
@@ -422,7 +422,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
           <ul className="space-y-2">
             {[
-              { href: "/schd",                          label: "楽天SCHDとは？特徴を解説" },
+              { href: "/schd",                          label: "米国ETF SCHDとは？特徴を解説" },
               { href: "/compare/schd-vs-sp500",         label: "SCHD vs S&P500 比較" },
               { href: "/fund/schd",                     label: "SCHD銘柄詳細ページ" },
               { href: "/fund/vym",                      label: "VYM銘柄詳細ページ" },

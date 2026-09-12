@@ -11,6 +11,8 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import { getArticlesRelatedToFunds } from "@/lib/article-pages";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ComparePageClient from "./ComparePageClient";
+import ReturnQualityPill from "@/components/common/ReturnQualityPill";
+import { getReturnSeriesDefinition } from "@/lib/return-series";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -66,6 +68,9 @@ export default async function ComparePage({ params }: Props) {
 
   const fundA = FUNDS[page.fundAId];
   const fundB = FUNDS[page.fundBId];
+  const definitionA = getReturnSeriesDefinition(page.fundAId);
+  const definitionB = getReturnSeriesDefinition(page.fundBId);
+  const hasReferenceSeries = definitionA.quality === "G" || definitionB.quality === "G";
 
   const resultA = simulate({
     fundId: page.fundAId,
@@ -132,6 +137,15 @@ export default async function ComparePage({ params }: Props) {
               {page.h1}
             </h1>
             <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 text-xs text-zinc-400">{fundA.shortName}<ReturnQualityPill fundId={page.fundAId} /></span>
+              <span className="inline-flex items-center gap-1.5 text-xs text-zinc-400">{fundB.shortName}<ReturnQualityPill fundId={page.fundBId} /></span>
+            </div>
+            {hasReferenceSeries && (
+              <p className="rounded-xl border border-amber-400/20 bg-amber-400/5 px-3 py-2 text-[11px] leading-relaxed text-amber-200/90">
+                SCHDの表示値は参考データ・原典未検証です。A品質系列と同じ信頼度の公式実績ではなく、実績ランキングにも使用していません。<Link href="/about/data-sources" className="ml-1 underline underline-offset-2">データ詳細</Link>
+              </p>
+            )}
 
             {/* 結論カード */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/[0.08] p-5 space-y-3">

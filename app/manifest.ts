@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "積立タイムマシン｜積立投資シミュレーション",
     short_name: "積立タイムマシン",
-    description: "年次参考系列を用いて、オルカン・S&P500・NASDAQ100などの積立結果を簡易シミュレーション。",
+  description: "一次情報から検証した月次実績を用いて、オルカン・S&P500・NASDAQ100などの積立結果をシミュレーション。",
     start_url: "/",
     display: "standalone",
     background_color: "#09090b",

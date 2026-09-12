@@ -286,7 +286,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
             </AnimatePresence>
 
             <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
-              ※ VTは公式月次NAVリターンを日銀月末為替で円換算し、その他は原典未特定の年次参考系列を月次換算しています。将来の運用成果を示すものではありません。
+              ※ A系列は一次情報から検証した月次実績を使用します。G系列は参考データとして品質を明示し、将来の運用成果を示すものではありません。
             </p>
           </motion.div>
         )}

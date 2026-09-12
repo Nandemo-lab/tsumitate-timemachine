@@ -5,7 +5,7 @@
  * 使い方:
  *   node scripts/new-article.mjs --slug schd-vs-vt --fundA schd --fundB vt \
  *     --title "SCHDとVTどっち？配当重視と全世界分散を比較" \
- *     --description "楽天SCHDとVTの配当利回り・分散性・過去実績を比較。配当収入か世界分散か、判断材料を整理しました。"
+ *     --description "米国ETF SCHDとVTの配当利回り・分散性・過去実績を比較。配当収入か世界分散か、判断材料を整理しました。"
  *
  * 生成されるもの:
  *   content/articles/<slug>.tsx （ArticleBlocks共通コンポーネントを使うひな形）

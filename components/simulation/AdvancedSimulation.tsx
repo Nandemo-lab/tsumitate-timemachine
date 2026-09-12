@@ -331,7 +331,7 @@ export default function AdvancedSimulation() {
             )}
 
             <p className="text-[10px] text-zinc-400 text-center">
-              ※ VTは公式月次NAVリターンを日銀月末為替で円換算し、その他は原典未特定の年次参考系列を用いています。手数料・税金は個別計算していません。
+              ※ A系列は一次情報から検証した月次実績を使用します。G系列は参考データとして品質を明示し、手数料・税金は個別計算していません。
             </p>
           </motion.div>
         )}

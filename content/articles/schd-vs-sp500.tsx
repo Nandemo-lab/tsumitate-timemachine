@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { formatExpenseRatio } from "@/lib/funds";
-import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
+import { NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
@@ -136,14 +136,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="SCHDとは？特徴と仕組み" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          SCHD（Schwab U.S. Dividend Equity ETF）は、シュワブが運用する米国高配当ETFです。配当利回りだけでなく財務健全性・増配継続実績を重視したスクリーニングで約100銘柄に絞り込んでいます。日本では「楽天・高配当株式・米国ファンド（楽天SCHD）」として投資信託化されています。
+          SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。Dow Jones U.S. Dividend 100 Indexへの連動を目指し、財務健全性や増配実績などを基準に銘柄を選定します。SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
         </p>
         <SpecCard rows={[
           ["対象", "米国高配当株（財務優良約100社）"],
           ["銘柄数", "約100銘柄"],
           ["配当利回り", "約3.5〜4.0%（目安）"],
           ["経費率", formatExpenseRatio("schd")],
-          ["新NISA対応", "成長投資枠（投信もあり）"],
+          ["商品形態", "USD建て米国ETF"],
+          ["データ品質", "G：参考データ・原典未検証"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           「配当を増やし続けられる財務優良企業」に的を絞っているのが特徴です。値上がり益より配当収入を重視する設計のため、S&P500と比べると株価の伸びは穏やかになる傾向があります。
@@ -212,7 +213,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          実際の運用成績データをもとに、積立タイムマシンのシミュレーション機能で計算した結果です。
+          S&amp;P500は検証済み月次実績、SCHDは原典未検証の参考系列を使った比較です。両者のデータ品質は同一ではありません。
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
@@ -248,7 +249,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </ul>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※原典未特定の年次参考系列による簡易計算です。配当・費用・為替処理は未特定で、実際の商品実績や将来の成果を示すものではありません。
+          ※SCHDは「G：参考データ・原典未検証」です。S&amp;P500の「A：公式月次データ」と同じ精度の実績としては扱えません。詳しくはデータ出典ページをご確認ください。
         </p>
       </section>
 
@@ -318,14 +319,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-7" className="space-y-4">
         <SectionHeading index={7} title="新NISAではどちらが向いているか" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          新NISA（2024年〜）では、S&P500はつみたて投資枠・成長投資枠の両方で購入できます。SCHD（楽天SCHD）は成長投資枠での購入となり、つみたて投資枠には対応していません。
+          eMAXIS Slim 米国株式（S&amp;P500）は、つみたて投資枠と成長投資枠の対象です。米国ETF SCHDの取扱い・NISA区分は証券会社で確認が必要です。SCHDを主要投資対象とする国内投信は別商品で、商品ごとに取扱いと対象枠が異なります。
         </p>
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
           <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
           <ul className="space-y-2">
             {[
               "S&P500はつみたて投資枠・成長投資枠の両方で積立設定が可能",
-              `SCHD（楽天SCHD）は成長投資枠（年${formatManEn(NISA_LIMITS.growthAnnual)}）内での購入となる。${NISA_SYSTEM_DISCLAIMER}`,
+              `米国ETF SCHDとSCHD連動国内投信は別商品で、NISA区分・費用・税務も異なる。${NISA_SYSTEM_DISCLAIMER}`,
               "資産形成期はS&P500、取り崩し期にSCHDを組み合わせる段階的な使い分けもある",
               "両方を組み合わせ、コアをS&P500・配当ポケットをSCHDとする配分も見られる",
             ].map((t, i) => (
@@ -401,7 +402,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               q: "新NISAではSCHDとS&P500どちらが有利ですか？",
-              a: "トータルリターンの最大化を目指すならS&P500（つみたて投資枠対応・再投資で複利効果）。配当を非課税で受け取りたい場合はNISA口座でSCHD（楽天SCHD・成長投資枠）という使い方もあります。ただしNISAでも米国側の外国源泉税（10%）は控除されるため、配当が完全非課税にはなりません。",
+              a: "eMAXIS Slim 米国株式（S&P500）と米国ETF SCHDでは、商品形態・通貨・分配方針が異なります。NISAでの取扱いも同一ではないため、利用する証券会社の商品ページで確認してください。SCHD連動国内投信は米国ETF SCHDとは別商品です。",
             },
             {
               q: "SCHDとS&P500を両方持つのはありですか？",
@@ -474,7 +475,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
           <ul className="space-y-2">
             {[
-              { href: "/schd",                          label: "楽天SCHDとは？特徴を解説" },
+              { href: "/schd",                          label: "米国ETF SCHDとは？特徴を解説" },
               { href: "/compare/schd-vs-vym",           label: "SCHD vs VYM 比較" },
               { href: "/fund/schd",                     label: "SCHD銘柄詳細ページ" },
               { href: "/fund/sp500",                    label: "S&P500銘柄詳細ページ" },

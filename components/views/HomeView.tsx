@@ -44,7 +44,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
     []
   );
 
-  // 今日のおすすめ（日付ベースで日替わり）
+  // 日替わりの検証例
   const todayPick = useMemo(() => {
     const fund = FUND_LIST[todayPickIndex];
     const result = simulate({ fundId: fund.id, startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
@@ -177,7 +177,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </p>
       </motion.div>
 
-      {/* ── 今日のおすすめ銘柄 ── */}
+      {/* ── 今日の検証例 ── */}
       <motion.section
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -186,7 +186,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       >
         <div className="flex items-center gap-2 mb-3">
           <Star className="h-4 w-4 text-amber-400" fill="#f59e0b" />
-          <p className="font-heading text-sm font-semibold text-white">今日のおすすめ銘柄</p>
+          <p className="font-heading text-sm font-semibold text-white">今日の検証例</p>
         </div>
 
         <motion.button
@@ -417,7 +417,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       </motion.section>
 
       <p className="text-center text-xs text-zinc-400 px-6 leading-relaxed">
-        VTは公式月次NAVリターンを日銀月末為替で円換算し、その他は年次参考値を月次換算しています。手数料・税金は個別計算していません。
+        9系列は一次情報から検証した月次実績を使用しています。参考系列は品質を明示し、手数料・税金は個別計算していません。
       </p>
 
       {/* ── 人気ガイド ── */}
@@ -438,7 +438,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
             { label: "オルカン一本だけでいい？",       href: "/guide/orukan-ippon-de-ii",        sub: "1本投資の合理的な理由と注意点" },
             { label: "新NISAは月いくら積立すべき？",   href: "/guide/nisa-tsumitate-ikura",      sub: "収入別おすすめ金額と30年試算" },
             { label: "新NISAのおすすめ積立先は？",     href: "/guide/nisa-beginner",             sub: "オルカン・S&P500・NASDAQ100を比較" },
-            { label: "ドルコスト平均法とは？",         href: "/guide/dollar-cost-averaging",     sub: "定額積立が最強の理由" },
+            { label: "ドルコスト平均法とは？",         href: "/guide/dollar-cost-averaging",     sub: "定額積立の仕組みと注意点" },
             { label: "積立投資の失敗パターン5つ",      href: "/guide/index-shippai-pattern",     sub: "やってはいけない行動と回避法" },
             { label: "積立vs一括投資どっちが有利？",   href: "/guide/tsumitate-vs-ikkatu",       sub: "過去データで比較検証" },
             { label: "老後資金シミュレーション",       href: "/guide/retirement-investing",      sub: "30代・40代の積立プラン" },

@@ -7,6 +7,8 @@ import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import ReturnQualityPill from "@/components/common/ReturnQualityPill";
+import { getReturnSeriesDefinition } from "@/lib/return-series";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -69,6 +71,7 @@ export default async function FundLandingPage({ params }: Props) {
   if (!page) notFound();
 
   const fund = FUNDS[page.fundId];
+  const returnDefinition = getReturnSeriesDefinition(page.fundId);
   const result = simulate({
     fundId: page.fundId,
     startYear: page.simYear,
@@ -210,7 +213,8 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── Simulation Result ─────────────────────────────────── */}
           <section className="mb-12">
-            <SectionHeading>{page.fundId === "vt" ? "月次円換算データによるシミュレーション" : "年次参考系列によるシミュレーション"}</SectionHeading>
+            <SectionHeading>{returnDefinition.quality === "A" ? "公式月次データによるシミュレーション" : "参考データによるシミュレーション"}</SectionHeading>
+            <div className="mb-3"><ReturnQualityPill fundId={page.fundId} /></div>
             <p className="text-xs text-zinc-400 mb-4">
               {page.simYear}年{page.simMonth}月から毎月{formatCurrency(page.simAmount)}を積み立てた場合（2025年6月時点）
             </p>
@@ -257,7 +261,7 @@ export default async function FundLandingPage({ params }: Props) {
               {/* Trust line */}
               <div className="mt-4 pt-3 border-t border-white/8 flex items-center gap-1.5 text-[10px] text-zinc-500">
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-                <span>{page.fundId === "vt" ? "VT公式月次NAVリターン＋日銀月末為替で円換算" : "年次参考系列を月次換算・原典や配当処理は未特定"}</span>
+                <span>{returnDefinition.quality === "A" ? `${returnDefinition.seriesName}（${returnDefinition.startMonth}〜${returnDefinition.endMonth}）` : "参考データ・原典未検証。A品質の実績順位には使用していません"}</span>
               </div>
             </div>
 
@@ -378,7 +382,7 @@ export default async function FundLandingPage({ params }: Props) {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <p className="text-[10px] text-zinc-500 mt-4">
-              {page.fundId === "vt" ? "※ VTは公式月次NAVリターンを日銀月末為替で円換算しています。税金・売買コスト等は含みません。" : "※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。"}
+              {returnDefinition.quality === "A" ? "※ 一次情報から検証した月次実績を使用しています。税金・売買コスト等は個別計算していません。" : "※ 参考データ・原典未検証の系列です。公式月次データとして扱わず、将来の運用成果を示すものではありません。"}
             </p>
           </section>
           <DisclaimerBar />

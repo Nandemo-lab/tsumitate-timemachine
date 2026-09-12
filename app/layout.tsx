@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | 積立タイムマシン",
   },
   description:
-    "年次参考系列を月次換算し、オルカン・S&P500・NASDAQ100などの積立結果を簡易シミュレーション。実際の商品実績とは異なる参考値です。",
+    "一次情報から検証した月次実績を使い、オルカン・S&P500・NASDAQ100などの円ベースの積立結果を比較できるシミュレーターです。",
   keywords: [
     "積立投資", "シミュレーター", "たられば投資", "NISA", "新NISA", "S&P500",
     "オルカン", "全世界株", "NASDAQ100", "インデックス投資", "資産形成",
@@ -111,7 +111,7 @@ const webappLd = {
   "@id": "https://tsumitate-timemachine.com/#webapp",
   name: "積立タイムマシン",
   url: "https://tsumitate-timemachine.com",
-  description: "年次参考系列を月次換算し、オルカン・S&P500・NASDAQ100などの積立結果を簡易計算するWebアプリ。実際の商品実績とは異なる参考値です。",
+  description: "一次情報から検証した月次実績を使い、オルカン・S&P500・NASDAQ100などの円ベースの積立結果を比較するWebアプリです。",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Any",
   inLanguage: "ja",

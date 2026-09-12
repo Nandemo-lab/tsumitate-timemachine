@@ -211,7 +211,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          実際の運用成績データをもとに、積立タイムマシンのシミュレーション機能で計算した結果です。
+          両商品の公式な分配金再投資基準価額から検証した、商品設定後の月次実績を使った計算結果です。
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
@@ -247,7 +247,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </ul>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※原典未特定の年次参考系列による簡易計算です。配当・費用・為替処理は未特定で、実際の商品実績や将来の成果を示すものではありません。
+          ※両系列とも「A：公式月次データ」です。商品設定後の実績を使用しており、将来の成果を示すものではありません。
         </p>
       </section>
 

@@ -16,6 +16,7 @@ import { simulate, formatCurrency } from "@/lib/simulation";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -195,6 +196,7 @@ export default async function FundPage({ params }: Props) {
 
             {/* 特徴タグ */}
             <div className="flex flex-wrap gap-1.5">
+              <ReturnQualityPill fundId={page.fundId} />
               {enc.features.map((f) => (
                 <span
                   key={f}
@@ -218,7 +220,7 @@ export default async function FundPage({ params }: Props) {
             <div className="rounded-xl border border-white/[0.08] overflow-hidden">
               {[
                 { label: "投資対象", value: fund.description },
-                { label: "信託報酬", value: enc.managementFee },
+                { label: page.fundId === "schd" ? "経費率" : "信託報酬・経費率", value: enc.managementFee },
                 {
                   label: "NISA対応",
                   value: (
@@ -300,6 +302,7 @@ export default async function FundPage({ params }: Props) {
               border: `1px solid ${fund.color}30`,
             }}
           >
+            <ReturnQualityPill fundId={page.fundId} />
             <div>
               <p className="text-xs font-black tracking-widest uppercase text-zinc-400 mb-1">
                 もし{page.simYear}年から積み立てていたら？

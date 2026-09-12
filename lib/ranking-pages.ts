@@ -156,9 +156,9 @@ export const RANKING_PAGES: RankingPageData[] = [
       },
       {
         fundId: "schd", fundSlug: "schd", yearSlug: undefined, rank: 4, badge: "4位",
-        highlight: "配当収入重視の方には最適。成長投資枠で購入可能",
-        pros: ["増配株に絞った高品質な配当成長投資", "楽天SCHDとして投資信託形式で積立可能"],
-        cons: ["成長株より値上がり益は限定的", "つみたて投資枠は対象外"],
+        highlight: "米国ETFとして増配株へ投資する選択肢。取扱条件は証券会社で確認",
+        pros: ["増配株に絞った配当成長戦略", "米国ETF SCHDとして約100銘柄へ分散"],
+        cons: ["G：参考データ・原典未検証", "SCHD連動国内投信とは別商品"],
         metric: "NISA適性", metricValue: "★★★☆☆",
       },
     ],
@@ -289,7 +289,7 @@ export const RANKING_PAGES: RankingPageData[] = [
     slug: "high-dividend",
     metaTitle: "高配当ETFランキング｜SCHD vs VYMの配当・積立実績を比較",
     metaDescription:
-      "SCHD（楽天SCHD）とVYMを配当利回り・増配率・積立実績で比較ランキング。老後の収入源づくりに向いている高配当ETFを今すぐ確認→",
+      "米国ETF SCHDとVYMを配当方針・銘柄分散・コストで比較。データ品質の違いも明示して、高配当ETFを選ぶ判断材料を整理します。",
     h1: "高配当ETFランキング｜SCHD vs VYM",
     intro:
       "老後の配当収入を目的とした投資家向けに、人気の高配当ETFをランキング形式で比較します。単純な配当利回りだけでなく、配当の成長性・安定性・コストを総合評価しました。",
@@ -306,8 +306,8 @@ export const RANKING_PAGES: RankingPageData[] = [
       {
         fundId: "schd", fundSlug: "schd", yearSlug: undefined, rank: 1, badge: "🥇",
         highlight: "増配株に絞った「質の高い配当」。VYMより高い配当成長率が魅力",
-        pros: ["増配実績を持つ財務優良企業に絞込", "VYMより配当成長率が高い", "楽天SCHDとして投資信託で積立可能"],
-        cons: ["VYMより銘柄数が少ない（約100銘柄）", "信託報酬0.1238%とVYMより高め"],
+        pros: ["増配実績を持つ財務優良企業に絞込", "Dow Jones U.S. Dividend 100 Indexへの連動を目指す", "米国ETFの経費率は0.060%"],
+        cons: ["VYMより銘柄数が少ない（約100銘柄）", "G：参考データ・原典未検証"],
         metric: "配当品質", metricValue: "★★★★★",
       },
       {
@@ -323,7 +323,7 @@ export const RANKING_PAGES: RankingPageData[] = [
       { q: "高配当ETFは新NISAで買えますか？", a: "VYM・SCHDともにNISA成長投資枠で購入できます。ただしつみたて投資枠は対象外です。NISAを使えば配当・値上がり益ともに非課税になり、高配当ETFの恩恵を最大化できます。" },
       { q: "高配当ETFはインデックス（S&P500・オルカン）と組み合わせた方がいいですか？", a: "多くの投資家が「メイン：S&P500またはオルカン＋サブ：VYM/SCHD」という組み合わせを採用しています。インデックスで資産成長を狙いながら、高配当ETFで定期的な配当収入も確保できるためです。" },
       { q: "高配当ETFは老後資金に向いていますか？", a: "はい、特に引き出し期（60代以降）に向いています。株式を売却せずに配当収入を生活費の補填に使えるため、「資産を売らずに生活できる」というメリットがあります。ただし現役世代は配当より成長（インデックス）を優先した方が資産最大化になりやすいです。" },
-      { q: "楽天SCHDとは何ですか？", a: "楽天SCHDは「楽天・高配当株式・米国ファンド」の通称で、米国ETFのSCHD（Schwab US Dividend Equity ETF）に投資する日本の投資信託です。ETFを直接買うより少額から積立でき、NISAの成長投資枠でも購入できます。" },
+      { q: "米国ETF SCHDと楽天SCHDは同じ商品ですか？", a: "別商品です。当ページのSCHDはSchwab U.S. Dividend Equity ETFを指します。楽天SCHDは米国ETF SCHDを主要投資対象とする国内投信で、通貨・費用・取扱い・税務が異なります。" },
     ],
     relatedCompareSlugs: ["schd-vs-vym", "schd-vs-sp500"],
     relatedRankingSlugs: ["", "nisa", "beginner"],
