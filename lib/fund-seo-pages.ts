@@ -151,10 +151,10 @@ export const FUND_PAGES: FundPage[] = [
   {
     slug: "schd",
     fundId: "schd",
-    metaTitle: "楽天SCHDとは？配当利回り・増配実績・VYMとの違いを解説",
+    metaTitle: "米国ETF SCHDの基本情報｜指数・経費率・VYMとの違い",
     metaDescription:
-      "楽天SCHD（楽天・高配当株式・米国ファンド）の配当利回り・増配率・積立実績を解説。VYMとの違いも比較→今すぐ確認",
-    h1: "楽天SCHDとは？配当利回り・特徴・VYMとの比較",
+      "Schwab U.S. Dividend Equity ETF（SCHD）の仕組み・経費率・VYMとの違いを解説。楽天SCHDとは別商品として整理します。",
+    h1: "米国ETF SCHDとは？特徴・経費率・VYMとの比較",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -175,7 +175,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "SCHDは新NISAで買えますか？",
-        a: "楽天・高配当株式・米国ファンド（四半期決算型）として投資信託化されており、新NISAの成長投資枠で購入できます。つみたて投資枠には非対応ですが、成長投資枠の年240万円枠内で積立設定が可能です。",
+        a: "米国ETF SCHDと楽天・シュワブ・高配当株式・米国ファンドは別商品です。NISA区分や取扱いは利用する証券会社の商品ページで確認してください。",
       },
       {
         q: "SCHDは初心者向けですか？",
@@ -183,7 +183,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "SCHDで配当金はいつ受け取れますか？",
-        a: "楽天・高配当株式・米国ファンド（四半期決算型）は3・6・9・12月の年4回決算で分配金を受け取れます。NISA口座では国内課税が非課税になりますが、米国での源泉徴収（10%）は控除されます。",
+        a: "米国ETF SCHDは四半期分配です。楽天SCHDの分配方針・税務・取扱いは別商品の公式資料で確認する必要があります。",
       },
     ],
   },

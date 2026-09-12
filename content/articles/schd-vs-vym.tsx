@@ -9,7 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { FUNDS } from "@/lib/funds";
+import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -23,7 +23,7 @@ export const meta: ArticleMeta = {
   h1: "SCHDとVYMどっち？配当利回り・増配率・過去実績を徹底比較",
   metaTitle: "SCHDとVYMどっち？配当利回り・増配率・どちらが向いているかを比較",
   metaDescription:
-    "楽天SCHDとVYMの配当利回り・増配率・積立実績を過去シミュレーション・コスト・新NISAでの選び方から徹底比較。増配重視と分散重視、どちらが自分に向いているか判断できます。",
+    "米国ETF SCHDとVYMの配当方針・銘柄選定・コストを比較。SCHDの実績値は原典検証中の参考データとして分離して表示します。",
   lastUpdated: "2026年7月",
   publishedAt: "2026-07-03",
   category: "比較コラム",
@@ -141,7 +141,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["銘柄数", "約100銘柄"],
           ["配当利回り", "約3.5〜4.0%（目安）"],
           ["増配率（10年平均）", "約11〜12%"],
-          ["経費率", "年0.1238%（投資信託）"],
+          ["経費率", formatExpenseRatio("schd")],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           銘柄数を絞ることで「配当を増やし続けられる質の高い企業」に的を絞っているのが特徴です。その分、個別銘柄への集中度はVYMよりやや高くなります。
@@ -189,7 +189,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["配当利回り", "約3.5〜4.0%",              "約2.8〜3.2%"],
                 ["増配率（10年平均）", "約11〜12%",         "約6〜7%"],
                 ["分散度",     "△ やや集中",               "◎ 広く分散"],
-                ["経費率",     "0.1238%（投信）",           "0.04%"],
+              ["経費率", formatExpenseRatio("schd"), formatExpenseRatio("vym")],
                 ["NISA対応",   "○ 成長投資枠（ETF）",       "○ 成長投資枠（ETF）"],
               ].map(([k, a, b]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">

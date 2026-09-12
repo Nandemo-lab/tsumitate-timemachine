@@ -23,7 +23,7 @@ export const meta: ArticleMeta = {
   h1: "SCHDとS&P500どっち？配当重視と成長重視を過去実績で比較",
   metaTitle: "SCHDとS&P500どっち？配当重視と成長重視、どちらが向いているかを比較",
   metaDescription:
-    "楽天SCHDとS&P500のトータルリターン・配当利回り・暴落耐性を過去データで比較。配当収入を重視するか、資産の最大化を重視するか、判断材料を整理しました。",
+    "米国ETF SCHDとS&P500連動投信の特徴・配当・値動きを比較。SCHDの実績値は原典検証中の参考データとして分離して表示します。",
   lastUpdated: "2026年7月",
   publishedAt: "2026-07-06",
   category: "比較コラム",
@@ -45,8 +45,8 @@ export const meta: ArticleMeta = {
 
 const simSchd     = simulate({ fundId: "schd",  startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
 const simSp500    = simulate({ fundId: "sp500", startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
-const simSchdLong  = simulate({ fundId: "schd",  startYear: 2016, startMonth: 1, monthlyAmount: 30000 });
-const simSp500Long = simulate({ fundId: "sp500", startYear: 2016, startMonth: 1, monthlyAmount: 30000 });
+const simSchdLong  = simulate({ fundId: "schd",  startYear: 2018, startMonth: 8, monthlyAmount: 30000 });
+const simSp500Long = simulate({ fundId: "sp500", startYear: 2018, startMonth: 8, monthlyAmount: 30000 });
 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
@@ -142,7 +142,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["対象", "米国高配当株（財務優良約100社）"],
           ["銘柄数", "約100銘柄"],
           ["配当利回り", "約3.5〜4.0%（目安）"],
-          ["信託報酬", "年0.1238%（投資信託）"],
+          ["経費率", formatExpenseRatio("schd")],
           ["新NISA対応", "成長投資枠（投信もあり）"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
@@ -191,7 +191,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["配当利回り",   "約3.5〜4.0%",                    "約1.2〜1.5%"],
                 ["リターン特性", "配当中心・値上がりやや低め",       "値上がり重視・配当は低め"],
                 ["リスク",       "中低",                            "中"],
-                ["信託報酬",     "0.1238%（投信）",                 formatExpenseRatio("sp500")],
+              ["信託報酬・経費率", formatExpenseRatio("schd"), formatExpenseRatio("sp500")],
                 ["NISA対応",     "○ 成長投資枠（投信もあり）",       "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
@@ -204,7 +204,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </table>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※信託報酬は楽天・高配当株式・米国ファンド、eMAXIS Slim米国株式（S&P500）の2025年6月時点の税込水準に基づく参考値。
+            ※SCHDは米国ETFの経費率、S&amp;P500はeMAXIS Slim米国株式（S&amp;P500）の信託報酬です。楽天SCHDは別商品です。
         </p>
       </section>
 
@@ -225,7 +225,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </div>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2016年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+              【2018年8月〜2025年6月】毎月{formatCurrency(30000)}積立（S&amp;P500投信の公式実績開始後）
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="SCHD" color="#10b981" sim={simSchdLong} />

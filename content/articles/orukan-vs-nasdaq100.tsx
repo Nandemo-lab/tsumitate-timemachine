@@ -45,8 +45,8 @@ export const meta: ArticleMeta = {
 
 const simOrcan      = simulate({ fundId: "orcan",     startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
 const simNasdaq     = simulate({ fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
-const simOrcanLong  = simulate({ fundId: "orcan",     startYear: 2015, startMonth: 1, monthlyAmount: 30000 });
-const simNasdaqLong = simulate({ fundId: "nasdaq100", startYear: 2015, startMonth: 1, monthlyAmount: 30000 });
+const simOrcanLong  = simulate({ fundId: "orcan",     startYear: 2018, startMonth: 11, monthlyAmount: 30000 });
+const simNasdaqLong = simulate({ fundId: "nasdaq100", startYear: 2018, startMonth: 11, monthlyAmount: 30000 });
 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
@@ -223,7 +223,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </div>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2015年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+              【2018年11月〜2025年6月】毎月{formatCurrency(30000)}積立（両商品の公式実績が揃う期間）
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="オルカン" color="#6366f1" sim={simOrcanLong} />
