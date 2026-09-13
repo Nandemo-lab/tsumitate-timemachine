@@ -188,6 +188,9 @@ export default async function ComparePage({ params }: Props) {
                   <span className="text-xs text-zinc-500 self-center">{spec.label}</span>
                   <span className="text-xs text-zinc-300 self-center">{spec.a}</span>
                   <span className="text-xs text-zinc-300 self-center">{spec.b}</span>
+                  {spec.note && (
+                    <p className="col-span-3 text-xs text-zinc-400 leading-relaxed">{spec.note}</p>
+                  )}
                 </div>
               ))}
             </div>

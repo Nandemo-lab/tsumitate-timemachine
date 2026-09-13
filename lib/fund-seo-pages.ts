@@ -21,12 +21,14 @@ export interface FundPage {
   relatedCompareSlugs: string[];
   /** /fund/[slug] へのリンク用（同画面内） */
   relatedFundSlugs: string[];
+  contextualComparison?: string;
 }
 
 export const FUND_PAGES: FundPage[] = [
   // ── オルカン ─────────────────────────────────────────────────────────
   {
     slug: "orukan",
+    contextualComparison: "世界分散型と米国高配当型の違いは、[オルカンと米国ETF SCHDの比較](/compare/orukan-vs-schd)で確認できます。SCHDの数値は原典未検証の参考データです。",
     fundId: "orcan",
     metaTitle: "オルカン（全世界株式）とは？新NISAで人気の理由・メリット・積立実績",
     metaDescription:
@@ -191,6 +193,7 @@ export const FUND_PAGES: FundPage[] = [
   // ── VYM ──────────────────────────────────────────────────────────────
   {
     slug: "vym",
+    contextualComparison: "高配当株への投資と世界全体への分散を比べる場合は、[VYMとオルカンの違い](/compare/orukan-vs-vym)も確認できます。",
     fundId: "vym",
     metaTitle: "VYMとは？配当利回り・積立実績・SCHDとの違いを解説",
     metaDescription:
@@ -232,6 +235,7 @@ export const FUND_PAGES: FundPage[] = [
   // ── VTI ──────────────────────────────────────────────────────────────
   {
     slug: "vti",
+    contextualComparison: "米国株全体への分散と大型グロース株への集中の違いは、[VTIとNASDAQ100の比較](/compare/vti-vs-nasdaq100)で確認できます。",
     fundId: "vti",
     metaTitle: "VTIとは？S&P500との違い・楽天VTI・積立実績を解説",
     metaDescription:

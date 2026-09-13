@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import GuideBodyText from "@/components/guide/GuideBodyText";
 import Link from "next/link";
 import { Metadata } from "next";
 import {
@@ -210,6 +211,7 @@ export default async function FundPage({ params }: Props) {
           </section>
 
           {/* ── 基本情報テーブル ────────────────────────────────── */}
+          {page.contextualComparison && <GuideBodyText body={page.contextualComparison} />}
           <section>
             <h2
               className="text-base font-bold text-white mb-4"

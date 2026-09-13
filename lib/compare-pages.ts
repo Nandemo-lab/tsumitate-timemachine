@@ -1,5 +1,6 @@
 import { FundId } from "@/types";
 import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
+import { verifiedCagrSpec } from "@/lib/compare-return-metrics";
 
 export interface CompareFaq {
   q: string;
@@ -10,6 +11,7 @@ export interface CompareSpec {
   label: string;
   a: string;
   b: string;
+  note?: string;
 }
 
 export interface CompareMixExample {
@@ -60,7 +62,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",      a: FUNDS.orcan.shareCount,         b: FUNDS.sp500.shareCount },
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "○ 米国内で分散" },
       { label: "リスク",      a: "中（★★★）",                  b: "中（★★★）" },
-      { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+14%（2015〜2025年平均）" },
+      verifiedCagrSpec("orcan", "sp500"),
       { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("sp500") },
       { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
     ],
@@ -114,7 +116,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "業種分散",      a: "○ 全業種に分散",               b: "△ IT・ハイテク偏重（約60%）" },
       { label: "銘柄数",        a: FUNDS.sp500.shareCount,          b: FUNDS.nasdaq100.shareCount },
       { label: "リスク",        a: "中（★★★）",                   b: "やや高（★★★★）" },
-      { label: "過去の年平均リターン", a: "約+14%（2015〜2025年平均）",        b: "約+20%（2015〜2025年平均）" },
+      verifiedCagrSpec("sp500", "nasdaq100"),
       { label: "最大下落幅",    a: "約−33%（2020年コロナ）",       b: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）` },
       { label: "信託報酬",      a: formatExpenseRatio("sp500"),     b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ つみたて・成長両対応" },
@@ -237,7 +239,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "形式",          a: "ETF（株式市場で売買）",         b: "投資信託（毎日基準価格）" },
       { label: "米国比率",      a: "100%",                          b: "構成国で最大（比率は変動）" },
       { label: "リスク",        a: "中（★★★）",                   b: "中（★★★）" },
-      { label: "過去の年平均リターン", a: "約+13%（2015〜2025年平均）",        b: "約+12%（2015〜2025年平均）" },
+      verifiedCagrSpec("vti", "orcan"),
       { label: "経費率",        a: `${formatExpenseRatio("vti")}（世界最低水準）`,       b: formatExpenseRatio("orcan") },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",           b: "○ つみたて・成長両対応" },
     ],
@@ -346,7 +348,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",        a: FUNDS.nasdaq100.shareCount,       b: `${FUNDS.fangplus.shareCount}（均等加重）` },
       { label: "主要銘柄",      a: "Apple・MS・NVIDIA・Amazonなど", b: "META・Apple・NVIDIA・Googleなど" },
       { label: "リスク",        a: "やや高（★★★★）",              b: "非常に高（★★★★★）" },
-      { label: "過去の年平均リターン", a: "約+20%（2015〜2025年平均）", b: "約+25%（2015〜2025年平均）" },
+      verifiedCagrSpec("nasdaq100", "fangplus"),
       { label: "最大下落幅",    a: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）`,   b: `${formatAnnualReturn("fangplus", 2022)}（2022年）` },
       { label: "信託報酬",      a: formatExpenseRatio("nasdaq100"), b: formatExpenseRatio("fangplus") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ つみたて・成長両対応" },
@@ -624,7 +626,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",      a: FUNDS.orcan.shareCount,         b: FUNDS.fangplus.shareCount },
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "× 10銘柄に集中" },
       { label: "リスク",      a: "中（★★★）",                  b: "非常に高（★★★★★）" },
-      { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+25%（2015〜2025年平均）" },
+      verifiedCagrSpec("orcan", "fangplus"),
       { label: "最大下落率（年間）",   a: "約-18%（2022年）",            b: "約-44%（2022年）" },
       { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("fangplus") },
       { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
@@ -662,9 +664,9 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "vt-vs-sp500",
     fundAId: "vt",
     fundBId: "sp500",
-    metaTitle: "VT vs S&P500 どっちがいい？全世界ETFと米国ETFを徹底比較",
+    metaTitle: "VT vs S&P500 どっちがいい？全世界ETFと米国株投信を徹底比較",
     metaDescription:
-      "全世界株ETF「VT」と米国株ETF・投資信託「S&P500」を積立実績・分散性・信託報酬で比較。世界分散か米国集中か、選び方を解説します。",
+      "全世界株ETF「VT」と国内投信「eMAXIS Slim 米国株式（S&P500）」を積立実績・分散性・信託報酬で比較。世界分散か米国集中か、選び方を解説します。",
     relatedDescription: "全世界ETF vs 米国株を比較",
     h1: "VTとS&P500、どちらを積み立てるべき？",
     intro:
@@ -680,7 +682,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",      a: FUNDS.vt.shareCount,            b: FUNDS.sp500.shareCount },
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "○ 米国内で分散" },
       { label: "リスク",      a: "中（★★★）",                  b: "中（★★★）" },
-      { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+14%（2015〜2025年平均）" },
+      verifiedCagrSpec("vt", "sp500"),
       { label: "信託報酬",    a: formatExpenseRatio("vt"),       b: formatExpenseRatio("sp500") },
       { label: "NISA対応",    a: "○ 成長投資枠（ETF）",          b: "○ つみたて・成長両対応" },
     ],
@@ -735,7 +737,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "○ 米国の高配当株に分散" },
       { label: "配当の有無",  a: "なし（自動再投資）",           b: "あり（定期的に分配）" },
       { label: "リスク",      a: "中（★★★）",                  b: "低〜中（★★）" },
-      { label: "過去の年平均リターン", a: "約+12%（2015〜2025年平均）",  b: "約+11%（2015〜2025年平均）" },
+      verifiedCagrSpec("orcan", "vym"),
       { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("vym") },
       { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ 成長投資枠対応" },
     ],
@@ -789,7 +791,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",      a: FUNDS.vti.shareCount,           b: FUNDS.nasdaq100.shareCount },
       { label: "分散性",      a: "◎ 米国市場全体に分散",         b: "△ テック業種に集中" },
       { label: "リスク",      a: "中（★★★）",                  b: "高（★★★★）" },
-      { label: "過去の年平均リターン", a: "約+13%（2015〜2025年平均）",  b: "約+20%（2015〜2025年平均）" },
+      verifiedCagrSpec("vti", "nasdaq100"),
       { label: "最大下落率（年間）",   a: "約-19%（2022年）",            b: "約-33%（2022年）" },
       { label: "信託報酬",    a: formatExpenseRatio("vti"),      b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",    a: "○ 成長投資枠（ETF）",          b: "○ つみたて・成長両対応" },
@@ -844,7 +846,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",      a: FUNDS.india.shareCount,         b: FUNDS.emerging.shareCount },
       { label: "分散性",      a: "△ インド1ヵ国に集中",         b: "○ 複数の新興国に分散" },
       { label: "リスク",      a: "高（★★★★）",                b: "中〜高（★★★★）" },
-      { label: "過去の年平均リターン", a: "約+11%（2015〜2025年平均）",  b: "約+5%（2015〜2025年平均）" },
+      verifiedCagrSpec("india", "emerging"),
       { label: "信託報酬",    a: formatExpenseRatio("india"),    b: formatExpenseRatio("emerging") },
       { label: "NISA対応",    a: "× 非対応",                     b: "○ 成長投資枠対応" },
     ],
