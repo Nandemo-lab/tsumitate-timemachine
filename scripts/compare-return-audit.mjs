@@ -86,6 +86,9 @@ const { FUNDS, formatAnnualReturn } = require(path.join(root, "lib/funds.ts"));
 const { getGuidePage } = require(path.join(root, "lib/guide-pages.ts"));
 const guide = getGuidePage("tsumitate-nansnen-keizoku");
 const guideText = JSON.stringify(guide);
+if (/約2倍|20代スタートで40年|長い期間ほど複利効果が大きい/.test(guideText)) throw new Error("unsupported age-based projection remains");
+const ageFaq = guide.faqs.find((faq) => faq.q === "何歳から始めると何年間積み立てられますか？");
+if (!ageFaq.a.includes("20歳開始なら40年") || !ageFaq.a.includes("拠出元本") || !ageFaq.a.includes("必ず利益が増えるわけではありません")) throw new Error("age and contribution explanation mismatch");
 if (/2015|オルカン.*10〜15年以上の積立期間があれば損失/.test(guideText)) throw new Error("pre-inception guide claims remain");
 const independentValue = points("orcan").filter((point) => point.month >= "2020-01" && point.month <= "2025-06")
   .reduce((value, point) => (value + 30000) * (1 + point.monthlyReturn), 0);
