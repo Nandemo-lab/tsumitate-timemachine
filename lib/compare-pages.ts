@@ -627,7 +627,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "× 10銘柄に集中" },
       { label: "リスク",      a: "中（★★★）",                  b: "非常に高（★★★★★）" },
       verifiedCagrSpec("orcan", "fangplus"),
-      { label: "最大下落率（年間）",   a: "約-18%（2022年）",            b: "約-44%（2022年）" },
+      { label: "2022年の暦年リターン", a: formatAnnualReturn("orcan", 2022), b: formatAnnualReturn("fangplus", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("fangplus") },
       { label: "NISA対応",    a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
     ],
@@ -654,7 +654,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "FANG+の大きな下落から回復するまでどのくらいかかりますか？",
-        a: "2022年の下落（約-44%）の後、2023年には約+72%という大幅な回復を記録しています。過去の実績では数年以内に回復していますが、値動きの振れ幅が大きいため、回復を待てる期間の余裕があることが前提になります。",
+        a: `iFreeNEXT FANG+インデックスの円ベース・分配金再投資込みの暦年リターンは、2022年が${formatAnnualReturn("fangplus", 2022)}、2023年が${formatAnnualReturn("fangplus", 2023)}です。暦年の騰落率だけでは、購入時点の価格や年中の高値までの回復期間は分かりません。回復にかかる期間は起点によって異なり、将来の回復を保証するものではありません。`,
       },
     ],
   },
@@ -701,7 +701,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "暴落時に強いのはどちらですか？",
-        a: "下落幅はほぼ同程度です。2022年の年間下落率はVTが約-18%、S&P500が約-18%と近い水準でした。VTのほうが米国以外の地域にも分散されているため、米国株だけが急落する局面では相対的にダメージが小さくなる傾向があります。",
+        a: `2022年の円ベース・分配金再投資込みの暦年リターンは、米国ETF VTが${formatAnnualReturn("vt", 2022)}、eMAXIS Slim 米国株式（S&P500）が${formatAnnualReturn("sp500", 2022)}でした。VTはUSD建てNAV Total Returnを日銀USD/JPYで円換算しています。これは暦年リターンであり、年中の最大下落率や、あらゆる暴落での強さを示すものではありません。`,
       },
       {
         q: "VTはNISAのどちらの枠で買えますか？",

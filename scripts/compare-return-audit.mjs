@@ -27,12 +27,23 @@ baselineModule._compile(ts.transpileModule(execFileSync("git", ["show", "afc2f0f
 }).outputText, baselineModule.filename);
 for (const previous of baselineModule.exports.COMPARE_PAGES) {
   const current = COMPARE_PAGES.find((page) => page.slug === previous.slug);
-  for (const key of ["slug", "h1", "fundAId", "fundBId", "simYear", "simMonth", "simAmount", "faqs"]) {
+  for (const key of ["slug", "h1", "fundAId", "fundBId", "simYear", "simMonth", "simAmount"]) {
     if (JSON.stringify(current[key]) !== JSON.stringify(previous[key])) throw new Error(`unexpected regression ${previous.slug} ${key}`);
+  }
+  const authorizedFaqs = {
+    "vt-vs-sp500": ["暴落時に強いのはどちらですか？"],
+    "orukan-vs-fangplus": ["FANG+の大きな下落から回復するまでどのくらいかかりますか？"],
+  };
+  if (current.faqs.length !== previous.faqs.length) throw new Error(`FAQ count regression ${previous.slug}`);
+  for (let index = 0; index < previous.faqs.length; index++) {
+    const oldFaq = previous.faqs[index];
+    const newFaq = current.faqs[index];
+    if (newFaq.q !== oldFaq.q) throw new Error(`FAQ question regression ${previous.slug}`);
+    if (!(authorizedFaqs[previous.slug] ?? []).includes(oldFaq.q) && newFaq.a !== oldFaq.a) throw new Error(`unexpected FAQ regression ${previous.slug}`);
   }
   if (previous.slug !== "vt-vs-sp500" && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
 }
-console.log("PASS: all 15 compare H1/slug/simulation/FAQ unchanged; metadata unchanged except authorized VT/S&P500 correction");
+console.log("PASS: all 15 compare H1/slug/simulation unchanged; only 2 authorized FAQ corrections; metadata unchanged except authorized VT/S&P500 correction");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const vtSource = read("lib/verified-monthly-return-series.ts");
 const array = (name) => vtSource.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\] as const;`))[1]
@@ -70,6 +81,29 @@ for (const [a, b] of [["schd", "vt"], ["vt", "schd"]]) {
 if (read("lib/compare-pages.ts").includes("2015〜2025年平均")) throw new Error("obsolete comparison averages remain");
 console.table(rows);
 console.log("PASS: 9 verified common-period CAGRs; independent log-compounding matches; G rejected; no legacy averages");
+
+const { FUNDS, formatAnnualReturn } = require(path.join(root, "lib/funds.ts"));
+const { getGuidePage } = require(path.join(root, "lib/guide-pages.ts"));
+const guide = getGuidePage("tsumitate-nansnen-keizoku");
+const guideText = JSON.stringify(guide);
+if (/2015|オルカン.*10〜15年以上の積立期間があれば損失/.test(guideText)) throw new Error("pre-inception guide claims remain");
+const independentValue = points("orcan").filter((point) => point.month >= "2020-01" && point.month <= "2025-06")
+  .reduce((value, point) => (value + 30000) * (1 + point.monthlyReturn), 0);
+const example = guide.sections.flatMap((section) => section.subsections ?? []).find((section) => section.h3.includes("2020年1月"));
+if (!example.body.includes(`${Math.round(independentValue).toLocaleString()}円`) || !example.body.includes("1,980,000円") || !example.body.includes("66か月")) throw new Error("guide simulation example mismatch");
+for (const [fundId, year] of [["vt", 2022], ["sp500", 2022], ["orcan", 2022], ["fangplus", 2022], ["fangplus", 2023]]) {
+  const yearly = points(fundId).filter((point) => point.month.startsWith(`${year}-`));
+  const annual = Math.expm1(yearly.reduce((sum, point) => sum + Math.log1p(point.monthlyReturn), 0));
+  if (yearly.length !== 12 || Math.abs(annual - FUNDS[fundId].annualReturns[year]) > 1e-12) throw new Error(`annual mismatch ${fundId} ${year}`);
+  console.log(`OK SSOT annual ${fundId} ${year}: ${formatAnnualReturn(fundId, year)}`);
+}
+const vtFaq = COMPARE_PAGES.find((page) => page.slug === "vt-vs-sp500").faqs.find((faq) => faq.q === "暴落時に強いのはどちらですか？");
+for (const id of ["vt", "sp500"]) if (!vtFaq.a.includes(formatAnnualReturn(id, 2022))) throw new Error("VT comparison FAQ mismatch");
+const fangPage = COMPARE_PAGES.find((page) => page.slug === "orukan-vs-fangplus");
+const annualSpec = fangPage.specs.find((spec) => spec.label === "2022年の暦年リターン");
+if (annualSpec.a !== formatAnnualReturn("orcan", 2022) || annualSpec.b !== formatAnnualReturn("fangplus", 2022)) throw new Error("FANG annual spec mismatch");
+if (!fangPage.faqs.at(-1).a.includes(formatAnnualReturn("fangplus", 2023))) throw new Error("FANG recovery FAQ mismatch");
+console.log(`PASS: 3-page fact corrections; independent guide value = ${Math.round(independentValue).toLocaleString()}円; annual figures match monthly ledgers`);
 
 if (process.argv.includes("--server")) {
   const server = process.argv[process.argv.indexOf("--server") + 1];
