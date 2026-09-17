@@ -9,7 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { formatExpenseRatio } from "@/lib/funds";
+import { formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -163,7 +163,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          2020年+48.8%、2023年+53.8%など高いリターンを記録する年がある一方、2022年は約-33%と大幅下落した年もあります。金融株を含まないため、S&P500よりもテクノロジー分野への集中度が高い構造です。
+          2020年は{formatAnnualReturn("nasdaq100", 2020)}、2023年は{formatAnnualReturn("nasdaq100", 2023)}と高い暦年リターンを記録した一方、2022年は{formatAnnualReturn("nasdaq100", 2022)}でした。いずれも円ベース・分配金再投資込みの暦年リターンです。金融株を含まないため、S&P500よりもテクノロジー分野への集中度が高い構造です。
         </p>
       </section>
 
@@ -189,7 +189,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["銘柄数",     "500銘柄",                  "100銘柄"],
                 ["業種分散",   "○ 全業種に分散",           "△ IT・ハイテク偏重（約60%）"],
                 ["リスク",     "中",                       "やや高"],
-                ["最大下落幅（2022年）", "約-18%",         "約-33%"],
+                ["2022年の暦年リターン", formatAnnualReturn("sp500", 2022), formatAnnualReturn("nasdaq100", 2022)],
                 ["信託報酬",   formatExpenseRatio("sp500"), formatExpenseRatio("nasdaq100")],
                 ["NISA対応",   "○ つみたて・成長両対応",    "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
@@ -203,7 +203,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </table>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※信託報酬はeMAXIS Slim米国株式（S&P500）、iFreeNEXT NASDAQ100インデックスの2025年6月時点の税込数値。
+          ※暦年リターンは円ベース・分配金再投資込みで、年中の高値から安値までの最大下落率ではありません。信託報酬はeMAXIS Slim米国株式（S&P500）、iFreeNEXT NASDAQ100インデックスの2025年6月時点の税込数値。
         </p>
       </section>
 
@@ -267,7 +267,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               event: "インフレ・利上げショック（2022年）",
-              body: "NASDAQ100は約-33%の下落。S&P500は約-18%に留まりました。金利上昇局面ではグロース株中心のNASDAQ100が特に大きな影響を受けます。",
+              body: `2022年の円ベース・分配金再投資込みの暦年リターンは、NASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}、S&P500が${formatAnnualReturn("sp500", 2022)}でした。これは年中の最大下落率ではありません。金利上昇局面ではグロース株中心のNASDAQ100が大きな影響を受けました。`,
               diff: "NASDAQ100が大きく劣後",
               diffColor: "text-amber-400",
             },

@@ -38,6 +38,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはNASDAQ100とFANG+のどちらですか？",
     ],
     "vti-vs-nasdaq100": ["暴落時に強いのはどちらですか？"],
+    "schd-vs-sp500": ["暴落時に強いのはSCHDとS&P500どちらですか？"],
     "vt-vs-sp500": ["暴落時に強いのはどちらですか？"],
     "orukan-vs-fangplus": ["FANG+の大きな下落から回復するまでどのくらいかかりますか？"],
   };
@@ -95,6 +96,7 @@ const guide = getGuidePage("tsumitate-nansnen-keizoku");
 const guideText = JSON.stringify(guide);
 if (/約2倍|20代スタートで40年|長い期間ほど複利効果が大きい/.test(guideText)) throw new Error("unsupported age-based projection remains");
 if (/最低10年|5年・10年・20年・30年の積立シミュレーション/.test(guide.metaDescription) || !guide.metaDescription.includes("商品設定後の公式実績例")) throw new Error("guide metadata/content mismatch");
+if (/10年・20年・30年|5年・10年・20年/.test(`${guide.metaTitle} ${guide.h1}`) || !guide.metaTitle.includes("元本割れリスク") || !guide.h1.includes("公式実績")) throw new Error("guide title/H1 mismatch");
 const ageFaq = guide.faqs.find((faq) => faq.q === "何歳から始めると何年間積み立てられますか？");
 if (!ageFaq.a.includes("20歳開始なら40年") || !ageFaq.a.includes("拠出元本") || !ageFaq.a.includes("必ず利益が増えるわけではありません")) throw new Error("age and contribution explanation mismatch");
 if (/2015|オルカン.*10〜15年以上の積立期間があれば損失/.test(guideText)) throw new Error("pre-inception guide claims remain");
@@ -126,6 +128,14 @@ for (const [slug, fundA, fundB] of [
   if (!spec.note?.includes("最大下落率ではありません")) throw new Error(`calendar/max-drawdown distinction missing ${slug}`);
 }
 if (/label:\s*"最大下落[^\n]*formatAnnualReturn/.test(read("lib/compare-pages.ts"))) throw new Error("calendar return mislabeled as max drawdown");
+const articleSource = read("content/articles/sp500-vs-nasdaq100.tsx");
+if (!articleSource.includes('formatAnnualReturn("sp500", 2022)') || !articleSource.includes('formatAnnualReturn("nasdaq100", 2022)')) throw new Error("article annual return SSOT reference missing");
+if (/最大下落幅（2022年）|約-18%|約-33%/.test(articleSource)) throw new Error("article hard-coded annual return or drawdown label remains");
+const beginnerGuide = getGuidePage("nisa-beginner");
+if (!beginnerGuide.sections?.some((section) => section.body.includes(formatAnnualReturn("nasdaq100", 2022)) && section.body.includes("最大下落率ではありません"))) throw new Error("beginner guide annual return explanation mismatch");
+const schdPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-sp500");
+const schdDrawdownFaq = schdPage.faqs.find((faq) => faq.q === "暴落時に強いのはSCHDとS&P500どちらですか？");
+if (!schdDrawdownFaq.a.includes(formatAnnualReturn("sp500", 2022)) || !schdDrawdownFaq.a.includes("G品質") || /約−18%|約-18%/.test(schdDrawdownFaq.a)) throw new Error("SCHD/S&P500 quality-aware return explanation mismatch");
 console.log(`PASS: fact corrections and return-type labels; independent guide value = ${Math.round(independentValue).toLocaleString()}円; annual figures match monthly ledgers`);
 
 if (process.argv.includes("--server")) {
