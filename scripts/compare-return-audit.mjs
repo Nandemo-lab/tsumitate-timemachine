@@ -31,6 +31,13 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (JSON.stringify(current[key]) !== JSON.stringify(previous[key])) throw new Error(`unexpected regression ${previous.slug} ${key}`);
   }
   const authorizedFaqs = {
+    "sp500-vs-nasdaq100": ["リスクが高いのはS&P500とNASDAQ100のどちらですか？"],
+    "nasdaq100-vs-fangplus": [
+      "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
+      "リスクが高いのはNASDAQ100とFANG+のどちらですか？",
+      "暴落時に強いのはNASDAQ100とFANG+のどちらですか？",
+    ],
+    "vti-vs-nasdaq100": ["暴落時に強いのはどちらですか？"],
     "vt-vs-sp500": ["暴落時に強いのはどちらですか？"],
     "orukan-vs-fangplus": ["FANG+の大きな下落から回復するまでどのくらいかかりますか？"],
   };
@@ -43,7 +50,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
   }
   if (previous.slug !== "vt-vs-sp500" && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
 }
-console.log("PASS: all 15 compare H1/slug/simulation unchanged; only 2 authorized FAQ corrections; metadata unchanged except authorized VT/S&P500 correction");
+console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata unchanged except authorized VT/S&P500 correction");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const vtSource = read("lib/verified-monthly-return-series.ts");
 const array = (name) => vtSource.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\] as const;`))[1]
@@ -87,6 +94,7 @@ const { getGuidePage } = require(path.join(root, "lib/guide-pages.ts"));
 const guide = getGuidePage("tsumitate-nansnen-keizoku");
 const guideText = JSON.stringify(guide);
 if (/約2倍|20代スタートで40年|長い期間ほど複利効果が大きい/.test(guideText)) throw new Error("unsupported age-based projection remains");
+if (/最低10年|5年・10年・20年・30年の積立シミュレーション/.test(guide.metaDescription) || !guide.metaDescription.includes("商品設定後の公式実績例")) throw new Error("guide metadata/content mismatch");
 const ageFaq = guide.faqs.find((faq) => faq.q === "何歳から始めると何年間積み立てられますか？");
 if (!ageFaq.a.includes("20歳開始なら40年") || !ageFaq.a.includes("拠出元本") || !ageFaq.a.includes("必ず利益が増えるわけではありません")) throw new Error("age and contribution explanation mismatch");
 if (/2015|オルカン.*10〜15年以上の積立期間があれば損失/.test(guideText)) throw new Error("pre-inception guide claims remain");
@@ -106,7 +114,19 @@ const fangPage = COMPARE_PAGES.find((page) => page.slug === "orukan-vs-fangplus"
 const annualSpec = fangPage.specs.find((spec) => spec.label === "2022年の暦年リターン");
 if (annualSpec.a !== formatAnnualReturn("orcan", 2022) || annualSpec.b !== formatAnnualReturn("fangplus", 2022)) throw new Error("FANG annual spec mismatch");
 if (!fangPage.faqs.at(-1).a.includes(formatAnnualReturn("fangplus", 2023))) throw new Error("FANG recovery FAQ mismatch");
-console.log(`PASS: 3-page fact corrections; independent guide value = ${Math.round(independentValue).toLocaleString()}円; annual figures match monthly ledgers`);
+for (const [slug, fundA, fundB] of [
+  ["sp500-vs-nasdaq100", "sp500", "nasdaq100"],
+  ["orukan-vs-nasdaq100", "orcan", "nasdaq100"],
+  ["nasdaq100-vs-fangplus", "nasdaq100", "fangplus"],
+  ["vti-vs-nasdaq100", "vti", "nasdaq100"],
+]) {
+  const page = COMPARE_PAGES.find((entry) => entry.slug === slug);
+  const spec = page.specs.find((entry) => entry.label === "2022年の暦年リターン");
+  if (!spec || spec.a !== formatAnnualReturn(fundA, 2022) || spec.b !== formatAnnualReturn(fundB, 2022)) throw new Error(`calendar return spec mismatch ${slug}`);
+  if (!spec.note?.includes("最大下落率ではありません")) throw new Error(`calendar/max-drawdown distinction missing ${slug}`);
+}
+if (/label:\s*"最大下落[^\n]*formatAnnualReturn/.test(read("lib/compare-pages.ts"))) throw new Error("calendar return mislabeled as max drawdown");
+console.log(`PASS: fact corrections and return-type labels; independent guide value = ${Math.round(independentValue).toLocaleString()}円; annual figures match monthly ledgers`);
 
 if (process.argv.includes("--server")) {
   const server = process.argv[process.argv.indexOf("--server") + 1];

@@ -117,7 +117,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",        a: FUNDS.sp500.shareCount,          b: FUNDS.nasdaq100.shareCount },
       { label: "リスク",        a: "中（★★★）",                   b: "やや高（★★★★）" },
       verifiedCagrSpec("sp500", "nasdaq100"),
-      { label: "最大下落幅",    a: "約−33%（2020年コロナ）",       b: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）` },
+      { label: "2022年の暦年リターン", a: formatAnnualReturn("sp500", 2022), b: formatAnnualReturn("nasdaq100", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",      a: formatExpenseRatio("sp500"),     b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ つみたて・成長両対応" },
     ],
@@ -136,7 +136,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "リスクが高いのはS&P500とNASDAQ100のどちらですか？",
-        a: "NASDAQ100のほうがリスクは高いです。2022年には約−33%下落し、同年のS&P500（約−18%）を大幅に上回る下落幅を記録しました。IT・ハイテク銘柄への集中度が高いため、金利上昇・景気後退時には特に大きく売られやすい傾向があります。",
+        a: `2022年の円ベース・分配金再投資込みの暦年リターンは、S&P500が${formatAnnualReturn("sp500", 2022)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}でした。これは年中の高値から安値までの最大下落率ではありません。NASDAQ100はIT・ハイテク銘柄への集中度が高く、値動きが大きくなる場合があります。`,
       },
       {
         q: "暴落時に強いのはS&P500とNASDAQ100のどちらですか？",
@@ -172,7 +172,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "銘柄数",        a: FUNDS.orcan.shareCount,          b: FUNDS.nasdaq100.shareCount },
       { label: "業種分散",      a: "◎ 全業種・全世界に分散",       b: "△ IT・ハイテク偏重（約60%）" },
       { label: "リスク",        a: "中（★★★）",                   b: "高（★★★★）" },
-      { label: "最大下落幅（2022年）", a: formatAnnualReturn("orcan", 2022),  b: formatAnnualReturn("nasdaq100", 2022) },
+      { label: "2022年の暦年リターン", a: formatAnnualReturn("orcan", 2022), b: formatAnnualReturn("nasdaq100", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",      a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",       b: "○ つみたて・成長両対応" },
     ],
@@ -349,7 +349,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "主要銘柄",      a: "Apple・MS・NVIDIA・Amazonなど", b: "META・Apple・NVIDIA・Googleなど" },
       { label: "リスク",        a: "やや高（★★★★）",              b: "非常に高（★★★★★）" },
       verifiedCagrSpec("nasdaq100", "fangplus"),
-      { label: "最大下落幅",    a: `${formatAnnualReturn("nasdaq100", 2022)}（2022年）`,   b: `${formatAnnualReturn("fangplus", 2022)}（2022年）` },
+      { label: "2022年の暦年リターン", a: formatAnnualReturn("nasdaq100", 2022), b: formatAnnualReturn("fangplus", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",      a: formatExpenseRatio("nasdaq100"), b: formatExpenseRatio("fangplus") },
       { label: "NISA対応",      a: "○ つみたて・成長両対応",        b: "○ つみたて・成長両対応" },
     ],
@@ -360,11 +360,11 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
-        a: "過去の実績ではFANG+がNASDAQ100を大幅に上回るリターンを記録しています。2019〜2021年の上昇相場ではFANG+が年率30〜60%のリターンを達成した年もあります。ただし2022年のような下落相場では40%超下がることもあり、高リターンの裏には高リスクがあります。",
+        a: `過去の実績ではFANG+がNASDAQ100を上回った期間があります。ただし2022年の円ベース・分配金再投資込みの暦年リターンはFANG+が${formatAnnualReturn("fangplus", 2022)}で、値動きが大きい商品です。暦年リターンは年中の最大下落率とは異なり、将来の成果を示すものでもありません。`,
       },
       {
         q: "リスクが高いのはNASDAQ100とFANG+のどちらですか？",
-        a: "FANG+のほうがリスクは著しく高いです。10銘柄への均等加重投資のため、1銘柄の業績悪化や規制リスクがポートフォリオ全体に大きく影響します。2022年には約44%の下落を経験。NASDAQ100も十分リスクは高いですが、100銘柄への分散でFANG+よりは緩衝されています。",
+        a: `FANG+は10銘柄への均等加重投資のため、1銘柄の業績悪化や規制リスクがポートフォリオ全体に大きく影響します。2022年の円ベース・分配金再投資込みの暦年リターンは、FANG+が${formatAnnualReturn("fangplus", 2022)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}でした。これは最大下落率ではありません。`,
       },
       {
         q: "新NISAで人気なのはNASDAQ100とFANG+のどちらですか？",
@@ -372,7 +372,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "暴落時に強いのはNASDAQ100とFANG+のどちらですか？",
-        a: "NASDAQ100のほうが下落耐性は高いです。100銘柄への分散により、特定企業の急落の影響がFANG+より小さくなります。2022年の大幅下落局面でも、NASDAQ100は約−33%に対しFANG+は約−44%と差がありました。どちらも大きく下落しますが、相対的にはNASDAQ100のほうがダメージは小さいです。",
+        a: `NASDAQ100はFANG+より銘柄数が多く、特定企業の値動きによる影響が相対的に分散されます。2022年の円ベース・分配金再投資込みの暦年リターンは、NASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}、FANG+が${formatAnnualReturn("fangplus", 2022)}でした。ただし、単年の暦年リターンだけで将来の下落耐性は判断できません。`,
       },
       {
         q: "長期投資向きなのはNASDAQ100とFANG+のどちらですか？",
@@ -792,7 +792,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "分散性",      a: "◎ 米国市場全体に分散",         b: "△ テック業種に集中" },
       { label: "リスク",      a: "中（★★★）",                  b: "高（★★★★）" },
       verifiedCagrSpec("vti", "nasdaq100"),
-      { label: "最大下落率（年間）",   a: "約-19%（2022年）",            b: "約-33%（2022年）" },
+      { label: "2022年の暦年リターン", a: formatAnnualReturn("vti", 2022), b: formatAnnualReturn("nasdaq100", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",    a: formatExpenseRatio("vti"),      b: formatExpenseRatio("nasdaq100") },
       { label: "NISA対応",    a: "○ 成長投資枠（ETF）",          b: "○ つみたて・成長両対応" },
     ],
@@ -807,7 +807,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "暴落時に強いのはどちらですか？",
-        a: "VTIのほうが下落耐性は高い傾向があります。2022年の年間下落率はVTIが約-19%だったのに対し、NASDAQ100は約-33%とより大きく下落しました。テック業種に集中している分、金利上昇局面などでの下落幅が大きくなりやすい性質があります。",
+        a: `2022年の円ベース・分配金再投資込みの暦年リターンは、VTIが${formatAnnualReturn("vti", 2022)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}でした。これは年中の高値から安値までの最大下落率ではありません。NASDAQ100はテック業種への集中度が高いため、値動きが大きくなる場合があります。`,
       },
       {
         q: "VTIとNASDAQ100を両方持つのはありですか？",
