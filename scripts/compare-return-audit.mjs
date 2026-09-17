@@ -130,7 +130,7 @@ for (const [slug, fundA, fundB] of [
 if (/label:\s*"最大下落[^\n]*formatAnnualReturn/.test(read("lib/compare-pages.ts"))) throw new Error("calendar return mislabeled as max drawdown");
 const articleSource = read("content/articles/sp500-vs-nasdaq100.tsx");
 if (!articleSource.includes('formatAnnualReturn("sp500", 2022)') || !articleSource.includes('formatAnnualReturn("nasdaq100", 2022)')) throw new Error("article annual return SSOT reference missing");
-if (/最大下落幅（2022年）|約-18%|約-33%/.test(articleSource)) throw new Error("article hard-coded annual return or drawdown label remains");
+if (/最大下落幅（2022年）|約-18%|約-33%|\+53\.8%/.test(articleSource)) throw new Error("article hard-coded annual return or drawdown label remains");
 const beginnerGuide = getGuidePage("nisa-beginner");
 if (!beginnerGuide.sections?.some((section) => section.body.includes(formatAnnualReturn("nasdaq100", 2022)) && section.body.includes("最大下落率ではありません"))) throw new Error("beginner guide annual return explanation mismatch");
 const schdPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-sp500");

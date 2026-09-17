@@ -273,7 +273,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               event: "2023年のテック株回復局面",
-              body: "AI関連銘柄の急成長を背景に、NASDAQ100は+53.8%という高い回復を見せました。S&P500も上昇しましたが、回復幅では差がつきました。",
+              body: `AI関連銘柄の上昇を背景に、2023年の円ベース・分配金再投資込みの暦年リターンはNASDAQ100が${formatAnnualReturn("nasdaq100", 2023)}でした。S&P500も上昇しましたが、暦年リターンには差がありました。`,
               diff: "NASDAQ100の回復力が際立つ",
               diffColor: "text-emerald-400",
             },
