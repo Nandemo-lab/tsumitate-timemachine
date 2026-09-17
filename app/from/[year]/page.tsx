@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { ChevronRight, TrendingUp, ArrowRight, Trophy } from "lucide-react";
 import { FUNDS, FUND_LIST } from "@/lib/funds";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { CURRENT_MONTH, CURRENT_YEAR, simulate, formatCurrency, formatCurrencyFull } from "@/lib/simulation";
+import { getReturnSeriesDefinition, monthKey } from "@/lib/return-series";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -32,19 +33,18 @@ const YEAR_FAQS: Record<number, { q: string; a: string }[]> = {
     { q: "2020年から積み立てを始めた場合、どの銘柄が最も増えましたか？", a: "上記のランキングをご確認ください。テック集中型（NASDAQ100・FANG+）がコロナ後の急騰で高リターンになりやすい一方、2022年の大幅下落も経験しています。分散型（オルカン・S&P500）は安定して高いリターンを維持してきた傾向があります。" },
     { q: "2020年はコロナショックがあったのに積み立てて良かったのですか？", a: "結果的には、2020年3月の急落時に安値で多くの口数を積み上げたことが後の回復局面で大きな利益につながりました。積立投資（ドルコスト平均法）では、下落局面ほど安値で多く買えるため、長期では下落が恩恵になることがあります。" },
     { q: "2020年から新NISAで積み立てていた場合の非課税メリットは？", a: "新NISAが開始されたのは2024年1月からです。2020〜2023年は旧つみたてNISA（年40万円上限）が対象でした。2020年から積み立てていた方は旧制度枠を使っている場合もあります。現在の状況に応じて、新NISAへの移行・継続を検討してください。" },
-    { q: "月3万円の積立で2020年から始めた場合の元本はいくらですか？", a: "2020年1月スタートから現在（2025年6月）まで積み立てた場合、元本は月3万円×約65ヶ月=約195万円程度です。上記各銘柄の評価額と比較することで、実際に増えた金額を確認できます。" },
     { q: "2020年積立開始の投資家がするべきこととは？", a: "2020年開始の方は既に5年以上の積立実績があり、複利効果が蓄積されています。基本的には「定額積立を継続すること」が最善策です。下落局面でも積み立てを止めず、長期20〜30年の視点で資産形成を続けることが重要です。" },
   ],
   2021: [
     { q: "2021年から積み立てた場合、2022年の大幅下落は大きな痛手でしたか？", a: "2021年開始の方は、翌2022年に多くの銘柄が大幅下落（S&P500約−18%、NASDAQ100約−37%）を経験しました。ただし定額積立では下落時に安値で多くの口数を取得でき、2023年以降の回復で評価額が改善した方が多いです。上記シミュレーションで現在の状況をご確認ください。" },
     { q: "2021年開始組の現在の成績はどの銘柄が最も良いですか？", a: "上記ランキングをご確認ください。2021年は高値からのスタートでしたが、4年以上の積立継続により多くの銘柄でプラスのリターンになっています。" },
-    { q: "2021年はどの銘柄が最も下落しましたか？", a: "2022年の下落では、テック株集中型（NASDAQ100約−37%、FANG+約−44%）の落ち込みが大きく、2021年開始の方は一時大きな評価損を経験しました。一方、高配当系（VYM・SCHD）は比較的下落が小さく、2022年に強さを発揮しました。" },
+    { q: "2021年はどの銘柄が最も下落しましたか？", a: "2022年の下落では、テック株集中型（NASDAQ100約−37%、FANG+約−44%）の落ち込みが大きく、2021年開始の方は一時大きな評価損を経験しました。一方、検証済み月次データを使用する高配当ETFのVYMは、これらより下落が小さい結果でした。" },
     { q: "2021年開始の積立を2024年の新NISAにどう活かすべきですか？", a: "旧つみたてNISAで積み立てていた分は非課税期間（20年）が残っています。新NISAの枠は別枠として2024年から新たに使えるため、継続して活用することでさらなる非課税積立が可能です。" },
     { q: "2021年積立開始で今後の見通しはどうですか？", a: "将来の市場予測は誰にも正確にはできません。ただし長期積立では短期の上下よりも「継続することの複利効果」が重要です。2021年開始の方はまだ積立期間が4〜5年で、10〜20年の目標まで続けることが最大のポイントです。" },
   ],
   2022: [
     { q: "2022年はほぼ全銘柄が下落しましたが、積み立て開始して良かったですか？", a: "結果的には、2022年の下落相場で安値から積み立てを開始できたため、2023年以降の急回復で大きな恩恵を受けた年でもありました。特にNASDAQ100は2022年約−37%の後、2023年に約+53%と急回復しています。" },
-    { q: "2022年の最大の勝ち組と負け組はどの銘柄でしたか？", a: "2022年の年間リターンで最も下落が小さかったのはVYM（約−0.1%）・SCHD（約−3%）などの高配当系。最も下落したのはFANG+（約−44%）・NASDAQ100（約−33%）などのテック集中系でした。2022年開始の現在成績は上記ランキングをご確認ください。" },
+    { q: "2022年の最大の勝ち組と負け組はどの銘柄でしたか？", a: "2022年の年間リターンでは、検証済み月次データを使用する銘柄の中でVYM（約−0.1%）などの高配当系は下落が比較的小さく、FANG+（約−44%）・NASDAQ100（約−33%）などのテック集中系は下落が大きい結果でした。2022年開始の現在成績は上記ランキングをご確認ください。" },
     { q: "2022年は「最高の積立開始年」と言われる理由は？", a: "安値での積立スタートにより、その後の上昇相場での恩恵が大きいためです。積立投資は「安い時期に多くの口数を取得し、高い時期に評価額が膨らむ」構造を持っています。2022年の下落相場での積立は、まさにこの恩恵を最大限に受けるタイミングでした。" },
     { q: "2022年の暴落中に積み立てを止めなかった人はどうなりましたか？", a: "2022年の下落中も定額積立を継続した方は、安値での口数積み上げにより2023年の急回復で大きな利益を得やすい結果となりました。逆に下落時に積立をやめた方は、回復局面での恩恵が限定的になった可能性があります。" },
     { q: "2022年から積み立てていた場合の現在の評価額は？", a: "上記各銘柄のシミュレーション結果をご確認ください。2022年は下落年でしたが、その後の回復を含めた現在の累計リターンが表示されています。" },
@@ -54,7 +54,7 @@ const YEAR_FAQS: Record<number, { q: string; a: string }[]> = {
     { q: "2023年は高値圏でのスタートでしたが大丈夫でしたか？", a: "2023年に始めた方の成績は上記シミュレーションをご確認ください。2023年自体が高リターン年だったため、年初に積み立てを始めた方はその恩恵を受けています。2024年も引き続き高い水準が続いており、現時点ではプラスになっているケースが多いと思われます。" },
     { q: "2023年からNASDAQ100を積み立てた場合の特徴は？", a: "2023年はNASDAQ100が年間+53%という圧倒的なリターンを記録したため、2023年1月開始の積立は短期間で大きく評価額が増えました。ただしNASDAQ100は変動も大きいため、今後の下落局面でも継続できるか確認しておくことが重要です。" },
     { q: "新NISAが始まる前（2023年）に始めるべきでしたか？", a: "旧つみたてNISA（2023年まで）と新NISA（2024年〜）は別制度です。2023年以前に始めた方は旧制度の非課税枠を活用しつつ、2024年からの新NISA枠を別途活用できます。どちらのタイミングで始めても長期積立の本質は変わりません。" },
-    { q: "2023年から高配当株（SCHD・VYM）を積み立てた場合は？", a: "2023年の高配当系ETFは成長株に比べるとリターンが控えめでした（SCHD+6.8%、VYM+10.7%）。ただし配当収入を含めたトータルリターンや、下落耐性の高さを考慮すると長期保有での強みが発揮されます。上記シミュレーション結果と合わせてご確認ください。" },
+    { q: "2023年から高配当ETFのVYMを積み立てた場合は？", a: "検証済み月次データを使用するVYMは、2023年の円ベース暦年リターンが約+10.7%でした。2023年1月から現在までの積立結果は上記ランキングで確認できます。原典未検証の参考系列であるSCHDは数値順位に含めていません。" },
   ],
   2024: [
     { q: "2024年から積み立てを始めた場合の現在の結果は？", a: "上記ランキングをご確認ください。2024年は新NISA元年として多くの方が積立を開始した年です。年間リターンも米国株中心に高水準で、2024年開始の方も現時点でプラスになっているケースが多いと思われます。" },
@@ -87,6 +87,20 @@ export function generateStaticParams() {
   return SUPPORTED_YEARS.map((y) => ({ year: String(y) }));
 }
 
+function getRankedFunds(year: number) {
+  const requestedStart = monthKey(year, SIM_MONTH);
+  const requestedEnd = monthKey(CURRENT_YEAR, CURRENT_MONTH);
+
+  return FUND_LIST.filter((fund) => {
+    const definition = getReturnSeriesDefinition(fund.id);
+    return (
+      definition.quality === "A" &&
+      definition.startMonth <= requestedStart &&
+      definition.endMonth >= requestedEnd
+    );
+  });
+}
+
 const FROM_YEAR_LABEL: Record<number, string> = {
   2019: "コロナ前夜",
   2020: "コロナ直後",
@@ -111,8 +125,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!SUPPORTED_YEARS.includes(yearNum)) return {};
   const label = FROM_YEAR_LABEL[yearNum] ?? String(yearNum);
   const prefix = FROM_YEAR_DESC_PREFIX[yearNum] ?? `${year}年から`;
-  const title = `${year}年（${label}）から積み立てていたら？全銘柄リターンランキング`;
-  const description = `${prefix}${year}年から月3万円を全銘柄に積み立てた場合のリターンをランキング形式で公開。オルカン・S&P500・NASDAQ100など主要ファンドの実績を今すぐ確認→`;
+  const title = `${year}年（${label}）から積み立てていたら？検証済み銘柄リターンランキング`;
+  const description = `${prefix}${year}年から月3万円を検証済み銘柄に積み立てた場合のリターンをランキング形式で公開。オルカン・S&P500・NASDAQ100など主要ファンドの実績を今すぐ確認→`;
   return {
     title,
     description,
@@ -129,7 +143,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: `${BASE_URL}/api/og?fund=sp500&year=${year}&amount=30000`,
           width: 1200,
           height: 630,
-          alt: `${year}年から積み立てていたら？全銘柄リターン比較`,
+          alt: `${year}年から積み立てていたら？検証済み銘柄リターン比較`,
         },
       ],
     },
@@ -149,8 +163,8 @@ export default async function FromYearPage({ params }: Props) {
   const yearNum = Number(year);
   if (!SUPPORTED_YEARS.includes(yearNum)) notFound();
 
-  // 全銘柄シミュレーション → リターン率でソート
-  const ranked = FUND_LIST.map((fund) => {
+  // 同一期間を検証済み月次データで計算できる銘柄だけを順位付けする。
+  const ranked = getRankedFunds(yearNum).map((fund) => {
     const result = simulate({
       fundId: fund.id,
       startYear: yearNum,
@@ -160,9 +174,19 @@ export default async function FromYearPage({ params }: Props) {
     return { fund, result };
   }).sort((a, b) => b.result.returnRate - a.result.returnRate);
 
-  const winner = ranked[0];
+  const winner = ranked[0] ?? null;
   const yearContext = YEAR_CONTEXT[yearNum] ?? "";
-  const faqs = YEAR_FAQS[yearNum] ?? [];
+  const faqs = [...(YEAR_FAQS[yearNum] ?? [])];
+  if (yearNum === 2020 && winner) {
+    faqs.splice(3, 0, {
+      q: "月3万円の積立で2020年から始めた場合の元本はいくらですか？",
+      a: `2020年1月から${CURRENT_YEAR}年${CURRENT_MONTH}月まで、月初に${formatCurrency(SIM_AMOUNT)}を${winner.result.monthsElapsed}回積み立てた元本は${formatCurrencyFull(winner.result.totalPrincipal)}です。上記各銘柄の評価額と比較することで、運用による増減を確認できます。`,
+    });
+  }
+
+  const referenceFunds = FUND_LIST.filter(
+    (fund) => getReturnSeriesDefinition(fund.id).quality === "G"
+  );
 
   // 同年の各銘柄ページへのリンク（year-pagesに存在するもの）
   const yearPageLinks = YEAR_PAGES.filter((p) => p.year === yearNum);
@@ -215,7 +239,7 @@ export default async function FromYearPage({ params }: Props) {
                 className="text-2xl font-black text-white leading-tight"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
-                {year}年から積み立てていたら？<br />全銘柄リターンランキング
+              {year}年から積み立てていたら？<br />検証済み銘柄リターンランキング
               </h1>
             </div>
             <p className="text-sm text-zinc-400">
@@ -234,7 +258,15 @@ export default async function FromYearPage({ params }: Props) {
           </section>
 
           {/* ── 1位ハイライト ─────────────────────────────────────── */}
-          <section
+          {winner ? <section
+            data-winner-fund-id={winner.fund.id}
+            data-start-year={yearNum}
+            data-start-month={SIM_MONTH}
+            data-end-year={CURRENT_YEAR}
+            data-end-month={CURRENT_MONTH}
+            data-monthly-amount={SIM_AMOUNT}
+            data-month-count={winner.result.monthsElapsed}
+            data-principal-yen={winner.result.totalPrincipal}
             className="rounded-2xl p-5 space-y-3"
             style={{
               background: `${winner.fund.color}12`,
@@ -270,7 +302,11 @@ export default async function FromYearPage({ params }: Props) {
                 <p className="text-[10px] text-zinc-500">元本 {formatCurrency(winner.result.totalPrincipal)}</p>
               </div>
             </div>
-          </section>
+          </section> : (
+            <section className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
+              <p className="text-sm text-zinc-400">この期間を検証済みデータで計算できる銘柄はありません。</p>
+            </section>
+          )}
 
           {/* ── 全銘柄ランキング ─────────────────────────────────── */}
           <section>
@@ -278,9 +314,9 @@ export default async function FromYearPage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {year}年スタート・全銘柄リターンランキング
+              {year}年スタート・検証済み{ranked.length}銘柄リターンランキング
             </h2>
-            <div className="space-y-2">
+            <div className="space-y-2" data-ranked-count={ranked.length}>
               {ranked.map(({ fund, result }, i) => {
                 const isProfit = result.profit >= 0;
                 const yearPageSlug = FUND_ID_TO_YEAR_PAGE_SLUG[fund.id];
@@ -331,22 +367,55 @@ export default async function FromYearPage({ params }: Props) {
                 return hasYearPage ? (
                   <Link
                     key={fund.id}
+                    data-ranked-position={i + 1}
+                    data-ranked-fund-id={fund.id}
+                    data-ranked-quality={getReturnSeriesDefinition(fund.id).quality}
                     href={`/${yearPageSlug}/${yearNum}`}
                     className={baseClass + " hover:bg-white/[0.08]"}
                   >
                     {CardContent}
                   </Link>
                 ) : (
-                  <div key={fund.id} className={baseClass}>
+                  <div
+                    key={fund.id}
+                    data-ranked-position={i + 1}
+                    data-ranked-fund-id={fund.id}
+                    data-ranked-quality={getReturnSeriesDefinition(fund.id).quality}
+                    className={baseClass}
+                  >
                     {CardContent}
                   </div>
                 );
               })}
+              {ranked.length === 0 && (
+                <p className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-zinc-400">
+                  順位付けできる検証済み銘柄がありません。
+                </p>
+              )}
             </div>
             <p className="text-[10px] text-zinc-600 mt-3 text-center">
-              ※月3万円 / {year}年{SIM_MONTH}月〜現在の積立シミュレーション（積立タイムマシン調べ）
+              ※月3万円 / {year}年{SIM_MONTH}月〜{CURRENT_YEAR}年{CURRENT_MONTH}月 / 検証済み月次データを使用
             </p>
           </section>
+
+          {referenceFunds.length > 0 && (
+            <section className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] px-4 py-4 space-y-2">
+              <p className="text-xs font-bold text-amber-200">順位外の参考系列</p>
+              <p className="text-xs leading-relaxed text-zinc-400">
+                {referenceFunds.map((fund) => fund.shortName).join("・")}は原典未検証の参考データ（G品質）のため、数値順位には含めていません。
+              </p>
+              <div className="flex flex-wrap gap-3 text-xs">
+                {referenceFunds.map((fund) => (
+                  <Link key={fund.id} href={`/fund/${fund.id}`} className="text-amber-200 hover:text-amber-100">
+                    {fund.shortName}の商品情報
+                  </Link>
+                ))}
+                <Link href="/about/data-sources" className="text-amber-200 hover:text-amber-100">
+                  データ品質の詳細
+                </Link>
+              </div>
+            </section>
+          )}
 
           {/* ── 銘柄別の詳細ページ ───────────────────────────────── */}
           {yearPageLinks.length > 0 && (

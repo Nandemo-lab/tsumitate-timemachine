@@ -298,6 +298,64 @@ async function main() {
       }
     }
 
+    // --- /from/[year]: 元本・順位・品質の整合性 ---
+    if (/^\/from\/\d{4}$/.test(url)) {
+      const readNumericAttribute = (name) => {
+        const match = html.match(new RegExp(`${name}="(\\d+)"`));
+        return match ? Number(match[1]) : null;
+      };
+
+      const rankedCount = readNumericAttribute("data-ranked-count");
+      const rankedIds = [...html.matchAll(/data-ranked-fund-id="([^"]+)"/g)].map((m) => m[1]);
+      const rankedPositions = [...html.matchAll(/data-ranked-position="(\d+)"/g)].map((m) => Number(m[1]));
+      const rankedQualities = [...html.matchAll(/data-ranked-quality="([^"]+)"/g)].map((m) => m[1]);
+
+      if (rankedCount === null) {
+        report("ERROR", url, "開始年別ランキングの対象件数が出力されていません");
+      } else if (rankedCount !== rankedIds.length) {
+        report("ERROR", url, `開始年別ランキングの対象件数不一致: 表示=${rankedCount}, 行=${rankedIds.length}`);
+      }
+      if (rankedPositions.some((position, index) => position !== index + 1)) {
+        report("ERROR", url, "開始年別ランキングの順位が表示順と一致しません");
+      }
+      if (rankedQualities.length !== rankedIds.length || rankedQualities.some((quality) => quality !== "A")) {
+        report("ERROR", url, "開始年別ランキングにA品質以外の系列が含まれています");
+      }
+
+      const startYear = readNumericAttribute("data-start-year");
+      const startMonth = readNumericAttribute("data-start-month");
+      const endYear = readNumericAttribute("data-end-year");
+      const endMonth = readNumericAttribute("data-end-month");
+      const monthlyAmount = readNumericAttribute("data-monthly-amount");
+      const monthCount = readNumericAttribute("data-month-count");
+      const principal = readNumericAttribute("data-principal-yen");
+
+      if ([startYear, startMonth, endYear, endMonth, monthlyAmount, monthCount, principal].every(Number.isFinite)) {
+        const expectedMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+        const expectedPrincipal = expectedMonths * monthlyAmount;
+        if (monthCount !== expectedMonths || principal !== expectedPrincipal) {
+          report(
+            "ERROR",
+            url,
+            `開始年別ランキングの元本条件不一致: ${monthlyAmount}円×${expectedMonths}回=${expectedPrincipal}円（出力 ${principal}円 / ${monthCount}回）`
+          );
+        }
+
+        if (url === "/from/2020") {
+          const faqBlock = jsonLdBlocks.find((block) => block["@type"] === "FAQPage");
+          const principalFaq = faqBlock?.mainEntity?.find((item) => item.name?.includes("元本はいくら"));
+          const expectedPrincipalText = `${expectedPrincipal.toLocaleString("ja-JP")}円`;
+          if (!principalFaq?.acceptedAnswer?.text?.includes(expectedPrincipalText)) {
+            report("ERROR", url, `FAQ/JSON-LDの元本が計算条件と一致しません（期待 ${expectedPrincipalText}）`);
+          } else if (!html.includes(principalFaq.acceptedAnswer.text)) {
+            report("ERROR", url, "表示FAQとFAQ JSON-LDの回答が一致しません");
+          }
+        }
+      } else if (rankedCount > 0) {
+        report("ERROR", url, "開始年別ランキングの元本計算条件が不足しています");
+      }
+    }
+
     // --- 5. meta description ---
     const descMatch = html.match(/name="description"\s+content="([^"]*)"/);
     const desc = descMatch ? descMatch[1] : null;
