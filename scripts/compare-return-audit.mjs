@@ -136,6 +136,29 @@ if (!beginnerGuide.sections?.some((section) => section.body.includes(formatAnnua
 const schdPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-sp500");
 const schdDrawdownFaq = schdPage.faqs.find((faq) => faq.q === "暴落時に強いのはSCHDとS&P500どちらですか？");
 if (!schdDrawdownFaq.a.includes(formatAnnualReturn("sp500", 2022)) || !schdDrawdownFaq.a.includes("G品質") || /約−18%|約-18%/.test(schdDrawdownFaq.a)) throw new Error("SCHD/S&P500 quality-aware return explanation mismatch");
+const orcanNasdaqArticle = read("content/articles/orukan-vs-nasdaq100.tsx");
+for (const reference of [
+  'formatAnnualReturn("orcan", 2020)',
+  'formatAnnualReturn("orcan", 2022)',
+  'formatAnnualReturn("orcan", 2023)',
+  'formatAnnualReturn("nasdaq100", 2020)',
+  'formatAnnualReturn("nasdaq100", 2022)',
+  'formatAnnualReturn("nasdaq100", 2023)',
+  'formatExpenseRatio("orcan")',
+  'formatExpenseRatio("nasdaq100")',
+  "FUNDS.orcan.shareCount",
+  "FUNDS.nasdaq100.shareCount",
+]) {
+  if (!orcanNasdaqArticle.includes(reference)) throw new Error(`orukan/NASDAQ100 article SSOT reference missing: ${reference}`);
+}
+if (/\+48\.8%|\+53\.8%|-33\.0%|2022年-33%|-18〜20%/.test(orcanNasdaqArticle)) throw new Error("orukan/NASDAQ100 article hard-coded return remains");
+if (!orcanNasdaqArticle.includes("最大下落率ではありません") || !orcanNasdaqArticle.includes("回復期間を示すものではありません")) throw new Error("orukan/NASDAQ100 return-type distinction missing");
+const schdSpArticle = read("content/articles/schd-vs-sp500.tsx");
+for (const reference of ['formatAnnualReturn("sp500", 2022)', 'formatExpenseRatio("schd")', 'formatExpenseRatio("sp500")', "FUNDS.schd.shareCount", "FUNDS.sp500.shareCount"]) {
+  if (!schdSpArticle.includes(reference)) throw new Error(`SCHD/S&P500 article SSOT reference missing: ${reference}`);
+}
+if (/約−3\.4%|約−18\.4%|S&P500の回復が速い/.test(schdSpArticle)) throw new Error("SCHD/S&P500 unverified direct comparison remains");
+if (!schdSpArticle.includes("G品質（参考データ・原典未検証）") || !schdSpArticle.includes("回復速度の優劣を実績として断定しません")) throw new Error("SCHD/S&P500 quality distinction missing");
 console.log(`PASS: fact corrections and return-type labels; independent guide value = ${Math.round(independentValue).toLocaleString()}円; annual figures match monthly ledgers`);
 
 if (process.argv.includes("--server")) {

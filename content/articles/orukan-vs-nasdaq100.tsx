@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
+import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -138,9 +139,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <SpecCard rows={[
           ["対象", "先進国23カ国＋新興国24カ国（約47カ国）"],
-          ["銘柄数", "約3,000銘柄（2025年時点）"],
+          ["銘柄数", FUNDS.orcan.shareCount],
           ["米国比率", "構成国で最大（比率は月次で変動）"],
-          ["信託報酬", "年0.05775%（業界最安水準）"],
+          ["信託報酬", formatExpenseRatio("orcan")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
@@ -156,13 +157,13 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <SpecCard rows={[
           ["対象", "米国ナスダック非金融上位100社"],
-          ["銘柄数", "約100銘柄"],
+          ["銘柄数", FUNDS.nasdaq100.shareCount],
           ["セクター比率", "テクノロジー中心（金融除く）"],
-          ["信託報酬", "年0.495%"],
+          ["信託報酬", formatExpenseRatio("nasdaq100")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          2020年+48.8%、2023年+53.8%など爆発的なリターンを記録する年がある一方、2022年は-33.0%と大幅下落した年もあります。ハイリターン・ハイボラティリティという特徴を理解した上で活用することが重要です。
+          2020年は{formatAnnualReturn("nasdaq100", 2020)}、2023年は{formatAnnualReturn("nasdaq100", 2023)}と高い暦年リターンを記録した一方、2022年は{formatAnnualReturn("nasdaq100", 2022)}でした。いずれも円ベース・分配金再投資込みの暦年リターンであり、年中の最大下落率ではありません。
         </p>
       </section>
 
@@ -185,11 +186,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             <tbody className="divide-y divide-white/[0.05]">
               {[
                 ["対象国",     "約47カ国（全世界）",     "米国のみ"],
-                ["銘柄数",     "約3,000銘柄",           "約100銘柄"],
+                ["銘柄数",     FUNDS.orcan.shareCount,    FUNDS.nasdaq100.shareCount],
                 ["分散度",     "◎ 地域・業種とも分散",   "△ テック業種に集中"],
                 ["過去リターン", "○ 安定的な水準",       "◎ 好調期は圧倒的に高い"],
-                ["信託報酬",   "0.05775%",              "0.495%"],
-                ["下落時の振れ幅", "比較的穏やか",       "非常に大きい（2022年-33%）"],
+                ["信託報酬",   formatExpenseRatio("orcan"), formatExpenseRatio("nasdaq100")],
+                ["2022年の暦年リターン", formatAnnualReturn("orcan", 2022), formatAnnualReturn("nasdaq100", 2022)],
                 ["向いている使い方", "コア（主力）向き",  "サテライト（一部）向き"],
               ].map(([k, o, s]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
@@ -202,7 +203,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </table>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※信託報酬はeMAXIS Slim全世界株式（オール・カントリー）、iFreeNEXT NASDAQ100インデックスの2025年6月時点の税込数値。
+          ※暦年リターンは円ベース・分配金再投資込みで、年中の高値から安値までの最大下落率ではありません。信託報酬はeMAXIS Slim全世界株式（オール・カントリー）、iFreeNEXT NASDAQ100インデックスの2025年6月時点の税込数値。
         </p>
       </section>
 
@@ -260,20 +261,20 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {[
             {
               event: "コロナショック（2020年2〜3月）",
-              body: "両者ともに急落しましたが、NASDAQ100の方が下落幅・回復速度ともに大きく、その後のテック株主導の急回復では圧倒的なリターンを記録しました。",
-              diff: "NASDAQ100の方が振れ幅大",
+              body: `2020年の円ベース・分配金再投資込みの暦年リターンは、オルカンが${formatAnnualReturn("orcan", 2020)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2020)}でした。暦年リターンだけでは、年中の最大下落率や回復までの期間は判断できません。`,
+              diff: "年中の下落・回復期間とは別の指標",
               diffColor: "text-violet-400",
             },
             {
               event: "インフレ・利上げショック（2022年）",
-              body: "NASDAQ100は約-33.0%の大幅下落。オルカンは-18〜20%程度に留まりました。金利上昇局面ではグロース株中心のNASDAQ100が特に大きな影響を受けます。",
+              body: `2022年の円ベース・分配金再投資込みの暦年リターンは、オルカンが${formatAnnualReturn("orcan", 2022)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}でした。これは年中の最大下落率ではありません。`,
               diff: "NASDAQ100が大きく劣後",
               diffColor: "text-amber-400",
             },
             {
               event: "2023年のテック株回復局面",
-              body: "AI関連銘柄の急成長を背景に、NASDAQ100は+53.8%という高い回復を見せました。オルカンも上昇しましたが、回復幅では大きな差がつきました。",
-              diff: "NASDAQ100の回復力が際立つ",
+              body: `2023年の円ベース・分配金再投資込みの暦年リターンは、オルカンが${formatAnnualReturn("orcan", 2023)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2023)}でした。単年の暦年リターンは、下落前の水準までの回復期間を示すものではありません。`,
+              diff: "NASDAQ100の暦年リターンが上回った年",
               diffColor: "text-emerald-400",
             },
           ].map((item, i) => (

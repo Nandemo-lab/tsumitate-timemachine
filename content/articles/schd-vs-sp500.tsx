@@ -9,7 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { formatExpenseRatio } from "@/lib/funds";
+import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -140,7 +140,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <SpecCard rows={[
           ["対象", "米国高配当株（財務優良約100社）"],
-          ["銘柄数", "約100銘柄"],
+          ["銘柄数", FUNDS.schd.shareCount],
           ["配当利回り", "約3.5〜4.0%（目安）"],
           ["経費率", formatExpenseRatio("schd")],
           ["商品形態", "USD建て米国ETF"],
@@ -159,7 +159,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <SpecCard rows={[
           ["対象", "米国大型株500社（全業種）"],
-          ["銘柄数", "500銘柄"],
+          ["銘柄数", FUNDS.sp500.shareCount],
           ["配当利回り", "約1.2〜1.5%（目安）"],
           ["信託報酬", formatExpenseRatio("sp500")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
@@ -188,7 +188,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             <tbody className="divide-y divide-white/[0.05]">
               {[
                 ["投資対象",     "米国高配当株（財務優良約100社）", "米国大型株500社（全業種）"],
-                ["銘柄数",       "約100銘柄",                      "500銘柄"],
+                ["銘柄数",       FUNDS.schd.shareCount,             FUNDS.sp500.shareCount],
                 ["配当利回り",   "約3.5〜4.0%",                    "約1.2〜1.5%"],
                 ["リターン特性", "配当中心・値上がりやや低め",       "値上がり重視・配当は低め"],
                 ["リスク",       "中低",                            "中"],
@@ -240,8 +240,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </p>
           <ul className="space-y-1.5 pl-5">
             {[
-              "過去の成績ではS&P500がSCHDを上回っている期間が多い",
-              "SCHDはS&P500と比べて値動きが穏やかな傾向がある",
+              "S&P500は検証済み月次実績、SCHDは原典未検証の参考系列であり、同じ確度では比較できない",
+              "SCHDの参考値は、検証済み実績ランキングや優劣判断には使用しない",
               "開始年・期間によって差は変動する（特定の期間が未来を保証しない）",
             ].map((t, i) => (
               <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
@@ -263,14 +263,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {[
             {
               event: "インフレ・利上げショック（2022年）",
-              body: "2022年のSCHDは約−3.4%の下落に留まったのに対し、S&P500は約−18.4%と大きく下落しました。財務優良な高配当株（公益・生活必需品・金融など）を多く含むSCHDは、テック株主導の下落局面で相対的に穏やかに推移しました。",
-              diff: "SCHDの下落幅が小さい",
+              body: `eMAXIS Slim 米国株式（S&P500）の2022年の円ベース・分配金再投資込みの暦年リターンは${formatAnnualReturn("sp500", 2022)}でした。一方、当サイトのSCHD系列はG品質（参考データ・原典未検証）のため、同じ条件・確度の数値として直接比較できません。暦年リターンは年中の最大下落率でもありません。`,
+              diff: "SCHDは検証済み数値との直接比較対象外",
               diffColor: "text-emerald-400",
             },
             {
               event: "コロナショック（2020年2〜3月）",
-              body: "両者ともに急落しましたが、その後の回復局面ではテクノロジー株の比率が高いS&P500の方が急速に回復しました。SCHDは財務優良株中心のため、回復ペースはS&P500よりやや緩やかでした。",
-              diff: "S&P500の回復が速い",
+              body: "コロナショック時の最大下落率や回復期間を、現在の検証済み月次台帳では同一条件で比較していません。SCHDはG品質のため、回復速度の優劣を実績として断定しません。",
+              diff: "回復期間は同一条件で未検証",
               diffColor: "text-amber-400",
             },
           ].map((item, i) => (
@@ -284,7 +284,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-zinc-300 leading-relaxed">
-            SCHDの下落耐性は過去の特定局面（2022年）で見られた傾向であり、あらゆる下落局面で同様の結果になるとは限りません。
+            高配当株中心という商品特性だけで、将来の下落耐性や回復速度が保証されるわけではありません。SCHDの検証済み月次実績が揃うまでは、S&amp;P500との数値比較を参考情報としても優劣判断に使用しません。
           </p>
         </div>
       </section>
@@ -394,7 +394,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {[
             {
               q: "SCHDとS&P500はトータルリターンでどちらが高いですか？",
-              a: "過去のデータではS&P500が上回る期間が多く見られます。SCHDは高い配当を出す分、株価の値上がりはS&P500より抑えられる傾向があります。ただし配当を再投資せず生活費に使う場合の「手取り収入」という観点ではSCHDが優位です。",
+              a: "当サイトでは、S&P500はA品質の検証済み月次実績、SCHDはG品質の原典未検証データです。このため、両者のトータルリターンの優劣を同じ確度で判定していません。配当を受け取るか再投資するかでも結果は変わります。",
             },
             {
               q: "配当投資とインデックス投資はどちらが得ですか？",
