@@ -4,7 +4,7 @@ import { VERIFIED_ANNUAL_JPY_RETURNS } from "@/lib/verified-return-series";
 export const FUND_CATEGORIES: Record<FundCategory, FundCategoryMeta> = {
   global:   { id: "global",   label: "全世界",   emoji: "🌍", description: "世界中の株式に分散投資" },
   us:       { id: "us",       label: "米国",     emoji: "🇺🇸", description: "米国株式市場に投資" },
-  dividend: { id: "dividend", label: "高配当",   emoji: "💰", description: "配当重視の安定運用" },
+  dividend: { id: "dividend", label: "高配当",   emoji: "💰", description: "配当を重視する株式商品" },
   hightech: { id: "hightech", label: "ハイテク", emoji: "🚀", description: "テック企業集中投資" },
   emerging: { id: "emerging", label: "新興国",   emoji: "🌏", description: "インド・新興国市場" },
 };

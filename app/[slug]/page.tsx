@@ -194,7 +194,7 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── For Whom ─────────────────────────────────────────── */}
           <section className="mb-12">
-            <SectionHeading>こんな人におすすめ</SectionHeading>
+            <SectionHeading>{returnDefinition.quality === "G" ? "商品選択時の確認ポイント" : "こんな人におすすめ"}</SectionHeading>
             <div
               className="rounded-2xl border border-white/10 p-5 space-y-3"
               style={{ background: "rgba(255,255,255,0.03)" }}

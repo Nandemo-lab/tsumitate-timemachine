@@ -108,7 +108,8 @@ if (read("lib/compare-pages.ts").includes("2015〜2025年平均")) throw new Err
 console.table(rows);
 console.log("PASS: 9 verified common-period CAGRs; independent log-compounding matches; G rejected; no legacy averages");
 
-const { FUNDS, formatAnnualReturn } = require(path.join(root, "lib/funds.ts"));
+const { FUNDS, FUND_CATEGORIES, formatAnnualReturn } = require(path.join(root, "lib/funds.ts"));
+const { FUND_SEO_MAP } = require(path.join(root, "lib/fund-seo.ts"));
 const { getGuidePage } = require(path.join(root, "lib/guide-pages.ts"));
 const guide = getGuidePage("tsumitate-nansnen-keizoku");
 const guideText = JSON.stringify(guide);
@@ -350,3 +351,25 @@ for (const label of ["ボラティリティ", "リスクレベル", "推奨投�
   if (!otherFundHtml.includes(label)) throw new Error(`Other fund section unexpectedly removed: ${label}`);
 }
 console.log("PASS: rendered SCHD assessment boundaries and other fund sections");
+
+// トップ階層 /schd と共有カテゴリ説明に、G品質からは判定できない安定性・優劣・推奨が戻っていないか検査。
+if (FUND_CATEGORIES.dividend.description !== "配当を重視する株式商品") {
+  throw new Error("dividend category description is not neutral");
+}
+const legacySchd = FUND_SEO_MAP.get("schd");
+const legacySchdText = JSON.stringify(legacySchd);
+for (const phrase of ["比較的安定した値動き", "中級者以上の方に向いています", "VYMより増配率・トータルリターン", "10年平均で年約11〜12%", "一般的な順序"]) {
+  if (legacySchdText.includes(phrase)) throw new Error(`legacy SCHD unsupported claim remains: ${phrase}`);
+}
+for (const phrase of ["G品質（参考データ・原典未検証）", "値動きの安定性", "適性は判定していません"]) {
+  if (!legacySchdText.includes(phrase)) throw new Error(`legacy SCHD evidence boundary missing: ${phrase}`);
+}
+const legacySchdHtml = read(".next/server/app/schd.html");
+const legacySchdBody = legacySchdHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, "");
+for (const phrase of ["比較的安定した値動き", "中級者以上の方に向いています", "VYMより増配率・トータルリターン", "10年平均で年約11〜12%", "こんな人におすすめ"]) {
+  if (legacySchdBody.includes(phrase)) throw new Error(`/schd rendered unsupported claim: ${phrase}`);
+}
+for (const phrase of ["商品選択時の確認ポイント", "G品質", "原典未検証", "適性は判定していません"]) {
+  if (!legacySchdBody.includes(phrase)) throw new Error(`/schd rendered boundary missing: ${phrase}`);
+}
+console.log("PASS: legacy /schd and dividend category evidence boundaries");
