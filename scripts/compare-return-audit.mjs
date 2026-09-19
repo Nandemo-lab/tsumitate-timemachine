@@ -20,6 +20,9 @@ Module._extensions[".ts"] = (module, filename) => {
 const { getVerifiedComparisonCagr } = require(path.join(root, "lib/compare-return-metrics.ts"));
 const { COMPARE_PAGES } = require(path.join(root, "lib/compare-pages.ts"));
 const { FUND_PAGES } = require(path.join(root, "lib/fund-seo-pages.ts"));
+const { GUIDE_PAGES } = require(path.join(root, "lib/guide-pages.ts"));
+const { RANKING_PAGES } = require(path.join(root, "lib/ranking-pages.ts"));
+const { YEAR_PAGES } = require(path.join(root, "lib/year-pages.ts"));
 const baselineModule = new Module(path.join(root, "lib/compare-pages-baseline.ts"));
 baselineModule.filename = path.join(root, "lib/compare-pages-baseline.ts");
 baselineModule.paths = Module._nodeModulePaths(path.join(root, "lib"));
@@ -32,6 +35,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (JSON.stringify(current[key]) !== JSON.stringify(previous[key])) throw new Error(`unexpected regression ${previous.slug} ${key}`);
   }
   const authorizedFaqs = {
+    "orukan-vs-sp500": ["初心者にはどちらが向いていますか？"],
     "sp500-vs-nasdaq100": ["リスクが高いのはS&P500とNASDAQ100のどちらですか？"],
     "nasdaq100-vs-fangplus": [
       "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
@@ -39,6 +43,14 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはNASDAQ100とFANG+のどちらですか？",
     ],
     "vti-vs-nasdaq100": ["暴落時に強いのはどちらですか？"],
+    "vti-vs-orukan": [
+      "VTIとオルカンの違いは何ですか？",
+      "分散性が高いのはVTIとオルカンのどちらですか？",
+    ],
+    "vti-vs-sp500": [
+      "VTIとS&P500の実績に大きな差はありますか？",
+      "VTIはS&P500より分散が効いていますか？",
+    ],
     "schd-vs-vym": [
       "配当金が多いのはSCHDとVYMのどちらですか？",
       "増配率が高いのはSCHDとVYMのどちらですか？",
@@ -373,3 +385,53 @@ for (const phrase of ["商品選択時の確認ポイント", "G品質", "原典
   if (!legacySchdBody.includes(phrase)) throw new Error(`/schd rendered boundary missing: ${phrase}`);
 }
 console.log("PASS: legacy /schd and dividend category evidence boundaries");
+
+// VTIの現在銘柄数はSSOTから生成し、旧固定値を本文・FAQ・生成HTMLへ戻さない。
+const vtiShareCount = FUNDS.vti.shareCount;
+const vtiSources = JSON.stringify({
+  legacy: FUND_SEO_MAP.get("vti"),
+  fund: FUND_PAGES.find((page) => page.fundId === "vti"),
+  compares: COMPARE_PAGES.filter((page) => page.fundAId === "vti" || page.fundBId === "vti"),
+  years: YEAR_PAGES.filter((page) => page.fundId === "vti"),
+  rankings: RANKING_PAGES,
+});
+for (const stale of ["約3,700銘柄", "約3700銘柄", "約4,000社", "約4,000", "3,700銘柄"]) {
+  if (vtiSources.includes(stale)) throw new Error(`stale VTI share count remains: ${stale}`);
+}
+for (const file of [
+  ".next/server/app/fund/vti.html",
+  ".next/server/app/vti.html",
+  ".next/server/app/compare/vti-vs-orukan.html",
+  ".next/server/app/compare/vti-vs-sp500.html",
+]) {
+  const html = read(file);
+  if (!html.includes(vtiShareCount)) throw new Error(`VTI SSOT share count missing: ${file}`);
+  for (const stale of ["約3,700銘柄", "約3700銘柄", "約4,000社", "約4,000"]) {
+    if (html.includes(stale)) throw new Error(`stale VTI share count rendered in ${file}: ${stale}`);
+  }
+}
+console.log(`PASS: VTI rendered share count matches SSOT (${vtiShareCount}); stale counts 0`);
+
+// 国内投信の商品設定前を含むように読める「過去10年」実績を対象ページへ戻さない。
+const periodSensitiveSources = JSON.stringify({
+  guides: GUIDE_PAGES.filter((page) => ["index-investing", "orukan-yameta-houga-ii"].includes(page.slug)),
+  legacyFunds: ["orukan", "sp500", "nasdaq100"].map((slug) => FUND_SEO_MAP.get(slug)),
+  fundPages: FUND_PAGES.filter((page) => ["orcan", "sp500", "nasdaq100"].includes(page.fundId)),
+  years: YEAR_PAGES.filter((page) => ["orcan", "sp500", "nasdaq100"].includes(page.fundId)),
+  rankings: RANKING_PAGES,
+});
+for (const phrase of ["過去10年平均", "過去10年のリターン", "過去10年は", "過去10年で最高水準", "過去10年で最も安定", "過去10〜20年で最も安定"]) {
+  if (periodSensitiveSources.includes(phrase)) throw new Error(`pre-inception performance wording remains: ${phrase}`);
+}
+for (const file of [
+  ".next/server/app/guide/index-investing.html",
+  ".next/server/app/fund/orukan.html",
+  ".next/server/app/fund/sp500.html",
+  ".next/server/app/fund/nasdaq100.html",
+]) {
+  const body = read(file).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, "");
+  for (const phrase of ["過去10年平均", "過去10年のリターン", "過去10年は", "過去10年で"]) {
+    if (body.includes(phrase)) throw new Error(`pre-inception performance wording rendered in ${file}: ${phrase}`);
+  }
+}
+console.log("PASS: targeted domestic-fund pages contain no pre-inception 10-year performance claims");
