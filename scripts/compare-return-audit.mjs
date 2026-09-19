@@ -23,6 +23,7 @@ const { FUND_PAGES } = require(path.join(root, "lib/fund-seo-pages.ts"));
 const { GUIDE_PAGES } = require(path.join(root, "lib/guide-pages.ts"));
 const { RANKING_PAGES } = require(path.join(root, "lib/ranking-pages.ts"));
 const { YEAR_PAGES } = require(path.join(root, "lib/year-pages.ts"));
+const { MONTHLY_PAGES } = require(path.join(root, "lib/monthly-pages.ts"));
 const baselineModule = new Module(path.join(root, "lib/compare-pages-baseline.ts"));
 baselineModule.filename = path.join(root, "lib/compare-pages-baseline.ts");
 baselineModule.paths = Module._nodeModulePaths(path.join(root, "lib"));
@@ -435,3 +436,42 @@ for (const file of [
   }
 }
 console.log("PASS: targeted domestic-fund pages contain no pre-inception 10-year performance claims");
+
+// 歴史的指数のイベント下落率と、商品実績・回復期間を混同しない。
+const crashGuides = ["sp500-booraku-taisho", "lehman-kyuu-tsumitate-kensho"].map(getGuidePage);
+const crashGuideText = JSON.stringify(crashGuides);
+for (const stale of ["回復まで約7年", "回復まで約5年", "回復まで5ヶ月", "回復まで約18ヶ月", "高値からの下落率-57%", "高値から約57%下落"]) {
+  if (crashGuideText.includes(stale)) throw new Error(`unverified recovery/drawdown claim remains: ${stale}`);
+}
+for (const required of ["ITバブル-47.4%", "世界金融危機-55.3%", "コロナショック-33.8%", "2022年弱気相場-23.4%", "米ドル建て・配当込み", "回復所要期間"] ) {
+  if (!crashGuideText.includes(required)) throw new Error(`historical drawdown definition missing: ${required}`);
+}
+for (const file of [
+  ".next/server/app/guide/sp500-booraku-taisho.html",
+  ".next/server/app/guide/lehman-kyuu-tsumitate-kensho.html",
+]) {
+  const html = read(file);
+  if (!html.includes("Natural Selection: Tactics and Strategy with Equity Sectors") || !html.includes("米ドル建て・配当込み")) {
+    throw new Error(`historical drawdown source/definition missing in ${file}`);
+  }
+}
+console.log("PASS: historical drawdown definitions are sourced; unverified recovery durations 0");
+
+// 月額ページでは購入順序・万人向け配分を断定せず、確認事項を示す。
+const monthlyText = JSON.stringify(MONTHLY_PAGES);
+for (const stale of ["まずは月1万円から始めて", "初心者はまずオルカン一本", "最もお得です", '「まずiDeCo・新NISAを両方フル活用」が最強', "残り月5万円の枠を使って", "一部（例：3〜5万円）は"]) {
+  if (monthlyText.includes(stale)) throw new Error(`prescriptive monthly-page sequence remains: ${stale}`);
+}
+for (const required of ["投資対象の重複", "資金を使う時期", "許容できる値動き", "年間投資枠", "NISA枠の再利用時期"]) {
+  if (!monthlyText.includes(required)) throw new Error(`neutral monthly-page decision factor missing: ${required}`);
+}
+console.log("PASS: monthly pages use neutral decision factors instead of a purchase sequence");
+
+// EEMの共有商品説明に、期間・比較系列が不明な「過去10年」優劣を戻さない。
+if (FUNDS.emerging.encyclopedia.cons.some((item) => item.includes("過去10年") || item.includes("先進国に大きく劣後"))) {
+  throw new Error("unsupported EEM 10-year comparison remains");
+}
+for (const required of ["地政学リスク・政治リスク", "国・通貨・政策変更の影響"]) {
+  if (!FUNDS.emerging.encyclopedia.cons.some((item) => item.includes(required))) throw new Error(`EEM neutral risk factor missing: ${required}`);
+}
+console.log("PASS: EEM shared description has no unsupported 10-year superiority claim");
