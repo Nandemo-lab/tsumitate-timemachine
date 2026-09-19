@@ -20,10 +20,10 @@ import type { ArticleMeta } from "@/lib/article-pages";
 
 export const meta: ArticleMeta = {
   slug: "schd-vs-sp500",
-  h1: "SCHDとS&P500どっち？配当重視と成長重視を過去実績で比較",
-  metaTitle: "SCHDとS&P500どっち？配当重視と成長重視、どちらが向いているかを比較",
+  h1: "SCHDとS&P500どっち？商品形態・分配方針・データ品質を比較",
+  metaTitle: "SCHDとS&P500どっち？商品形態・分配方針・データ品質を比較",
   metaDescription:
-    "米国ETF SCHDとS&P500連動投信の特徴・配当・値動きを比較。SCHDの実績値は原典検証中の参考データとして分離して表示します。",
+    "米国ETF SCHDとeMAXIS Slim 米国株式（S&P500）の商品形態・分配方針・費用を比較。SCHDの実績値は原典検証中の参考データとして分離します。",
   lastUpdated: "2026年7月",
   publishedAt: "2026-07-06",
   category: "比較コラム",
@@ -51,16 +51,16 @@ const simSp500Long = simulate({ fundId: "sp500", startYear: 2018, startMonth: 8,
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
 const TOC = [
-  "結論：どちらを選ぶべきか",
+  "結論：比較時の確認点",
   "SCHDとは？特徴と仕組み",
   "S&P500とは？特徴と仕組み",
   "SCHDとS&P500の違いを比較",
   "過去の積立シミュレーションで比較",
-  "2022年など暴落時の違い",
+  "下落局面の数値を読む際の注意",
   "配当金の違い",
-  "新NISAではどちらが向いているか",
-  "こんな人はSCHD",
-  "こんな人はS&P500",
+  "新NISAで確認する点",
+  "SCHDの商品属性",
+  "S&P500の商品属性",
   "よくある質問",
   "積立タイムマシンで実際に確かめよう",
 ];
@@ -84,7 +84,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {meta.h1}
         </h1>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          「配当を受け取りながら育てるSCHD」と「値上がり益で資産を最大化するS&P500」。どちらも新NISAで人気の米国株投資先ですが、リターンの出方や下落局面での動きに違いがあります。この記事では両者の違いを事実ベースで比較し、どちらが自分の投資目的に合っているかを判断する材料を提供します。
+          米国ETF SCHDと、円建て国内投信のeMAXIS Slim 米国株式（S&amp;P500）は、商品形態・銘柄選定・分配方針が異なります。この記事では確認できる商品属性を整理し、G品質のSCHD参考系列とA品質のS&amp;P500実績を同じ確度で扱わない前提で比較します。
         </p>
       </section>
 
@@ -111,7 +111,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 0. 結論 */}
       <section id="section-0" className="space-y-4">
-        <SectionHeading index={0} title="結論：どちらを選ぶべきか" />
+        <SectionHeading index={0} title="結論：比較時の確認点" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
@@ -127,7 +127,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             ))}
           </ul>
           <p className="text-xs text-zinc-500 leading-relaxed pt-1">
-            ※ どちらも米国株への投資であり、優劣を断定できるものではありません。配当収入を重視するか、資産の最大化を重視するかで選択が分かれます。
+            ※ どちらも米国株へ投資しますが、商品形態・通貨・分配方針が異なります。SCHDの参考系列から将来成果の優劣は判定しません。
           </p>
         </div>
       </section>
@@ -147,7 +147,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["データ品質", "G：参考データ・原典未検証"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          「配当を増やし続けられる財務優良企業」に的を絞っているのが特徴です。値上がり益より配当収入を重視する設計のため、S&P500と比べると株価の伸びは穏やかになる傾向があります。
+          財務比率や配当実績等を用いて構成銘柄を選定する指数への連動が特徴です。この商品設計だけから、S&amp;P500に対する値上がり幅や下落耐性の優劣は断定できません。
         </p>
       </section>
 
@@ -190,8 +190,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["投資対象",     "米国高配当株（財務優良約100社）", "米国大型株500社（全業種）"],
                 ["銘柄数",       FUNDS.schd.shareCount,             FUNDS.sp500.shareCount],
                 ["分配・配当",   "四半期分配（利回りは変動）",     "ファンド内で再投資"],
-                ["リターン特性", "配当中心・値上がりやや低め",       "値上がり重視・配当は低め"],
-                ["リスク",       "中低",                            "中"],
+                ["商品形態",     "USD建て米国ETF",                  "円建て国内投資信託"],
               ["信託報酬・経費率", formatExpenseRatio("schd"), formatExpenseRatio("sp500")],
                 ["NISA対応",     "○ 成長投資枠（投信もあり）",       "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
@@ -255,9 +254,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 5. 暴落時 */}
       <section id="section-5" className="space-y-4">
-        <SectionHeading index={5} title="2022年など暴落時の違い" />
+        <SectionHeading index={5} title="下落局面の数値を読む際の注意" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          下落局面での値動きの差は、この2商品を比較するうえで重要なポイントです。
+          S&amp;P500の円ベース暦年リターンは確認できますが、SCHDはG品質の参考系列です。月次値から日中の最大下落率や正確な回復期間を算出せず、下落耐性の優劣は判定しません。
         </p>
         <div className="space-y-3">
           {[
@@ -317,7 +316,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. 新NISA */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="新NISAではどちらが向いているか" />
+        <SectionHeading index={7} title="新NISAで確認する点" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           eMAXIS Slim 米国株式（S&amp;P500）は、つみたて投資枠と成長投資枠の対象です。米国ETF SCHDの取扱い・NISA区分は証券会社で確認が必要です。SCHDを主要投資対象とする国内投信は別商品で、商品ごとに取扱いと対象枠が異なります。
         </p>
@@ -341,16 +340,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はSCHD */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="こんな人はSCHD" />
+        <SectionHeading index={8} title="SCHDの商品属性" />
         <div className="rounded-xl bg-emerald-500/6 border border-emerald-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Coins className="h-4 w-4 text-emerald-400" />
-            <p className="text-sm font-bold text-emerald-200">SCHDが向いている人</p>
+            <p className="text-sm font-bold text-emerald-200">SCHDを確認する観点</p>
           </div>
           <ul className="space-y-2.5">
             {[
-              "配当という形で定期的な現金収入を得たい人",
-              "老後の生活費補填を見据えた運用を考えている人",
+              "四半期分配を行う商品設計を確認した人",
+              "USD建て米国ETFの売買・分配・税務を確認した人",
               "Dow Jones U.S. Dividend 100 Indexの銘柄選定方法を確認した人",
               "財務優良企業に絞った銘柄選定を重視する人",
             ].map((t, i) => (
@@ -365,18 +364,18 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 9. こんな人はS&P500 */}
       <section id="section-9" className="space-y-4">
-        <SectionHeading index={9} title="こんな人はS&P500" />
+        <SectionHeading index={9} title="S&P500の商品属性" />
         <div className="rounded-xl bg-amber-500/6 border border-amber-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Flag className="h-4 w-4 text-amber-400" />
-            <p className="text-sm font-bold text-amber-200">S&P500が向いている人</p>
+            <p className="text-sm font-bold text-amber-200">S&amp;P500を確認する観点</p>
           </div>
           <ul className="space-y-2.5">
             {[
               "分配金をファンド内で再投資する国内投信を利用したい人",
               "つみたて投資枠を使って新NISAをフル活用したい人",
-              "配当より値上がり益による複利効果を重視したい人",
-              "資産形成期（20〜50代）で長期積立を続けたい人",
+              "分配金再投資基準価額で検証された商品実績を確認した人",
+              "円建て国内投信として積立設定する商品性を確認した人",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-amber-400 font-bold flex-shrink-0">→</span>
@@ -406,7 +405,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               q: "SCHDとS&P500を両方持つのはありですか？",
-              a: "見られる組み合わせの一つです。S&P500で資産成長を狙いながら、SCHDで配当収入を確保する方法です。ただし両者は重複する銘柄も含まれるため、完全な分散にはならない点に注意が必要です。",
+              a: "両方を保有することはできますが、構成銘柄には重複があります。保有比率を決める際は、商品形態・分配方針・通貨と重複銘柄を確認してください。将来の資産成長や分配収入は保証されません。",
             },
           ].map((faq) => (
             <div
@@ -423,7 +422,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* まとめ */}
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">まとめ：配当重視と成長重視の違い</p>
+        <p className="text-xs font-bold text-zinc-300">まとめ：商品形態と分配方針の違い</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
           SCHDは四半期分配を行うUSD建て米国ETF、eMAXIS Slim 米国株式（S&amp;P500）はファンド内で分配金を再投資する円建て国内投信です。SCHDの系列はG品質のため、<strong className="text-zinc-200">両者のトータルリターンや将来の資産額の優劣は判定していません</strong>。
         </p>
@@ -436,7 +435,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={11} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           実際にSCHDとS&P500を同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
-          あなた自身の開始年・毎月の積立額で、リアルな数字を体感できます。
+          開始年・毎月の積立額を変え、参考値と検証済み実績の品質差を確認できます。
         </p>
         <Link
           href="/compare/schd-vs-sp500"

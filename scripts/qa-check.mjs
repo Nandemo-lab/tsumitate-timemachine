@@ -30,12 +30,15 @@ import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
 
-const APP_DIR = path.join(process.cwd(), ".next/server/app");
 const BASE_URL = "https://tsumitate-timemachine.com";
 
 const args = process.argv.slice(2);
 const serverFlagIndex = args.indexOf("--server");
 const SERVER_URL = serverFlagIndex !== -1 ? args[serverFlagIndex + 1] : null;
+const appDirFlagIndex = args.indexOf("--app-dir");
+const APP_DIR = appDirFlagIndex !== -1
+  ? path.resolve(args[appDirFlagIndex + 1])
+  : path.join(process.cwd(), ".next/server/app");
 
 // title/descriptionの文字数目安（外れはINFOのみ）
 const TITLE_MIN = 30;
@@ -161,8 +164,15 @@ function guessAffectedUrls(changedFiles, knownRoutes) {
           if (routeGuess !== "") affected.add(r);
         }
       }
+    } else if (f === "lib/compare-pages.ts") {
+      for (const r of knownRoutes) if (r.startsWith("/compare/")) affected.add(r);
+    } else if (f === "lib/fund-seo-pages.ts") {
+      for (const r of knownRoutes) if (r.startsWith("/fund/")) affected.add(r);
+    } else if (f === "lib/guide-pages.ts") {
+      for (const r of knownRoutes) if (r.startsWith("/guide/")) affected.add(r);
     } else if (f.startsWith("lib/") || f.startsWith("components/")) {
-      // 共有データ・共通コンポーネントの変更はサイト全体に影響しうるため個別ページには絞らない
+      // 共有定義の影響範囲を安全に限定できない場合は、既知の全ルートを表示対象にする。
+      for (const r of knownRoutes) affected.add(r);
     }
   }
   return affected;
@@ -178,6 +188,10 @@ async function main() {
   const files = collectHtmlFiles(APP_DIR).filter(
     (f) => !f.includes("_global-error") && !f.includes("_not-found")
   );
+  if (files.length === 0) {
+    console.error(`✗ 検査対象ページが0件です（${APP_DIR}）。ビルド完了後にQAを単独で実行してください。`);
+    process.exit(1);
+  }
   const known = buildKnownRoutes(files);
   const robots = readRobotsTxt();
 

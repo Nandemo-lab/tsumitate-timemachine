@@ -51,15 +51,15 @@ const simVymLong  = simulate({ fundId: "vym",  startYear: 2016, startMonth: 1, m
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
 const TOC = [
-  "結論：どちらを選ぶべきか",
+  "結論：比較時の確認点",
   "SCHDとは？特徴と仕組み",
   "VYMとは？特徴と仕組み",
   "SCHDとVYMの違いを比較",
   "過去の積立シミュレーションで比較",
   "分配方針と銘柄選定の違い",
-  "新NISAではどちらが向いているか",
-  "こんな人はSCHD",
-  "こんな人はVYM",
+  "新NISAで確認する点",
+  "SCHDの商品属性",
+  "VYMの商品属性",
   "積立タイムマシンで実際に確かめよう",
 ];
 
@@ -109,12 +109,12 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 0. 結論 */}
       <section id="section-0" className="space-y-4">
-        <SectionHeading index={0} title="結論：どちらを選ぶべきか" />
+        <SectionHeading index={0} title="結論：比較時の確認点" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
-              "財務比率等を用いて約100銘柄を選定する指数への連動を重視する場合はSCHDの設計を確認",
+              `財務比率等を用いて${FUNDS.schd.shareCount}を選定する指数への連動を重視する場合はSCHDの設計を確認`,
               "より広い銘柄分散を重視する場合はVYMの設計を確認",
               "分配利回りや増配率は基準日と集計期間をそろえて公式資料で確認",
             ].map((t, i) => (
@@ -137,8 +137,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。財務健全性や増配実績などを基準に銘柄を選定します。SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
         </p>
         <SpecCard rows={[
-          ["対象", "米国高配当株（財務優良100社）"],
-          ["銘柄数", "約100銘柄"],
+          ["対象", "米国高配当株（財務比率等で選定）"],
+          ["銘柄数", FUNDS.schd.shareCount],
           ["分配利回り", "時点により変動（公式値を確認）"],
           ["経費率", formatExpenseRatio("schd")],
         ]} />
@@ -154,10 +154,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           VYM（Vanguard High Dividend Yield ETF）は、バンガードが運用する米国高配当ETFです。配当利回りが平均以上の米国株、{FUNDS.vym.shareCount}に幅広く分散投資します。SCHDより銘柄数が多く、1社あたりの影響を受けにくい構造です。
         </p>
         <SpecCard rows={[
-          ["対象", "米国高配当株（約400社）"],
+          ["対象", `米国高配当株（${FUNDS.vym.shareCount}）`],
           ["銘柄数", FUNDS.vym.shareCount],
           ["分配利回り", "時点により変動（公式値を確認）"],
-          ["経費率", "年0.04%"],
+          ["経費率", formatExpenseRatio("vym")],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
           VYMはSCHDより多い銘柄へ分散します。ただし、銘柄数の違いだけで値動きの安定性や将来の成果は決まりません。
@@ -182,10 +182,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             </thead>
             <tbody className="divide-y divide-white/[0.05]">
               {[
-                ["投資対象",   "財務優良な高配当株100社",   "高配当株約400社"],
-                ["銘柄数",     "約100銘柄",                FUNDS.vym.shareCount],
+                ["投資対象",   "財務比率等で選定する高配当株", "配当利回りが平均以上の米国株"],
+                ["銘柄数",     FUNDS.schd.shareCount,       FUNDS.vym.shareCount],
                 ["分配利回り", "時点により変動",            "時点により変動"],
-                ["分散度",     "△ やや集中",               "◎ 広く分散"],
+                ["分散範囲",   `${FUNDS.schd.shareCount}に分散`, `${FUNDS.vym.shareCount}に分散`],
               ["経費率", formatExpenseRatio("schd"), formatExpenseRatio("vym")],
                 ["NISA対応",   "○ 成長投資枠（ETF）",       "○ 成長投資枠（ETF）"],
               ].map(([k, a, b]) => (
@@ -234,9 +234,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </p>
           <ul className="space-y-1.5 pl-5">
             {[
-              "過去の成績ではSCHDがVYMをやや上回っている期間が多い",
-              "両者ともS&P500やNASDAQ100と比べて値動きは穏やか",
-              "開始年・期間によって差は変動する（特定の期間が未来を保証しない）",
+              "VYMは検証済み月次実績、SCHDは原典未検証の参考系列で、表示差から優劣は判定できない",
+              "両者は銘柄選定方法と分散範囲が異なるが、その違いだけで値動きの大小は断定できない",
+              "開始年・期間によって参考結果は変わり、将来の成果を示すものではない",
             ].map((t, i) => (
               <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
             ))}
@@ -268,9 +268,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               diffColor: "text-emerald-400",
             },
             {
-              event: "銘柄集中度によるリスク",
-              body: `SCHDは約100銘柄への集中のため、個別銘柄の業績悪化の影響を受けやすい面があります。VYMは${FUNDS.vym.shareCount}と幅広く、1社の影響が相対的に小さくなります。`,
-              diff: "VYMの方が分散効果は大きい",
+              event: "銘柄数と組入比率",
+              body: `SCHDは${FUNDS.schd.shareCount}、VYMは${FUNDS.vym.shareCount}で構成されます。銘柄数と組入比率の違いはありますが、それだけで値動きや将来成果の優劣は決まりません。`,
+              diff: "構成銘柄と比率を公式資料で確認",
               diffColor: "text-sky-400",
             },
           ].map((item, i) => (
@@ -291,12 +291,12 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 6. 新NISA */}
       <section id="section-6" className="space-y-4">
-        <SectionHeading index={6} title="新NISAではどちらが向いているか" />
+        <SectionHeading index={6} title="新NISAで確認する点" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           米国ETF SCHDとVYMは、取扱証券会社や商品区分を確認したうえで検討する必要があります。SCHDを主要投資対象とする国内投信は別商品で、積立設定・費用・NISA区分も異なります。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          NISA口座では国内課税が非課税になりますが、米国側の外国源泉税（10%）は控除される点に注意が必要です。配当を非課税で受け取れることは変わらず、長期の配当投資との相性は良好です。
+          NISA口座で米国ETFを保有する場合も、米国側の外国源泉税や取扱証券会社の分配金処理を確認する必要があります。分配金を受け取るか再投資するかも含めて商品性を確認してください。
         </p>
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
           <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
@@ -304,8 +304,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "どちらも成長投資枠（ETF）またはそれに連動する投資信託で購入可能",
               "SCHDとVYMでは指数の銘柄選定方法と分散範囲が異なる",
-              "SCHDとVYMを組み合わせて保有する投資家も一定数いる",
-              "配当よりトータルリターンを重視するなら成長株型インデックスも選択肢",
+              "両方を保有する場合は、重複銘柄と全体の組入比率を確認する",
+              "商品を比較する際は、分配方針だけでなくトータルリターンの定義とデータ品質も確認する",
               "分配実績を比べる場合は、同じ基準日・期間・算出方法の公式資料を確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
@@ -319,11 +319,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. こんな人はSCHD */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="こんな人はSCHD" />
+        <SectionHeading index={7} title="SCHDの商品属性" />
         <div className="rounded-xl bg-emerald-500/6 border border-emerald-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Coins className="h-4 w-4 text-emerald-400" />
-            <p className="text-sm font-bold text-emerald-200">SCHDが向いている人</p>
+            <p className="text-sm font-bold text-emerald-200">SCHDを確認する観点</p>
           </div>
           <ul className="space-y-2.5">
             {[
@@ -343,18 +343,18 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はVYM */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="こんな人はVYM" />
+        <SectionHeading index={8} title="VYMの商品属性" />
         <div className="rounded-xl bg-sky-500/6 border border-sky-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Layers className="h-4 w-4 text-sky-400" />
-            <p className="text-sm font-bold text-sky-200">VYMが向いている人</p>
+            <p className="text-sm font-bold text-sky-200">VYMを確認する観点</p>
           </div>
           <ul className="space-y-2.5">
             {[
-              "より多くの銘柄に分散して安定を重視したい人",
-              "個別銘柄の業績悪化リスクを抑えたい人",
+              "より多くの銘柄へ分散する指数設計を確認した人",
+              "配当利回りが平均以上の米国株を幅広く保有する設計を確認した人",
               "配当利回りより幅広い分散を優先したい人",
-              "SCHDと組み合わせてポートフォリオを構築したい人",
+              "組入銘柄と比率を確認して保有商品との重複を判断したい人",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-sky-400 font-bold flex-shrink-0">→</span>
@@ -369,7 +369,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
         <p className="text-xs font-bold text-zinc-300">まとめ：銘柄選定方法と分散範囲の違い</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
-          SCHDは財務比率等を用いて約100銘柄を選定し、VYMはより幅広い銘柄へ分散します。SCHDのリターン系列はG品質のため、<strong className="text-zinc-200">未検証の増配率やトータルリターンを根拠に優劣を判定しません</strong>。
+          SCHDは財務比率等を用いて{FUNDS.schd.shareCount}を選定し、VYMは{FUNDS.vym.shareCount}へ分散します。SCHDのリターン系列はG品質のため、<strong className="text-zinc-200">未検証の増配率やトータルリターンを根拠に優劣を判定しません</strong>。
         </p>
       </div>
 
@@ -380,7 +380,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={9} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           実際にSCHDとVYMを同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
-          あなた自身の開始年・毎月の積立額で、リアルな数字を体感できます。
+          開始年・毎月の積立額を変え、参考値と検証済み実績の品質差を確認できます。
         </p>
         <Link
           href="/compare/schd-vs-vym"

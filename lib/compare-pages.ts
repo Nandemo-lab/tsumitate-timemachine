@@ -292,7 +292,6 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "投資対象",      a: "米国高配当株（財務優良100社）", b: "米国高配当株（約400社）" },
       { label: "銘柄数",        a: FUNDS.schd.shareCount,            b: FUNDS.vym.shareCount },
       { label: "分配利回り",    a: "時点により変動（公式値を確認）", b: "時点により変動（公式値を確認）" },
-      { label: "リスク",        a: "中低（★★）",                   b: "中低（★★）" },
       { label: "データ品質",    a: "G：参考データ・原典未検証",       b: "A：公式月次データ" },
       { label: "経費率",        a: formatExpenseRatio("schd"),      b: formatExpenseRatio("vym") },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",           b: "○ 成長投資枠（ETF）" },
@@ -511,8 +510,6 @@ export const COMPARE_PAGES: ComparePage[] = [
     specs: [
       { label: "投資対象",       a: "米国高配当株（財務優良約100社）", b: `米国大型株（${FUNDS.sp500.shareCount}）` },
       { label: "分配・配当",     a: "四半期分配（利回りは変動）",        b: "ファンド内で再投資" },
-      { label: "リターン特性",   a: "配当中心・値上がりやや低め",       b: "値上がり重視・配当は低め" },
-      { label: "リスク",         a: "中低（★★）",                     b: "中（★★★）" },
       { label: "商品形態",       a: "USD建て米国ETF",                    b: "円建て国内投資信託" },
       { label: "経費率・信託報酬", a: formatExpenseRatio("schd"),        b: formatExpenseRatio("sp500") },
       { label: "データ品質",     a: "G：参考データ・原典未検証",        b: "A：商品設定後の公式月次実績" },

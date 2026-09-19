@@ -201,7 +201,7 @@ const schdPublicText = [
   schdSpArticle,
   JSON.stringify(orcanSchdPage),
 ].join("\n");
-if (/11〜12%|6〜7%|3\.5〜4\.0%|2\.8〜3\.2%|1\.2〜1\.5%|S&P500が上回る期間が多い|資産最大化ではS&P500|SCHDが有利|SCHDには劣ります/.test(schdPublicText)) {
+if (/11〜12%|6〜7%|3\.5〜4\.0%|2\.8〜3\.2%|1\.2〜1\.5%|S&P500が上回る期間が多い|資産最大化ではS&P500|SCHDが有利|SCHDには劣ります|SCHDがVYMをやや上回っている期間が多い|S&P500やNASDAQ100と比べて値動きは穏やか|値上がり益で資産を最大化するS&P500|S&P500と比べると株価の伸びは穏やか|S&P500で資産成長を狙いながら/.test(schdPublicText)) {
   throw new Error("unverified SCHD yield, dividend-growth, or superiority claim remains in scoped pages");
 }
 for (const required of [
@@ -224,6 +224,11 @@ for (const required of [
 }
 if (orcanSchdPage.specs.some((spec) => spec.label === "2022年のリターン" || spec.label === "リスク")) {
   throw new Error("orukan/SCHD unverified return or risk grade remains in comparison specs");
+}
+for (const page of [schdVymPage, schdSpPage]) {
+  if (page.specs.some((spec) => spec.label === "リスク" || spec.label === "リターン特性")) {
+    throw new Error(`${page.slug} has an unverified risk or return grade`);
+  }
 }
 
 for (const [fundId, question, years] of [

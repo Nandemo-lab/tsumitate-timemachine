@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "qa": "node scripts/qa-check.mjs",
+    "qa:zero-page-audit": "node scripts/qa-zero-page-audit.mjs",
     "qa:live": "node scripts/qa-check.mjs --server http://localhost:3000",
     "new-article": "node scripts/new-article.mjs",
     "system-check-audit": "node scripts/system-check-audit.mjs",
