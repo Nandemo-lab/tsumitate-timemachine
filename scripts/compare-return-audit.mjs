@@ -51,6 +51,11 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはSCHDとS&P500どちらですか？",
       "SCHDとS&P500を両方持つのはありですか？",
     ],
+    "orukan-vs-schd": [
+      "暴落時に強いのはどちらですか？",
+      "オルカンとSCHDを両方持つのはありですか？",
+      "配当を再投資すればオルカンと同じ効果になりますか？",
+    ],
     "vt-vs-sp500": ["暴落時に強いのはどちらですか？"],
     "orukan-vs-fangplus": ["FANG+の大きな下落から回復するまでどのくらいかかりますか？"],
   };
@@ -61,7 +66,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (newFaq.q !== oldFaq.q) throw new Error(`FAQ question regression ${previous.slug}`);
     if (!(authorizedFaqs[previous.slug] ?? []).includes(oldFaq.q) && newFaq.a !== oldFaq.a) throw new Error(`unexpected FAQ regression ${previous.slug}`);
   }
-  const authorizedMetadata = new Set(["vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500"]);
+  const authorizedMetadata = new Set(["vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500", "orukan-vs-schd"]);
   if (!authorizedMetadata.has(previous.slug) && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
 }
 console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata changes limited to authorized fact corrections");
@@ -186,6 +191,7 @@ if (!orcanSpArticle.includes("最大下落率や回復期間ではありませ�
 
 const schdVymPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-vym");
 const schdSpPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-sp500");
+const orcanSchdPage = COMPARE_PAGES.find((page) => page.slug === "orukan-vs-schd");
 const schdFundPage = FUND_PAGES.find((page) => page.fundId === "schd");
 const schdPublicText = [
   JSON.stringify(schdVymPage),
@@ -193,6 +199,7 @@ const schdPublicText = [
   JSON.stringify(schdFundPage),
   read("content/articles/schd-vs-vym.tsx"),
   schdSpArticle,
+  JSON.stringify(orcanSchdPage),
 ].join("\n");
 if (/11〜12%|6〜7%|3\.5〜4\.0%|2\.8〜3\.2%|1\.2〜1\.5%|S&P500が上回る期間が多い|資産最大化ではS&P500|SCHDが有利|SCHDには劣ります/.test(schdPublicText)) {
   throw new Error("unverified SCHD yield, dividend-growth, or superiority claim remains in scoped pages");
@@ -203,6 +210,20 @@ for (const required of [
   "トータルリターンの優劣を同じ確度で判定していません",
 ]) {
   if (!schdPublicText.includes(required)) throw new Error(`SCHD evidence boundary missing: ${required}`);
+}
+const orcanSchdText = JSON.stringify(orcanSchdPage);
+if (/下げ幅が小さい傾向|値上がり局面ではオルカンに劣る|低〜中（★★）|人気の組み合わせ/.test(orcanSchdText)) {
+  throw new Error("orukan/SCHD unverified downside or superiority claim remains");
+}
+for (const required of [
+  "最大下落率・回復速度・下落耐性の優劣を同じ確度で判定していません",
+  "商品設計であることだけから、将来の下落幅が小さいとは断定できません",
+  "G：参考データ・原典未検証",
+]) {
+  if (!orcanSchdText.includes(required)) throw new Error(`orukan/SCHD evidence boundary missing: ${required}`);
+}
+if (orcanSchdPage.specs.some((spec) => spec.label === "2022年のリターン" || spec.label === "リスク")) {
+  throw new Error("orukan/SCHD unverified return or risk grade remains in comparison specs");
 }
 
 for (const [fundId, question, years] of [
