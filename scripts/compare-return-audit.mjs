@@ -19,6 +19,7 @@ Module._extensions[".ts"] = (module, filename) => {
 };
 const { getVerifiedComparisonCagr } = require(path.join(root, "lib/compare-return-metrics.ts"));
 const { COMPARE_PAGES } = require(path.join(root, "lib/compare-pages.ts"));
+const { FUND_PAGES } = require(path.join(root, "lib/fund-seo-pages.ts"));
 const baselineModule = new Module(path.join(root, "lib/compare-pages-baseline.ts"));
 baselineModule.filename = path.join(root, "lib/compare-pages-baseline.ts");
 baselineModule.paths = Module._nodeModulePaths(path.join(root, "lib"));
@@ -159,6 +160,45 @@ for (const reference of ['formatAnnualReturn("sp500", 2022)', 'formatExpenseRati
 }
 if (/約−3\.4%|約−18\.4%|S&P500の回復が速い/.test(schdSpArticle)) throw new Error("SCHD/S&P500 unverified direct comparison remains");
 if (!schdSpArticle.includes("G品質（参考データ・原典未検証）") || !schdSpArticle.includes("回復速度の優劣を実績として断定しません")) throw new Error("SCHD/S&P500 quality distinction missing");
+
+for (const [fundId, question, years] of [
+  ["sp500", "S&P500で大きく下落した年はありますか？", [2022, 2023]],
+  ["nasdaq100", "NASDAQ100のリスクはどのくらいですか？", [2022]],
+  ["fangplus", "FANG+のリスクはどのくらいですか？", [2022]],
+]) {
+  const page = FUND_PAGES.find((entry) => entry.fundId === fundId);
+  const faq = page?.faqs.find((entry) => entry.q === question);
+  if (!faq) throw new Error(`fund return FAQ missing ${fundId}`);
+  for (const year of years) {
+    if (!faq.a.includes(formatAnnualReturn(fundId, year))) throw new Error(`fund return FAQ SSOT mismatch ${fundId} ${year}`);
+  }
+  if (!faq.a.includes("円ベース・分配金再投資込みの暦年リターン") || !faq.a.includes("最大下落率")) {
+    throw new Error(`fund return type distinction missing ${fundId}`);
+  }
+}
+
+const fromSource = read("app/from/[year]/page.tsx");
+for (const reference of [
+  'formatAnnualReturn("sp500", 2019)',
+  'formatAnnualReturn("sp500", 2022)',
+  'formatAnnualReturn("nasdaq100", 2022)',
+  'formatAnnualReturn("fangplus", 2022)',
+  'formatAnnualReturn("nasdaq100", 2023)',
+  'formatAnnualReturn("fangplus", 2023)',
+  'formatAnnualReturn("orcan", 2024)',
+]) {
+  if (!fromSource.includes(reference)) throw new Error(`from page SSOT reference missing: ${reference}`);
+}
+for (const obsolete of ["S&P500が年間+31%", "S&P500約−18%", "NASDAQ100約−37%", "FANG+約−44%", "NASDAQ100が年間+53%", "年間50〜70%", "最高の買い場", "最大の勝ち組", "最善策", "安定して高いリターン", "複利効果が重要", "その恩恵を受けています", "長期では高いリターンを記録する傾向"]) {
+  if (fromSource.includes(obsolete)) throw new Error(`obsolete from page claim remains: ${obsolete}`);
+}
+
+const orcanGuide = getGuidePage("orukan-yameta-houga-ii");
+const orcanGuideText = JSON.stringify(orcanGuide);
+if (!orcanGuideText.includes(formatAnnualReturn("orcan", 2022)) || !orcanGuideText.includes("公式な円建て・分配金再投資基準価額")) {
+  throw new Error("orcan guide verified JPY data explanation missing");
+}
+if (orcanGuideText.includes("本サイトの過去比較値はドルベースの参考系列")) throw new Error("obsolete orcan data explanation remains");
 console.log(`PASS: fact corrections and return-type labels; independent guide value = ${Math.round(independentValue).toLocaleString()}円; annual figures match monthly ledgers`);
 
 if (process.argv.includes("--server")) {
@@ -201,5 +241,17 @@ if (process.argv.includes("--server")) {
     const html = await response.text();
     if (response.status !== 200 || !/<meta name="robots" content="noindex, follow"/.test(html) || /rel="canonical"/.test(html)) throw new Error(`${fundId} simulate regression`);
   }
+  for (const [fundId, years] of [["sp500", [2022, 2023]], ["nasdaq100", [2022]], ["fangplus", [2022]]]) {
+    const html = htmlByPath.get(`/fund/${fundId}`);
+    for (const year of years) {
+      if (!html?.includes(formatAnnualReturn(fundId, year))) throw new Error(`/fund/${fundId} rendered return mismatch ${year}`);
+    }
+  }
+  for (const year of [2019, 2020, 2021, 2022, 2023, 2024]) {
+    const html = htmlByPath.get(`/from/${year}`);
+    if (!html?.includes("円ベース・分配金再投資込みの暦年リターン")) throw new Error(`/from/${year} return definition missing`);
+  }
+  const orcanGuideHtml = htmlByPath.get("/guide/orukan-yameta-houga-ii");
+  if (!orcanGuideHtml?.includes(formatAnnualReturn("orcan", 2022)) || !orcanGuideHtml.includes("公式な円建て・分配金再投資基準価額")) throw new Error("orcan guide rendered data explanation mismatch");
   console.log("PASS: sitemap 99/99 direct 200; redirect/404/5xx/noindex/canonical errors 0; JSON-LD parse PASS; contextual links 5/5 once each; simulate noindex preserved");
 }

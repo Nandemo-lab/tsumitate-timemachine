@@ -1,5 +1,5 @@
 import { FundId } from "@/types";
-import { FUNDS, formatExpenseRatio } from "@/lib/funds";
+import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 
 export interface FundPageFaq {
   q: string;
@@ -103,7 +103,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "S&P500で大きく下落した年はありますか？",
-        a: "2022年は約−18%の下落を記録しましたが、2023年は約+26%と大きく回復しています。定額積立（ドルコスト平均法）では下落時に安く買い増しできるため、長期的には下落局面がプラスに働くことも多いです。",
+        a: `eMAXIS Slim 米国株式（S&P500）の円ベース・分配金再投資込みの暦年リターンは、2022年が${formatAnnualReturn("sp500", 2022)}、2023年が${formatAnnualReturn("sp500", 2023)}でした。暦年リターンは年中の高値から安値までの最大下落率や、下落前の水準までの回復期間を示すものではありません。`,
       },
     ],
   },
@@ -136,7 +136,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "NASDAQ100のリスクはどのくらいですか？",
-        a: "テクノロジーセクターへの集中度が高いため、S&P500より値動きが大きくなります。2022年には約33%の下落を記録しています。長期（10年以上）での保有と、下落相場でも積立を続けられる精神力が必要です。",
+        a: `テクノロジー関連企業への集中度が高く、値動きが大きくなる場合があります。iFreeNEXT NASDAQ100インデックスの2022年の円ベース・分配金再投資込みの暦年リターンは${formatAnnualReturn("nasdaq100", 2022)}でした。これは年中の最大下落率ではなく、将来の値動きを示すものでもありません。`,
       },
       {
         q: "NASDAQ100は初心者向けですか？",
@@ -294,7 +294,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "FANG+のリスクはどのくらいですか？",
-        a: "非常にリスクが高い商品です。10銘柄への集中投資のため、テック株全体が下落する局面では大きなダメージを受けます。2022年には約44%の下落を経験しています。余剰資金の一部をサテライト投資として使うのが一般的です。",
+        a: `10銘柄への集中投資のため、構成銘柄の値動きが基準価額へ大きく影響します。iFreeNEXT FANG+インデックスの2022年の円ベース・分配金再投資込みの暦年リターンは${formatAnnualReturn("fangplus", 2022)}でした。これは年中の最大下落率ではなく、将来の損失幅を示すものでもありません。`,
       },
       {
         q: "FANG+とNASDAQ100の違いは何ですか？",
