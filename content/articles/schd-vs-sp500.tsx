@@ -116,9 +116,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
-              "「配当を定期的な収入として受け取りたい」→ SCHDが向いている",
-              "「トータルリターン・資産の最大化を優先したい」→ S&P500が向いている",
-              "「どちらか迷っている」→ 資産形成期はS&P500、取り崩し期にSCHDという段階的な使い分けもある",
+              "四半期分配を行うUSD建て米国ETFを検討する場合はSCHDの商品性を確認",
+              "分配金をファンド内で再投資する円建て国内投信を利用したい場合はS&P500の商品性を確認",
+              "商品形態・通貨・分配方針が異なり、未検証の実績値から優劣や配分を決めない",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -141,7 +141,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SpecCard rows={[
           ["対象", "米国高配当株（財務優良約100社）"],
           ["銘柄数", FUNDS.schd.shareCount],
-          ["配当利回り", "約3.5〜4.0%（目安）"],
+          ["分配利回り", "時点により変動（公式値を確認）"],
           ["経費率", formatExpenseRatio("schd")],
           ["商品形態", "USD建て米国ETF"],
           ["データ品質", "G：参考データ・原典未検証"],
@@ -160,12 +160,12 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SpecCard rows={[
           ["対象", "米国大型株500社（全業種）"],
           ["銘柄数", FUNDS.sp500.shareCount],
-          ["配当利回り", "約1.2〜1.5%（目安）"],
+          ["分配方針", "ファンド内で再投資"],
           ["信託報酬", formatExpenseRatio("sp500")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          配当よりも企業の成長・値上がり益を反映する設計のため、配当利回りはSCHDより低めです。過去数十年にわたり世界の主要指数の中でも高いトータルリターンを記録してきた実績があります。
+          このページで扱うeMAXIS Slim 米国株式（S&amp;P500）は、分配金再投資基準価額を用いて商品設定後の実績を検証しています。米国ETF SCHDとは商品形態・通貨・分配方針が異なります。
         </p>
       </section>
 
@@ -189,7 +189,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               {[
                 ["投資対象",     "米国高配当株（財務優良約100社）", "米国大型株500社（全業種）"],
                 ["銘柄数",       FUNDS.schd.shareCount,             FUNDS.sp500.shareCount],
-                ["配当利回り",   "約3.5〜4.0%",                    "約1.2〜1.5%"],
+                ["分配・配当",   "四半期分配（利回りは変動）",     "ファンド内で再投資"],
                 ["リターン特性", "配当中心・値上がりやや低め",       "値上がり重視・配当は低め"],
                 ["リスク",       "中低",                            "中"],
               ["信託報酬・経費率", formatExpenseRatio("schd"), formatExpenseRatio("sp500")],
@@ -293,13 +293,13 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="配当金の違い" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          配当投資かインデックス投資かを選ぶ際、最も分かりやすい違いが配当利回りです。
+          SCHDは四半期分配を行う米国ETF、eMAXIS Slim 米国株式（S&amp;P500）はファンド内で分配金を再投資する円建て国内投信です。
         </p>
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
           <ul className="space-y-2">
             {[
-              "SCHDの配当利回りは約3.5〜4.0%（目安）で、四半期ごとに分配金を受け取れる",
-              "S&P500の配当利回りは約1.2〜1.5%（目安）で、値上がり益中心の設計",
+              "SCHDは四半期ごとに分配金を受け取る商品設計で、分配利回りは市場価格と分配実績により変動する",
+              "eMAXIS Slim 米国株式（S&P500）は分配金再投資基準価額で実績を検証している",
               "配当は受け取った時点で課税対象となり、再投資しない場合は複利効果が限定的になる",
               "NISA口座では国内課税は非課税になるが、米国側の外国源泉税（10%）は控除される",
             ].map((t, i) => (
@@ -311,7 +311,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </ul>
         </div>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          資産を最大化する観点では、配当を都度受け取るより値上がり益として保有し続ける方が複利効果を得やすいとされています。一方で、配当という形で現金収入を定期的に得られる点は、生活費の補填を目的とする場合に活用されています。
+          分配金を受け取るかファンド内で再投資するかにより、資金の受取方法と税務が異なります。将来の資産額は市場環境・税務・再投資の有無で変わるため、商品形態だけから優劣は断定できません。
         </p>
       </section>
 
@@ -327,8 +327,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "S&P500はつみたて投資枠・成長投資枠の両方で積立設定が可能",
               `米国ETF SCHDとSCHD連動国内投信は別商品で、NISA区分・費用・税務も異なる。${NISA_SYSTEM_DISCLAIMER}`,
-              "資産形成期はS&P500、取り崩し期にSCHDを組み合わせる段階的な使い分けもある",
-              "両方を組み合わせ、コアをS&P500・配当ポケットをSCHDとする配分も見られる",
+              "SCHDは分配金を受け取る米国ETF、S&P500投信はファンド内再投資という商品形態の違いがある",
+              "保有目的・税務・外貨での売買を確認し、一律の配分を前提にしない",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
                 <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -351,7 +351,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "配当という形で定期的な現金収入を得たい人",
               "老後の生活費補填を見据えた運用を考えている人",
-              "下落局面での値動きの穏やかさを重視したい人",
+              "Dow Jones U.S. Dividend 100 Indexの銘柄選定方法を確認した人",
               "財務優良企業に絞った銘柄選定を重視する人",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
@@ -373,7 +373,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "資産の最大化・トータルリターンを重視したい人",
+              "分配金をファンド内で再投資する国内投信を利用したい人",
               "つみたて投資枠を使って新NISAをフル活用したい人",
               "配当より値上がり益による複利効果を重視したい人",
               "資産形成期（20〜50代）で長期積立を続けたい人",
@@ -398,7 +398,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               q: "配当投資とインデックス投資はどちらが得ですか？",
-              a: "資産の最大化という観点では、配当に税金がかかる分だけ再投資効率が下がるため、S&P500のようなインデックス投資が有利とされています。一方SCHDは定期的な現金収入が得られるため、生活費補填や心理的な安定感という点で活用されています。",
+              a: "商品形態、分配金の扱い、税務、保有期間によって結果は変わります。SCHDは四半期分配を行う米国ETF、eMAXIS Slim 米国株式（S&P500）はファンド内で分配金を再投資する国内投信です。この違いだけから将来の資産額の優劣は断定できません。",
             },
             {
               q: "新NISAではSCHDとS&P500どちらが有利ですか？",
@@ -425,7 +425,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
         <p className="text-xs font-bold text-zinc-300">まとめ：配当重視と成長重視の違い</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
-          SCHDは配当収入を重視した安定志向、S&P500は資産の最大化を重視した成長志向という違いがあります。どちらが絶対に優れているという答えはなく、<strong className="text-zinc-200">配当という形の現金収入を重視するか、トータルリターンを重視するか</strong>で選択が分かれます。
+          SCHDは四半期分配を行うUSD建て米国ETF、eMAXIS Slim 米国株式（S&amp;P500）はファンド内で分配金を再投資する円建て国内投信です。SCHDの系列はG品質のため、<strong className="text-zinc-200">両者のトータルリターンや将来の資産額の優劣は判定していません</strong>。
         </p>
       </div>
 

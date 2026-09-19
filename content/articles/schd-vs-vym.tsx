@@ -20,8 +20,8 @@ import type { ArticleMeta } from "@/lib/article-pages";
 
 export const meta: ArticleMeta = {
   slug: "schd-vs-vym",
-  h1: "SCHDとVYMどっち？配当利回り・増配率・過去実績を徹底比較",
-  metaTitle: "SCHDとVYMどっち？配当利回り・増配率・どちらが向いているかを比較",
+  h1: "SCHDとVYMどっち？銘柄選定・分散範囲・商品設計を比較",
+  metaTitle: "SCHDとVYMどっち？銘柄選定・分散範囲・商品設計を比較",
   metaDescription:
     "米国ETF SCHDとVYMの配当方針・銘柄選定・コストを比較。SCHDの実績値は原典検証中の参考データとして分離して表示します。",
   lastUpdated: "2026年7月",
@@ -56,7 +56,7 @@ const TOC = [
   "VYMとは？特徴と仕組み",
   "SCHDとVYMの違いを比較",
   "過去の積立シミュレーションで比較",
-  "配当・増配率の違い",
+  "分配方針と銘柄選定の違い",
   "新NISAではどちらが向いているか",
   "こんな人はSCHD",
   "こんな人はVYM",
@@ -82,7 +82,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {meta.h1}
         </h1>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          米国高配当ETFの代表格として並んで語られる「SCHD」と「VYM」。どちらも配当収入を重視した投資先ですが、銘柄数の絞り込み方や増配率に違いがあります。この記事では両者の違いを事実ベースで比較し、どちらが自分の配当投資に向いているかを判断する材料を提供します。
+          米国高配当ETFのSCHDとVYMについて、指数の銘柄選定方法・分散範囲・費用を整理します。SCHDのリターン系列はG品質のため、検証済み実績による優劣は判定しません。
         </p>
       </section>
 
@@ -114,9 +114,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
-              "「増配率・トータルリターンを重視したい」→ SCHDが向いている",
-              "「より多くの銘柄に分散して安定を重視したい」→ VYMが向いている",
-              "「どちらか迷っている」→ 増配実績を重視するかどうかで選ぶ",
+              "財務比率等を用いて約100銘柄を選定する指数への連動を重視する場合はSCHDの設計を確認",
+              "より広い銘柄分散を重視する場合はVYMの設計を確認",
+              "分配利回りや増配率は基準日と集計期間をそろえて公式資料で確認",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -139,8 +139,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SpecCard rows={[
           ["対象", "米国高配当株（財務優良100社）"],
           ["銘柄数", "約100銘柄"],
-          ["配当利回り", "約3.5〜4.0%（目安）"],
-          ["増配率（10年平均）", "約11〜12%"],
+          ["分配利回り", "時点により変動（公式値を確認）"],
           ["経費率", formatExpenseRatio("schd")],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
@@ -157,12 +156,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SpecCard rows={[
           ["対象", "米国高配当株（約400社）"],
           ["銘柄数", FUNDS.vym.shareCount],
-          ["配当利回り", "約2.8〜3.2%（目安）"],
-          ["増配率（10年平均）", "約6〜7%"],
+          ["分配利回り", "時点により変動（公式値を確認）"],
           ["経費率", "年0.04%"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          幅広い銘柄に分散するため、SCHDと比べて安定感のある値動きが期待できます。一方で、増配率という点ではSCHDに一歩譲る傾向があります。
+          VYMはSCHDより多い銘柄へ分散します。ただし、銘柄数の違いだけで値動きの安定性や将来の成果は決まりません。
         </p>
       </section>
 
@@ -186,8 +184,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               {[
                 ["投資対象",   "財務優良な高配当株100社",   "高配当株約400社"],
                 ["銘柄数",     "約100銘柄",                FUNDS.vym.shareCount],
-                ["配当利回り", "約3.5〜4.0%",              "約2.8〜3.2%"],
-                ["増配率（10年平均）", "約11〜12%",         "約6〜7%"],
+                ["分配利回り", "時点により変動",            "時点により変動"],
                 ["分散度",     "△ やや集中",               "◎ 広く分散"],
               ["経費率", formatExpenseRatio("schd"), formatExpenseRatio("vym")],
                 ["NISA対応",   "○ 成長投資枠（ETF）",       "○ 成長投資枠（ETF）"],
@@ -202,7 +199,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </table>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※配当利回り・増配率は目安値。経費率はSCHD・VYMともに2025年6月時点の税込水準に基づく参考値。
+          ※分配利回りは市場価格と分配実績により変動します。購入時点の各運用会社公式ページで同じ基準日の値をご確認ください。経費率はSSOTの登録値です。
         </p>
       </section>
 
@@ -252,22 +249,22 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 5. 配当・増配率 */}
       <section id="section-5" className="space-y-4">
-        <SectionHeading index={5} title="配当・増配率の違い" />
+        <SectionHeading index={5} title="分配方針と銘柄選定の違い" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          配当投資では「今の利回り」だけでなく、「将来にわたって配当がどれだけ増えるか」という増配率も重要な判断材料になります。
+          分配実績を比べる場合は、対象期間・基準日・集計方法をそろえる必要があります。このページでは同一条件の一次資料による増配率を確認していないため、商品設計の違いに限定して整理します。
         </p>
         <div className="space-y-3">
           {[
             {
               event: "現在の配当利回り",
-              body: "SCHDは約3.5〜4.0%、VYMは約2.8〜3.2%が目安です。SCHDの方がやや高い利回りですが、株価変動により購入時点の実際の利回りは変わります。",
-              diff: "SCHDがやや高い",
+              body: "両ETFの分配利回りは市場価格と分配実績により変動します。同じ基準日の各運用会社公式ページで確認する必要があります。",
+              diff: "固定値では比較しない",
               diffColor: "text-emerald-400",
             },
             {
-              event: "10年平均の増配率",
-              body: "SCHDは年約11〜12%、VYMは年約6〜7%というデータがあります。増配率が高いほど、長期保有時の取得価格に対する利回り（YOC）が向上していきます。",
-              diff: "SCHDが大きく上回る",
+              event: "増配率の比較",
+              body: "増配率は対象期間、分配金の集計方法、基準日によって変わります。同一条件の一次資料を確認していない数値は掲載せず、公式資料で個別に確認します。",
+              diff: "数値による優劣は未判定",
               diffColor: "text-emerald-400",
             },
             {
@@ -287,7 +284,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-zinc-300 leading-relaxed">
-            配当利回り・増配率は市場環境により変動します。過去の実績が将来も継続する保証はなく、あくまで参考値としてご覧ください。
+            分配利回りと増配率は市場環境や集計期間により変動します。過去の値が将来も続くことや、トータルリターンの優劣を保証するものではありません。
           </p>
         </div>
       </section>
@@ -306,10 +303,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <ul className="space-y-2">
             {[
               "どちらも成長投資枠（ETF）またはそれに連動する投資信託で購入可能",
-              "配当を重視するならSCHD、分散を重視するならVYM",
+              "SCHDとVYMでは指数の銘柄選定方法と分散範囲が異なる",
               "SCHDとVYMを組み合わせて保有する投資家も一定数いる",
               "配当よりトータルリターンを重視するなら成長株型インデックスも選択肢",
-              "どちらを選んでも、長期保有が配当・増配の効果を活かす前提となる",
+              "分配実績を比べる場合は、同じ基準日・期間・算出方法の公式資料を確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
                 <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -330,9 +327,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "増配率・トータルリターンを重視したい人",
+              "財務比率等を用いる指数の銘柄選定方法を確認した人",
               "財務優良企業に絞った質の高い配当株を持ちたい人",
-              "長期保有で取得利回り（YOC）の向上を狙いたい人",
+              "四半期分配を行う米国ETFの商品性を理解している人",
               "米国ETFを外貨建てで保有する方法を理解している人",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
@@ -370,9 +367,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* まとめ */}
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">まとめ：増配率と分散度の違い</p>
+        <p className="text-xs font-bold text-zinc-300">まとめ：銘柄選定方法と分散範囲の違い</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
-          SCHDは財務優良企業に絞った高い増配率、VYMは幅広い銘柄への分散が特徴です。どちらが絶対に優れているという答えはなく、<strong className="text-zinc-200">増配ペースを重視するか、分散の広さを重視するか</strong>で選択が分かれます。
+          SCHDは財務比率等を用いて約100銘柄を選定し、VYMはより幅広い銘柄へ分散します。SCHDのリターン系列はG品質のため、<strong className="text-zinc-200">未検証の増配率やトータルリターンを根拠に優劣を判定しません</strong>。
         </p>
       </div>
 

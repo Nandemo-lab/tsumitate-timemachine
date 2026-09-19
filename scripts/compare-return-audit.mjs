@@ -39,7 +39,18 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはNASDAQ100とFANG+のどちらですか？",
     ],
     "vti-vs-nasdaq100": ["暴落時に強いのはどちらですか？"],
-    "schd-vs-sp500": ["暴落時に強いのはSCHDとS&P500どちらですか？"],
+    "schd-vs-vym": [
+      "配当金が多いのはSCHDとVYMのどちらですか？",
+      "増配率が高いのはSCHDとVYMのどちらですか？",
+      "長期保有に向いているのはSCHDとVYMのどちらですか？",
+    ],
+    "schd-vs-sp500": [
+      "SCHDとS&P500はトータルリターンでどちらが高いですか？",
+      "配当投資とインデックス投資はどちらが得ですか？",
+      "老後の資金づくりにはSCHDとS&P500どちらが向いていますか？",
+      "暴落時に強いのはSCHDとS&P500どちらですか？",
+      "SCHDとS&P500を両方持つのはありですか？",
+    ],
     "vt-vs-sp500": ["暴落時に強いのはどちらですか？"],
     "orukan-vs-fangplus": ["FANG+の大きな下落から回復するまでどのくらいかかりますか？"],
   };
@@ -50,9 +61,10 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (newFaq.q !== oldFaq.q) throw new Error(`FAQ question regression ${previous.slug}`);
     if (!(authorizedFaqs[previous.slug] ?? []).includes(oldFaq.q) && newFaq.a !== oldFaq.a) throw new Error(`unexpected FAQ regression ${previous.slug}`);
   }
-  if (previous.slug !== "vt-vs-sp500" && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
+  const authorizedMetadata = new Set(["vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500"]);
+  if (!authorizedMetadata.has(previous.slug) && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
 }
-console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata unchanged except authorized VT/S&P500 correction");
+console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata changes limited to authorized fact corrections");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const vtSource = read("lib/verified-monthly-return-series.ts");
 const array = (name) => vtSource.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\] as const;`))[1]
@@ -160,6 +172,38 @@ for (const reference of ['formatAnnualReturn("sp500", 2022)', 'formatExpenseRati
 }
 if (/約−3\.4%|約−18\.4%|S&P500の回復が速い/.test(schdSpArticle)) throw new Error("SCHD/S&P500 unverified direct comparison remains");
 if (!schdSpArticle.includes("G品質（参考データ・原典未検証）") || !schdSpArticle.includes("回復速度の優劣を実績として断定しません")) throw new Error("SCHD/S&P500 quality distinction missing");
+
+const orcanSpArticle = read("content/articles/orukan-vs-sp500.tsx");
+for (const reference of ['formatAnnualReturn("orcan", 2022)', 'formatAnnualReturn("sp500", 2022)']) {
+  if (!orcanSpArticle.includes(reference)) throw new Error(`orcan/S&P500 annual return SSOT reference missing: ${reference}`);
+}
+if (/約-30%|回復速度も同水準|S&P500は約-19%|-18〜20%|下落幅はほぼ同水準/.test(orcanSpArticle)) {
+  throw new Error("orcan/S&P500 unverified drawdown or recovery claim remains");
+}
+if (!orcanSpArticle.includes("最大下落率や回復期間ではありません") || !orcanSpArticle.includes("最大下落率・回復期間は未算出")) {
+  throw new Error("orcan/S&P500 metric distinction missing");
+}
+
+const schdVymPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-vym");
+const schdSpPage = COMPARE_PAGES.find((page) => page.slug === "schd-vs-sp500");
+const schdFundPage = FUND_PAGES.find((page) => page.fundId === "schd");
+const schdPublicText = [
+  JSON.stringify(schdVymPage),
+  JSON.stringify(schdSpPage),
+  JSON.stringify(schdFundPage),
+  read("content/articles/schd-vs-vym.tsx"),
+  schdSpArticle,
+].join("\n");
+if (/11〜12%|6〜7%|3\.5〜4\.0%|2\.8〜3\.2%|1\.2〜1\.5%|S&P500が上回る期間が多い|資産最大化ではS&P500|SCHDが有利|SCHDには劣ります/.test(schdPublicText)) {
+  throw new Error("unverified SCHD yield, dividend-growth, or superiority claim remains in scoped pages");
+}
+for (const required of [
+  "G：参考データ・原典未検証",
+  "同一条件の一次資料による増配率を確認していない",
+  "トータルリターンの優劣を同じ確度で判定していません",
+]) {
+  if (!schdPublicText.includes(required)) throw new Error(`SCHD evidence boundary missing: ${required}`);
+}
 
 for (const [fundId, question, years] of [
   ["sp500", "S&P500で大きく下落した年はありますか？", [2022, 2023]],

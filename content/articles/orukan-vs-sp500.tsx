@@ -9,7 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { formatExpenseRatio } from "@/lib/funds";
+import { formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -261,20 +261,20 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {[
             {
               event: "コロナショック（2020年2〜3月）",
-              body: "両者ともに約-30%前後の急落。回復速度も同水準で、米国テクノロジー株主導の急回復を両者ともに享受しました。この局面ではほぼ差はありませんでした。",
-              diff: "ほぼ差なし",
+              body: "現在の検証済み台帳は月末の月次データです。日中・日次の高値から安値までの最大下落率や、下落前の水準へ戻るまでの正確な期間は、このデータからは判定していません。",
+              diff: "最大下落率・回復期間は未算出",
               diffColor: "text-zinc-400",
             },
             {
               event: "インフレ・利上げショック（2022年）",
-              body: "米国グロース株が大きく下落し、S&P500は約-19%。オルカンも同水準の-18〜20%程度で推移しました。欧州や新興国も下落したため、地域分散の恩恵は限定的でした。",
-              diff: "ほぼ同等の下落",
+              body: `2022年の円ベース・分配金再投資込みの暦年リターンは、オルカンが${formatAnnualReturn("orcan", 2022)}、S&P500が${formatAnnualReturn("sp500", 2022)}でした。これは各年の年初から年末までの変化であり、年中の最大下落率や回復期間ではありません。`,
+              diff: "暦年リターンを同じ条件で比較",
               diffColor: "text-zinc-400",
             },
             {
-              event: "新興国・中国リスクが顕在化した局面",
-              body: "中国株の下落が大きかった2021〜2022年の一部期間では、新興国比率を持つオルカンの方がやや下落幅が大きい局面もありました。",
-              diff: "オルカンが若干不利な場合も",
+              event: "数値を読む際の注意",
+              body: "単年の暦年リターンが近くても、年中の値動き、最大下落率、回復までの期間が同じとは限りません。地域分散の有無だけから将来の下落耐性を断定することもできません。",
+              diff: "指標ごとに分けて確認",
               diffColor: "text-amber-400",
             },
           ].map((item, i) => (
@@ -288,7 +288,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-zinc-300 leading-relaxed">
-            過去の大きな下落局面では、オルカンとS&P500の下落幅はほぼ同水準でした。「オルカンの方が必ず安全」とは言えません。分散の効果は長期的に見て発揮されるものです。
+            オルカンとS&amp;P500はいずれも株式商品で、価格が大きく下がる可能性があります。上記の暦年リターンだけでは最大下落率や回復速度を比較できず、将来のリスクが同等であることも示しません。
           </p>
         </div>
       </section>
