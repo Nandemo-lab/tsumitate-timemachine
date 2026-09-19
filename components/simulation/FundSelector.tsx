@@ -86,19 +86,19 @@ export default function FundSelector({ value, onChange, label, accentColor }: Pr
                   className="h-1 w-5 rounded-full"
                   style={{ background: isSelected ? fund.color : "rgba(255,255,255,0.15)" }}
                 />
-                <div className="flex gap-0.5">
+                {fund.riskLevel !== null && <div className="flex gap-0.5">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
                       key={i}
                       className="h-1 w-1 rounded-full"
                       style={{
-                        background: i < fund.riskLevel
+                        background: i < (fund.riskLevel ?? 0)
                           ? (isSelected ? fund.color : "rgba(255,255,255,0.3)")
                           : "rgba(255,255,255,0.08)",
                       }}
                     />
                   ))}
-                </div>
+                </div>}
               </div>
               <p
                 className="font-heading text-sm font-semibold leading-tight"

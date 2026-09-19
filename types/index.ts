@@ -21,14 +21,14 @@ export interface FundEncyclopediaData {
   nickname: string;               // 通称（オルカン）
   formalName: string;             // 正式名称
   catchCopy: string;              // キャッチコピー
-  forWhom: string;                // こんな人向け
+  forWhom: string | null;         // nullは推奨対象を設定しない
   features: string[];             // 特徴タグ
   pros: string[];                 // メリット
   cons: string[];                 // デメリット・注意点
   managementFee: string;          // 信託報酬
-  beginnerScore: 1 | 2 | 3 | 4 | 5;  // 初心者向け度
-  volatility: "低" | "中" | "高" | "非常に高";
-  expectedHorizon: string;        // 推奨投資期間
+  beginnerScore: 1 | 2 | 3 | 4 | 5 | null;  // 初心者向け度。nullは未評価
+  volatility: "低" | "中" | "高" | "非常に高" | null;
+  expectedHorizon: string | null; // nullは推奨期間を設定しない
   nisaSupport: {
     tsumitate: boolean; // つみたて投資枠
     growth: boolean;    // 成長投資枠
@@ -43,7 +43,8 @@ export interface Fund {
   color: string;
   category: FundCategory;
   description: string;
-  riskLevel: 1 | 2 | 3 | 4 | 5;
+  /** nullは未評価。低リスクやゼロとして表示しない */
+  riskLevel: 1 | 2 | 3 | 4 | 5 | null;
   /** 構成銘柄数の表示用文字列（例: "約3,000銘柄"）。記事・比較ページはここを唯一の参照元とする */
   shareCount: string;
   annualReturns: Record<number, number>;

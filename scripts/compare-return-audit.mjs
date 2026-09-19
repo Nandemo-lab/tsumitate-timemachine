@@ -325,3 +325,28 @@ if (process.argv.includes("--server")) {
   if (!orcanGuideHtml?.includes(formatAnnualReturn("orcan", 2022)) || !orcanGuideHtml.includes("公式な円建て・分配金再投資基準価額")) throw new Error("orcan guide rendered data explanation mismatch");
   console.log("PASS: sitemap 99/99 direct 200; redirect/404/5xx/noindex/canonical errors 0; JSON-LD parse PASS; contextual links 5/5 once each; simulate noindex preserved");
 }
+
+
+// SCHDの共有説明値だけでなく、実際の生成ページに評価・推奨欄がないことを検査。
+for (const [field, value] of Object.entries({
+  riskLevel: FUNDS.schd.riskLevel,
+  beginnerScore: FUNDS.schd.encyclopedia.beginnerScore,
+  volatility: FUNDS.schd.encyclopedia.volatility,
+  expectedHorizon: FUNDS.schd.encyclopedia.expectedHorizon,
+  forWhom: FUNDS.schd.encyclopedia.forWhom,
+})) {
+  if (value !== null) throw new Error(`SCHD unverified assessment restored: ${field}`);
+}
+const schdHtml = read(".next/server/app/fund/schd.html");
+const schdBody = schdHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, "");
+for (const label of ["ボラティリティ", "リスクレベル", "推奨投資期間", "こんな人におすすめ", "VYMより質の高い", "高品質銘柄", "財務優良銘柄", "成長株より値上がり益が小さい"]) {
+  if (schdBody.includes(label)) throw new Error(`SCHD rendered unsupported assessment: ${label}`);
+}
+for (const required of [FUNDS.schd.encyclopedia.catchCopy, "G品質", "原典未検証", "リスク等級や下落耐性は判定していない"]) {
+  if (!schdBody.includes(required)) throw new Error(`SCHD rendered boundary missing: ${required}`);
+}
+const otherFundHtml = read(".next/server/app/fund/sp500.html");
+for (const label of ["ボラティリティ", "リスクレベル", "推奨投資期間", "こんな人におすすめ"]) {
+  if (!otherFundHtml.includes(label)) throw new Error(`Other fund section unexpectedly removed: ${label}`);
+}
+console.log("PASS: rendered SCHD assessment boundaries and other fund sections");

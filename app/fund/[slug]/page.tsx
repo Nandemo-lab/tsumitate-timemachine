@@ -233,9 +233,9 @@ export default async function FundPage({ params }: Props) {
                   ),
                 },
                 { label: "ボラティリティ", value: enc.volatility },
-                { label: "リスクレベル", value: RISK_LABELS[fund.riskLevel] },
+                { label: "リスクレベル", value: fund.riskLevel === null ? null : RISK_LABELS[fund.riskLevel] },
                 { label: "推奨投資期間", value: enc.expectedHorizon },
-              ].map(({ label, value }, i) => (
+              ].filter(({ value }) => value !== null).map(({ label, value }, i) => (
                 <div
                   key={label}
                   className={`grid grid-cols-2 px-4 py-3 gap-4 ${
@@ -393,7 +393,7 @@ export default async function FundPage({ params }: Props) {
           </section>
 
           {/* ── こんな人におすすめ ───────────────────────────────── */}
-          <section className="space-y-3">
+          {enc.forWhom && <section className="space-y-3">
             <h2
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
@@ -411,7 +411,7 @@ export default async function FundPage({ params }: Props) {
                 </div>
               ))}
             </div>
-          </section>
+          </section>}
 
           {/* ── よくある質問 ─────────────────────────────────────── */}
           <section>

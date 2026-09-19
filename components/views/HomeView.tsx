@@ -66,7 +66,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
 
   // 初心者向けランキング
   const beginnerRanking = useMemo(
-    () => [...FUND_LIST].sort((a, b) => b.encyclopedia.beginnerScore - a.encyclopedia.beginnerScore).slice(0, 4),
+    () => FUND_LIST.filter((fund) => fund.encyclopedia.beginnerScore !== null).sort((a, b) => (b.encyclopedia.beginnerScore ?? 0) - (a.encyclopedia.beginnerScore ?? 0)).slice(0, 4),
     []
   );
 
@@ -206,16 +206,16 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               {(pickEnc.nisaSupport.tsumitate || pickEnc.nisaSupport.growth) && (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300">NISA対応</span>
               )}
-              <div className="flex items-center gap-0.5 ml-auto">
+              {pickEnc.beginnerScore !== null && <div className="flex items-center gap-0.5 ml-auto">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star
                     key={j}
                     className="h-2.5 w-2.5"
-                    fill={j < pickEnc.beginnerScore ? "#f59e0b" : "none"}
-                    stroke={j < pickEnc.beginnerScore ? "#f59e0b" : "#52525b"}
+                    fill={j < (pickEnc.beginnerScore ?? 0) ? "#f59e0b" : "none"}
+                    stroke={j < (pickEnc.beginnerScore ?? 0) ? "#f59e0b" : "#52525b"}
                   />
                 ))}
-              </div>
+              </div>}
             </div>
 
             {/* 銘柄名（やや目立たせる） */}

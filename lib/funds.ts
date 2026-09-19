@@ -134,8 +134,8 @@ export const FUNDS: Record<FundId, Fund> = {
     id: "schd", category: "dividend",
     name: "Schwab U.S. Dividend Equity ETF",
     shortName: "SCHD", ticker: "schd.us",
-    color: "#059669", riskLevel: 2,
-    description: "配当を増やし続ける優良企業に投資できる",
+    color: "#059669", riskLevel: null,
+    description: "米国の配当株を対象とするETF",
     shareCount: "約100銘柄",
     annualReturns: {
       2015: -0.012, 2016: 0.173, 2017: 0.185, 2018: -0.074,
@@ -145,15 +145,15 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "SCHD",
       formalName: "Schwab U.S. Dividend Equity ETF（SCHD）",
-      catchCopy: "増配株に絞った、質の高い配当成長投資",
-      forWhom: "VYMより質の高い配当株に投資したい人・配当成長を重視する人",
-      features: ["💰 配当成長", "📈 高品質銘柄", "🛡️ 財務優良銘柄"],
+      catchCopy: "米国配当株指数への連動を目指すETF",
+      forWhom: null,
+      features: ["🇺🇸 米国株式", "📊 米国ETF", "💵 分配型"],
       pros: ["配当実績や財務指標等のルールで銘柄を選定", "約100銘柄へ分散", "Dow Jones U.S. Dividend 100 Indexへの連動を目指す"],
-      cons: ["米国上場ETFのため売買・為替の確認が必要", "配当重視のため成長株より値上がり益が小さい局面もある"],
+      cons: ["米国上場ETFのため売買・為替の確認が必要", "リターン系列はG品質・原典未検証で、リスク等級や下落耐性は判定していない"],
       managementFee: "0.060%（年率）",
-      beginnerScore: 3,
-      volatility: "低",
-      expectedHorizon: "10年以上",
+      beginnerScore: null,
+      volatility: null,
+      expectedHorizon: null,
       nisaSupport: { tsumitate: false, growth: true },
     },
   },
@@ -303,7 +303,7 @@ export const CATEGORY_ORDER: FundCategory[] = ["global", "us", "dividend", "high
 export function getFundTags(fund: Fund): string[] {
   const enc = fund.encyclopedia;
   const tags: string[] = [];
-  if (enc.beginnerScore >= 5) tags.push("初心者向け");
+  if (enc.beginnerScore !== null && enc.beginnerScore >= 5) tags.push("初心者向け");
   else if (fund.id === "sp500") tags.push("王道");
   if (fund.category === "hightech") tags.push("高リターン");
   if (fund.category === "us") tags.push("米国株");
@@ -311,6 +311,6 @@ export function getFundTags(fund: Fund): string[] {
   if (fund.category === "emerging") tags.push("新興国");
   const feeValue = parseFloat(enc.managementFee);
   if (!Number.isNaN(feeValue) && feeValue < 0.1) tags.push("低コスト");
-  if (enc.expectedHorizon.includes("10年")) tags.push("長期向け");
+  if (enc.expectedHorizon?.includes("10年")) tags.push("長期向け");
   return Array.from(new Set(tags)).slice(0, 2);
 }

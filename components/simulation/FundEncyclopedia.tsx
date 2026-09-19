@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId, FundCategory } from "@/types";
 import { FUNDS, FUND_CATEGORIES, CATEGORY_ORDER, getFundsByCategory } from "@/lib/funds";
@@ -184,7 +185,7 @@ function FundDetailCard({
           ))}
         </div>
 
-        <BeginnerScore score={enc.beginnerScore} />
+        {enc.beginnerScore !== null && <BeginnerScore score={enc.beginnerScore} />}
       </div>
 
       {/* Stats */}
@@ -193,21 +194,21 @@ function FundDetailCard({
           <p className="text-[10px] text-zinc-400 mb-0.5">信託報酬</p>
           <p className="text-xs font-bold text-zinc-300">{enc.managementFee}</p>
         </div>
-        <div>
+        {enc.volatility !== null && <div>
           <p className="text-[10px] text-zinc-400 mb-0.5">ボラティリティ</p>
           <p className="text-xs font-bold text-zinc-300">{enc.volatility}</p>
-        </div>
-        <div>
+        </div>}
+        {enc.expectedHorizon !== null && <div>
           <p className="text-[10px] text-zinc-400 mb-0.5">推奨期間</p>
           <p className="text-xs font-bold text-zinc-300">{enc.expectedHorizon}</p>
-        </div>
+        </div>}
       </div>
 
       {/* For whom */}
-      <div className="px-5 pb-3">
+      {enc.forWhom && <div className="px-5 pb-3">
         <p className="text-[10px] text-zinc-400 mb-1 font-black tracking-widest uppercase">こんな人向け</p>
         <p className="text-xs text-zinc-400 leading-relaxed">{enc.forWhom}</p>
-      </div>
+      </div>}
 
       {/* Pros/Cons */}
       <div className="px-5 pb-4 space-y-1.5">
@@ -217,7 +218,7 @@ function FundDetailCard({
             <p className="text-xs text-zinc-400">{p}</p>
           </div>
         ))}
-        {enc.cons.slice(0, 1).map((c) => (
+        {enc.cons.slice(0, fund.riskLevel === null ? enc.cons.length : 1).map((c) => (
           <div key={c} className="flex items-start gap-2">
             <AlertTriangle className="h-3.5 w-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
             <p className="text-xs text-zinc-400">{c}</p>
@@ -310,7 +311,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                           成長投資枠
                         </span>
                       )}
-                      <RiskBadge level={fund.riskLevel} />
+                      {fund.riskLevel !== null ? <RiskBadge level={fund.riskLevel} /> : <ReturnQualityPill fundId={fund.id} />}
                     </div>
                     <p className="text-[10px] text-zinc-400 truncate mt-0.5">{enc.formalName}</p>
                   </div>
