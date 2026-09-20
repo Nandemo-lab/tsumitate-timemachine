@@ -2,6 +2,8 @@ import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { FUNDS } from "@/lib/funds";
+import { getReturnSeriesDefinition } from "@/lib/return-series";
+import { getOgComparisonState } from "@/lib/og-comparison.mjs";
 import { FundId } from "@/types";
 
 export const runtime = "nodejs";
@@ -9,11 +11,6 @@ export const runtime = "nodejs";
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
 
-  const fundId = (searchParams.get("fund") ?? "sp500") as FundId;
-  const startYear = parseInt(searchParams.get("year") ?? "2020");
-  const startMonth = parseInt(searchParams.get("month") ?? "1");
-  const monthlyAmount = parseInt(searchParams.get("amount") ?? "30000");
-  const fundBId = (searchParams.get("fundB") ?? "") as FundId;
   // static=1 → default landing OGP (no simulation params needed)
   const isStatic = searchParams.get("static") === "1" || searchParams.size === 0;
 
@@ -158,11 +155,53 @@ export async function GET(req: NextRequest) {
   }
 
   // Dynamic: fund-specific result OGP
-  const fund = FUNDS[fundId] ?? FUNDS["sp500"];
-  const result = simulate({ fundId, startYear, startMonth, monthlyAmount });
-  const resultB = fundBId && FUNDS[fundBId]
-    ? simulate({ fundId: fundBId, startYear, startMonth, monthlyAmount })
+  const fundParam = searchParams.get("fund");
+  const fundBParam = searchParams.get("fundB");
+  const yearParam = searchParams.get("year") ?? "2020";
+  const monthParam = searchParams.get("month") ?? "1";
+  const amountParam = searchParams.get("amount") ?? "30000";
+  const startYear = Number(yearParam);
+  const startMonth = Number(monthParam);
+  const monthlyAmount = Number(amountParam);
+  const isFundId = (value: string | null): value is FundId => value !== null && Object.hasOwn(FUNDS, value);
+  const validNumbers =
+    Number.isInteger(startYear) &&
+    Number.isInteger(startMonth) && startMonth >= 1 && startMonth <= 12 &&
+    Number.isInteger(monthlyAmount) && monthlyAmount > 0;
+
+  if (!isFundId(fundParam) || (fundBParam !== null && !isFundId(fundBParam)) || !validNumbers) {
+    return new Response("Invalid OGP parameters", { status: 400 });
+  }
+
+  const fundId = fundParam;
+  const fundBId = fundBParam && isFundId(fundBParam) ? fundBParam : null;
+  const fund = FUNDS[fundId];
+  let result;
+  try {
+    result = simulate({ fundId, startYear, startMonth, monthlyAmount });
+  } catch {
+    return new Response("Unsupported OGP simulation period", { status: 422 });
+  }
+
+  let resultB = null;
+  if (fundBId) {
+    try {
+      resultB = simulate({ fundId: fundBId, startYear, startMonth, monthlyAmount });
+    } catch {
+      resultB = null;
+    }
+  }
+
+  const comparison = fundBId
+    ? getOgComparisonState({
+        a: result,
+        b: resultB,
+        qualityA: getReturnSeriesDefinition(fundId).quality,
+        qualityB: getReturnSeriesDefinition(fundBId).quality,
+      })
     : null;
+  const formatSignedCurrency = (value: number) => `${value >= 0 ? "+" : ""}${formatCurrency(value)}`;
+  const formatSignedPercent = (value: number) => `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`;
 
   const profitColor = result.profit >= 0 ? "#10b981" : "#ef4444";
   const fundColor = fund.color;
@@ -236,20 +275,20 @@ export async function GET(req: NextRequest) {
               flexDirection: "column",
             }}
           >
-            {resultB && (
+            {comparison?.labelA && (
               <div style={{ color: fundColor, fontSize: "13px", fontWeight: 900, marginBottom: "10px", display: "flex" }}>
-                🏆 WINNER
+                {comparison.labelA}
               </div>
             )}
             <div style={{ color: fundColor, fontSize: "28px", fontWeight: 900, marginBottom: "10px", display: "flex" }}>
               {fund.shortName}
             </div>
             <div style={{ color: profitColor, fontSize: "72px", fontWeight: 900, lineHeight: 1, display: "flex", letterSpacing: "-0.02em" }}>
-              +{formatCurrency(result.profit)}
+              {formatSignedCurrency(result.profit)}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "14px" }}>
               <span style={{ color: "#34d399", fontSize: "20px", fontWeight: 700, display: "flex" }}>
-                +{result.returnRate.toFixed(1)}%
+                {formatSignedPercent(result.returnRate)}
               </span>
               <span style={{ color: "#52525b", fontSize: "16px", display: "flex" }}>
                 現在資産 {formatCurrency(result.finalValue)}
@@ -258,7 +297,7 @@ export async function GET(req: NextRequest) {
           </div>
 
           {/* Fund B card */}
-          {resultB && (
+          {fundBId && (
             <div
               style={{
                 flex: 1,
@@ -270,17 +309,19 @@ export async function GET(req: NextRequest) {
                 flexDirection: "column",
               }}
             >
-              <div style={{ color: "#52525b", fontSize: "13px", fontWeight: 700, marginBottom: "10px", display: "flex" }}>
-                比較
+              <div style={{ color: FUNDS[fundBId].color, fontSize: "13px", fontWeight: 900, marginBottom: "10px", display: "flex" }}>
+                {comparison?.labelB ?? (resultB ? "比較" : "計算対象外")}
               </div>
-              <div style={{ color: FUNDS[fundBId]?.color ?? "#94a3b8", fontSize: "28px", fontWeight: 900, marginBottom: "10px", display: "flex" }}>
-                {FUNDS[fundBId]?.shortName}
+              <div style={{ color: FUNDS[fundBId].color, fontSize: "28px", fontWeight: 900, marginBottom: "10px", display: "flex" }}>
+                {FUNDS[fundBId].shortName}
               </div>
-              <div style={{ color: "#10b981", fontSize: "56px", fontWeight: 900, lineHeight: 1, display: "flex", letterSpacing: "-0.02em" }}>
-                +{formatCurrency(resultB.profit)}
+              <div style={{ color: resultB && resultB.profit < 0 ? "#ef4444" : "#10b981", fontSize: "56px", fontWeight: 900, lineHeight: 1, display: "flex", letterSpacing: "-0.02em" }}>
+                {resultB ? formatSignedCurrency(resultB.profit) : "—"}
               </div>
               <div style={{ color: "#52525b", fontSize: "16px", marginTop: "14px", display: "flex" }}>
-                差額 {formatCurrency(Math.abs(result.profit - resultB.profit))}
+                {resultB
+                  ? `${formatSignedPercent(resultB.returnRate)}　現在資産 ${formatCurrency(resultB.finalValue)}`
+                  : comparison?.note}
               </div>
             </div>
           )}
@@ -297,8 +338,8 @@ export async function GET(req: NextRequest) {
             borderTop: "1px solid rgba(255,255,255,0.07)",
           }}
         >
-          <div style={{ color: "#3f3f46", fontSize: "13px", display: "flex" }}>
-            ※A系列は検証済み月次実績。G系列は参考データとして品質を明示
+          <div style={{ color: "#52525b", fontSize: "13px", display: "flex" }}>
+            {comparison?.note ?? "※A系列は検証済み月次実績。G系列は参考データとして品質を明示"}
           </div>
           <div style={{ color: "#6366f1", fontSize: "17px", fontWeight: 900, display: "flex" }}>
             tsumitate-timemachine.com
