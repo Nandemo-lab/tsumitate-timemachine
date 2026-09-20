@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags, FUND_SHORT_DESC } from "@/lib/funds";
@@ -25,14 +25,22 @@ interface Props {
   onTaraeba: (fundId: FundId, startYear: number, startMonth: number, monthlyAmount: number) => void;
 }
 
-export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props) {
-  // SSR/初期hydrationは固定値にし、閲覧環境の日付はマウント後に反映する。
-  // サーバーUTCと日本時間の日付境界によるテキスト不一致を防ぐ。
-  const [todayPickIndex, setTodayPickIndex] = useState(0);
+const subscribeToJstDate = () => () => {};
+const getServerPickIndex = () => 0;
+const getJstPickIndex = () => {
+  const day = Number(
+    new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Tokyo", day: "numeric" }).format(new Date())
+  );
+  return day % FUND_LIST.length;
+};
 
-  useEffect(() => {
-    setTodayPickIndex(new Date().getDate() % FUND_LIST.length);
-  }, []);
+export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props) {
+  // SSR/hydrationは固定snapshot、hydration後はJSTの日付snapshotを使う。
+  const todayPickIndex = useSyncExternalStore(
+    subscribeToJstDate,
+    getJstPickIndex,
+    getServerPickIndex
+  );
 
   const taraeba = useMemo(
     () =>

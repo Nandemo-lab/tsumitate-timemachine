@@ -1,15 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { parseShareParams, ShareParams } from "@/lib/utils/shareUrl";
 
 export function useShareUrl(): ShareParams | null {
-  const [params, setParams] = useState<ShareParams | null>(null);
-
-  useEffect(() => {
-    const parsed = parseShareParams(window.location.search);
-    if (parsed) setParams(parsed);
-  }, []);
-
-  return params;
+  const searchParams = useSearchParams();
+  return useMemo(() => parseShareParams(searchParams.toString()), [searchParams]);
 }

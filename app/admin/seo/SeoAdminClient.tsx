@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect, Fragment } from "react";
+import { useState, useMemo, useCallback, useSyncExternalStore, Fragment } from "react";
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -28,6 +28,65 @@ interface ScRow {
 interface ScoreResult {
   stars: number; // 1-5
   reasons: string[];
+}
+
+const NOTES_STORAGE_KEY = "seo-admin-notes";
+const NOTES_CHANGE_EVENT = "seo-admin-notes-change";
+const EMPTY_NOTES: Record<string, string> = Object.freeze({});
+let cachedNotesRaw: string | null | undefined;
+let cachedNotes: Record<string, string> = EMPTY_NOTES;
+
+function parseStoredNotes(raw: string | null): Record<string, string> {
+  if (!raw) return EMPTY_NOTES;
+  try {
+    const value: unknown = JSON.parse(raw);
+    if (!value || typeof value !== "object" || Array.isArray(value)) return EMPTY_NOTES;
+    const entries = Object.entries(value).filter(
+      (entry): entry is [string, string] => typeof entry[1] === "string"
+    );
+    return entries.length > 0 ? Object.fromEntries(entries) : EMPTY_NOTES;
+  } catch {
+    return EMPTY_NOTES;
+  }
+}
+
+function getNotesSnapshot(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(NOTES_STORAGE_KEY);
+    if (raw !== cachedNotesRaw) {
+      cachedNotesRaw = raw;
+      cachedNotes = parseStoredNotes(raw);
+    }
+  } catch {
+    return cachedNotes;
+  }
+  return cachedNotes;
+}
+
+function subscribeToNotes(onStoreChange: () => void): () => void {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === NOTES_STORAGE_KEY) onStoreChange();
+  };
+  window.addEventListener("storage", onStorage);
+  window.addEventListener(NOTES_CHANGE_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("storage", onStorage);
+    window.removeEventListener(NOTES_CHANGE_EVENT, onStoreChange);
+  };
+}
+
+function writeNotes(next: Record<string, string>): void {
+  const raw = JSON.stringify(next);
+  try {
+    if (Object.keys(next).length > 0) localStorage.setItem(NOTES_STORAGE_KEY, raw);
+    else localStorage.removeItem(NOTES_STORAGE_KEY);
+  } catch {
+    // Storage can be unavailable (for example in a restricted browser mode).
+    // Keep the current tab usable even when persistence is unavailable.
+  }
+  cachedNotesRaw = Object.keys(next).length > 0 ? raw : null;
+  cachedNotes = Object.keys(next).length > 0 ? next : EMPTY_NOTES;
+  window.dispatchEvent(new Event(NOTES_CHANGE_EVENT));
 }
 
 type Tab = "list" | "duplicate" | "notes";
@@ -353,25 +412,14 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
-  const [notes, setNotes] = useState<Record<string, string>>({});
+  const notes = useSyncExternalStore(subscribeToNotes, getNotesSnapshot, () => EMPTY_NOTES);
   const [showTop5, setShowTop5] = useState(false);
 
-  // ⑩ 修正メモ: localStorage
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("seo-admin-notes");
-      if (stored) setNotes(JSON.parse(stored) as Record<string, string>);
-    } catch { /* ignore */ }
-  }, []);
-
   const saveNote = useCallback((path: string, text: string) => {
-    setNotes(prev => {
-      const next = { ...prev };
-      if (text.trim()) next[path] = text;
-      else delete next[path];
-      try { localStorage.setItem("seo-admin-notes", JSON.stringify(next)); } catch { /* ignore */ }
-      return next;
-    });
+    const next = { ...getNotesSnapshot() };
+    if (text.trim()) next[path] = text;
+    else delete next[path];
+    writeNotes(next);
   }, []);
 
   const applyCsv = useCallback(() => {
@@ -1136,8 +1184,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
               {Object.keys(notes).length > 0 && (
                 <button
                   onClick={() => {
-                    setNotes({});
-                    try { localStorage.removeItem("seo-admin-notes"); } catch { /* ignore */ }
+                    writeNotes(EMPTY_NOTES);
                   }}
                   className="text-[10px] text-red-400 hover:text-red-300"
                 >

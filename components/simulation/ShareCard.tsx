@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SimulationResult } from "@/types";
 import { formatCurrency } from "@/lib/simulation";
 import { Copy, Check } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { trackShareClick } from "@/lib/analytics";
 
@@ -16,10 +16,13 @@ interface Props {
   monthlyAmount: number;
 }
 
+const subscribeToClient = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export default function ShareCard({ planA, planB, startYear, startMonth, monthlyAmount }: Props) {
   const [copied, setCopied] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const mounted = useSyncExternalStore(subscribeToClient, getClientSnapshot, getServerSnapshot);
   const sorted = planB ? [planA, planB].sort((a, b) => b.profit - a.profit) : [planA];
   const winner = sorted[0];
   const loser = sorted[1];
