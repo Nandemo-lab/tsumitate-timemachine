@@ -465,6 +465,23 @@ for (const stale of ["まずは月1万円から始めて", "初心者はまず�
 for (const required of ["投資対象の重複", "資金を使う時期", "許容できる値動き", "年間投資枠", "NISA枠の再利用時期"]) {
   if (!monthlyText.includes(required)) throw new Error(`neutral monthly-page decision factor missing: ${required}`);
 }
+for (const stale of [
+  "数年で回復しています",
+  "今すぐ始めて長く続ける\"のが最善",
+  "暴落を乗り越える継続力",
+  "約8,000〜10,000万円",
+  "約7,400万円",
+  "約5,800万円",
+  "過去10〜20年のリターンではS&P500が上回っています",
+  "過去20年の年率リターンが約15%",
+  "相場の下落時に売却しない",
+  "ドルコスト平均法の効果を最大化する",
+]) {
+  if (monthlyText.includes(stale)) throw new Error(`unsupported monthly-page claim remains: ${stale}`);
+}
+for (const required of ["長期の仮定利回りによる将来予測ではありません", "回復時期や将来の利益は保証されません", "商品設定前を含む指数実績を商品の将来利回りとしては使用しません"]) {
+  if (!monthlyText.includes(required)) throw new Error(`monthly-page limitation missing: ${required}`);
+}
 console.log("PASS: monthly pages use neutral decision factors instead of a purchase sequence");
 
 // EEMの共有商品説明に、期間・比較系列が不明な「過去10年」優劣を戻さない。

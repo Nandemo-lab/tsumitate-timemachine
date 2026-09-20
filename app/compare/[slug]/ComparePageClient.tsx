@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { SimulationResult } from "@/types";
 import { formatCurrency } from "@/lib/simulation";
 import ComparisonChart from "@/components/simulation/ComparisonChart";
@@ -10,31 +9,8 @@ interface Props {
   resultB: SimulationResult;
 }
 
-function StatCard({
-  label,
-  value,
-  sub,
-  color,
-}: {
-  label: string;
-  value: string;
-  sub?: string;
-  color: string;
-}) {
-  return (
-    <div className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] p-4">
-      <span className="text-xs text-zinc-500">{label}</span>
-      <span className="text-xl font-bold tabular-nums" style={{ color }}>
-        {value}
-      </span>
-      {sub && <span className="text-xs text-zinc-400">{sub}</span>}
-    </div>
-  );
-}
-
 export default function ComparePageClient({ resultA, resultB }: Props) {
   const winner = resultA.profit >= resultB.profit ? resultA : resultB;
-  const loser  = resultA.profit >= resultB.profit ? resultB : resultA;
   const diff   = Math.abs(resultA.profit - resultB.profit);
 
   return (

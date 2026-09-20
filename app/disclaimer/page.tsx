@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, AlertTriangle } from "lucide-react";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {

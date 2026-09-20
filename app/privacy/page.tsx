@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, ShieldCheck } from "lucide-react";
-import { SITE_NAME, SITE_URL, LAST_UPDATED_PRIVACY } from "@/lib/site";
+import { SITE_URL, LAST_UPDATED_PRIVACY } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {

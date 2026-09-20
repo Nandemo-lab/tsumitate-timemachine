@@ -62,8 +62,7 @@ const LINK_CATS: Record<string, string[]> = {
 // ── ファイル更新日取得 ─────────────────────────────────────────────────
 function mtime(relPath: string): string {
   try {
-    // turbopackIgnore: true
-    const abs = nodePath.join(process.cwd(), relPath);
+    const abs = nodePath.join(/* turbopackIgnore: true */ process.cwd(), relPath);
     return fs.statSync(abs).mtime.toISOString().slice(0, 10);
   } catch {
     return "—";

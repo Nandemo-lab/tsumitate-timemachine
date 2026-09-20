@@ -9,7 +9,7 @@ import {
   Home,
 } from "lucide-react";
 import { getMonthlyPage, MONTHLY_PAGES, MONTHLY_SIM_YEAR, MONTHLY_SIM_MONTH } from "@/lib/monthly-pages";
-import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
+import { getComparePage } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -33,7 +33,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, amount } = await params;
   const page = getMonthlyPage(slug, amount);
   if (!page) return {};
-  const fund = FUNDS[page.fundId];
   const pathname = `/${page.fundSlug}/monthly/${page.amount}`;
   const keepIndexed = isProgrammaticIndexException(pathname);
   return {

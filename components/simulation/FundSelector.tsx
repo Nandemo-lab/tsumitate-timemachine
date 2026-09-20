@@ -13,7 +13,7 @@ interface Props {
   accentColor: string;
 }
 
-export default function FundSelector({ value, onChange, label, accentColor }: Props) {
+export default function FundSelector({ value, onChange, label }: Props) {
   const currentFund = FUNDS[value];
   const [activeCategory, setActiveCategory] = useState<FundCategory>(currentFund.category);
 

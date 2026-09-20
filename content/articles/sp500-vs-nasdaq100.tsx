@@ -261,8 +261,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {[
             {
               event: "コロナショック（2020年2〜3月）",
-              body: "両者ともに急落しましたが、下落幅・回復速度ともにNASDAQ100の方が大きく、その後のテック株主導の急回復では高いリターンを記録しました。",
-              diff: "NASDAQ100の方が振れ幅大",
+              body: `2020年の円ベース・分配金再投資込みの暦年リターンは、S&P500が${formatAnnualReturn("sp500", 2020)}、NASDAQ100が${formatAnnualReturn("nasdaq100", 2020)}でした。この暦年値から、コロナショック時の日次最大下落率や回復期間の優劣は判定できません。`,
+              diff: "暦年値と日次下落・回復は別指標",
               diffColor: "text-violet-400",
             },
             {

@@ -418,7 +418,7 @@ async function main() {
       report("WARNING", uniqueUrls[0], `title重複「${title}」: ${uniqueUrls.join(", ")}`);
     }
   }
-  for (const [desc, urls] of descMap) {
+  for (const [, urls] of descMap) {
     const uniqueUrls = [...new Set(urls)];
     if (uniqueUrls.length > 1) {
       report("WARNING", uniqueUrls[0], `description重複: ${uniqueUrls.join(", ")}`);

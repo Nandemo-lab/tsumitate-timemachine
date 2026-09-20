@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FundId } from "@/types";
 import FundEncyclopedia from "@/components/simulation/FundEncyclopedia";

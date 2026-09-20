@@ -492,8 +492,9 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
   const hasSc = scData.size > 0;
 
-  // ── Th helper
-  const Th = ({ k, children, align = "left" }: { k?: SortKey; children: React.ReactNode; align?: "left" | "right" | "center" }) => (
+  // Plain render helper: this is not a component, so it is not recreated as a
+  // component type on every render.
+  const renderTh = (children: React.ReactNode, k?: SortKey, align: "left" | "right" | "center" = "left") => (
     <th
       className={`px-3 py-2.5 text-zinc-400 font-semibold text-[10px] uppercase tracking-wider whitespace-nowrap ${k ? "cursor-pointer hover:text-zinc-200 select-none" : ""} text-${align}`}
       onClick={k ? () => toggleSort(k) : undefined}
@@ -780,20 +781,20 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
               <table className="w-full border-collapse min-w-[960px]">
                 <thead>
                   <tr className="border-b border-white/[0.08] bg-zinc-900/60">
-                    <Th k="score">優先度</Th>
-                    <Th k="path">パス</Th>
-                    <Th>種別</Th>
-                    <Th k="tlen">Title</Th>
-                    <Th k="dlen">Desc</Th>
-                    <Th align="center">OGP</Th>
-                    <Th align="center">内部L</Th>
+                    {renderTh("優先度", "score")}
+                    {renderTh("パス", "path")}
+                    {renderTh("種別")}
+                    {renderTh("Title", "tlen")}
+                    {renderTh("Desc", "dlen")}
+                    {renderTh("OGP", undefined, "center")}
+                    {renderTh("内部L", undefined, "center")}
                     {hasSc && <>
-                      <Th k="clicks" align="right">クリック</Th>
-                      <Th k="impressions" align="right">表示</Th>
-                      <Th k="ctr" align="right">CTR</Th>
-                      <Th k="position" align="right">順位</Th>
+                      {renderTh("クリック", "clicks", "right")}
+                      {renderTh("表示", "impressions", "right")}
+                      {renderTh("CTR", "ctr", "right")}
+                      {renderTh("順位", "position", "right")}
                     </>}
-                    <Th>更新日</Th>
+                    {renderTh("更新日")}
                   </tr>
                 </thead>
                 <tbody>
