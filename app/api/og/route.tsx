@@ -4,7 +4,7 @@ import { simulate, formatCurrency } from "@/lib/simulation";
 import { FUNDS } from "@/lib/funds";
 import { FundId } from "@/types";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
