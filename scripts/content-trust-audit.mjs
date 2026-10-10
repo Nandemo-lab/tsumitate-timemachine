@@ -21,12 +21,20 @@ assert(years.includes('formatAnnualReturn("sp500", 2023)'), "2023年リターン
 assert(!compares.includes("過去20年のデータではS&P500"), "商品設定前を含む比較主張が再混入");
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
-assert(home.includes("実績期間：2025年6月まで"), "トップでデータ終端を開示していない");
+assert(home.includes("実績期間：2026年8月まで"), "トップでデータ終端を開示していない");
 
 if (fs.existsSync(path.join(root, ".next/server/app/guide/nisa-tsumitate-ikura.html"))) {
   const built = read(".next/server/app/guide/nisa-tsumitate-ikura.html");
+  const ledger = JSON.parse(read("data/verified/orcan-monthly.json"));
+  const returns = new Map(ledger.observations.map(({ month, monthlyReturn }) => [month, monthlyReturn]));
+  let expectedValue = 0;
+  for (const [month, monthlyReturn] of returns) {
+    if (month < "2020-01") continue;
+    expectedValue = (expectedValue + 10_000) * (1 + monthlyReturn);
+  }
+  const expectedDisplay = `${Math.round(expectedValue).toLocaleString("ja-JP")}円`;
   assert(!built.includes("約162万円"), "生成HTMLに旧評価額が残存");
-  assert(built.includes("1,100,108円"), "生成HTMLにSSOT評価額が見つからない");
+  assert(built.includes(expectedDisplay), `生成HTMLにSSOT評価額（${expectedDisplay}）が見つからない`);
 }
 
 if (failures.length) {

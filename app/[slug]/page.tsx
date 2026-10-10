@@ -216,7 +216,7 @@ export default async function FundLandingPage({ params }: Props) {
             <SectionHeading>{returnDefinition.quality === "A" ? "公式月次データによるシミュレーション" : "参考データによるシミュレーション"}</SectionHeading>
             <div className="mb-3"><ReturnQualityPill fundId={page.fundId} /></div>
             <p className="text-xs text-zinc-400 mb-4">
-              {page.simYear}年{page.simMonth}月から毎月{formatCurrency(page.simAmount)}を積み立てた場合（2025年6月時点）
+              {page.simYear}年{page.simMonth}月から毎月{formatCurrency(page.simAmount)}を積み立てた場合（{result.dataPoints.at(-1)?.date.replace("/", "年")}月時点）
             </p>
             <div
               className="rounded-2xl border p-6 mb-4"

@@ -58,6 +58,8 @@ export interface SimulationParams {
   startYear: number;
   startMonth: number;
   monthlyAmount: number;
+  endYear?: number;
+  endMonth?: number;
 }
 
 export interface MonthlyDataPoint {

@@ -11,7 +11,7 @@ import {
 import { getMonthlyPage, MONTHLY_PAGES, MONTHLY_SIM_YEAR, MONTHLY_SIM_MONTH } from "@/lib/monthly-pages";
 import { getComparePage } from "@/lib/compare-pages";
 import { FUNDS } from "@/lib/funds";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { isProgrammaticIndexException } from "@/lib/index-policy";
@@ -98,7 +98,7 @@ export default async function MonthlyAmountPage({ params }: Props) {
   // JSON-LD
   const dynamicFaq = {
     q: `${label}${enc.nickname}を積み立てていたらいくらになりましたか？`,
-    a: `${MONTHLY_SIM_YEAR}年${MONTHLY_SIM_MONTH}月から2025年6月まで${label}を積み立てた場合、元本${formatCurrency(result.totalPrincipal)}に対して期間末評価額は${formatCurrency(result.finalValue)}、利益は${isProfit ? "+" : ""}${formatCurrency(result.profit)}（リターン${result.returnRate.toFixed(1)}%）です。将来予測ではありません。`,
+    a: `${MONTHLY_SIM_YEAR}年${MONTHLY_SIM_MONTH}月から${CURRENT_YEAR}年${CURRENT_MONTH}月まで${label}を積み立てた場合、元本${formatCurrency(result.totalPrincipal)}に対して期間末評価額は${formatCurrency(result.finalValue)}、利益は${isProfit ? "+" : ""}${formatCurrency(result.profit)}（リターン${result.returnRate.toFixed(1)}%）です。将来予測ではありません。`,
   };
   const allFaqs = [dynamicFaq, ...page.faqs];
 
@@ -255,7 +255,7 @@ export default async function MonthlyAmountPage({ params }: Props) {
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
               {MONTHLY_SIM_YEAR}年{MONTHLY_SIM_MONTH}月から{label}を{enc.nickname}に積み立てた場合、
-              2025年6月時点の評価額は
+              {CURRENT_YEAR}年{CURRENT_MONTH}月時点の評価額は
               <span className="font-bold" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
                 {formatCurrency(result.finalValue)}
               </span>
@@ -263,7 +263,7 @@ export default async function MonthlyAmountPage({ params }: Props) {
               <span className="font-bold" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
                 {isProfit ? "+" : ""}{formatCurrency(result.profit)}（{isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%）
               </span>
-              になっています。積立期間{years}年{months > 0 ? `${months}ヶ月` : ""}、2025年6月までの結果です。
+              になっています。積立期間{years}年{months > 0 ? `${months}ヶ月` : ""}、{CURRENT_YEAR}年{CURRENT_MONTH}月までの結果です。
             </p>
           </section>
 

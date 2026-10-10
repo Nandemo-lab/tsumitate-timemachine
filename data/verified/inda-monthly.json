@@ -15,10 +15,10 @@
   "feeTreatment": "fund expenses deducted",
   "fxTreatment": "converted with BOJ month-end USD/JPY",
   "firstMonth": "2015-01",
-  "lastMonth": "2025-06",
+  "lastMonth": "2026-08",
   "rawDataUrl": "https://www.ishares.com/us/products/239659/ishares-msci-india-etf",
-  "retrievedAt": "2026-09-12",
-  "observationCount": 126,
+  "retrievedAt": "2026-10-11",
+  "observationCount": 140,
   "missingMonths": [],
   "inceptionTreatment": "product observations only; no pre-inception backfill",
   "notes": "No interpolation or fallback.",
@@ -1029,6 +1029,118 @@
       "usdNavTotalReturn": 0.02519999999999989,
       "previousMonthEndYenPerUsd": 144.04,
       "monthEndYenPerUsd": 144.13,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-07",
+      "monthlyReturn": -0.014708013598834446,
+      "usdNavTotalReturn": -0.0494,
+      "previousMonthEndYenPerUsd": 144.13,
+      "monthEndYenPerUsd": 149.39,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-08",
+      "monthlyReturn": -0.03216858558136437,
+      "usdNavTotalReturn": -0.01650000000000018,
+      "previousMonthEndYenPerUsd": 149.39,
+      "monthEndYenPerUsd": 147.01,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-09",
+      "monthlyReturn": 0.008922651520304692,
+      "usdNavTotalReturn": 0.0017000000000000348,
+      "previousMonthEndYenPerUsd": 147.01,
+      "monthEndYenPerUsd": 148.07,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-10",
+      "monthlyReturn": 0.08070149253731351,
+      "usdNavTotalReturn": 0.03699999999999992,
+      "previousMonthEndYenPerUsd": 148.07,
+      "monthEndYenPerUsd": 154.31,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-11",
+      "monthlyReturn": 0.022446866696908874,
+      "usdNavTotalReturn": 0.009300000000000086,
+      "previousMonthEndYenPerUsd": 154.31,
+      "monthEndYenPerUsd": 156.32,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2025-12",
+      "monthlyReturn": -0.007762845445240418,
+      "usdNavTotalReturn": -0.005599999999999938,
+      "previousMonthEndYenPerUsd": 156.32,
+      "monthEndYenPerUsd": 155.98,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-01",
+      "monthlyReturn": -0.060516476471342284,
+      "usdNavTotalReturn": -0.04719999999999991,
+      "previousMonthEndYenPerUsd": 155.98,
+      "monthEndYenPerUsd": 153.8,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-02",
+      "monthlyReturn": 0.02777856306892046,
+      "usdNavTotalReturn": 0.012699999999999934,
+      "previousMonthEndYenPerUsd": 153.8,
+      "monthEndYenPerUsd": 156.09,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-03",
+      "monthlyReturn": -0.10049494157601402,
+      "usdNavTotalReturn": -0.12044262000000006,
+      "previousMonthEndYenPerUsd": 156.09,
+      "monthEndYenPerUsd": 159.63,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-04",
+      "monthlyReturn": 0.06970125188498422,
+      "usdNavTotalReturn": 0.06629456000000022,
+      "previousMonthEndYenPerUsd": 159.63,
+      "monthEndYenPerUsd": 160.14,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-05",
+      "monthlyReturn": -0.017186711227050955,
+      "usdNavTotalReturn": -0.01181816999999985,
+      "previousMonthEndYenPerUsd": 160.14,
+      "monthEndYenPerUsd": 159.27,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-06",
+      "monthlyReturn": 0.03573503273183887,
+      "usdNavTotalReturn": 0.016649319999999967,
+      "previousMonthEndYenPerUsd": 159.27,
+      "monthEndYenPerUsd": 162.26,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-07",
+      "monthlyReturn": -0.00101755529828651,
+      "usdNavTotalReturn": 0.011765130000000124,
+      "previousMonthEndYenPerUsd": 162.26,
+      "monthEndYenPerUsd": 160.21,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-08",
+      "monthlyReturn": -0.004548894358654243,
+      "usdNavTotalReturn": -0.0005563599999999225,
+      "previousMonthEndYenPerUsd": 160.21,
+      "monthEndYenPerUsd": 159.57,
       "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
     }
   ]

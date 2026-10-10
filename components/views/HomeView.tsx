@@ -124,7 +124,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           運用会社などの一次情報から検証した月次データで、同じ開始月・積立額・終了月を比較します。商品設定前の期間や欠損値は別系列で補いません。
         </p>
         <div className="flex flex-wrap gap-2 text-[11px] text-zinc-300">
-          <span className="rounded-full bg-white/[0.06] px-2.5 py-1">実績期間：2025年6月まで</span>
+          <span className="rounded-full bg-white/[0.06] px-2.5 py-1">実績期間：2026年8月まで</span>
           <span className="rounded-full bg-white/[0.06] px-2.5 py-1">A品質9系列・G参考1系列</span>
           <Link href="/about/data-sources" className="rounded-full bg-indigo-400/15 px-2.5 py-1 text-indigo-200 underline underline-offset-2">
             出典と計算方法

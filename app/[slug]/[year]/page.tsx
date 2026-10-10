@@ -14,7 +14,7 @@ import { getYearPage, YEAR_PAGES } from "@/lib/year-pages";
 import { getComparePage, COMPARE_PAGES } from "@/lib/compare-pages";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
 import { FUNDS } from "@/lib/funds";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
@@ -89,7 +89,7 @@ export default async function YearPage({ params }: Props) {
   // 動的FAQ（シミュレーション結果を含む）
   const dynamicFaq = {
     q: `${page.year}年から${enc.nickname}を毎月3万円積み立てていたらいくらになった？`,
-    a: `${page.year}年1月から2025年6月まで毎月3万円を積み立てた場合、元本${formatCurrency(result.totalPrincipal)}に対して期間末評価額は${formatCurrency(result.finalValue)}、利益は${isProfit ? "+" : ""}${formatCurrency(result.profit)}（リターン${result.returnRate.toFixed(1)}%）です。将来予測ではありません。`,
+    a: `${page.year}年1月から${CURRENT_YEAR}年${CURRENT_MONTH}月まで毎月3万円を積み立てた場合、元本${formatCurrency(result.totalPrincipal)}に対して期間末評価額は${formatCurrency(result.finalValue)}、利益は${isProfit ? "+" : ""}${formatCurrency(result.profit)}（リターン${result.returnRate.toFixed(1)}%）です。将来予測ではありません。`,
   };
   const allFaqs = [dynamicFaq, ...page.faqs];
 
@@ -289,7 +289,7 @@ export default async function YearPage({ params }: Props) {
             <p className="text-sm text-zinc-300 leading-relaxed">
               この年の{page.simMonth}月から毎月{(page.simAmount / 10000).toFixed(0)}万円を
               {enc.nickname}に積み立てていた場合、
-              2025年6月時点の評価額は
+              {CURRENT_YEAR}年{CURRENT_MONTH}月時点の評価額は
               <span className="font-bold" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
                 {formatCurrency(result.finalValue)}
               </span>

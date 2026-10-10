@@ -1,4 +1,4 @@
-import { VT_MONTHLY_JPY_TOTAL_RETURNS } from "@/lib/verified-monthly-return-series";
+import vt from "@/data/verified/vt-monthly.json";
 import vti from "@/data/verified/vti-monthly.json";
 import vym from "@/data/verified/vym-monthly.json";
 import eem from "@/data/verified/eem-monthly.json";
@@ -83,14 +83,16 @@ function calendarReturns(points: MonthlyPoint[]): Record<number, number> {
     const year = Number(point.month.slice(0, 4));
     byYear.set(year, [...(byYear.get(year) ?? []), point.monthlyReturn]);
   }
-  return Object.fromEntries([...byYear].map(([year, returns]) => [
-    year,
-    returns.reduce((growth, monthlyReturn) => growth * (1 + monthlyReturn), 1) - 1,
-  ]));
+  return Object.fromEntries([...byYear]
+    .filter(([, returns]) => returns.length === 12)
+    .map(([year, returns]) => [
+      year,
+      returns.reduce((growth, monthlyReturn) => growth * (1 + monthlyReturn), 1) - 1,
+    ]));
 }
 
 export const VERIFIED_ANNUAL_JPY_RETURNS = {
-  vt: calendarReturns(Object.values(VT_MONTHLY_JPY_TOTAL_RETURNS).map((point) => ({ month: point.month, monthlyReturn: point.jpyTotalReturn }))),
+  vt: calendarReturns(vt.observations),
   vti: calendarReturns(vti.observations),
   vym: calendarReturns(vym.observations),
   emerging: calendarReturns(eem.observations),

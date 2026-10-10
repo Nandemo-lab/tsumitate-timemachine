@@ -18,7 +18,7 @@ import { getGuidePage, GUIDE_PAGES, getGuideSeriesForSlug } from "@/lib/guide-pa
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { getArticlesRelatedToGuide } from "@/lib/article-pages";
 import { FUNDS } from "@/lib/funds";
-import { simulate, formatCurrency, formatYearMonth } from "@/lib/simulation";
+import { simulate, formatCurrency, formatYearMonth, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
 import GuideEeat from "@/components/guide/GuideEeat";
@@ -404,7 +404,7 @@ export default async function GuidePage({ params }: Props) {
                             {fund.shortName}
                           </span>
                           <span className="text-[10px] text-zinc-500">
-                            {formatYearMonth(row.year, row.month)}〜2025年6月
+                            {formatYearMonth(row.year, row.month)}〜{CURRENT_YEAR}年{CURRENT_MONTH}月
                           </span>
                         </div>
                         <p className="text-[10px] text-zinc-500">

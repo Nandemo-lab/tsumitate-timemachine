@@ -2,7 +2,7 @@
   "sourceUrl": "https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html",
   "seriesCode": "FM08'FXERM06",
   "definition": "Spot Rate at 17:00 JST, End of Month, Tokyo Market",
-  "retrievedAt": "2026-09-12",
+  "retrievedAt": "2026-10-11",
   "observations": [
     {
       "month": "2014-12",
@@ -511,6 +511,62 @@
     {
       "month": "2025-06",
       "yenPerUsd": 144.13
+    },
+    {
+      "month": "2025-07",
+      "yenPerUsd": 149.39
+    },
+    {
+      "month": "2025-08",
+      "yenPerUsd": 147.01
+    },
+    {
+      "month": "2025-09",
+      "yenPerUsd": 148.07
+    },
+    {
+      "month": "2025-10",
+      "yenPerUsd": 154.31
+    },
+    {
+      "month": "2025-11",
+      "yenPerUsd": 156.32
+    },
+    {
+      "month": "2025-12",
+      "yenPerUsd": 155.98
+    },
+    {
+      "month": "2026-01",
+      "yenPerUsd": 153.8
+    },
+    {
+      "month": "2026-02",
+      "yenPerUsd": 156.09
+    },
+    {
+      "month": "2026-03",
+      "yenPerUsd": 159.63
+    },
+    {
+      "month": "2026-04",
+      "yenPerUsd": 160.14
+    },
+    {
+      "month": "2026-05",
+      "yenPerUsd": 159.27
+    },
+    {
+      "month": "2026-06",
+      "yenPerUsd": 162.26
+    },
+    {
+      "month": "2026-07",
+      "yenPerUsd": 160.21
+    },
+    {
+      "month": "2026-08",
+      "yenPerUsd": 159.57
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "sourceUrl": "https://www.ishares.com/us/products/239659/ishares-msci-india-etf",
-  "retrievedAt": "2026-09-12",
+  "retrievedAt": "2026-10-11",
   "performanceData": {
     "name": "performanceData",
     "fullName": "performance.performanceData",
@@ -183,7 +183,8 @@
       20260531,
       20260630,
       20260731,
-      20260831
+      20260831,
+      20260930
     ],
     "formattedAsOfDate": [
       "Tue, Jan 31, 2012",
@@ -361,7 +362,8 @@
       "Sun, May 31, 2026",
       "Tue, Jun 30, 2026",
       "Fri, Jul 31, 2026",
-      "Mon, Aug 31, 2026"
+      "Mon, Aug 31, 2026",
+      "Wed, Sep 30, 2026"
     ],
     "formattedValue": [
       "10,000.00",
@@ -539,7 +541,8 @@
       "21,352.58",
       "21,708.09",
       "21,963.49",
-      "21,951.27"
+      "21,951.27",
+      "20,660.40"
     ],
     "label": "",
     "infoBubble": "",
@@ -720,7 +723,8 @@
       "21352.581634968454",
       "21708.087599435166",
       "21963.48607209391",
-      "21951.26646698284"
+      "21951.26646698284",
+      "20660.395900872158"
     ]
   }
 }

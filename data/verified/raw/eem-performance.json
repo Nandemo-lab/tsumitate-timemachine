@@ -1,6 +1,6 @@
 {
   "sourceUrl": "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf",
-  "retrievedAt": "2026-09-12",
+  "retrievedAt": "2026-10-11",
   "performanceData": {
     "name": "performanceData",
     "fullName": "performance.performanceData",
@@ -289,7 +289,8 @@
       20260531,
       20260630,
       20260731,
-      20260831
+      20260831,
+      20260930
     ],
     "formattedAsOfDate": [
       "Mon, Mar 31, 2003",
@@ -573,7 +574,8 @@
       "Sun, May 31, 2026",
       "Tue, Jun 30, 2026",
       "Fri, Jul 31, 2026",
-      "Mon, Aug 31, 2026"
+      "Mon, Aug 31, 2026",
+      "Wed, Sep 30, 2026"
     ],
     "formattedValue": [
       "10,000.00",
@@ -857,7 +859,8 @@
       "90,838.99",
       "91,267.56",
       "85,865.22",
-      "89,494.07"
+      "89,494.07",
+      "89,105.22"
     ],
     "label": "",
     "infoBubble": "",
@@ -1144,7 +1147,8 @@
       "90838.98705990611",
       "91267.56358407502",
       "85865.22019140793",
-      "89494.06728961585"
+      "89494.06728961585",
+      "89105.21646218315"
     ]
   }
 }

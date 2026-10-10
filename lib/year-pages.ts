@@ -255,7 +255,7 @@ export const YEAR_PAGES: YearPage[] = Object.entries(FUND_YEAR_CONFIG).flatMap(
         fundId: config.fundId,
         year,
         metaTitle: `${year}年（${label}）から${fundName}積立→今いくら？過去実績シミュレーション`,
-        metaDescription: `${prefix}${year}年から2025年6月まで${fundName}を月3万円積み立てた場合の期間末評価額・利益・リターンを、検証済み月次データで公開。`,
+        metaDescription: `${prefix}${year}年から2026年8月まで${fundName}を月3万円積み立てた場合の期間末評価額・利益・リターンを、検証済み月次データで公開。`,
         yearContext: YEAR_CONTEXT[year],
         simMonth: 1,
         simAmount: 30000,

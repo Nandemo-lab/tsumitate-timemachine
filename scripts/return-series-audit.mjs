@@ -16,7 +16,7 @@ for (const fundId of allFunds) {
   const generated = registrySource.includes(`${fundId}: definitionFromLedger("${fundId}"`);
   ok(explicit || generated, `${fundId} registry entry`);
 }
-ok((registrySource.match(/definitionFromLedger\("/g) ?? []).length === 8 && /vt:[\s\S]*?quality: "A"/.test(registrySource), "A series count = 9");
+ok((registrySource.match(/definitionFromLedger\("/g) ?? []).length === 9, "A series count = 9");
 ok(/schd:[\s\S]*?quality: "G"/.test(registrySource), "SCHD remains G");
 ok(!/annualReturns\[year\]\s*\?\?/.test(simulationSource), "no annual fallback chain");
 ok(!/CURRENT_YEAR\]\s*\?\?\s*0\.10/.test(simulationSource), "no CURRENT_YEAR/10% fallback");
@@ -24,7 +24,7 @@ ok(/filter\(\(fund\) => VERIFIED_FUND_IDS\.includes/.test(simulationSource), "pe
 ok(/managementFee: "0\.060%（年率）"/.test(fundsSource), "SCHD expense ratio is 0.060%");
 ok(/formalName: "Schwab U\.S\. Dividend Equity ETF（SCHD）"/.test(fundsSource), "SCHD identity is US ETF");
 
-const expected = { vti: 126, vym: 126, eem: 126, inda: 126, orcan: 80, sp500: 83, nasdaq100: 82, fangplus: 89 };
+const expected = { vt: 140, vti: 140, vym: 140, eem: 140, inda: 140, orcan: 94, sp500: 97, nasdaq100: 96, fangplus: 103 };
 for (const [key, count] of Object.entries(expected)) {
   const entry = manifest.series[key];
   const ledger = JSON.parse(read(`data/verified/${entry.file}`));

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { simulate, formatCurrency, calcElapsedYears } from "@/lib/simulation";
+import { simulate, formatCurrency, calcElapsedYears, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FUNDS, FUND_LIST } from "@/lib/funds";
 import { FundId } from "@/types";
 import SimulatePageClient from "./SimulatePageClient";
@@ -162,7 +162,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
             積み立てていたら？
           </h1>
           <p className="text-zinc-400 text-sm mb-10">
-            毎月{formatCurrency(monthlyAmount)} · {startYear}年1月〜2025年6月（約{elapsed.toFixed(0)}年間）
+            毎月{formatCurrency(monthlyAmount)} · {startYear}年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月（約{elapsed.toFixed(0)}年間）
           </p>
 
           {/* クライアントコンポーネント（グラフ・アニメーション） */}
@@ -180,10 +180,10 @@ export default async function SimulatePage({ params, searchParams }: Props) {
               {startYear}年から{fundData.shortName}に積み立てた場合の詳細
             </h2>
             <p>
-              {startYear}年1月から2025年6月まで、毎月{formatCurrency(monthlyAmount)}を
+              {startYear}年1月から{CURRENT_YEAR}年{CURRENT_MONTH}月まで、毎月{formatCurrency(monthlyAmount)}を
               {fundData.name}（{fundData.shortName}）に積み立てた場合、
               元本合計{formatCurrency(result.totalPrincipal)}に対して、
-              2025年6月時点の評価額は{formatCurrency(result.finalValue)}となります。
+              {CURRENT_YEAR}年{CURRENT_MONTH}月時点の評価額は{formatCurrency(result.finalValue)}となります。
               利益額は<strong className="text-white">+{formatCurrency(result.profit)}</strong>で、
               リターン率は{result.returnRate.toFixed(1)}%です。
             </p>

@@ -15,10 +15,10 @@
   "feeTreatment": "reflected in NAV",
   "fxTreatment": "none",
   "firstMonth": "2018-08",
-  "lastMonth": "2025-06",
+  "lastMonth": "2026-08",
   "rawDataUrl": "https://www.am.mufg.jp/fund_file/setteirai/253266.csv",
-  "retrievedAt": "2026-09-12",
-  "observationCount": 83,
+  "retrievedAt": "2026-10-11",
+  "observationCount": 97,
   "missingMonths": [],
   "inceptionTreatment": "product observations only; no pre-inception backfill",
   "notes": "No interpolation or fallback.",
@@ -768,6 +768,132 @@
       "previousMonthEndReinvestedNav": 30919,
       "monthEndDate": "2025-06-30",
       "monthEndReinvestedNav": 32527,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2025-07",
+      "monthlyReturn": 0.0639776185937837,
+      "previousMonthEndDate": "2025-06-30",
+      "previousMonthEndReinvestedNav": 32527,
+      "monthEndDate": "2025-07-31",
+      "monthEndReinvestedNav": 34608,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2025-08",
+      "monthlyReturn": 0.005894590846047265,
+      "previousMonthEndDate": "2025-07-31",
+      "previousMonthEndReinvestedNav": 34608,
+      "monthEndDate": "2025-08-29",
+      "monthEndReinvestedNav": 34812,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2025-09",
+      "monthlyReturn": 0.039153165575088966,
+      "previousMonthEndDate": "2025-08-29",
+      "previousMonthEndReinvestedNav": 34812,
+      "monthEndDate": "2025-09-30",
+      "monthEndReinvestedNav": 36175,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2025-10",
+      "monthlyReturn": 0.060704906703524575,
+      "previousMonthEndDate": "2025-09-30",
+      "previousMonthEndReinvestedNav": 36175,
+      "monthEndDate": "2025-10-31",
+      "monthEndReinvestedNav": 38371,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2025-11",
+      "monthlyReturn": 0.015975606577884438,
+      "previousMonthEndDate": "2025-10-31",
+      "previousMonthEndReinvestedNav": 38371,
+      "monthEndDate": "2025-11-28",
+      "monthEndReinvestedNav": 38984,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2025-12",
+      "monthlyReturn": 0.014134003693823116,
+      "previousMonthEndDate": "2025-11-28",
+      "previousMonthEndReinvestedNav": 38984,
+      "monthEndDate": "2025-12-30",
+      "monthEndReinvestedNav": 39535,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-01",
+      "monthlyReturn": -0.008903503224990561,
+      "previousMonthEndDate": "2025-12-30",
+      "previousMonthEndReinvestedNav": 39535,
+      "monthEndDate": "2026-01-30",
+      "monthEndReinvestedNav": 39183,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-02",
+      "monthlyReturn": 0.006150626547227089,
+      "previousMonthEndDate": "2026-01-30",
+      "previousMonthEndReinvestedNav": 39183,
+      "monthEndDate": "2026-02-27",
+      "monthEndReinvestedNav": 39424,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-03",
+      "monthlyReturn": -0.05684354707792205,
+      "previousMonthEndDate": "2026-02-27",
+      "previousMonthEndReinvestedNav": 39424,
+      "monthEndDate": "2026-03-31",
+      "monthEndReinvestedNav": 37183,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-04",
+      "monthlyReturn": 0.12906435736761424,
+      "previousMonthEndDate": "2026-03-31",
+      "previousMonthEndReinvestedNav": 37183,
+      "monthEndDate": "2026-04-30",
+      "monthEndReinvestedNav": 41982,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-05",
+      "monthlyReturn": 0.05426135010242494,
+      "previousMonthEndDate": "2026-04-30",
+      "previousMonthEndReinvestedNav": 41982,
+      "monthEndDate": "2026-05-29",
+      "monthEndReinvestedNav": 44260,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-06",
+      "monthlyReturn": 0.003140533212833363,
+      "previousMonthEndDate": "2026-05-29",
+      "previousMonthEndReinvestedNav": 44260,
+      "monthEndDate": "2026-06-30",
+      "monthEndReinvestedNav": 44399,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-07",
+      "monthlyReturn": -0.010112840379287835,
+      "previousMonthEndDate": "2026-06-30",
+      "previousMonthEndReinvestedNav": 44399,
+      "monthEndDate": "2026-07-31",
+      "monthEndReinvestedNav": 43950,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-08",
+      "monthlyReturn": 0.03317406143344703,
+      "previousMonthEndDate": "2026-07-31",
+      "previousMonthEndReinvestedNav": 43950,
+      "monthEndDate": "2026-08-31",
+      "monthEndReinvestedNav": 45408,
       "sourceBasis": "official reinvested NAV, last published business day of each month"
     }
   ]

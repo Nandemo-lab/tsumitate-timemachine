@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, formatCurrency } from "@/lib/simulation";
-import { getCommonStartMonth, getCommonStartOptions, getReturnSeriesDefinition } from "@/lib/return-series";
+import { getCommonEndMonth, getCommonStartMonth, getCommonStartOptions, getReturnSeriesDefinition } from "@/lib/return-series";
 import { FUNDS } from "@/lib/funds";
 import FundSelector from "@/components/simulation/FundSelector";
 import ResultCard from "@/components/simulation/ResultCard";
@@ -31,6 +31,9 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   const [showShare, setShowShare] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
   const startYearOptions = getCommonStartOptions([fundA, fundB]);
+  const commonEnd = getCommonEndMonth([fundA, fundB]);
+  const commonEndYear = Number(commonEnd.slice(0, 4));
+  const commonEndMonth = Number(commonEnd.slice(5, 7));
   const normalizeStartForFunds = (first: FundId, second: FundId) => {
     const minimum = getCommonStartMonth([first, second]);
     if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
@@ -50,12 +53,12 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
   }, [fundA, fundB, startYear, monthlyAmount]);
 
   const resultA = useMemo(
-    () => (showResult ? simulate({ fundId: fundA, startYear, startMonth, monthlyAmount }) : null),
-    [showResult, fundA, startYear, startMonth, monthlyAmount]
+    () => (showResult ? simulate({ fundId: fundA, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth }) : null),
+    [showResult, fundA, startYear, startMonth, monthlyAmount, commonEndYear, commonEndMonth]
   );
   const resultB = useMemo(
-    () => (showResult ? simulate({ fundId: fundB, startYear, startMonth, monthlyAmount }) : null),
-    [showResult, fundB, startYear, startMonth, monthlyAmount]
+    () => (showResult ? simulate({ fundId: fundB, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth }) : null),
+    [showResult, fundB, startYear, startMonth, monthlyAmount, commonEndYear, commonEndMonth]
   );
 
   const winnerResult = resultA && resultB ? (resultA.profit >= resultB.profit ? resultA : resultB) : null;
@@ -191,7 +194,7 @@ export default function CompareView({ initialFundA = "sp500" }: Props) {
                 </p>
               </div>
               <p className="text-xs text-zinc-400">
-                {startYear}年{startMonth}月〜2025年6月 · 毎月{formatCurrency(monthlyAmount)}
+                {startYear}年{startMonth}月〜{commonEndYear}年{commonEndMonth}月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
 

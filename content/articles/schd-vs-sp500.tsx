@@ -44,9 +44,9 @@ export const meta: ArticleMeta = {
 // ─── シミュレーションデータ ─────────────────────────────────────────────────
 
 const simSchd     = simulate({ fundId: "schd",  startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
-const simSp500    = simulate({ fundId: "sp500", startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
+const simSp500    = simulate({ fundId: "sp500", startYear: 2020, startMonth: 1, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
 const simSchdLong  = simulate({ fundId: "schd",  startYear: 2018, startMonth: 8, monthlyAmount: 30000 });
-const simSp500Long = simulate({ fundId: "sp500", startYear: 2018, startMonth: 8, monthlyAmount: 30000 });
+const simSp500Long = simulate({ fundId: "sp500", startYear: 2018, startMonth: 8, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 

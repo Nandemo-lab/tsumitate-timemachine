@@ -5,10 +5,12 @@ import path from "node:path";
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, "data", "verified");
 const RAW_DIR = path.join(DATA_DIR, "raw");
-const RETRIEVED_AT = "2026-09-12";
+const RETRIEVED_AT = "2026-10-11";
+const LAST_MONTH = "2026-08";
 const fetchMode = process.argv.includes("--fetch");
 
 const SOURCES = {
+  vt: { raw: "vt-nav.json", url: "https://advisors.vanguard.com/investments/products/api/funds/3141/performance/nav" },
   vti: { raw: "vti-nav.json", url: "https://advisors.vanguard.com/investments/products/api/funds/0970/performance/nav" },
   vym: { raw: "vym-nav.json", url: "https://advisors.vanguard.com/investments/products/api/funds/0923/performance/nav" },
   eem: { raw: "eem-performance.json", url: "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf" },
@@ -21,8 +23,9 @@ const SOURCES = {
 };
 
 const META = {
-  vti: { fundId: "vti", formalProductName: "Vanguard Morningstar Total Stock Market ETF", identifier: "VTI / fund 0970", manager: "The Vanguard Group", inceptionDate: "2001-05-24", sourceName: "Vanguard Advisors", sourceUrl: "https://advisors.vanguard.com/investments/products/vti/vanguard-morningstar-total-stock-market-etf", sourceSeriesDefinition: "Monthly NAV Total Return (1MTH)", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "included", feeTreatment: "net of fund expenses", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: "2025-06" },
-  vym: { fundId: "vym", formalProductName: "Vanguard High Dividend Yield ETF", identifier: "VYM / fund 0923", manager: "The Vanguard Group", inceptionDate: "2006-11-10", sourceName: "Vanguard Advisors", sourceUrl: "https://advisors.vanguard.com/investments/products/vym/vanguard-high-dividend-yield-etf", sourceSeriesDefinition: "Monthly NAV Total Return (1MTH)", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "included", feeTreatment: "net of fund expenses", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: "2025-06" },
+  vt: { fundId: "vt", formalProductName: "Vanguard Total World Stock ETF", identifier: "VT / fund 3141", manager: "The Vanguard Group", inceptionDate: "2008-06-24", sourceName: "Vanguard Advisors", sourceUrl: "https://advisors.vanguard.com/investments/products/vt/vanguard-total-world-stock-etfp", sourceSeriesDefinition: "Monthly NAV Total Return (1MTH)", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "included", feeTreatment: "net of fund expenses", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: LAST_MONTH },
+  vti: { fundId: "vti", formalProductName: "Vanguard Morningstar Total Stock Market ETF", identifier: "VTI / fund 0970", manager: "The Vanguard Group", inceptionDate: "2001-05-24", sourceName: "Vanguard Advisors", sourceUrl: "https://advisors.vanguard.com/investments/products/vti/vanguard-morningstar-total-stock-market-etf", sourceSeriesDefinition: "Monthly NAV Total Return (1MTH)", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "included", feeTreatment: "net of fund expenses", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: LAST_MONTH },
+  vym: { fundId: "vym", formalProductName: "Vanguard High Dividend Yield ETF", identifier: "VYM / fund 0923", manager: "The Vanguard Group", inceptionDate: "2006-11-10", sourceName: "Vanguard Advisors", sourceUrl: "https://advisors.vanguard.com/investments/products/vym/vanguard-high-dividend-yield-etf", sourceSeriesDefinition: "Monthly NAV Total Return (1MTH)", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "included", feeTreatment: "net of fund expenses", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: LAST_MONTH },
   eem: { fundId: "emerging", formalProductName: "iShares MSCI Emerging Markets ETF", identifier: "EEM / 239637", manager: "BlackRock Fund Advisors", inceptionDate: "2003-04-07", sourceName: "iShares", sourceUrl: SOURCES.eem.url, sourceSeriesDefinition: "Growth of Hypothetical $10,000, NAV total return", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "dividends and capital gains reinvested", feeTreatment: "fund expenses deducted", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: "2025-06" },
   inda: { fundId: "india", formalProductName: "iShares MSCI India ETF", identifier: "INDA / 239659", manager: "BlackRock Fund Advisors", inceptionDate: "2012-02-02", sourceName: "iShares", sourceUrl: SOURCES.inda.url, sourceSeriesDefinition: "Growth of Hypothetical $10,000, NAV total return", currency: "USD", returnType: "total-return", priceBasis: "NAV", dividendTreatment: "dividends and capital gains reinvested", feeTreatment: "fund expenses deducted", fxTreatment: "converted with BOJ month-end USD/JPY", firstMonth: "2015-01", lastMonth: "2025-06" },
   orcan: { fundId: "orcan", formalProductName: "eMAXIS Slim 全世界株式（オール・カントリー）", identifier: "253425 / 0331418A", manager: "三菱UFJアセットマネジメント", inceptionDate: "2018-10-31", sourceName: "三菱UFJアセットマネジメント", sourceUrl: "https://emaxis.am.mufg.jp/fund/253425.html", sourceSeriesDefinition: "分配金再投資基準価額の月末値", currency: "JPY", returnType: "total-return", priceBasis: "分配金再投資基準価額", dividendTreatment: "reinvested", feeTreatment: "reflected in NAV", fxTreatment: "none", firstMonth: "2018-11", lastMonth: "2025-06" },
@@ -31,7 +34,8 @@ const META = {
   fangplus: { fundId: "fangplus", formalProductName: "iFreeNEXT FANG+インデックス", identifier: "3346 / 04311181", manager: "大和アセットマネジメント", inceptionDate: "2018-01-31", sourceName: "大和アセットマネジメント", sourceUrl: "https://www.daiwa-am.co.jp/funds/detail/3346/detail_top.html", sourceSeriesDefinition: "分配金再投資基準価額の月末値", currency: "JPY", returnType: "total-return", priceBasis: "分配金再投資基準価額", dividendTreatment: "reinvested", feeTreatment: "reflected in NAV", fxTreatment: "none", firstMonth: "2018-02", lastMonth: "2025-06" },
 };
 
-const expectedCounts = { vti: 126, vym: 126, eem: 126, inda: 126, orcan: 80, sp500: 83, nasdaq100: 82, fangplus: 89 };
+for (const meta of Object.values(META)) meta.lastMonth = LAST_MONTH;
+const expectedCounts = { vt: 140, vti: 140, vym: 140, eem: 140, inda: 140, orcan: 94, sp500: 97, nasdaq100: 96, fangplus: 103 };
 const monthKey = (date) => date.slice(0, 7).replaceAll("/", "-");
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const expectedMonths = (first, last) => { const out = []; let [y, m] = first.split("-").map(Number); const [ey, em] = last.split("-").map(Number); while (y < ey || (y === ey && m <= em)) { out.push(`${y}-${String(m).padStart(2, "0")}`); if (++m === 13) { m = 1; y++; } } return out; };
@@ -42,7 +46,7 @@ async function saveRaw(name, text) { await writeFile(path.join(RAW_DIR, name), t
 
 async function fetchSources() {
   await mkdir(RAW_DIR, { recursive: true });
-  for (const id of ["vti", "vym"]) await saveRaw(SOURCES[id].raw, await fetchText(SOURCES[id].url));
+  for (const id of ["vt", "vti", "vym"]) await saveRaw(SOURCES[id].raw, await fetchText(SOURCES[id].url));
   for (const id of ["eem", "inda"]) {
     const html = await fetchText(SOURCES[id].url);
     const match = html.match(/<div data-componentname="PerformanceV3"><walrus-render-on-client[^>]*componentprops="([^"]+)"/);
@@ -55,7 +59,7 @@ async function fetchSources() {
   for (const id of ["orcan", "sp500", "nasdaq100", "fangplus"]) await saveRaw(SOURCES[id].raw, await fetchText(SOURCES[id].url, "shift_jis"));
   const fxHtml = await fetchText(SOURCES.fx.url);
   const rows = [...fxHtml.matchAll(/<tr[^>]*>\s*<th[^>]*>(\d{4}\/\d{2})<\/th><td>\s*([\d.]+)\s*<\/td>/g)].map(([, month, value]) => ({ month: month.replace("/", "-"), yenPerUsd: Number(value) }));
-  const selected = rows.filter(({ month }) => month >= "2014-12" && month <= "2025-06");
+  const selected = rows.filter(({ month }) => month >= "2014-12" && month <= LAST_MONTH);
   await saveRaw(SOURCES.fx.raw, JSON.stringify({ sourceUrl: SOURCES.fx.url, seriesCode: "FM08'FXERM06", definition: "Spot Rate at 17:00 JST, End of Month, Tokyo Market", retrievedAt: RETRIEVED_AT, observations: selected }, null, 2) + "\n");
 }
 
@@ -68,14 +72,14 @@ function parseDomestic(text, id) { const lines = text.trim().split(/\r?\n/); con
 
 async function buildLedgers() {
   await mkdir(DATA_DIR, { recursive: true });
-  const fxDoc = JSON.parse(await readRaw(SOURCES.fx.raw)); const fx = Object.fromEntries(fxDoc.observations.map((p) => [p.month, p.yenPerUsd])); if (fxDoc.observations.length !== 127) throw new Error(`FX count ${fxDoc.observations.length}`);
+  const fxDoc = JSON.parse(await readRaw(SOURCES.fx.raw)); const fx = Object.fromEntries(fxDoc.observations.map((p) => [p.month, p.yenPerUsd])); if (fxDoc.observations.length !== 141) throw new Error(`FX count ${fxDoc.observations.length}`);
   const ledgers = {};
-  for (const id of ["vti", "vym", "eem", "inda"]) {
-    const usd = id === "vti" || id === "vym" ? parseVanguard(await readRaw(SOURCES[id].raw), META[id].firstMonth, META[id].lastMonth) : parseIShares(await readRaw(SOURCES[id].raw), META[id].firstMonth, META[id].lastMonth);
+  for (const id of ["vt", "vti", "vym", "eem", "inda"]) {
+    const usd = id === "vt" || id === "vti" || id === "vym" ? parseVanguard(await readRaw(SOURCES[id].raw), META[id].firstMonth, META[id].lastMonth) : parseIShares(await readRaw(SOURCES[id].raw), META[id].firstMonth, META[id].lastMonth);
     ledgers[id] = usd.map((p) => { const [y, m] = p.month.split("-").map(Number); const prev = m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, "0")}`; if (fx[prev] === undefined || fx[p.month] === undefined) throw new Error(`${id} FX missing ${prev}/${p.month}`); return { month: p.month, monthlyReturn: (1 + p.usdNavTotalReturn) * (fx[p.month] / fx[prev]) - 1, usdNavTotalReturn: p.usdNavTotalReturn, previousMonthEndYenPerUsd: fx[prev], monthEndYenPerUsd: fx[p.month], sourceBasis: p.sourceBasis }; });
   }
   for (const id of ["orcan", "sp500", "nasdaq100", "fangplus"]) ledgers[id] = parseDomestic(await readRaw(SOURCES[id].raw), id);
-  const manifest = { schemaVersion: 1, retrievedAt: RETRIEVED_AT, fx: { sourceName: "日本銀行", sourceUrl: SOURCES.fx.url, rawDataUrl: SOURCES.fx.url, seriesCode: "FM08'FXERM06", currency: "JPY per USD", firstMonth: "2014-12", lastMonth: "2025-06", observationCount: 127, conversionFormula: "(1 + USD monthly NAV TR) * (current month-end USDJPY / previous month-end USDJPY) - 1", rawSha256: sha256(await readRaw(SOURCES.fx.raw)) }, series: {} };
+  const manifest = { schemaVersion: 1, retrievedAt: RETRIEVED_AT, fx: { sourceName: "日本銀行", sourceUrl: SOURCES.fx.url, rawDataUrl: SOURCES.fx.url, seriesCode: "FM08'FXERM06", currency: "JPY per USD", firstMonth: "2014-12", lastMonth: LAST_MONTH, observationCount: 141, conversionFormula: "(1 + USD monthly NAV TR) * (current month-end USDJPY / previous month-end USDJPY) - 1", rawSha256: sha256(await readRaw(SOURCES.fx.raw)) }, series: {} };
   for (const [id, points] of Object.entries(ledgers)) { validateMonths(id, points); const raw = await readRaw(SOURCES[id].raw); const doc = { schemaVersion: 1, ...META[id], rawDataUrl: SOURCES[id].url, retrievedAt: RETRIEVED_AT, observationCount: points.length, missingMonths: [], inceptionTreatment: "product observations only; no pre-inception backfill", notes: id === "nasdaq100" ? "This ledger is iFreeNEXT NASDAQ100 Index, not eMAXIS NASDAQ100." : "No interpolation or fallback.", observations: points }; await writeFile(path.join(DATA_DIR, `${id}-monthly.json`), JSON.stringify(doc, null, 2) + "\n", "utf8"); manifest.series[id] = { file: `${id}-monthly.json`, ...META[id], rawFile: path.posix.join("raw", SOURCES[id].raw), rawDataUrl: SOURCES[id].url, retrievedAt: RETRIEVED_AT, observationCount: points.length, missingMonths: [], rawSha256: sha256(raw) }; }
   await writeFile(path.join(DATA_DIR, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n", "utf8");
 }

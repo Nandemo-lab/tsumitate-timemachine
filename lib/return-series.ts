@@ -1,7 +1,6 @@
 import { FundId, ReturnCalculationMode, ReturnSeriesQuality } from "@/types";
 import { FUNDS } from "@/lib/funds";
-import { VT_MONTHLY_JPY_TOTAL_RETURNS } from "@/lib/verified-monthly-return-series";
-import manifest from "@/data/verified/manifest.json";
+import vt from "@/data/verified/vt-monthly.json";
 import vti from "@/data/verified/vti-monthly.json";
 import vym from "@/data/verified/vym-monthly.json";
 import eem from "@/data/verified/eem-monthly.json";
@@ -60,7 +59,7 @@ type LedgerMetadata = Ledger & {
 };
 
 const monthlyMaps: Partial<Record<FundId, ReadonlyMap<string, number>>> = {
-  vt: new Map(Object.entries(VT_MONTHLY_JPY_TOTAL_RETURNS).map(([month, point]) => [month, point.jpyTotalReturn])),
+  vt: toMap(vt),
   vti: toMap(vti),
   vym: toMap(vym),
   emerging: toMap(eem),
@@ -104,30 +103,7 @@ function definitionFromLedger(fundId: FundId, ledger: LedgerMetadata): ReturnSer
 }
 
 export const RETURN_SERIES_REGISTRY: Record<FundId, ReturnSeriesDefinition> = {
-  vt: {
-    fundId: "vt",
-    formalProductName: "Vanguard Total World Stock ETF",
-    identifier: "NYSE Arca: VT / CUSIP 922042742",
-    manager: "The Vanguard Group",
-    quality: "A",
-    calculationMode: "verified-monthly-jpy",
-    startMonth: "2015-01",
-    endMonth: "2025-06",
-    sourceName: "Vanguard Advisors",
-    sourceUrl: "https://advisors.vanguard.com/investments/products/vt/vanguard-total-world-stock-etf",
-    retrievedAt: "2026-08-21",
-    currency: "JPY（USD公式実績を円換算）",
-    returnType: "Total Return",
-    priceBasis: "NAV",
-    dividendTreatment: "分配金込み",
-    feeTreatment: "ファンド費用控除後",
-    fxTreatment: `日本銀行 ${manifest.fx.seriesCode} の月末USD/JPYで円換算`,
-    inceptionDate: "2008-06-24",
-    inceptionTreatment: "設定後の公式商品実績のみ（proxyなし）",
-    missingValueTreatment: "欠損時は補完・fallbackせず計算停止",
-    investmentTiming: "毎月月初に積立後、前月末から当月末までの月次リターンを適用",
-    seriesName: "Vanguard公式 月次NAV Total Return",
-  },
+  vt: definitionFromLedger("vt", vt),
   vti: definitionFromLedger("vti", vti),
   vym: definitionFromLedger("vym", vym),
   emerging: definitionFromLedger("emerging", eem),
@@ -211,6 +187,10 @@ export function getCommonStartMonth(fundIds: FundId[]): string {
   return fundIds.map(getAvailableStartMonth).sort().at(-1)!;
 }
 
+export function getCommonEndMonth(fundIds: FundId[]): string {
+  return fundIds.map(getAvailableEndMonth).sort().at(0)!;
+}
+
 export function getStartYearOptions(fundId: FundId): number[] {
   const startYear = Number(getAvailableStartMonth(fundId).slice(0, 4));
   const endYear = Number(getAvailableEndMonth(fundId).slice(0, 4));
@@ -219,7 +199,8 @@ export function getStartYearOptions(fundId: FundId): number[] {
 
 export function getCommonStartOptions(fundIds: FundId[]): number[] {
   const startYear = Number(getCommonStartMonth(fundIds).slice(0, 4));
-  return Array.from({ length: 2025 - startYear + 1 }, (_, index) => startYear + index);
+  const endYear = Number(fundIds.map(getAvailableEndMonth).sort().at(0)!.slice(0, 4));
+  return Array.from({ length: endYear - startYear + 1 }, (_, index) => startYear + index);
 }
 
 export const VERIFIED_FUND_IDS = (Object.keys(RETURN_SERIES_REGISTRY) as FundId[])

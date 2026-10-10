@@ -3,12 +3,17 @@ import {
   RankingItem, FundId, InvestmentEvent, AdvancedSimulationResult, AdvancedDataPoint
 } from "@/types";
 import { FUNDS, FUND_LIST } from "./funds";
-import { VERIFIED_FUND_IDS, getCommonStartMonth, getMonthlyJpyReturn } from "./return-series";
+import { VERIFIED_FUND_IDS, getAvailableEndMonth, getCommonStartMonth, getMonthlyJpyReturn } from "./return-series";
 
-export const CURRENT_YEAR = 2025;
-export const CURRENT_MONTH = 6;
+export const CURRENT_YEAR = 2026;
+export const CURRENT_MONTH = 8;
 export const DATA_SOURCE = "一次情報から検証した月次円建てリターン（A系列）と、原典未検証の年次参考モデル（G系列）";
-export const DATA_UPDATED = "2026年9月（収録最終月：2025年6月）";
+export const DATA_UPDATED = "2026年10月11日（収録最終月：2026年8月）";
+
+function endParts(fundIds: FundId[]): [number, number] {
+  const end = fundIds.map(getAvailableEndMonth).sort().at(0) ?? `${CURRENT_YEAR}-${String(CURRENT_MONTH).padStart(2, "0")}`;
+  return end.split("-").map(Number) as [number, number];
+}
 
 // ── 通常シミュレーション ─────────────────────────────────────────────
 
@@ -22,8 +27,16 @@ export function simulate(params: SimulationParams): SimulationResult {
   let monthIndex = 0;
   let year = startYear;
   let month = startMonth;
+  const [availableEndYear, availableEndMonth] = endParts([fundId]);
+  const requestedEnd = params.endYear === undefined
+    ? [availableEndYear, availableEndMonth] as const
+    : [params.endYear, params.endMonth ?? 12] as const;
+  const [endYear, endMonth] = requestedEnd[0] < availableEndYear
+    || (requestedEnd[0] === availableEndYear && requestedEnd[1] < availableEndMonth)
+    ? requestedEnd
+    : [availableEndYear, availableEndMonth] as const;
 
-  while (year < CURRENT_YEAR || (year === CURRENT_YEAR && month <= CURRENT_MONTH)) {
+  while (year < endYear || (year === endYear && month <= endMonth)) {
     totalPrincipal += monthlyAmount;
     currentValue += monthlyAmount;
     currentValue *= 1 + getMonthlyJpyReturn(fundId, year, month);
@@ -73,8 +86,10 @@ export function simulateAdvanced(events: InvestmentEvent[]): AdvancedSimulationR
 
   let year = sorted[0].year;
   let month = sorted[0].month;
+  const involvedFunds = [...new Set(sorted.map((event) => event.fundId).filter((fundId): fundId is FundId => Boolean(fundId)))];
+  const [endYear, endMonth] = endParts(involvedFunds);
 
-  while (year < CURRENT_YEAR || (year === CURRENT_YEAR && month <= CURRENT_MONTH)) {
+  while (year < endYear || (year === endYear && month <= endMonth)) {
     // Apply events for this month
     for (const ev of sorted) {
       if (ev.year !== year || ev.month !== month) continue;

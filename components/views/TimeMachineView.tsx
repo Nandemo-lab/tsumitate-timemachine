@@ -298,7 +298,7 @@ export default function TimeMachineView({
             <div className="text-center">
               <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-1">シミュレーション結果</p>
               <p className="text-xs text-zinc-400">
-                {startYear}年{startMonth}月〜2025年6月 · 毎月{formatCurrency(monthlyAmount)}
+                {startYear}年{startMonth}月〜{result?.dataPoints.at(-1)?.date.replace("/", "年")}月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
 

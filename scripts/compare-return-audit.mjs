@@ -90,15 +90,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
 }
 console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata changes limited to authorized fact corrections");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
-const vtSource = read("lib/verified-monthly-return-series.ts");
-const array = (name) => vtSource.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\] as const;`))[1]
-  .replace(/\/\/.*$/gm, "").split(",").map((value) => value.trim()).filter(Boolean).map(Number);
-const usd = array("VT_MONTHLY_USD_NAV_TOTAL_RETURNS");
-const fx = array("BOJ_MONTH_END_YEN_PER_USD");
-const vt = usd.map((value, index) => ({
-  month: `${2015 + Math.floor(index / 12)}-${String(index % 12 + 1).padStart(2, "0")}`,
-  monthlyReturn: (1 + value) * fx[index + 1] / fx[index] - 1,
-}));
+const vt = JSON.parse(read("data/verified/vt-monthly.json")).observations;
 const fileKey = { india: "inda", emerging: "eem" };
 const points = (fundId) => fundId === "vt" ? vt : JSON.parse(read(`data/verified/${fileKey[fundId] ?? fundId}-monthly.json`)).observations;
 const slugs = ["orukan-vs-sp500", "sp500-vs-nasdaq100", "vti-vs-orukan", "nasdaq100-vs-fangplus", "orukan-vs-fangplus", "vt-vs-sp500", "vti-vs-nasdaq100", "orukan-vs-vym", "india-vs-emerging"];
@@ -138,10 +130,11 @@ if (/10年・20年・30年|5年・10年・20年/.test(`${guide.metaTitle} ${guid
 const ageFaq = guide.faqs.find((faq) => faq.q === "何歳から始めると何年間積み立てられますか？");
 if (!ageFaq.a.includes("20歳開始なら40年") || !ageFaq.a.includes("拠出元本") || !ageFaq.a.includes("必ず利益が増えるわけではありません")) throw new Error("age and contribution explanation mismatch");
 if (/2015|オルカン.*10〜15年以上の積立期間があれば損失/.test(guideText)) throw new Error("pre-inception guide claims remain");
-const independentValue = points("orcan").filter((point) => point.month >= "2020-01" && point.month <= "2025-06")
+const independentPoints = points("orcan").filter((point) => point.month >= "2020-01" && point.month <= "2026-08");
+const independentValue = independentPoints
   .reduce((value, point) => (value + 30000) * (1 + point.monthlyReturn), 0);
 const example = guide.sections.flatMap((section) => section.subsections ?? []).find((section) => section.h3.includes("2020年1月"));
-if (!example.body.includes(`${Math.round(independentValue).toLocaleString()}円`) || !example.body.includes("1,980,000円") || !example.body.includes("66か月")) throw new Error("guide simulation example mismatch");
+if (!example.body.includes(`${Math.round(independentValue).toLocaleString()}円`) || !example.body.includes(`${(independentPoints.length * 30000).toLocaleString()}円`) || !example.body.includes(`${independentPoints.length}か月`)) throw new Error("guide simulation example mismatch");
 for (const [fundId, year] of [["vt", 2022], ["sp500", 2022], ["orcan", 2022], ["fangplus", 2022], ["fangplus", 2023]]) {
   const yearly = points(fundId).filter((point) => point.month.startsWith(`${year}-`));
   const annual = Math.expm1(yearly.reduce((sum, point) => sum + Math.log1p(point.monthlyReturn), 0));
