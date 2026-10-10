@@ -11,10 +11,11 @@ import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { GUIDE_SERIES } from "@/lib/guide-pages";
 import { MainTab } from "@/components/layout/BottomNav";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
   { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "2020年のコロナショック直後に始めていたら" },
-  { fundId: "sp500",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "新NISA開始前から米国の成長に賭けていたら" },
+  { fundId: "sp500",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "米国大型株へ積み立てていたら" },
   { fundId: "orcan",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "世界全体にコツコツ分散していたら" },
   { fundId: "india",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "成長する新興国に早くから注目していたら" },
 ];
@@ -63,6 +64,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
   const topFunds = useMemo(
     () =>
       FUND_LIST
+        .filter((fund) => RETURN_SERIES_REGISTRY[fund.id].quality === "A")
         .map((fund) => ({
           fund,
           result: simulate({ fundId: fund.id, startYear: 2020, startMonth: 1, monthlyAmount: 30000 }),
@@ -114,6 +116,21 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           </span>
         </h1>
         <p className="text-sm text-zinc-400">過去の実績で「たられば」を体験する</p>
+      </div>
+
+      <div className="mx-4 rounded-2xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4 space-y-2">
+        <p className="text-sm font-bold text-white">このツールで確認できること</p>
+        <p className="text-xs leading-relaxed text-zinc-300">
+          運用会社などの一次情報から検証した月次データで、同じ開始月・積立額・終了月を比較します。商品設定前の期間や欠損値は別系列で補いません。
+        </p>
+        <div className="flex flex-wrap gap-2 text-[11px] text-zinc-300">
+          <span className="rounded-full bg-white/[0.06] px-2.5 py-1">実績期間：2025年6月まで</span>
+          <span className="rounded-full bg-white/[0.06] px-2.5 py-1">A品質9系列・G参考1系列</span>
+          <Link href="/about/data-sources" className="rounded-full bg-indigo-400/15 px-2.5 py-1 text-indigo-200 underline underline-offset-2">
+            出典と計算方法
+          </Link>
+        </div>
+        <p className="text-[11px] leading-relaxed text-zinc-400">過去実績であり、将来の成果や商品の優劣を示すものではありません。</p>
       </div>
 
       {/* ── 人気のたられば ── */}
@@ -282,7 +299,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
         >
           {[
-            { year: 2020, label: "コロナ後の絶好機", color: "#10b981" },
+            { year: 2020, label: "コロナ急落を含む期間", color: "#10b981" },
             { year: 2021, label: "相場回復局面から", color: "#3b82f6" },
             { year: 2022, label: "下落相場を経験",   color: "#f59e0b" },
             { year: 2023, label: "AIブーム期から",   color: "#8b5cf6" },
@@ -444,7 +461,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
             { label: "オルカンはやめたほうがいい？",   href: "/guide/orukan-yameta-houga-ii",    sub: "6つの懸念点を実績データで検証" },
             { label: "S&P500が暴落したらどうなる？",   href: "/guide/sp500-booraku-taisho",      sub: "過去の暴落データと積立継続の効果" },
             { label: "オルカン一本だけでいい？",       href: "/guide/orukan-ippon-de-ii",        sub: "1本投資の合理的な理由と注意点" },
-            { label: "新NISAは月いくら積立すべき？",   href: "/guide/nisa-tsumitate-ikura",      sub: "収入別おすすめ金額と30年試算" },
+            { label: "新NISAは月いくら？",   href: "/guide/nisa-tsumitate-ikura",      sub: "家計と過去実績から確認" },
             { label: "新NISAのおすすめ積立先は？",     href: "/guide/nisa-beginner",             sub: "オルカン・S&P500・NASDAQ100を比較" },
             { label: "ドルコスト平均法とは？",         href: "/guide/dollar-cost-averaging",     sub: "定額積立の仕組みと注意点" },
             { label: "積立投資の失敗パターン5つ",      href: "/guide/index-shippai-pattern",     sub: "やってはいけない行動と回避法" },

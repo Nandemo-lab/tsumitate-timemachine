@@ -163,7 +163,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          過去20年以上にわたり、世界の主要指数の中でも高いリターンを誇ってきた実績があります。一方で、米国1カ国への集中という点では分散が効いておらず、米国経済が低迷した際の影響を受けやすい構造でもあります。
+          この記事の数値比較は、eMAXIS Slim 米国株式（S&amp;P500）とオルカンの公式月次データがそろう共通期間に限定しています。S&amp;P500は米国大型株へ投資するため、オルカンより投資地域が集中しています。
         </p>
       </section>
 

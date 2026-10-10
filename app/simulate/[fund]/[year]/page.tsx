@@ -183,7 +183,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
               {startYear}年1月から2025年6月まで、毎月{formatCurrency(monthlyAmount)}を
               {fundData.name}（{fundData.shortName}）に積み立てた場合、
               元本合計{formatCurrency(result.totalPrincipal)}に対して、
-              現在の評価額は{formatCurrency(result.finalValue)}となります。
+              2025年6月時点の評価額は{formatCurrency(result.finalValue)}となります。
               利益額は<strong className="text-white">+{formatCurrency(result.profit)}</strong>で、
               リターン率は{result.returnRate.toFixed(1)}%です。
             </p>

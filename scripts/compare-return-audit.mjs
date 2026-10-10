@@ -36,7 +36,13 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (JSON.stringify(current[key]) !== JSON.stringify(previous[key])) throw new Error(`unexpected regression ${previous.slug} ${key}`);
   }
   const authorizedFaqs = {
-    "orukan-vs-sp500": ["初心者にはどちらが向いていますか？"],
+    "orukan-vs-sp500": [
+      "オルカンとS&P500はどっちがおすすめですか？",
+      "新NISAならオルカンとS&P500どちらが人気ですか？",
+      "初心者にはどちらが向いていますか？",
+      "暴落時に強いのはどちらですか？",
+      "長期投資に向いているのはどちらですか？",
+    ],
     "sp500-vs-nasdaq100": ["リスクが高いのはS&P500とNASDAQ100のどちらですか？"],
     "nasdaq100-vs-fangplus": [
       "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
@@ -79,7 +85,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (newFaq.q !== oldFaq.q) throw new Error(`FAQ question regression ${previous.slug}`);
     if (!(authorizedFaqs[previous.slug] ?? []).includes(oldFaq.q) && newFaq.a !== oldFaq.a) throw new Error(`unexpected FAQ regression ${previous.slug}`);
   }
-  const authorizedMetadata = new Set(["vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500", "orukan-vs-schd"]);
+  const authorizedMetadata = new Set(["orukan-vs-sp500", "vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500", "orukan-vs-schd"]);
   if (!authorizedMetadata.has(previous.slug) && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
 }
 console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata changes limited to authorized fact corrections");

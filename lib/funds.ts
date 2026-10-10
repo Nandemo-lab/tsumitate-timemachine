@@ -45,7 +45,7 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "VT",
       formalName: "Vanguard Total World Stock ETF（VT）",
-      catchCopy: "バンガード社が誇る、究極の全世界ETF",
+      catchCopy: "全世界の株式を対象とするバンガードのETF",
       forWhom: "ETFで国際分散したい人・証券口座で買いたい人",
       features: ["🌍 全世界分散", "📊 ETF形式", "💼 バンガード運用"],
       pros: ["全世界約10,000銘柄をカバー", "バンガード社の信頼性", "流動性が高い"],
@@ -70,9 +70,9 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "S&P500",
       formalName: "eMAXIS Slim 米国株式（S&P500）",
-      catchCopy: "米国経済の成長をそのまま受け取る。長期投資の王道",
-      forWhom: "米国企業の成長に賭けたい人・オルカンより高リターンを狙いたい人",
-      features: ["🇺🇸 米国集中", "💰 NISA向き", "📈 高リターン実績", "💼 低コスト"],
+      catchCopy: "米国を代表する大型株500社を対象とする商品",
+      forWhom: "米国大型株へ投資する商品の仕組みを確認したい人",
+      features: ["🇺🇸 米国大型株", "💰 NISA対象", "📊 500銘柄", "💼 低コスト"],
       pros: ["米国を代表する大型株500社へ分散", "米国の主要な大型成長企業が主力", "信託報酬が超低コスト"],
       cons: ["米国のみへの集中リスク", "円安時に有利だが円高時は注意"],
       managementFee: "0.08140%（年率）",
@@ -118,10 +118,10 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "VYM",
       formalName: "Vanguard High Dividend Yield ETF（VYM）",
-      catchCopy: "配当で育てる。安定志向の資産形成",
-      forWhom: "配当収入を楽しみたい人・安定重視の人・50代以上",
-      features: ["💰 高配当", "📉 比較的安定", "🏦 老後向き"],
-      pros: ["約3〜4%の配当利回り", "値動きが比較的安定", "景気悪化時に底堅い"],
+      catchCopy: "米国の高配当株指数への連動を目指すETF",
+      forWhom: "分配金と米国高配当株の構成を確認したい人",
+      features: ["💰 高配当株", "📊 ETF形式", "🇺🇸 米国株式"],
+      pros: ["米国高配当株へ分散", "FTSE High Dividend Yield Indexへの連動を目指す", "四半期ごとに分配"],
       cons: ["成長株より値上がり益は小さい", "日本円での配当受取に税金がかかる"],
       managementFee: "0.04%（年率）",
       beginnerScore: 3,
@@ -170,9 +170,9 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "NASDAQ100（ナスダック）",
       formalName: "iFreeNEXT NASDAQ100 インデックス",
-      catchCopy: "米国ハイテク成長企業を中心に。高リターン・高リスクの攻めの一本",
-      forWhom: "テック成長に強気な人・S&P500より高いリターンを狙いたい人",
-      features: ["💻 テック集中", "🚀 高リターン実績", "⚡ 高ボラティリティ"],
+      catchCopy: "NASDAQ市場の大型非金融企業100社を対象とする商品",
+      forWhom: "米国大型非金融株への集中度と値動きを確認したい人",
+      features: ["💻 非金融大型株", "📊 約100銘柄", "⚡ 値動き大"],
       pros: ["米国の非金融大型株100社へ投資", "米国の主要テクノロジー・成長企業が主力", "イノベーション分野の比率が高い"],
       cons: ["テクノロジーセクターへの集中リスク", "下落相場では大幅下落する局面もある"],
       managementFee: "0.495%（年率）",
@@ -193,10 +193,10 @@ export const FUNDS: Record<FundId, Fund> = {
     encyclopedia: {
       nickname: "FANG+（ファング・プラス）",
       formalName: "iFreeNEXT FANG+インデックス",
-      catchCopy: "イノベーションを牽引する大型テクノロジー企業10社へ集中。ハイリスク・ハイリターンの極致",
-      forWhom: "最大リターンを狙う上級者・リスクを理解した攻め型投資家",
-      features: ["🚀 超高リターン", "⚠️ 高リスク", "💻 10銘柄集中"],
-      pros: ["過去に数十%を超える驚異的なリターンを記録した実績あり", "時代を代表する大型テクノロジー企業群へ集中投資", "少額から世界屈指の成長企業に投資できる"],
+      catchCopy: "大型テクノロジー企業など10銘柄へ集中する商品",
+      forWhom: "10銘柄への集中度と大きな価格変動を確認したい人",
+      features: ["💻 大型成長株", "⚠️ 集中度が高い", "📊 10銘柄"],
+      pros: ["10銘柄を均等比率で構成", "大型テクノロジー企業などへ集中投資", "四半期ごとに構成を見直す指数"],
       cons: ["過去に40〜50%超の大幅下落局面あり", "10銘柄のみで集中リスクが非常に高い", "信託報酬が高め"],
       managementFee: "0.7755%（年率）",
       beginnerScore: 1,
@@ -257,15 +257,15 @@ export const FUNDS: Record<FundId, Fund> = {
 
 // ホームランキングなどで使う、1行に収まる超短い説明
 export const FUND_SHORT_DESC: Record<FundId, string> = {
-  orcan: "長期積立向け",
+  orcan: "全世界株式型",
   vt: "全世界ETF",
-  sp500: "米国成長重視",
+  sp500: "米国大型株型",
   vti: "米国分散型",
   vym: "配当重視型",
   schd: "配当成長型",
-  nasdaq100: "ハイリターン型",
-  fangplus: "攻めの成長株",
-  india: "新興国成長",
+  nasdaq100: "大型非金融株型",
+  fangplus: "10銘柄集中型",
+  india: "インド株式型",
   emerging: "新興国分散",
 };
 
@@ -299,13 +299,12 @@ export function formatExpenseRatio(fundId: FundId): string {
 
 export const CATEGORY_ORDER: FundCategory[] = ["global", "us", "dividend", "hightech", "emerging"];
 
-// 投資初心者が選びやすいよう、銘柄の特徴を短いラベルに要約する
+// 商品属性を短いラベルに要約する（適性や将来成果は評価しない）
 export function getFundTags(fund: Fund): string[] {
   const enc = fund.encyclopedia;
   const tags: string[] = [];
-  if (enc.beginnerScore !== null && enc.beginnerScore >= 5) tags.push("初心者向け");
-  else if (fund.id === "sp500") tags.push("王道");
-  if (fund.category === "hightech") tags.push("高リターン");
+  if (fund.category === "global") tags.push("全世界株");
+  if (fund.category === "hightech") tags.push("集中型");
   if (fund.category === "us") tags.push("米国株");
   if (fund.category === "dividend") tags.push("高配当");
   if (fund.category === "emerging") tags.push("新興国");

@@ -262,7 +262,7 @@ export const RANKING_PAGES: RankingPageData[] = [
       {
         fundId: "nasdaq100", fundSlug: "nasdaq100", yearSlug: "nasdaq100", rank: 2, badge: "🥈",
         highlight: "テック成長のリターンを幅広く取りに行く王道の高リターン選択",
-        pros: ["過去20年の年率リターン約15%と高水準", "上位100銘柄への分散でFANG+より安定"],
+        pros: ["米国NASDAQ市場の大型非金融企業100銘柄で構成", "FANG+より構成銘柄数が多い"],
         cons: ["2022年は−33%と大幅下落を経験", "テック株低迷期は大きく下がる"],
         metric: "過去のリターン水準", metricValue: "★★★★☆",
       },

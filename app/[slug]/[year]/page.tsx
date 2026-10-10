@@ -89,7 +89,7 @@ export default async function YearPage({ params }: Props) {
   // 動的FAQ（シミュレーション結果を含む）
   const dynamicFaq = {
     q: `${page.year}年から${enc.nickname}を毎月3万円積み立てていたらいくらになった？`,
-    a: `${page.year}年1月から毎月3万円を積み立てた場合、元本${formatCurrency(result.totalPrincipal)}に対して現在の評価額は${formatCurrency(result.finalValue)}、利益は${isProfit ? "+" : ""}${formatCurrency(result.profit)}（リターン${result.returnRate.toFixed(1)}%）となっています（積立タイムマシン調べ・最新データ基準）。`,
+    a: `${page.year}年1月から2025年6月まで毎月3万円を積み立てた場合、元本${formatCurrency(result.totalPrincipal)}に対して期間末評価額は${formatCurrency(result.finalValue)}、利益は${isProfit ? "+" : ""}${formatCurrency(result.profit)}（リターン${result.returnRate.toFixed(1)}%）です。将来予測ではありません。`,
   };
   const allFaqs = [dynamicFaq, ...page.faqs];
 
@@ -289,7 +289,7 @@ export default async function YearPage({ params }: Props) {
             <p className="text-sm text-zinc-300 leading-relaxed">
               この年の{page.simMonth}月から毎月{(page.simAmount / 10000).toFixed(0)}万円を
               {enc.nickname}に積み立てていた場合、
-              現在の評価額は
+              2025年6月時点の評価額は
               <span className="font-bold" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
                 {formatCurrency(result.finalValue)}
               </span>
