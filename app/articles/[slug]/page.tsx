@@ -9,6 +9,7 @@ import {
   buildOgImageUrl,
 } from "@/lib/article-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
+import PageRoleGuide from "@/components/common/PageRoleGuide";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -56,6 +57,10 @@ export default async function ArticlePage({ params }: Props) {
   if (!entry) notFound();
 
   const { meta, Content } = entry;
+  const relatedFunds = meta.relatedFunds ?? [];
+  const comparisonHref = relatedFunds.length >= 2
+    ? `/compare/${relatedFunds[0] === "orcan" ? "orukan" : relatedFunds[0]}-vs-${relatedFunds[1] === "orcan" ? "orukan" : relatedFunds[1]}`
+    : undefined;
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -105,6 +110,13 @@ export default async function ArticlePage({ params }: Props) {
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
             <span className="text-zinc-400 truncate max-w-[160px]">{meta.h1}</span>
           </nav>
+
+          <PageRoleGuide
+            label="商品の仕組みと比較結果の読み方を整理する"
+            description="数値の勝ち負けではなく、投資対象、商品形態、費用、分配方針、データ品質を確認します。同条件の数値計算は比較ページに分けています。"
+            counterpartHref={comparisonHref}
+            counterpartLabel={comparisonHref ? "同じ条件の積立比較を開く" : undefined}
+          />
 
           {/* 記事本文（各記事コンポーネントが H1〜CTA まで全て担う） */}
           <Content meta={meta} />

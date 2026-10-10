@@ -18,6 +18,7 @@ import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
+import PageRoleGuide from "@/components/common/PageRoleGuide";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -209,6 +210,13 @@ export default async function FundPage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          <PageRoleGuide
+            label="正式商品・費用・データ品質を確認する資料"
+            description="商品の設定日、投資対象、費用、NISA区分、検証できる実績期間と一次情報を確認します。積立条件を変える操作はシミュレーション入口に分けています。"
+            counterpartHref={page.fundId === "vym" ? undefined : `/${page.fundId === "orcan" ? "orukan" : page.fundId === "fangplus" ? "fang" : page.fundId}`}
+            counterpartLabel={page.fundId === "vym" ? undefined : `${enc.nickname}の積立条件を変えて試す`}
+          />
 
           {/* ── 基本情報テーブル ────────────────────────────────── */}
           {page.contextualComparison && <GuideBodyText body={page.contextualComparison} />}

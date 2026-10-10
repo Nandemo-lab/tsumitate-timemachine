@@ -243,7 +243,27 @@ export default async function FromYearPage({ params }: Props) {
               </h1>
             </div>
             <p className="text-sm text-zinc-400">
-              月3万円 / {year}年{SIM_MONTH}月スタート / 最新データで計算
+              月3万円 / {year}年{SIM_MONTH}月スタート / 2026年8月までの検証済み実績
+            </p>
+
+            {winner && (
+              <div className="grid grid-cols-3 gap-2" aria-label={`${year}年開始の計算条件`}>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+                  <p className="text-[10px] text-zinc-500">積立回数</p>
+                  <p className="mt-1 text-sm font-bold text-white">{winner.result.monthsElapsed}回</p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+                  <p className="text-[10px] text-zinc-500">共通元本</p>
+                  <p className="mt-1 text-sm font-bold text-white">{formatCurrency(winner.result.totalPrincipal)}</p>
+                </div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+                  <p className="text-[10px] text-zinc-500">順位対象</p>
+                  <p className="mt-1 text-sm font-bold text-white">A品質 {ranked.length}銘柄</p>
+                </div>
+              </div>
+            )}
+            <p className="text-xs leading-relaxed text-zinc-500">
+              このページ固有の比較は、{year}年1月から同じ月額を積み立てた経過です。単年リターンではなく、毎月の追加投資を含む期間全体の評価額を比較します。
             </p>
 
             {/* 年の背景 */}

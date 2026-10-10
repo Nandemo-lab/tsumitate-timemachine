@@ -118,6 +118,20 @@ export default function GuideIndexPage() {
             </p>
           </header>
 
+          <section className="grid gap-2 sm:grid-cols-2" aria-label="疑問別のガイド案内">
+            {[
+              ["制度・税金を確認したい", "制度ハブで投資枠と手続きを、税金ハブで口座・分配金・申告を確認"],
+              ["商品を選ぶ前提を知りたい", "初心者クラスタで始め方、指数、失敗パターンを確認"],
+              ["積立中の判断を整理したい", "運用クラスタで期間、一括との違い、継続・停止時の論点を確認"],
+              ["使う時期から逆算したい", "出口戦略で取り崩し、必要時期、価格変動リスクを確認"],
+            ].map(([title, body]) => (
+              <div key={title} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
+                <p className="text-xs font-bold text-indigo-300">{title}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{body}</p>
+              </div>
+            ))}
+          </section>
+
           {/* クラスタハブ（税金・制度・暴落） */}
           <section className="space-y-3">
             <div className="flex items-center gap-1.5">

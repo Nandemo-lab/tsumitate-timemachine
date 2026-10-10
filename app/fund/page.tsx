@@ -74,6 +74,16 @@ export default function FundIndexPage() {
             </p>
           </header>
 
+          <section className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 space-y-2">
+            <h2 className="text-xs font-bold text-emerald-200">知りたい項目から銘柄を選ぶ</h2>
+            <p className="text-xs leading-relaxed text-zinc-400">
+              Fund詳細では、正式商品名、投資対象、費用、NISA区分、設定日、検証可能な実績期間、一次情報を確認できます。利益額の違いは商品landingや比較ページで条件をそろえて確認します。
+            </p>
+            <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-300">
+              データ品質と更新履歴を見る<ArrowRight className="h-3 w-3" />
+            </Link>
+          </section>
+
           <div className="space-y-2">
             {FUND_PAGES.map((fp) => {
               const fund = FUNDS[fp.fundId];

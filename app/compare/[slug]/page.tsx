@@ -12,7 +12,8 @@ import { getArticlesRelatedToFunds } from "@/lib/article-pages";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ComparePageClient from "./ComparePageClient";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
-import { getReturnSeriesDefinition } from "@/lib/return-series";
+import { getCommonEndMonth, getReturnSeriesDefinition } from "@/lib/return-series";
+import PageRoleGuide from "@/components/common/PageRoleGuide";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -71,18 +72,30 @@ export default async function ComparePage({ params }: Props) {
   const definitionA = getReturnSeriesDefinition(page.fundAId);
   const definitionB = getReturnSeriesDefinition(page.fundBId);
   const hasReferenceSeries = definitionA.quality === "G" || definitionB.quality === "G";
+  const commonEnd = getCommonEndMonth([page.fundAId, page.fundBId]);
+  const commonEndYear = Number(commonEnd.slice(0, 4));
+  const commonEndMonth = Number(commonEnd.slice(5, 7));
+  const relatedArticle = getArticlesRelatedToFunds([page.fundAId, page.fundBId])
+    .find((article) => {
+      const relatedFunds = article.relatedFunds ?? [];
+      return relatedFunds.includes(page.fundAId) && relatedFunds.includes(page.fundBId);
+    });
 
   const resultA = simulate({
     fundId: page.fundAId,
     startYear: page.simYear,
     startMonth: page.simMonth,
     monthlyAmount: page.simAmount,
+    endYear: commonEndYear,
+    endMonth: commonEndMonth,
   });
   const resultB = simulate({
     fundId: page.fundBId,
     startYear: page.simYear,
     startMonth: page.simMonth,
     monthlyAmount: page.simAmount,
+    endYear: commonEndYear,
+    endMonth: commonEndMonth,
   });
 
   // JSON-LD
@@ -195,6 +208,13 @@ export default async function ComparePage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          <PageRoleGuide
+            label="同じ開始月・月額・共通終端で数値を比べる"
+            description="元本をそろえ、期間末評価額と推移を検証済み月次系列で比較します。商品構造や選択時の確認事項は比較コラムと役割を分けています。"
+            counterpartHref={relatedArticle ? `/articles/${relatedArticle.slug}` : undefined}
+            counterpartLabel={relatedArticle ? "商品構造と比較結果の読み方を見る" : undefined}
+          />
 
           {page.mixExamples && page.mixExamples.length > 0 && (
             <section className="space-y-4">

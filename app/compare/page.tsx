@@ -74,6 +74,22 @@ export default function CompareIndexPage() {
             </p>
           </header>
 
+          <section className="grid gap-2 sm:grid-cols-3" aria-label="比較ページの選び方">
+            {[
+              ["全世界と米国", "オルカン・VTとS&P500・VTIで、地域分散と米国集中の違いを確認"],
+              ["米国とハイテク", "S&P500・VTIとNASDAQ100・FANG+で、構成範囲と値動きの違いを確認"],
+              ["配当方針", "VYM・SCHDで商品設計を確認。SCHD実績はG品質の参考系列として分離"],
+            ].map(([title, body]) => (
+              <div key={title} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+                <p className="text-xs font-bold text-violet-300">{title}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{body}</p>
+              </div>
+            ))}
+          </section>
+          <p className="text-xs leading-relaxed text-zinc-500">
+            各ページは同じ開始月・月額・共通終端で元本をそろえます。商品の仕組みを読みたい場合はコラム、数値を変えて確かめたい場合は比較ページを選んでください。
+          </p>
+
           <div className="space-y-2">
             {COMPARE_PAGES.map((cp) => {
               const fA = FUNDS[cp.fundAId];

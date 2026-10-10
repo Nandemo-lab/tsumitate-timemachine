@@ -97,6 +97,16 @@ export default function RankingView({ page }: Props) {
             <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
           </section>
 
+          <section className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.05] p-4 space-y-2">
+            <h2 className="text-xs font-bold text-indigo-200">順位を見る前に：対象と除外条件</h2>
+            <p className="text-xs leading-relaxed text-zinc-400">
+              実績値は{page.simYear}年{page.simMonth}月開始・月{formatCurrency(page.simAmount)}の同一条件です。A品質の検証済み月次系列だけを数値比較し、商品設定前や欠損月を別系列で補いません。G品質は商品属性の参考表示に限り、実績順位から除外します。
+            </p>
+            <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-indigo-300 hover:text-indigo-200">
+              対象系列と検証方法を見る<ArrowRight className="h-3 w-3" />
+            </Link>
+          </section>
+
           {/* ── 評価基準 ─────────────────────────────────────── */}
           <section>
             <h2
@@ -124,7 +134,7 @@ export default function RankingView({ page }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              編集評価ランキング
+              条件別の比較結果
             </h2>
             {page.funds.map((entry) => {
               const fund = FUNDS[entry.fundId];

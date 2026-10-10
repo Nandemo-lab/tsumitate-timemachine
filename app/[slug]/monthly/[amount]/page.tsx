@@ -267,49 +267,20 @@ export default async function MonthlyAmountPage({ params }: Props) {
             </p>
           </section>
 
-          {/* ── こんな人におすすめ ───────────────────────────── */}
+          {/* ── 金額設定時の確認事項 ─────────────────────────── */}
           <section className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-5 space-y-3">
             <h2
               className="text-sm font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {label}積立はこんな人に向いています
+              {label}積立を設定する前の確認事項
             </h2>
             <ul className="space-y-2">
-              {page.amount === 10000 && [
-                "投資初心者・まず少額から試したい方",
-                "新NISAを始めたばかりで慣れたい方",
-                "副業・節約で生み出した余裕資金を活用したい方",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm text-zinc-400">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />
-                  {t}
-                </li>
-              ))}
-              {page.amount === 30000 && [
-                "月2〜3万円の余裕資金がある会社員・共働き世帯",
-                "新NISAのつみたて投資枠を活用したい方",
-                "コツコツ長期積立で老後資金を準備したい方",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm text-zinc-400">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />
-                  {t}
-                </li>
-              ))}
-              {page.amount === 50000 && [
-                "ある程度収入が安定しており余裕資金が多い方",
-                "新NISAのつみたて投資枠を半額以上活用したい方",
-                "老後資金を本格的に積み上げたい30〜40代の方",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm text-zinc-400">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />
-                  {t}
-                </li>
-              ))}
-              {page.amount === 100000 && [
-                "新NISAつみたて投資枠（月10万円）を最大活用したい方",
-                "世帯収入が高く余裕資金が十分にある方",
-                "早期リタイア・セミリタイアを目指している方",
+              {[
+                `${label}を毎月拠出しても、生活費と近い将来に使う資金を分けて確保できるか`,
+                `積立期間中の拠出元本は${formatCurrency(result.totalPrincipal)}です。期間と合計額が資金計画に合うか`,
+                "表示結果は過去の月次実績であり、同じ評価額になる将来予測ではないこと",
+                "NISAを使う場合は、他の積立を含めた年間投資額と制度上の取扱いを確認すること",
               ].map((t) => (
                 <li key={t} className="flex items-start gap-2 text-sm text-zinc-400">
                   <span className="mt-1 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />

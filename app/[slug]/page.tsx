@@ -8,7 +8,9 @@ import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
+import PageRoleGuide from "@/components/common/PageRoleGuide";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
+import { getFundPageSlug } from "@/lib/fund-seo-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -71,6 +73,7 @@ export default async function FundLandingPage({ params }: Props) {
   if (!page) notFound();
 
   const fund = FUNDS[page.fundId];
+  const fundDetailSlug = getFundPageSlug(page.fundId);
   const returnDefinition = getReturnSeriesDefinition(page.fundId);
   const result = simulate({
     fundId: page.fundId,
@@ -173,6 +176,13 @@ export default async function FundLandingPage({ params }: Props) {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </section>
+
+          <PageRoleGuide
+            label="条件を変えて積立結果を確かめる入口"
+            description="開始年と月額を変え、検証済み月次実績による元本・期間末評価額・利益を確認します。商品仕様や一次情報は銘柄詳細に分けています。"
+            counterpartHref={fundDetailSlug ? `/fund/${fundDetailSlug}` : undefined}
+            counterpartLabel={fundDetailSlug ? `${fund.shortName}の正式商品・費用・データ品質を見る` : undefined}
+          />
 
           {/* ── Features ─────────────────────────────────────────── */}
           <section className="mb-12">

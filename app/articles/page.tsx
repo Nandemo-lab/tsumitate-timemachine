@@ -68,6 +68,16 @@ export default function ArticlesIndexPage() {
             </p>
           </header>
 
+          <section className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.05] p-4 space-y-2">
+            <h2 className="text-xs font-bold text-indigo-200">コラムで確認すること</h2>
+            <p className="text-xs leading-relaxed text-zinc-400">
+              商品形態、投資対象、費用、分配方針、重複する投資先など、数値差が生じる背景を整理します。同条件の評価額・元本・グラフは対応する比較ページで再計算できます。
+            </p>
+            <Link href="/compare" className="inline-flex items-center gap-1 text-xs font-bold text-indigo-300">
+              数値を同条件で比較する<ArrowRight className="h-3 w-3" />
+            </Link>
+          </section>
+
           <div className="space-y-3">
             {ARTICLE_PAGES.map((article) => (
               <Link

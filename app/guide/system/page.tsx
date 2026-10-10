@@ -112,7 +112,7 @@ export default function SystemGuideIndexPage() {
               新NISA制度ガイド一覧
             </h1>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              新NISAの投資枠の使い分けから、旧NISA・ジュニアNISAとの関係、金融機関変更の手続きまで、新NISA制度の仕組みを6つの記事に整理しています。まずはじめて読む方は、上から順番に読み進めることをおすすめします。
+              新NISAの投資枠の使い分けから、旧NISA・ジュニアNISAとの関係、金融機関変更の手続きまで、新NISA制度の仕組みを6つの記事に整理しています。積立額、投資枠、移行、変更手続きなど、確認したい制度項目から選べます。
             </p>
           </header>
 
