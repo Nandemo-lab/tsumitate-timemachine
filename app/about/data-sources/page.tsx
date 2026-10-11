@@ -59,7 +59,7 @@ export default function DataSourcesPage() {
             データソース・計算方法
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed">
-            9系列は一次情報から作成した検証済み月次データを使用します。米国ETFは公式NAV Total Returnを日本銀行の月末為替で円換算し、国内投信は商品設定後の分配金再投資基準価額を使用します。SCHDだけは月次原典の検証が未完了のため参考データとして分離しています。
+            9系列は一次情報から作成した検証済み月次データを使用します。米国ETFは配当を含む公式の基準価額リターンを日本銀行の月末為替で円換算し、国内投信は商品設定後の分配金再投資基準価額を使用します。SCHDだけは月次原典の検証が未完了のため参考データとして分離しています。
           </p>
         </header>
 
@@ -79,15 +79,15 @@ export default function DataSourcesPage() {
               </p>
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">年次リターンデータの取得</p>
+              <p className="text-xs font-bold text-zinc-300">月次リターンデータの取得</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                ETF5系列は運用会社公式の月次NAV Total Returnと日本銀行の月末USD/JPYを使用します。国内投信4系列は運用会社公式の分配金再投資基準価額を使用します。売買手数料、税金、実際の為替スプレッドは個別計算していません。
+                ETF5系列は運用会社公式の配当込み基準価額リターンと、日本銀行の月末USD/JPYを使用します。国内投信4系列は運用会社公式の分配金再投資基準価額を使用します。ファンド内部の運用費用は参照値に反映されていますが、売買手数料、税金、実際の為替スプレッドは個別計算していません。
               </p>
             </div>
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-zinc-300">収録最終月と更新履歴</p>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                現在の収録最終月は2026年8月です。2026年10月11日に9つのA系列を公式一次情報から再取得し、raw snapshotのSHA-256、連続月、円換算式を再検証しました。各系列は同月までの値だけを使用し、未来データや年次値へのfallbackは行いません。
+                現在の収録最終月は2026年8月です。2026年10月11日に9つのA系列を公式一次情報から再取得し、保存した元データのSHA-256、連続月、円換算式を再検証しました。各系列は同月までの値だけを使用し、未来データや年次値で補いません。
               </p>
             </div>
             <div className="space-y-1.5">
@@ -194,7 +194,7 @@ export default function DataSourcesPage() {
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">表示コスト</span>
                     <span className="text-zinc-400">
-                      {formatExpenseRatio(fund.id)}（{source.sourceStatus === "verified" ? "公式NAVリターンに反映済み" : "シミュレーションへの反映は未特定"}）
+                      {formatExpenseRatio(fund.id)}（{source.sourceStatus === "verified" ? "参照する基準価額に反映済み・二重控除なし" : "シミュレーションへの反映は未特定"}）
                     </span>
                   </div>
                 </div>

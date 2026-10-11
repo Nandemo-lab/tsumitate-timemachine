@@ -19,14 +19,20 @@ const MONTHLY_AMOUNTS = [10000, 20000, 30000, 50000, 100000];
 
 interface Props {
   initialFundA?: FundId;
+  initialYear?: number;
+  initialMonth?: number;
+  initialAmount?: number;
 }
 
-export default function CompareView({ initialFundA = "sp500" }: Props) {
+export default function CompareView({ initialFundA = "sp500", initialYear = 2020, initialMonth = 1, initialAmount = 30000 }: Props) {
+  const initialCommonStart = getCommonStartMonth([initialFundA, "orcan"]);
+  const requestedStart = `${initialYear}-${String(initialMonth).padStart(2, "0")}`;
+  const safeInitialStart = requestedStart < initialCommonStart ? initialCommonStart : requestedStart;
   const [fundA, setFundA] = useState<FundId>(initialFundA);
   const [fundB, setFundB] = useState<FundId>("orcan");
-  const [startYear, setStartYear] = useState(2020);
-  const [startMonth, setStartMonth] = useState(1);
-  const [monthlyAmount, setMonthlyAmount] = useState(30000);
+  const [startYear, setStartYear] = useState(Number(safeInitialStart.slice(0, 4)));
+  const [startMonth, setStartMonth] = useState(Number(safeInitialStart.slice(5, 7)));
+  const [monthlyAmount, setMonthlyAmount] = useState(initialAmount);
   const [showResult, setShowResult] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);

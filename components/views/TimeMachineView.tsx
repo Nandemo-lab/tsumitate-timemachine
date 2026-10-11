@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, simulateAll, formatCurrency, MONTH_OPTIONS } from "@/lib/simulation";
-import { VERIFIED_FUND_IDS, getAvailableStartMonth, getCommonStartMonth, getStartYearOptions } from "@/lib/return-series";
+import { VERIFIED_FUND_IDS, getAvailableEndMonth, getAvailableStartMonth, getCommonEndMonth, getCommonStartMonth, getStartYearOptions } from "@/lib/return-series";
 import FundSelector from "@/components/simulation/FundSelector";
 import EmotionalMessage from "@/components/simulation/EmotionalMessage";
 import ShareCard from "@/components/simulation/ShareCard";
@@ -25,7 +25,7 @@ interface Props {
   initialMonth?: number;
   initialAmount?: number;
   autoRun?: boolean;
-  onCompare: (fundId: FundId) => void;
+  onCompare: (fundId: FundId, conditions?: { year: number; month: number; amount: number }) => void;
 }
 
 const MONTHLY_AMOUNTS = [10000, 30000, 50000, 100000];
@@ -98,9 +98,13 @@ export default function TimeMachineView({
   );
 
   const yearsElapsed = useMemo(() => {
+    const end = subMode === "ranking"
+      ? getCommonEndMonth(VERIFIED_FUND_IDS)
+      : getAvailableEndMonth(fund);
+    const [endYear, endMonth] = end.split("-").map(Number);
     const start = startYear + (startMonth - 1) / 12;
-    return Math.max(1, (2025 + 5 / 12) - start);
-  }, [startYear, startMonth]);
+    return Math.max(1, (endYear + (endMonth - 1) / 12) - start);
+  }, [fund, startYear, startMonth, subMode]);
 
   const run = () => {
     trackCalculate({ mode: subMode, fund_id: subMode === "single" ? fund : undefined, start_year: startYear, monthly_amount: monthlyAmount });
@@ -362,7 +366,10 @@ export default function TimeMachineView({
 
             {/* 比較モード誘導（圧縮・控えめ） */}
             <button
-              onClick={() => { trackCompareClick({ fund_id: fund }); onCompare(fund); }}
+              onClick={() => {
+                trackCompareClick({ fund_id: fund });
+                onCompare(fund, { year: startYear, month: startMonth, amount: monthlyAmount });
+              }}
               className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors py-1"
             >
               <GitCompareArrows className="h-3.5 w-3.5" />

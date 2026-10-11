@@ -116,7 +116,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
             積み立てていたら？
           </span>
         </h1>
-        <p className="text-sm text-zinc-400">過去の実績で「たられば」を体験する</p>
+        <p className="text-sm text-zinc-400">商品・開始月・月額を選び、過去の積立結果を再現する</p>
       </div>
 
       <div className="mx-4 rounded-2xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4 space-y-2">
@@ -133,6 +133,37 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </div>
         <p className="text-[11px] leading-relaxed text-zinc-400">過去実績であり、将来の成果や商品の優劣を示すものではありません。</p>
       </div>
+
+      {/* ── 主行動：条件を選んで検証する ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+        className="px-4 space-y-3"
+      >
+        <div className="grid grid-cols-3 gap-2" aria-label="シミュレーションの流れ">
+          {["商品を選ぶ", "開始月・月額", "結果を確認"].map((label, index) => (
+            <div key={label} className="rounded-xl border border-white/8 bg-white/[0.025] px-2 py-2.5 text-center">
+              <p className="text-[10px] font-bold text-indigo-300">STEP {index + 1}</p>
+              <p className="mt-1 text-[11px] font-semibold text-zinc-200">{label}</p>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => onNavigate("timemachine")}
+          className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl px-4 py-4 text-base font-bold text-white"
+          style={{
+            background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
+            boxShadow: "0 8px 24px #6366f130",
+          }}
+        >
+          <Zap className="h-5 w-5" />
+          条件を選んで積立実績を調べる
+        </button>
+        <p className="text-center text-[11px] leading-relaxed text-zinc-400">
+          元本・期間末評価額・損益を、検証済みの月次データで確認できます
+        </p>
+      </motion.div>
 
       {/* ── 条件別の検証例 ── */}
       <motion.section
@@ -179,29 +210,6 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           ))}
         </div>
       </motion.section>
-
-      {/* ── 自分で試してみる（メインCTA） ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-        className="px-4"
-      >
-        <button
-          onClick={() => onNavigate("timemachine")}
-          className="w-full rounded-2xl py-5 text-base font-bold text-white flex items-center justify-center gap-2"
-          style={{
-            background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
-            boxShadow: "0 8px 24px #6366f130",
-          }}
-        >
-          <Zap className="h-5 w-5" />
-          自分で試してみる
-        </button>
-        <p className="text-center text-[11px] text-zinc-400 mt-2">
-          銘柄・年・金額を自由に設定できます
-        </p>
-      </motion.div>
 
       {/* ── 今日の検証例 ── */}
       <motion.section

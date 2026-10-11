@@ -18,7 +18,10 @@ export function getEmotionalMessage(
   fundName: string,
   yearsElapsed: number
 ): EmotionalMessage {
-  const profitMan = Math.round(profit / 10_000);
+  // Main result cards use whole ten-thousands rounded toward zero. Keep the
+  // explanatory sentence on the same display rule so one result never shows
+  // two different profit amounts.
+  const profitMan = Math.trunc(profit / 10_000);
   const principalMan = Math.round(totalPrincipal / 10_000);
   return {
     emoji: "📈",

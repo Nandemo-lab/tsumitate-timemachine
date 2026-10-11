@@ -26,6 +26,9 @@ const sitemap = read("app/sitemap.ts");
 const monthly = read("lib/monthly-pages.ts");
 const dataSourcesPage = read("app/about/data-sources/page.tsx");
 const returnDataSources = read("lib/return-data-sources.ts");
+const timeMachine = read("components/views/TimeMachineView.tsx");
+const homePage = read("app/page.tsx");
+const emotional = read("lib/emotional.ts");
 
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
 assert(guides.includes("nisaMonthly10kExample.finalValue"), "NISA実績例がsimulate結果を参照していない");
@@ -48,10 +51,19 @@ assert(!compares.includes("過去20年のデータではS&P500"), "商品設定�
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年8月まで"), "トップでデータ終端を開示していない");
+assert(home.includes("条件を選んで積立実績を調べる"), "トップでシミュレーションを主行動として示していない");
+assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf("条件別の検証例"), "トップで検証例が主行動より先に表示される");
+assert(!timeMachine.includes("2025 + 5 / 12") && timeMachine.includes("getAvailableEndMonth"), "期間表示が旧終端2025年6月へ固定されている");
+assert(timeMachine.includes("year: startYear, month: startMonth, amount: monthlyAmount") && homePage.includes("initialAmount={comparePreset.amount}"), "単一結果から比較へ開始年月・月額を引き継いでいない");
+assert(emotional.includes("Math.trunc(profit / 10_000)"), "結果カードと説明文で損益の万円丸めが一致しない");
 assert(dataSourcesPage.includes("現在の収録最終月は2026年8月です"), "Data SourcesがA品質系列の最新終端2026年8月を明示していない");
 assert(dataSourcesPage.includes("9つのA系列"), "Data Sourcesが最新終端の対象をA品質9系列に限定していない");
 assert(returnDataSources.includes('dataThrough: verified ? definition.endMonth : "原典検証待ち（公開計算の対象外）"'), "Data SourcesがG品質系列を検証済み終端として表示する可能性がある");
 assert(returnDataSources.includes('granularity: verified ? `${definition.startMonth}〜${definition.endMonth}の月次データ` : "検証済み月次系列なし"'), "Data SourcesがG品質系列を検証済み月次系列として表示する可能性がある");
+for (const phrase of ["配当・分配金を含む総合リターン", "ファンド内部の運用費用控除後", "欠損値を補間せず、別系列でも補わない"]) {
+  assert(returnDataSources.includes(phrase), `Data Sourcesの技術用語に読者向け日本語がない: ${phrase}`);
+}
+assert(returnDataSources.includes("月次の配当込み基準価額リターン") && returnDataSources.includes("欠損時は補完せず、別系列でも補わず計算停止"), "Data Sourcesの使用系列または欠損処理に内部向け英語が残る");
 for (const [source, text] of [
   ["年別ページ", years],
   ["比較ページ", compares],

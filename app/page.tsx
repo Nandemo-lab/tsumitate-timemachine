@@ -17,10 +17,19 @@ interface TmPreset {
   autoRun: boolean;
 }
 
+interface ComparePreset {
+  fund: FundId;
+  year: number;
+  month: number;
+  amount: number;
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<MainTab>("home");
   const [encyclopediaFund, setEncyclopediaFund] = useState<FundId | null>(null);
-  const [compareFundA, setCompareFundA] = useState<FundId>("sp500");
+  const [comparePreset, setComparePreset] = useState<ComparePreset>({
+    fund: "sp500", year: 2020, month: 1, amount: 30000,
+  });
   const [tmPreset, setTmPreset] = useState<TmPreset>({
     fund: "orcan", year: 2020, month: 1, amount: 30000, autoRun: false,
   });
@@ -34,11 +43,18 @@ export default function Home() {
   const goToEncyclopedia = (fundId: FundId) => {
     setEncyclopediaFund(fundId);
     setActiveTab("encyclopedia");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const goToCompare = (fundId: FundId) => {
-    setCompareFundA(fundId);
+  const goToCompare = (fundId: FundId, conditions?: { year: number; month: number; amount: number }) => {
+    setComparePreset({
+      fund: fundId,
+      year: conditions?.year ?? 2020,
+      month: conditions?.month ?? 1,
+      amount: conditions?.amount ?? 30000,
+    });
     setActiveTab("compare");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleTabChange = (tab: MainTab) => {
@@ -46,6 +62,7 @@ export default function Home() {
     // Reset autoRun when user manually switches to timemachine
     if (tab === "timemachine") setTmPreset((p) => ({ ...p, autoRun: false }));
     setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -115,13 +132,18 @@ export default function Home() {
 
           {activeTab === "compare" && (
             <motion.div
-              key="compare"
+              key={`compare-${comparePreset.fund}-${comparePreset.year}-${comparePreset.month}-${comparePreset.amount}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.22 }}
             >
-              <CompareView initialFundA={compareFundA} />
+              <CompareView
+                initialFundA={comparePreset.fund}
+                initialYear={comparePreset.year}
+                initialMonth={comparePreset.month}
+                initialAmount={comparePreset.amount}
+              />
             </motion.div>
           )}
         </AnimatePresence>
