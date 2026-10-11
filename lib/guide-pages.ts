@@ -101,6 +101,8 @@ export interface GuidePage {
   faqs: GuideFaq[];
   relatedGuides: string[];
   recommendFor?: string[];
+  /** recommendFor を適性・推奨ではなく確認項目として使うページ向けの見出し */
+  recommendHeading?: string;
   commonMistakes?: GuideMistake[];
 }
 
@@ -110,10 +112,10 @@ export const GUIDE_PAGES: GuidePage[] = [
     slug: "nisa-beginner",
     metaTitle: "新NISAの積立候補3銘柄を比較｜初心者向けに特徴を整理",
     metaDescription:
-      "新NISAで積み立てるならどの銘柄がおすすめ？オルカン・S&P500・NASDAQ100の特徴とシミュレーション結果を比較。初心者でも分かりやすく解説します。",
+      "新NISAの積立候補として挙がるオルカン・S&P500・NASDAQ100を、投資対象・費用・設定日・検証済み実績の条件に分けて比較します。",
     h1: "新NISAのおすすめ積立先は？オルカン・S&P500・NASDAQ100を比較",
     intro:
-      `2024年から始まった新NISAで「何を買えばいいか分からない」という声をよく聞きます。つみたて投資枠（年${formatManEn(NISA_LIMITS.tsumitateAnnual)}）で購入できる代表的な3銘柄の特徴・実績・向いている人を比較してみましょう。${NISA_SYSTEM_DISCLAIMER}`,
+      `新NISAの商品を比較するときは、過去リターンの順位だけでなく、投資対象、費用、設定日、NISA対象区分、資金を使う時期を分けて確認します。つみたて投資枠（年${formatManEn(NISA_LIMITS.tsumitateAnnual)}）で購入できる3商品の違いを、同じ条件の検証済み実績と商品属性から整理します。${NISA_SYSTEM_DISCLAIMER}`,
     lastUpdated: "2026年8月",
     systemCheck: [
       {
@@ -186,6 +188,7 @@ export const GUIDE_PAGES: GuidePage[] = [
       "積立額を決める前に資金を使う時期を確認する",
       `年間${formatManEn(NISA_LIMITS.tsumitateAnnual)}のつみたて投資枠を公式情報と照合する`,
     ],
+    recommendHeading: "このページで確認すること",
     commonMistakes: [
       {
         label: "銘柄を毎年変えてしまう",

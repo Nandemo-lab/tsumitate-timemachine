@@ -659,7 +659,7 @@ export default async function GuidePage({ params }: Props) {
                 className="text-base font-bold text-white"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
-                こんな人におすすめ
+                {page.recommendHeading ?? "こんな人におすすめ"}
               </h2>
               <div className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2.5">
                 {page.recommendFor.map((item, i) => (
