@@ -73,6 +73,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     "schd-vs-vym": [
       "配当金が多いのはSCHDとVYMのどちらですか？",
       "増配率が高いのはSCHDとVYMのどちらですか？",
+      "NISAで買うならSCHDとVYMのどちらがおすすめですか？",
       "長期保有に向いているのはSCHDとVYMのどちらですか？",
     ],
     "schd-vs-sp500": [
@@ -109,10 +110,16 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     ],
   };
   if (current.faqs.length !== previous.faqs.length) throw new Error(`FAQ count regression ${previous.slug}`);
+  const authorizedQuestionChanges = {
+    "schd-vs-vym": new Map([
+      ["NISAで買うならSCHDとVYMのどちらがおすすめですか？", "NISAでSCHDとVYMを比較するときの確認点は？"],
+    ]),
+  };
   for (let index = 0; index < previous.faqs.length; index++) {
     const oldFaq = previous.faqs[index];
     const newFaq = current.faqs[index];
-    if (newFaq.q !== oldFaq.q) throw new Error(`FAQ question regression ${previous.slug}`);
+    const expectedQuestion = authorizedQuestionChanges[previous.slug]?.get(oldFaq.q) ?? oldFaq.q;
+    if (newFaq.q !== expectedQuestion) throw new Error(`FAQ question regression ${previous.slug}`);
     if (!(authorizedFaqs[previous.slug] ?? []).includes(oldFaq.q) && newFaq.a !== oldFaq.a) throw new Error(`unexpected FAQ regression ${previous.slug}`);
   }
   const authorizedMetadata = new Set(["orukan-vs-sp500", "vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500", "orukan-vs-schd", "nasdaq100-vs-fangplus", "orukan-vs-fangplus"]);
