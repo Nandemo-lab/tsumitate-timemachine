@@ -11,6 +11,8 @@ const years = read("lib/year-pages.ts");
 const compares = read("lib/compare-pages.ts");
 const article = read("content/articles/orukan-vs-sp500.tsx");
 const returnArticle = read("content/articles/sp500-vs-nasdaq100.tsx");
+const schdVymArticle = read("content/articles/schd-vs-vym.tsx");
+const schdSp500Article = read("content/articles/schd-vs-sp500.tsx");
 const fundSeo = read("lib/fund-seo.ts");
 const fundSeoPages = read("lib/fund-seo-pages.ts");
 const home = read("components/views/HomeView.tsx");
@@ -38,6 +40,11 @@ for (const [source, text] of [
 assert(!guides.includes("損失になった事例はほぼゼロ"), "ガイドに条件不明の長期損失確率が再混入");
 assert(!guides.includes("変えないことが成功の鍵"), "ガイドに未検証の成功断定が再混入");
 assert(!returnArticle.includes("NASDAQ100の回復力が際立つ"), "暦年リターンを回復力として説明している");
+assert(!schdVymArticle.includes('simulate({ fundId: "schd"'), "SCHDのG品質系列が記事の数値シミュレーションへ再混入");
+assert(!schdSp500Article.includes('simulate({ fundId: "schd"'), "SCHDのG品質系列が記事の数値シミュレーションへ再混入");
+assert(!compares.includes("★★★★★") && !compares.includes("★★★★") && !compares.includes("★★★"), "尺度のないリスク星が比較表へ再混入");
+assert(!fundSeoPages.includes("過去40年以上の年平均リターンは約10%"), "商品ページに指数と商品の期間を混同する長期実績が再混入");
+assert(!fundSeoPages.includes("10〜20年の長期保有を前提にすれば歴史的には回復"), "商品ページに根拠不明の回復主張が再混入");
 
 if (fs.existsSync(path.join(root, ".next/server/app/guide/nisa-tsumitate-ikura.html"))) {
   const built = read(".next/server/app/guide/nisa-tsumitate-ikura.html");

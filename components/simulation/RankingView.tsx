@@ -76,7 +76,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
             </p>
           </div>
           <div className="text-right flex-shrink-0">
-            <p className="text-[10px] text-zinc-400 mb-0.5">現在資産</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">期間末評価額</p>
             <p className="text-sm font-bold text-zinc-200">{formatCurrency(top.result.finalValue)}</p>
           </div>
         </div>

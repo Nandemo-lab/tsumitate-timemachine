@@ -75,7 +75,7 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
         {/* Sub numbers */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-4 border-t border-white/8">
           <div>
-            <p className="text-[10px] text-zinc-400 mb-0.5">現在資産</p>
+            <p className="text-[10px] text-zinc-400 mb-0.5">期間末評価額</p>
             <p className="text-sm font-bold text-zinc-200">
               {formatCurrency(result.finalValue)}
             </p>

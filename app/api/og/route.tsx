@@ -291,7 +291,7 @@ export async function GET(req: NextRequest) {
                 {formatSignedPercent(result.returnRate)}
               </span>
               <span style={{ color: "#52525b", fontSize: "16px", display: "flex" }}>
-                現在資産 {formatCurrency(result.finalValue)}
+                期間末評価額 {formatCurrency(result.finalValue)}
               </span>
             </div>
           </div>
@@ -320,7 +320,7 @@ export async function GET(req: NextRequest) {
               </div>
               <div style={{ color: "#52525b", fontSize: "16px", marginTop: "14px", display: "flex" }}>
                 {resultB
-                  ? `${formatSignedPercent(resultB.returnRate)}　現在資産 ${formatCurrency(resultB.finalValue)}`
+                  ? `${formatSignedPercent(resultB.returnRate)}　期間末評価額 ${formatCurrency(resultB.finalValue)}`
                   : comparison?.note}
               </div>
             </div>

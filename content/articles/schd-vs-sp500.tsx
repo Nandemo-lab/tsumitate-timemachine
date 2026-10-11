@@ -43,9 +43,7 @@ export const meta: ArticleMeta = {
 
 // ─── シミュレーションデータ ─────────────────────────────────────────────────
 
-const simSchd     = simulate({ fundId: "schd",  startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
 const simSp500    = simulate({ fundId: "sp500", startYear: 2020, startMonth: 1, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
-const simSchdLong  = simulate({ fundId: "schd",  startYear: 2018, startMonth: 8, monthlyAmount: 30000 });
 const simSp500Long = simulate({ fundId: "sp500", startYear: 2018, startMonth: 8, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
@@ -212,14 +210,13 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          S&amp;P500は検証済み月次実績、SCHDは原典未検証の参考系列を使った比較です。両者のデータ品質は同一ではありません。
+          数値はA品質のS&amp;P500だけを表示します。SCHDは原典未検証のG品質系列であるため、この記事では評価額・利益の数値比較に使用しません。
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
             【2020年1月〜2025年6月】毎月{formatCurrency(30000)}積立
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <SimCard name="SCHD" color="#10b981" sim={simSchd} />
+          <div className="grid grid-cols-1 gap-3">
             <SimCard name="S&P500" color="#f59e0b" sim={simSp500} />
           </div>
         </div>
@@ -227,8 +224,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-xs font-bold text-zinc-400">
               【2018年8月〜2025年6月】毎月{formatCurrency(30000)}積立（S&amp;P500投信の公式実績開始後）
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <SimCard name="SCHD" color="#10b981" sim={simSchdLong} />
+          <div className="grid grid-cols-1 gap-3">
             <SimCard name="S&P500" color="#f59e0b" sim={simSp500Long} />
           </div>
         </div>

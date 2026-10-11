@@ -43,9 +43,7 @@ export const meta: ArticleMeta = {
 
 // ─── シミュレーションデータ ─────────────────────────────────────────────────
 
-const simSchd     = simulate({ fundId: "schd", startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
 const simVym      = simulate({ fundId: "vym",  startYear: 2020, startMonth: 1, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
-const simSchdLong = simulate({ fundId: "schd", startYear: 2016, startMonth: 1, monthlyAmount: 30000 });
 const simVymLong  = simulate({ fundId: "vym",  startYear: 2016, startMonth: 1, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
@@ -207,14 +205,13 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          VYMは検証済み月次実績、SCHDは原典未検証の参考系列を使った比較です。両者のデータ品質は同一ではありません。
+          数値はA品質のVYMだけを表示します。SCHDは原典未検証のG品質系列であるため、この記事では評価額・利益の数値比較に使用しません。
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
             【2020年1月〜2025年6月】毎月{formatCurrency(30000)}積立
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <SimCard name="SCHD" color="#10b981" sim={simSchd} />
+          <div className="grid grid-cols-1 gap-3">
             <SimCard name="VYM" color="#38bdf8" sim={simVym} />
           </div>
         </div>
@@ -222,8 +219,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-xs font-bold text-zinc-400">
             【2016年1月〜2025年6月】毎月{formatCurrency(30000)}積立
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <SimCard name="SCHD" color="#10b981" sim={simSchdLong} />
+          <div className="grid grid-cols-1 gap-3">
             <SimCard name="VYM" color="#38bdf8" sim={simVymLong} />
           </div>
         </div>
@@ -234,7 +230,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </p>
           <ul className="space-y-1.5 pl-5">
             {[
-              "VYMは検証済み月次実績、SCHDは原典未検証の参考系列で、表示差から優劣は判定できない",
+              "VYMの数値は検証済み月次実績から再現でき、SCHDは商品属性だけを比較する",
               "両者は銘柄選定方法と分散範囲が異なるが、その違いだけで値動きの大小は断定できない",
               "開始年・期間によって参考結果は変わり、将来の成果を示すものではない",
             ].map((t, i) => (

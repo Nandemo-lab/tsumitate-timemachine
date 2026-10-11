@@ -1,7 +1,7 @@
 import { writeFile } from "node:fs/promises";
 
 const baseUrl = (process.argv[2] || "https://tsumitate-timemachine.com").replace(/\/$/, "");
-const output = "docs/audits/final-98-independent-audit-2026-10-11.csv";
+const output = process.argv[3] || "docs/audits/final-96-content-audit-2026-10-11.csv";
 
 const decode = (value) => value
   .replaceAll("&amp;", "&").replaceAll("&lt;", "<").replaceAll("&gt;", ">")
@@ -59,7 +59,7 @@ function roleAssessment(path, type, text) {
 
 const sitemap = await (await fetch(`${baseUrl}/sitemap.xml`)).text();
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-if (urls.length !== 98) throw new Error(`expected 98 sitemap URLs, found ${urls.length}`);
+if (urls.length !== 96) throw new Error(`expected current 96 sitemap URLs, found ${urls.length}`);
 
 const pages = [];
 for (const url of urls) {

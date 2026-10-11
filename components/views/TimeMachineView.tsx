@@ -179,12 +179,13 @@ export default function TimeMachineView({
               <button
                 key={m}
                 onClick={() => { setStartMonth(m); setShowResult(false); }}
+                aria-pressed={startMonth === m}
                 className={`flex-shrink-0 rounded-lg text-xs font-bold transition-all ${
                   startMonth === m
                     ? "bg-white/15 text-white"
                     : "text-zinc-400 hover:text-zinc-400"
                 }`}
-                style={{ minHeight: 32, minWidth: 36, padding: "0 6px" }}
+                style={{ minHeight: 44, minWidth: 44, padding: "0 8px" }}
               >
                 {m}月
               </button>
@@ -260,7 +261,7 @@ export default function TimeMachineView({
         <div className="flex-1 h-px bg-white/[0.06]" />
         <button
           onClick={() => setShowAdvanced((v) => !v)}
-          className="flex items-center gap-1.5 text-[10px] text-zinc-400 hover:text-zinc-400 transition-colors"
+          className="flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-xs text-zinc-300 hover:bg-white/5 transition-colors"
         >
           <Settings2 className="h-3 w-3" />
           {showAdvanced ? "詳細設定を閉じる" : "詳細シミュレーション（上級者向け）"}

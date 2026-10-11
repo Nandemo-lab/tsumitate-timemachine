@@ -100,6 +100,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "FANG+の大きな下落から回復するまでどのくらいかかりますか？",
     ],
     "orukan-vs-vym": [
+      "オルカンとVYMはどっちがおすすめですか？",
       "初心者にはどちらが向いていますか？",
       "暴落時に強いのはどちらですか？",
     ],

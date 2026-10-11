@@ -39,8 +39,9 @@ export default function FundSelector({ value, onChange, label }: Props) {
             <button
               key={catId}
               onClick={() => setActiveCategory(catId)}
+              aria-pressed={isActive}
               className={cn(
-                "flex-shrink-0 flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[11px] font-bold transition-all border",
+                "flex-shrink-0 flex min-h-11 items-center gap-1 rounded-lg px-3 py-2 text-xs font-bold transition-all border",
                 isActive
                   ? "bg-white/15 text-white border-white/20"
                   : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300 hover:bg-white/8"
@@ -80,25 +81,13 @@ export default function FundSelector({ value, onChange, label }: Props) {
                     }
               }
             >
-              {/* Risk badge */}
+              {/* Selection marker */}
               <div className="flex items-center justify-between mb-2">
                 <div
                   className="h-1 w-5 rounded-full"
                   style={{ background: isSelected ? fund.color : "rgba(255,255,255,0.15)" }}
                 />
-                {fund.riskLevel !== null && <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-1 w-1 rounded-full"
-                      style={{
-                        background: i < (fund.riskLevel ?? 0)
-                          ? (isSelected ? fund.color : "rgba(255,255,255,0.3)")
-                          : "rgba(255,255,255,0.08)",
-                      }}
-                    />
-                  ))}
-                </div>}
+                {isSelected && <span className="text-xs font-bold text-zinc-300">選択中</span>}
               </div>
               <p
                 className="font-heading text-sm font-semibold leading-tight"

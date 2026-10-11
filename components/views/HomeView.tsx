@@ -127,7 +127,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         <div className="flex flex-wrap gap-2 text-[11px] text-zinc-300">
           <span className="rounded-full bg-white/[0.06] px-2.5 py-1">実績期間：2026年8月まで</span>
           <span className="rounded-full bg-white/[0.06] px-2.5 py-1">A品質9系列・G参考1系列</span>
-          <Link href="/about/data-sources" className="rounded-full bg-indigo-400/15 px-2.5 py-1 text-indigo-200 underline underline-offset-2">
+          <Link href="/about/data-sources" className="inline-flex min-h-11 items-center rounded-full bg-indigo-400/15 px-3 py-2 text-xs font-bold text-indigo-200 underline underline-offset-2">
             出典と計算方法
           </Link>
         </div>
