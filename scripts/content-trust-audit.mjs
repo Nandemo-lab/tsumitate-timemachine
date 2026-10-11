@@ -29,6 +29,14 @@ assert(!years.includes("yearFaqs"), "未使用の旧年次FAQ定義が残って�
 assert(shareCard.includes("buildShareUrl") && !shareCard.includes('const url = "https://tsumitate-timemachine.com"'), "ShareCardが条件付きURLを保持していない");
 assert(shareUrl.includes("fundB?: FundId") && shareUrl.includes("endYear: number") && shareUrl.includes("endMonth: number"), "共有URLが比較商品または終了年月を保持していない");
 assert(sharePage.includes("同じ条件で結果を再現") && sharePage.includes("G品質の参考系列を含むため、商品の優劣は表示しません"), "共有先の条件再現またはG品質境界が不足");
+assert(shareUrl.includes('RETURN_SERIES_REGISTRY[fund].quality !== "A"'), "G品質系列が共有URLで拒否されていない");
+assert(shareCard.includes("G品質の参考系列を含む結果は、共有用の評価額・損益として公開しません"), "ShareCardがG品質の数値共有を停止していない");
+assert(!shareCard.includes("#新NISA"), "共有文が口座条件を確認せず#新NISAを付与している");
+assert(!compares.includes('a: "全世界へ地域分散",             b: "米国大型株へ集中"'), "S&P500/NASDAQ100比較の投資範囲が誤っている");
+assert(!compares.includes('a: "米国株式市場全体",            b: "10銘柄を均等加重"'), "オルカン/FANG+比較の投資範囲が誤っている");
+assert(!compares.includes('b: "全世界の大型・中型株"'), "S&P500を全世界株式とする誤記が残っている");
+assert(!compares.includes("過去の実績ではインド株のほうが平均リターンで上回っています"), "India/Emerging比較に表示値と矛盾する優劣主張が残っている");
+assert(!compares.includes("テック企業の成長力に賭けて高いリターンを狙いたい"), "VTI/NASDAQ100比較に将来成果を示唆する助言が残っている");
 assert(!compares.includes("過去20年のデータではS&P500"), "商品設定前を含む比較主張が再混入");
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");

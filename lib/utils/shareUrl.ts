@@ -1,7 +1,7 @@
 import { FundId } from "@/types";
 import { SITE_URL } from "@/lib/site";
 import { FUNDS } from "@/lib/funds";
-import { getAvailableEndMonth, isReturnMonthAvailable } from "@/lib/return-series";
+import { getAvailableEndMonth, isReturnMonthAvailable, RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 
 const VALID_FUNDS = Object.keys(FUNDS) as FundId[];
 
@@ -54,6 +54,7 @@ export function parseShareParams(search: string): ShareParams | null {
   if (!VALID_FUNDS.includes(fund)) return null;
   const fundB = fundBRaw ? fundBRaw as FundId : undefined;
   if (fundB && !VALID_FUNDS.includes(fundB)) return null;
+  if (RETURN_SERIES_REGISTRY[fund].quality !== "A" || (fundB && RETURN_SERIES_REGISTRY[fundB].quality !== "A")) return null;
 
   const year = parseInt(yearRaw, 10);
   const month = parseInt(monthRaw ?? "1", 10);

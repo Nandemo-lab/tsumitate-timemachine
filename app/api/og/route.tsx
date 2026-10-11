@@ -181,6 +181,9 @@ export async function GET(req: NextRequest) {
 
   const fundId = fundParam;
   const fundBId = fundBParam && isFundId(fundBParam) ? fundBParam : null;
+  if (getReturnSeriesDefinition(fundId).quality !== "A" || (fundBId && getReturnSeriesDefinition(fundBId).quality !== "A")) {
+    return new Response("Verified series required for shared OGP", { status: 422 });
+  }
   const fund = FUNDS[fundId];
   let result;
   try {

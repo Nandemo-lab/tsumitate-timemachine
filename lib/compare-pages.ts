@@ -115,7 +115,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "投資対象",      a: "米国大型株500社",              b: "ナスダック上場の非金融100社" },
       { label: "業種分散",      a: "○ 全業種に分散",               b: "△ IT・ハイテク偏重（約60%）" },
       { label: "銘柄数",        a: FUNDS.sp500.shareCount,          b: FUNDS.nasdaq100.shareCount },
-      { label: "集中の特徴",    a: "全世界へ地域分散",             b: "米国大型株へ集中" },
+      { label: "集中の特徴",    a: "米国大型株500社・複数業種",     b: "非金融の大型株100社" },
       verifiedCagrSpec("sp500", "nasdaq100"),
       { label: "2022年の暦年リターン", a: formatAnnualReturn("sp500", 2022), b: formatAnnualReturn("nasdaq100", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",      a: formatExpenseRatio("sp500"),     b: formatExpenseRatio("nasdaq100") },
@@ -618,7 +618,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "投資対象",    a: "全世界株式（先進国＋新興国）", b: "世界の大型テック企業10社に集中" },
       { label: "銘柄数",      a: FUNDS.orcan.shareCount,         b: FUNDS.fangplus.shareCount },
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "× 10銘柄に集中" },
-      { label: "銘柄集中",    a: "米国株式市場全体",            b: "10銘柄を均等加重" },
+      { label: "銘柄集中",    a: "全世界株式へ地域分散",          b: "10銘柄を均等加重" },
       verifiedCagrSpec("orcan", "fangplus"),
       { label: "2022年の暦年リターン", a: formatAnnualReturn("orcan", 2022), b: formatAnnualReturn("fangplus", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",    a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("fangplus") },
@@ -674,7 +674,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "国数",        a: "約50ヵ国",                    b: "米国のみ（1ヵ国）" },
       { label: "銘柄数",      a: FUNDS.vt.shareCount,            b: FUNDS.sp500.shareCount },
       { label: "分散性",      a: "◎ 世界全体に分散",            b: "○ 米国内で分散" },
-      { label: "投資範囲",    a: "全世界の株式",               b: "全世界の大型・中型株" },
+      { label: "投資範囲",    a: "全世界の株式",               b: "米国大型株500社" },
       verifiedCagrSpec("vt", "sp500"),
       { label: "信託報酬",    a: formatExpenseRatio("vt"),       b: formatExpenseRatio("sp500") },
       { label: "NISA対応",    a: "○ 成長投資枠（ETF）",          b: "○ つみたて・成長両対応" },
@@ -775,7 +775,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     intro:
       "米国株式市場全体に投資する「VTI」と、大型テクノロジー企業100社に投資する「NASDAQ100」。同じ米国株でも、対象範囲とリスクの大きさが異なります。過去の実績データで両者の違いを整理します。",
     conclusionA: "米国市場全体に分散したい → VTI",
-    conclusionB: "テック企業の成長に賭けたい → NASDAQ100",
+    conclusionB: "非金融大型株100社への集中度を確認 → NASDAQ100",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -792,7 +792,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     faqs: [
       {
         q: "VTIとNASDAQ100はどっちがおすすめですか？",
-        a: "投資目的とリスク許容度によります。「米国市場全体に幅広く分散したい」ならVTI、「テック企業の成長力に賭けて高いリターンを狙いたい」ならNASDAQ100が候補になります。過去の実績ではNASDAQ100のほうがリターン・下落幅ともに大きい傾向があります。",
+        a: "VTIは米国大型株から小型株まで、NASDAQ100はNASDAQ上場の非金融大型株100社を対象にします。銘柄数・業種構成・費用と、このページに表示する同一条件の過去結果を分けて確認してください。月次積立結果だけから日中の最大下落率や将来の優劣は判定できません。",
       },
       {
         q: "初心者にはどちらが向いていますか？",
@@ -804,7 +804,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "VTIとNASDAQ100を両方持つのはありですか？",
-        a: "VTIをコア（土台）とし、NASDAQ100をサテライト（一部）として組み合わせる考え方が紹介されています。ただしVTIの中にも大型テック企業が多く含まれているため、テック比率が重複する点には注意が必要です。",
+        a: "両方を保有すると、VTIに含まれる米国大型テクノロジー企業とNASDAQ100の構成銘柄が重複します。組み合わせる場合は、商品本数ではなく重複後の銘柄・業種比率を確認します。",
       },
       {
         q: "VTIとオルカンは何が違いますか？",
@@ -829,8 +829,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "インド株と新興国株、どちらを積み立てるべき？",
     intro:
       "急成長するインド企業に集中投資する「インド株（INDA）」と、中国・台湾など新興国全体に分散投資する「新興国株（EEM）」。同じ新興国投資でも、対象範囲と値動きの傾向が異なります。過去の実績データで両者の違いを整理します。",
-    conclusionA: "インドの成長に集中投資したい → インド株",
-    conclusionB: "新興国全体に分散したい → 新興国株",
+    conclusionA: "インド1ヵ国への集中度を確認 → インド株",
+    conclusionB: "複数の新興国への分散範囲を確認 → 新興国株",
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
@@ -846,7 +846,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     faqs: [
       {
         q: "インド株と新興国株はどっちがおすすめですか？",
-        a: "投資目的によります。「インドの高い経済成長に集中して賭けたい」ならインド株、「特定の国に偏らず新興国全体に分散したい」なら新興国株が候補になります。過去の実績ではインド株のほうが平均リターンで上回っていますが、1ヵ国への集中リスクがあります。",
+        a: "インド株はインド1ヵ国、新興国株は中国・台湾・インドなど複数国を対象にします。このページに表示する共通期間CAGRと同条件の積立結果は過去実績で、特定国の経済成長率や将来の投資成果を示しません。国・通貨・政策変更の影響範囲を分けて確認してください。",
       },
       {
         q: "初心者にはどちらが向いていますか？",

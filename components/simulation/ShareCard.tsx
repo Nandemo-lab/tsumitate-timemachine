@@ -44,7 +44,8 @@ export default function ShareCard({ planA, planB, startYear, startMonth, monthly
   });
   const formatSignedCurrency = (value: number) => `${value >= 0 ? "+" : "−"}${formatCurrency(Math.abs(value))}`;
   const shareText = planB && loser
-    ? `もし${startYear}年${startMonth}月から${winner.fundName}を
+    ? `${startYear}年${startMonth}月〜${endYear}年${endMonth}月の過去実績
+${winner.fundName}を
 毎月${formatCurrency(monthlyAmount)}積み立てていたら
 
 ${formatSignedCurrency(winner.profit)}（${winner.returnRate >= 0 ? "+" : ""}${winner.returnRate.toFixed(1)}%）
@@ -57,8 +58,10 @@ ${formatSignedCurrency(loser.profit)}（${loser.returnRate >= 0 ? "+" : ""}${los
 📊 積立タイムマシン
 ${url}
 
-自分でも試してみる↓ #積立タイムマシン #新NISA`
-    : `もし${startYear}年${startMonth}月から${winner.fundName}を
+税金・売買手数料・実取引の為替コストは個別計算していません。
+自分でも試してみる↓ #積立タイムマシン`
+    : `${startYear}年${startMonth}月〜${endYear}年${endMonth}月の過去実績
+${winner.fundName}を
 毎月${formatCurrency(monthlyAmount)}積み立てていたら
 
 ${formatSignedCurrency(winner.profit)}（${winner.returnRate >= 0 ? "+" : ""}${winner.returnRate.toFixed(1)}%）
@@ -67,7 +70,16 @@ ${formatSignedCurrency(winner.profit)}（${winner.returnRate >= 0 ? "+" : ""}${w
 📊 積立タイムマシン
 ${url}
 
-自分でも試してみる↓ #積立タイムマシン #新NISA`;
+税金・売買手数料・実取引の為替コストは個別計算していません。
+自分でも試してみる↓ #積立タイムマシン`;
+
+  if (includesReferenceSeries) {
+    return (
+      <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.06] p-4 text-xs leading-relaxed text-amber-100">
+        G品質の参考系列を含む結果は、共有用の評価額・損益として公開しません。正式な商品属性とデータ品質は商品詳細で確認できます。
+      </div>
+    );
+  }
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareText);
@@ -110,7 +122,7 @@ ${url}
             ⏰ 積立タイムマシン
           </p>
           <p className="text-xs text-zinc-400 mb-3">
-            もし{startYear}年{startMonth}月から 毎月{formatCurrency(monthlyAmount)}
+            {startYear}年{startMonth}月〜{endYear}年{endMonth}月・毎月{formatCurrency(monthlyAmount)}
           </p>
           <div className="space-y-2">
             {sorted.map((r, i) => (
@@ -134,7 +146,7 @@ ${url}
             </div>
           )}
           <p className="mt-3 text-[10px] leading-relaxed text-zinc-400">
-            {includesReferenceSeries ? "参考比較：G系列を含むため優劣ラベルは表示しません。" : "同じ開始月・終了月・積立額で計算した過去結果です。"}
+            過去の同条件結果です。税金・売買手数料・実取引の為替コストは個別計算していません。
           </p>
         </div>
       </div>

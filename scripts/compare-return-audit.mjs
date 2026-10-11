@@ -104,10 +104,15 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "初心者にはどちらが向いていますか？",
       "暴落時に強いのはどちらですか？",
     ],
-    "india-vs-emerging": ["初心者にはどちらが向いていますか？"],
+    "india-vs-emerging": [
+      "インド株と新興国株はどっちがおすすめですか？",
+      "初心者にはどちらが向いていますか？",
+    ],
     "vti-vs-nasdaq100": [
+      "VTIとNASDAQ100はどっちがおすすめですか？",
       "初心者にはどちらが向いていますか？",
       "暴落時に強いのはどちらですか？",
+      "VTIとNASDAQ100を両方持つのはありですか？",
     ],
   };
   if (current.faqs.length !== previous.faqs.length) throw new Error(`FAQ count regression ${previous.slug}`);

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { FUNDS } from "@/lib/funds";
 import { FundId } from "@/types";
-import { parseShareParams } from "@/lib/utils/shareUrl";
+import { buildShareUrl, parseShareParams } from "@/lib/utils/shareUrl";
 import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 import Link from "next/link";
 
@@ -32,6 +32,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
   const resultB = fundB ? simulate({ fundId: fundB, startYear: year, startMonth: month, endYear, endMonth, monthlyAmount: amount }) : null;
   const fundBName = fundB ? FUNDS[fundB].shortName : null;
+  const canonicalShareUrl = buildShareUrl(parsed);
   const ogImageUrl = `${BASE_URL}/api/og?fund=${fund}${fundB ? `&fundB=${fundB}` : ""}&year=${year}&month=${month}&endYear=${endYear}&endMonth=${endMonth}&amount=${amount}`;
   const title = fundBName
     ? `${fundName}と${fundBName}｜${year}年${month}月からの同条件積立結果`
@@ -46,7 +47,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     openGraph: {
       title,
       description,
-      url: `${BASE_URL}/share?f=${fund}&y=${year}&m=${month}&a=${amount}`,
+      url: canonicalShareUrl,
       siteName: "積立タイムマシン",
       locale: "ja_JP",
       type: "website",
@@ -124,6 +125,7 @@ export default async function SharePage({ searchParams }: Props) {
             ? "G品質の参考系列を含むため、商品の優劣は表示しません。公式商品属性と参考結果を分けて確認してください。"
             : "同じ開始月・終了月・積立額を、検証済み月次実績へ適用した過去結果です。将来の成果を示すものではありません。"}
         </div>
+        <p className="text-xs leading-relaxed text-zinc-500">A品質は商品設定後の検証済み月次実績だけを使用し、設定前を指数で補いません。税金・売買手数料・実取引の為替コストは個別計算していません。</p>
         <div className="flex flex-wrap gap-3">
           <Link href="/" className="inline-flex min-h-11 items-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold">別の条件を試す</Link>
           <Link href="/about/data-sources" className="inline-flex min-h-11 items-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-300">出典と計算方法</Link>

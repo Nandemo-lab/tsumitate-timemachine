@@ -1,3 +1,6 @@
+import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
+import type { FundId } from "@/types";
+
 export interface ArticleMeta {
   slug: string;
   /** <h1> 表示タイトル */
@@ -53,6 +56,11 @@ export function getArticlesRelatedToGuide(guideSlug: string): ArticleMeta[] {
 /** OG 画像 URL を生成（BASE_URL を引数で受け取り依存注入を避ける） */
 export function buildOgImageUrl(meta: ArticleMeta, baseUrl: string): string {
   if (!meta.ogFundA) return `${baseUrl}/api/og?static=1`;
+  const fundA = meta.ogFundA as FundId;
+  const fundB = meta.ogFundB as FundId | undefined;
+  if (RETURN_SERIES_REGISTRY[fundA].quality !== "A" || (fundB && RETURN_SERIES_REGISTRY[fundB].quality !== "A")) {
+    return `${baseUrl}/api/og?static=1`;
+  }
   const params = new URLSearchParams({
     fund: meta.ogFundA,
     year: String(meta.ogYear ?? 2020),
