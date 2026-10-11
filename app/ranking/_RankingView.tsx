@@ -13,6 +13,7 @@ import { FUND_SEO_MAP } from "@/lib/fund-seo";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
+import { NISA_LIMITS, NISA_SYSTEM_DISCLAIMER, formatManEn } from "@/lib/nisa";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -25,6 +26,8 @@ interface Props {
 
 export default function RankingView({ page }: Props) {
   const isRoot = page.slug === "";
+  const isNisa = page.slug === "nisa";
+  const isHighDividend = page.slug === "high-dividend";
   const breadcrumbSlug = isRoot ? null : page.slug;
   const preparedEntries = page.funds.map((entry) => {
     const verified = getReturnSeriesDefinition(entry.fundId).quality === "A";
@@ -41,17 +44,9 @@ export default function RankingView({ page }: Props) {
     .map((item) => ({ ...item, result: item.result! }))
     .sort((a, b) => (b.result?.finalValue ?? 0) - (a.result?.finalValue ?? 0));
   const referenceEntries = preparedEntries.filter((item) => !item.verified || !item.result);
-  const displayedCriteria = [
-    { label: "期間末評価額", description: "同じ開始月・月額・終了月で計算した円単位の評価額" },
-    { label: "データ品質", description: "対象期間全体を計算できるA品質系列だけを数値順位に使用" },
-    { label: "投資対象", description: "地域・銘柄範囲・商品形式は順位とは分けて確認" },
-    { label: "費用", description: "信託報酬・経費率は商品情報のSSOTから表示" },
-  ];
-  const displayedFaqs = [
-    { q: "このページの順位は何を示しますか？", a: `${page.simYear}年${page.simMonth}月から2026年8月まで、月初に${formatCurrency(page.simAmount)}を積み立てた期間末評価額の順です。将来の成果、適性、価格変動の小ささを示す順位ではありません。` },
-    { q: "商品設定前や欠損月はどう扱いますか？", a: "別の商品や指数で補完しません。対象期間全体をA品質の月次系列で計算できる商品だけを数値順位へ掲載します。" },
-    { q: "G品質の商品はどう扱いますか？", a: "商品属性は順位外の参考情報として表示しますが、原典未検証の月次系列をA品質商品の数値順位へ混ぜません。" },
-  ];
+  const displayedCriteria = page.criteria;
+  const displayedFaqs = page.faqs;
+  const comparisonResult = rankedEntries[0]?.result;
 
   // fangplus には /fund/fangplus がある
   const FUND_SLUG_MAP: Record<string, string> = {
@@ -123,10 +118,24 @@ export default function RankingView({ page }: Props) {
             <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
           </section>
 
+          {isRoot && (
+            <section className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-2">
+              <h2 className="text-sm font-bold text-white">初めて商品を比べるときの確認項目</h2>
+              <p className="text-xs leading-relaxed text-zinc-400">
+                数値順位は初心者適性や推奨順ではありません。投資対象、費用、分散範囲に加え、生活費と分けた余裕資金か、資金を使う時期までの期間、許容できる値動きを確認してください。
+              </p>
+              <p className="text-[11px] leading-relaxed text-zinc-500">
+                NISAを使う場合は商品ごとの対象枠も確認します。制度条件は新NISAページ、正式商品と設定日は各商品詳細へ分けて掲載しています。
+              </p>
+            </section>
+          )}
+
           <section className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.05] p-4 space-y-2">
-            <h2 className="text-xs font-bold text-indigo-200">数値順位の計算方法</h2>
+            <h2 className="text-xs font-bold text-indigo-200">{isHighDividend ? "実績と商品属性の分け方" : "数値順位の計算方法"}</h2>
             <p className="text-xs leading-relaxed text-zinc-400">
-              {page.simYear}年{page.simMonth}月から2026年8月まで、月初に{formatCurrency(page.simAmount)}を積み立てた期間末評価額の高い順です。候補商品のうち、期間全体を計算できるA品質の検証済み月次系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。
+              {isHighDividend
+                ? `VYMは${page.simYear}年${page.simMonth}月から2026年8月まで月初に${formatCurrency(page.simAmount)}を積み立てたA品質の検証済み結果を表示します。SCHDはG品質のため評価額・利益・順位を表示せず、公式に確認できる商品属性だけを掲載します。`
+                : `${page.simYear}年${page.simMonth}月から2026年8月まで、月初に${formatCurrency(page.simAmount)}を積み立てた期間末評価額の高い順です。元本は${comparisonResult ? formatCurrency(comparisonResult.totalPrincipal) : "対象結果で確認"}で、期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}
             </p>
             <p className="text-[11px] leading-relaxed text-zinc-500">
               候補商品はこのページの目的に沿って絞っています。順位は将来予測、推奨順位、価格変動の小ささを表すものではありません。G品質は順位外の参考情報として分けます。
@@ -135,6 +144,21 @@ export default function RankingView({ page }: Props) {
               対象系列と検証方法を見る<ArrowRight className="h-3 w-3" />
             </Link>
           </section>
+
+          {isNisa && (
+            <section className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 space-y-3">
+              <h2 className="text-sm font-bold text-emerald-200">新NISAの制度条件（2026年10月11日確認）</h2>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="rounded-lg bg-black/20 p-3"><p className="text-zinc-500">つみたて投資枠／年</p><p className="mt-1 font-bold text-white">{formatManEn(NISA_LIMITS.tsumitateAnnual)}</p></div>
+                <div className="rounded-lg bg-black/20 p-3"><p className="text-zinc-500">成長投資枠／年</p><p className="mt-1 font-bold text-white">{formatManEn(NISA_LIMITS.growthAnnual)}</p></div>
+                <div className="rounded-lg bg-black/20 p-3"><p className="text-zinc-500">非課税保有限度額</p><p className="mt-1 font-bold text-white">{formatManEn(NISA_LIMITS.lifetimeTotal)}</p></div>
+                <div className="rounded-lg bg-black/20 p-3"><p className="text-zinc-500">うち成長投資枠</p><p className="mt-1 font-bold text-white">{formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}</p></div>
+              </div>
+              <p className="text-xs leading-relaxed text-zinc-400">制度対象かどうかと、過去の積立結果は別の判断材料です。対象商品は金融庁の一覧と利用する金融機関で商品単位に確認してください。</p>
+              <p className="text-[11px] leading-relaxed text-zinc-500">{NISA_SYSTEM_DISCLAIMER}</p>
+              <a href="https://www.fsa.go.jp/policy/nisa2/know/index.html" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-300">金融庁「NISAを知る」<ArrowRight className="h-3 w-3" /></a>
+            </section>
+          )}
 
           {/* ── 評価基準 ─────────────────────────────────────── */}
           <section>
@@ -163,7 +187,7 @@ export default function RankingView({ page }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              条件別の比較結果
+              {isHighDividend ? "検証済み実績" : "条件別の比較結果"}
             </h2>
             {rankedEntries.map(({ entry, result }, index) => {
               const fund = FUNDS[entry.fundId];
@@ -180,7 +204,7 @@ export default function RankingView({ page }: Props) {
                   {/* ランク＋銘柄名ヘッダー */}
                   <div className="px-4 pt-4 pb-3 space-y-2">
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-black text-amber-300">{index + 1}位</span>
+                      {!isHighDividend && <span className="text-sm font-black text-amber-300">{index + 1}位</span>}
                       <div className="flex-1 min-w-0">
                         <span
                           className="text-base font-black text-white"
@@ -193,10 +217,13 @@ export default function RankingView({ page }: Props) {
                         className="text-[10px] font-black px-2 py-0.5 rounded flex-shrink-0"
                         style={{ background: `${fund.color}25`, color: fund.color }}
                       >
-                        A品質・実績順位
+                        {isHighDividend ? "A品質・検証済み実績" : "A品質・実績順位"}
                       </span>
                     </div>
-                    <p className="text-xs text-zinc-400 leading-snug">{fund.description}。構成は{fund.shareCount}、費用は{formatExpenseRatio(entry.fundId)}です。</p>
+                    <p className="text-xs text-zinc-400 leading-snug">
+                      {fund.description}。構成は{fund.shareCount}、費用は{formatExpenseRatio(entry.fundId)}です。
+                      {isNisa ? ` NISA対象は${enc.nisaSupport.tsumitate ? "つみたて投資枠・" : ""}${enc.nisaSupport.growth ? "成長投資枠" : "対象外"}です。` : ""}
+                    </p>
                   </div>
 
                   {/* シミュレーション結果 */}
@@ -275,7 +302,7 @@ export default function RankingView({ page }: Props) {
           {referenceEntries.length > 0 && (
             <section className="space-y-3">
               <div>
-                <h2 className="text-base font-bold text-white">順位外の参考商品</h2>
+                <h2 className="text-base font-bold text-white">{isHighDividend ? "公式に確認できる商品属性" : "順位外の参考商品"}</h2>
                 <p className="mt-1 text-xs leading-relaxed text-zinc-500">原典未検証のG品質系列、または対象期間全体を計算できない商品です。商品属性は確認できますが、上の数値順位には混ぜません。</p>
               </div>
               {referenceEntries.map(({ entry }) => {
@@ -288,7 +315,7 @@ export default function RankingView({ page }: Props) {
                         <p className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</p>
                         <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{fund.description}。費用は{formatExpenseRatio(entry.fundId)}です。</p>
                       </div>
-                      <span className="shrink-0 rounded bg-amber-500/10 px-2 py-1 text-[10px] font-bold text-amber-300">順位外</span>
+                      <span className="shrink-0 rounded bg-amber-500/10 px-2 py-1 text-[10px] font-bold text-amber-300">G品質・数値比較外</span>
                     </div>
                     {fundPageSlug && <Link href={`/fund/${fundPageSlug}`} className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-amber-200">商品属性を確認<ArrowRight className="h-3 w-3" /></Link>}
                   </div>

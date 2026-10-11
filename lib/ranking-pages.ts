@@ -5,13 +5,13 @@ export interface RankingFundEntry {
   fundId: FundId;
   fundSlug?: string;    // /fund/[slug] (undefined = no fund page exists)
   yearSlug?: string;    // /[yearSlug]/2020 (year page slug)
-  rank: number;
-  badge: string;        // 🥇🥈🥉 or "4位"
+  rank?: number;
+  badge?: string;        // legacy editorial ordering; rendered rankings are calculated
   highlight: string;    // このランキングでの推薦理由（1行）
   pros: string[];       // メリット（2〜3点）
   cons: string[];       // 注意点（1〜2点）
-  metric: string;       // このランキングの評価軸ラベル
-  metricValue: string;  // 評価値の文字列表現
+  metric?: string;       // legacy editorial field; not used for calculated order
+  metricValue?: string;
 }
 
 export interface RankingCriteria {
@@ -25,7 +25,7 @@ export interface RankingFaq {
 }
 
 export interface RankingPageData {
-  slug: string;         // "" | "nisa" | "beginner" | "high-return" | "high-dividend"
+  slug: string;         // "" | "nisa" | "high-return" | "high-dividend"
   metaTitle: string;
   metaDescription: string;
   h1: string;
@@ -112,7 +112,7 @@ export const RANKING_PAGES: RankingPageData[] = [
       { q: "高配当ETFは順位に含まれますか？", a: "期間全体を計算できるA品質系列は同じ基準で順位付けします。SCHDはG品質・原典未検証のため順位外の参考情報とし、商品属性だけを確認できます。" },
     ],
     relatedCompareSlugs: ["orukan-vs-sp500", "sp500-vs-nasdaq100", "schd-vs-vym"],
-    relatedRankingSlugs: ["nisa", "beginner", "high-return", "high-dividend"],
+    relatedRankingSlugs: ["nisa", "high-return", "high-dividend"],
   },
 
   // ─── 新NISAランキング (/ranking/nisa) ─────────────────────────────
@@ -125,10 +125,10 @@ export const RANKING_PAGES: RankingPageData[] = [
     intro:
       "新NISAで検討される代表商品を、制度上の取扱いと同一条件の過去積立結果に分けて確認します。対象枠は商品ごとに異なるため、金融庁・運用会社・証券会社の最新情報も確認してください。",
     criteria: [
-      { label: "NISA対応",     description: "つみたて投資枠/成長投資枠での購入可否" },
-      { label: "初心者適性",   description: "始めやすさ・管理のシンプルさ・情報量" },
-      { label: "実績期間", description: "商品設定後の検証済み月次系列で計算できる期間" },
-      { label: "コスト",       description: "信託報酬（年率）の低さ" },
+      { label: "対象枠", description: "つみたて投資枠・成長投資枠の対象可否を商品単位で確認" },
+      { label: "制度上限", description: "年間投資枠と非課税保有限度額を金融庁の制度情報で確認" },
+      { label: "同条件実績", description: "制度対象かつA品質の系列だけを同じ期間・月額で比較" },
+      { label: "商品属性", description: "投資対象、費用、商品設定日を実績順位とは分けて確認" },
     ],
     simYear: 2020,
     simMonth: 1,
@@ -165,71 +165,12 @@ export const RANKING_PAGES: RankingPageData[] = [
     ],
     faqs: [
       { q: "新NISAでオルカンとS&P500を比べる観点は？", a: "NISA対象区分に加え、投資対象地域、国別構成、費用、設定日を比べます。過去の期間末評価額だけで商品選択を決めることはできません。" },
-      { q: "NASDAQ100は新NISAのつみたて投資枠で買えますか？", a: "商品によります。eMAXIS NASDAQ100インデックスはつみたて投資枠対象外の場合があります。成長投資枠なら多くのNASDAQ100ファンドを購入できます。iFreeNEXT NASDAQ100インデックスなど、つみたて投資枠対象商品を選ぶ必要があります。" },
+      { q: "NASDAQ100は新NISAで買えますか？", a: "NISAの対象可否は、NASDAQ100という指数名ではなく購入する正式商品ごとに確認します。金融庁の対象商品一覧と、利用する金融機関の取扱商品・対象枠を照合してください。" },
       { q: "新NISAは損失が出た場合に損益通算できますか？", a: "NISA口座内の損失は課税口座の利益と損益通算できません。非課税という利点と、損失を税務上利用できない点を分けて確認します。" },
       { q: "SCHDが数値順位の対象外なのはなぜですか？", a: "当サイトのSCHD月次系列はG品質・原典未検証の参考系列だからです。商品属性は表示しますが、A品質商品の検証済み実績と同じ数値順位には含めません。" },
     ],
     relatedCompareSlugs: ["orukan-vs-sp500", "sp500-vs-nasdaq100", "schd-vs-sp500"],
-    relatedRankingSlugs: ["", "beginner", "high-return"],
-  },
-
-  // ─── 初心者ランキング (/ranking/beginner) ─────────────────────────
-  {
-    slug: "beginner",
-    metaTitle: "積立商品を初めて比べるときの確認項目｜同条件の実績比較",
-    metaDescription:
-      "積立候補として挙がる代表商品を、投資対象・商品形式・費用と同一条件の過去積立結果に分けて比較します。",
-    h1: "積立商品を初めて比べるときの確認項目",
-    intro:
-      "初めて商品を比較するときに確認したい、投資対象、商品形式、費用、NISA対象区分と、同一条件の過去積立結果を分けて整理します。数値順位は初心者への推奨順ではありません。",
-    criteria: [
-      { label: "始めやすさ",   description: "口座開設・積立設定のシンプルさ・情報量の豊富さ" },
-      { label: "分散性",       description: "投資先の地域・銘柄数の広さ。初心者ほど分散が重要" },
-      { label: "リスクの低さ", description: "価格変動の小ささ。初心者は変動が少ない方が継続しやすい" },
-      { label: "コスト",       description: "信託報酬の低さ。長期では大きな差になる" },
-    ],
-    simYear: 2020,
-    simMonth: 1,
-    simAmount: 30000,
-    funds: [
-      {
-        fundId: "orcan", fundSlug: "orukan", yearSlug: "orukan", rank: 1, badge: "🥇",
-        highlight: "全世界株式へ1本で分散する投資信託。費用・設定日・対象地域を確認",
-        pros: ["1本で全世界株式を対象", "複数地域へ分散", "国内投信として積立設定が可能"],
-        cons: ["米国が6割超を占め、完全な均等分散ではない"],
-        metric: "初心者適性", metricValue: "★★★★★",
-      },
-      {
-        fundId: "sp500", fundSlug: "sp500", yearSlug: "sp500", rank: 2, badge: "🥈",
-        highlight: "米国大型株を対象とする国内投信。全世界型との地域差を確認",
-        pros: ["米国代表企業500社に分散で理解しやすい", "過去実績・情報量ともに豊富", "NISA完全対応"],
-        cons: ["米国への集中リスク", "為替リスクがある"],
-        metric: "初心者適性", metricValue: "★★★★☆",
-      },
-      {
-        fundId: "vt", fundSlug: undefined, yearSlug: undefined, rank: 3, badge: "🥉",
-        highlight: "ETF好き・SBI証券ユーザーなら選択肢になるバンガードの全世界ETF",
-        pros: [`全世界の${FUNDS.vt.shareCount}を対象`, "米国上場ETFとして取引"],
-        cons: ["NISA成長投資枠のみ（つみたて投資枠非対応）", "投資信託より手間がかかる"],
-        metric: "初心者適性", metricValue: "★★★☆☆",
-      },
-      {
-        fundId: "vti", fundSlug: "vti", yearSlug: undefined, rank: 4, badge: "4位",
-        highlight: "米国市場全体をS&P500より広くカバー。中小型株も含む",
-        pros: [`米国${FUNDS.vti.shareCount}に分散`, "経費率が低い"],
-        cons: ["つみたて投資枠非対応", "S&P500との差分は限定的で選ぶ理由が少ない"],
-        metric: "初心者適性", metricValue: "★★★☆☆",
-      },
-    ],
-    faqs: [
-      { q: "初めて商品を比べるときは何を確認しますか？", a: "生活費とは分けた資金であることを確認し、投資対象、費用、設定日、NISA対象区分、許容できる値動きを商品ごとに比較します。手続きと取扱商品は利用する金融機関で確認してください。" },
-      { q: "オルカンを候補にする前に何を確認しますか？", a: "全世界株式へ分散する一方、各国を均等保有する商品ではありません。正式商品、費用、設定日、国別構成、NISA対象区分を確認し、米国集中商品との違いを整理します。" },
-      { q: "VTとVTIの違いは何ですか？", a: `VTは全世界の${FUNDS.vt.shareCount}、VTIは米国の${FUNDS.vti.shareCount}を対象とするETFです。投資対象地域と、NISAで利用できる枠を確認して比較します。` },
-      { q: "初心者はいくらから積み立てればいいですか？", a: "月1,000〜10,000円から始める人が多いです。重要なのは金額より「継続できること」と「早く始めること」です。生活費・緊急資金（生活費3ヶ月分）を確保した上で、無理のない金額を自動積立に設定するケースが一般的です。" },
-      { q: "値動きの大きい商品を比べるときの注意点は？", a: "レバレッジ、集中度、費用、価格変動、投資対象を確認します。名称や一期間の順位だけでなく、損失を許容できる範囲と資金を使う時期を先に整理します。" },
-    ],
-    relatedCompareSlugs: ["orukan-vs-sp500", "vti-vs-orukan", "vt-vs-orukan"],
-    relatedRankingSlugs: ["", "nisa", "high-return"],
+    relatedRankingSlugs: ["", "high-return"],
   },
 
   // ─── リターン重視ランキング (/ranking/high-return) ─────────────────
@@ -242,9 +183,9 @@ export const RANKING_PAGES: RankingPageData[] = [
     intro:
       "NASDAQ100・FANG+・S&P500を、同じ開始月・月額・終了月の期間末評価額で比較します。過去の一期間の順位と、構成銘柄数・集中範囲・費用は別の判断材料として表示します。",
     criteria: [
-      { label: "期間末評価額",   description: "同じ開始月・月額・終了月で計算した過去の積立評価額" },
+      { label: "過去の期間末評価額", description: "同じ開始月・月額・終了月で計算した過去の積立評価額" },
       { label: "成長セクター集中", description: "AI・テック・成長企業への集中度" },
-      { label: "実績期間",       description: "正式商品の設定後に検証できる月次系列の範囲" },
+      { label: "共通期間", description: "全商品を正式商品の設定後に同じ開始月・終了月で比較" },
       { label: "NISA対応",      description: "NISAでの非課税メリットを活かせるか" },
     ],
     simYear: 2020,
@@ -281,7 +222,7 @@ export const RANKING_PAGES: RankingPageData[] = [
       { q: "下落時は数値順位をどう読みますか？", a: "順位は2020年開始から2026年8月までの一つの経路です。積立停止・保有継続・売却は、生活資金と資金を使う時期を確認して別々に判断します。過去の順位から回復時期は予測できません。" },
     ],
     relatedCompareSlugs: ["sp500-vs-nasdaq100", "nasdaq100-vs-fangplus"],
-    relatedRankingSlugs: ["", "nisa", "beginner"],
+    relatedRankingSlugs: ["", "nisa"],
   },
 
   // ─── 高配当ランキング (/ranking/high-dividend) ─────────────────────
@@ -290,32 +231,30 @@ export const RANKING_PAGES: RankingPageData[] = [
     metaTitle: "高配当ETFの積立実績・商品属性比較｜VYMとSCHD",
     metaDescription:
       "米国ETF SCHDとVYMを配当方針・銘柄分散・コストで比較。データ品質の違いも明示して、高配当ETFを選ぶ判断材料を整理します。",
-    h1: "VYMとSCHDの積立実績・商品属性を分けて比較",
+    h1: "VYMの検証済み実績とSCHDの商品属性を分けて確認",
     intro:
       "米国高配当ETFを、公式に確認できる指数設計・分配方針・費用と、検証できる実績に分けて確認します。SCHDの月次系列はG品質のため評価額を表示せず、VYMの検証済み結果とも順位付けしません。",
     criteria: [
-      { label: "配当利回り",   description: "公表される年間配当利回り（時点により変動）" },
-      { label: "配当成長率",   description: "年間の配当増加率。配当が毎年増えるかどうか" },
-      { label: "安定性",       description: "配当の継続性・減配リスクの低さ" },
-      { label: "コスト",       description: "信託報酬の低さ。配当収入を減らさないため重要" },
+      { label: "検証済み実績", description: "A品質のVYMだけ同条件の期間末評価額を表示" },
+      { label: "商品設計", description: "連動対象指数、選定方法、構成範囲を公式情報で確認" },
+      { label: "分配と税務", description: "分配方針、外国税・国内課税、NISAでの取扱いを確認" },
+      { label: "費用と通貨", description: "経費率と米ドル建てETFである点を実績とは分けて確認" },
     ],
     simYear: 2020,
     simMonth: 1,
     simAmount: 30000,
     funds: [
       {
-        fundId: "schd", fundSlug: "schd", yearSlug: undefined, rank: 1, badge: "🥇",
+        fundId: "schd", fundSlug: "schd", yearSlug: undefined,
         highlight: "米国の配当株を選別するETF。指数設計と分配方針を確認",
-        pros: ["増配実績を持つ財務優良企業に絞込", "Dow Jones U.S. Dividend 100 Indexへの連動を目指す", "米国ETFの経費率は0.060%"],
+        pros: ["Dow Jones U.S. Dividend 100 Indexへの連動を目指す", "四半期分配を行う米国ETF", "米国ETFの経費率は0.060%"],
         cons: ["VYMより銘柄数が少ない（約100銘柄）", "G：参考データ・原典未検証"],
-        metric: "配当品質", metricValue: "★★★★★",
       },
       {
-        fundId: "vym", fundSlug: "vym", yearSlug: undefined, rank: 2, badge: "🥈",
+        fundId: "vym", fundSlug: "vym", yearSlug: undefined,
         highlight: "米国高配当株を広く対象とするETF。分配実績と価格変動を分けて確認",
         pros: ["米国高配当株を幅広く対象", "四半期分配を行うETF", "経費率が低い"],
         cons: ["つみたて投資枠非対応", "分配利回りは時点により変動"],
-        metric: "配当品質", metricValue: "★★★★☆",
       },
     ],
     faqs: [
@@ -326,7 +265,7 @@ export const RANKING_PAGES: RankingPageData[] = [
       { q: "米国ETF SCHDと楽天SCHDは同じ商品ですか？", a: "別商品です。当ページのSCHDはSchwab U.S. Dividend Equity ETFを指します。楽天SCHDは米国ETF SCHDを主要投資対象とする国内投信で、通貨・費用・取扱い・税務が異なります。" },
     ],
     relatedCompareSlugs: ["schd-vs-vym", "schd-vs-sp500"],
-    relatedRankingSlugs: ["", "nisa", "beginner"],
+    relatedRankingSlugs: ["", "nisa"],
   },
 ];
 
@@ -335,12 +274,11 @@ export function getRankingPage(slug: string): RankingPageData | undefined {
 }
 
 // カテゴリスラッグ一覧（/ranking/[category] 用）
-export const RANKING_CATEGORY_SLUGS = ["nisa", "beginner", "high-return", "high-dividend"] as const;
+export const RANKING_CATEGORY_SLUGS = ["nisa", "high-return", "high-dividend"] as const;
 
 export const RANKING_LABELS: Record<string, string> = {
   "":               "総合ランキング",
   "nisa":           "新NISAおすすめ",
-  "beginner":       "初心者向け",
   "high-return":    "リターン重視",
   "high-dividend":  "高配当",
 };

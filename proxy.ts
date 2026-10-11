@@ -15,8 +15,14 @@ export function proxy(req: NextRequest) {
     shouldRedirect = true;
   }
 
-  if (url.pathname === "/fang") {
-    url.pathname = "/fund/fangplus";
+  const permanentRedirects: Record<string, string> = {
+    "/fang": "/fund/fangplus",
+    "/schd": "/fund/schd",
+    "/ranking/beginner": "/ranking",
+  };
+  const redirectTarget = permanentRedirects[url.pathname];
+  if (redirectTarget) {
+    url.pathname = redirectTarget;
     shouldRedirect = true;
   }
 

@@ -419,9 +419,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
           <ul className="space-y-2">
             {[
-              { href: "/schd",                          label: "米国ETF SCHDとは？特徴を解説" },
+              { href: "/fund/schd",                     label: "米国ETF SCHDの商品情報・データ品質" },
               { href: "/compare/schd-vs-sp500",         label: "SCHD vs S&P500 比較" },
-              { href: "/fund/schd",                     label: "SCHD銘柄詳細ページ" },
               { href: "/fund/vym",                      label: "VYM銘柄詳細ページ" },
               { href: "/guide/nisa-wariate-osusume",    label: "新NISAのおすすめポートフォリオ割合" },
             ].map(({ href, label }) => (

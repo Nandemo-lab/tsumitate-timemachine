@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // 銘柄ランディングページ（SEO重点ページ）
-  const fundLandingPages: MetadataRoute.Sitemap = FUND_SEO_PAGES.map((p) => ({
+  const fundLandingPages: MetadataRoute.Sitemap = FUND_SEO_PAGES.filter((p) => p.slug !== "schd").map((p) => ({
     url: `${BASE_URL}/${p.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

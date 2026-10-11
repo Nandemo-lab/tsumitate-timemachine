@@ -474,9 +474,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
           <ul className="space-y-2">
             {[
-              { href: "/schd",                          label: "米国ETF SCHDとは？特徴を解説" },
+              { href: "/fund/schd",                     label: "米国ETF SCHDの商品情報・データ品質" },
               { href: "/compare/schd-vs-vym",           label: "SCHD vs VYM 比較" },
-              { href: "/fund/schd",                     label: "SCHD銘柄詳細ページ" },
               { href: "/fund/sp500",                    label: "S&P500銘柄詳細ページ" },
               { href: "/articles/schd-vs-vym",          label: "SCHD vs VYM 比較記事" },
             ].map(({ href, label }) => (

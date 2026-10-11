@@ -19,6 +19,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
+import { getReturnSeriesDefinition } from "@/lib/return-series";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -35,6 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = getFundPage(slug);
   if (!page) return {};
   const fund = FUNDS[page.fundId];
+  const ogUrl = getReturnSeriesDefinition(page.fundId).quality === "A"
+    ? `${BASE_URL}/api/og?fund=${page.fundId}&year=${page.simYear}&amount=${page.simAmount}`
+    : `${BASE_URL}/api/og?static=1`;
   return {
     title: page.metaTitle,
     description: page.metaDescription,
@@ -48,10 +52,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "ja_JP",
       images: [
         {
-          url: `${BASE_URL}/api/og?fund=${page.fundId}&year=${page.simYear}&amount=${page.simAmount}`,
+          url: ogUrl,
           width: 1200,
           height: 630,
-          alt: `${fund.shortName} 積立シミュレーション`,
+          alt: getReturnSeriesDefinition(page.fundId).quality === "A"
+            ? `${fund.shortName} 積立シミュレーション`
+            : `${fund.shortName} 商品情報・データ品質`,
         },
       ],
     },
@@ -60,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: page.metaTitle,
       description: page.metaDescription,
       images: [
-        `${BASE_URL}/api/og?fund=${page.fundId}&year=${page.simYear}&amount=${page.simAmount}`,
+        ogUrl,
       ],
     },
   };
@@ -86,15 +92,16 @@ export default async function FundPage({ params }: Props) {
   const fund = FUNDS[page.fundId];
   const enc = fund.encyclopedia;
 
-  const result = simulate({
+  const isVerifiedSeries = getReturnSeriesDefinition(page.fundId).quality === "A";
+  const result = isVerifiedSeries ? simulate({
     fundId: page.fundId,
     startYear: page.simYear,
     startMonth: page.simMonth,
     monthlyAmount: page.simAmount,
-  });
+  }) : null;
 
-  const isProfit = result.profit >= 0;
-  const totalPrincipal = result.totalPrincipal;
+  const isProfit = (result?.profit ?? 0) >= 0;
+  const totalPrincipal = result?.totalPrincipal ?? 0;
 
   // 関連比較ページ
   const relatedCompares = page.relatedCompareSlugs
@@ -208,8 +215,8 @@ export default async function FundPage({ params }: Props) {
             description={page.fundId === "fangplus"
               ? "正式商品、設定日、費用、データ品質を確認し、このページの検証済み結果から条件変更シミュレーターへ進めます。"
               : "商品の設定日、投資対象、費用、NISA区分、検証できる実績期間と一次情報を確認します。積立条件を変える操作はシミュレーション入口に分けています。"}
-            counterpartHref={page.fundId === "vym" ? undefined : page.fundId === "fangplus" ? `/simulate/fangplus/${page.simYear}` : `/${page.fundId === "orcan" ? "orukan" : page.fundId}`}
-            counterpartLabel={page.fundId === "vym" ? undefined : `${enc.nickname}の積立条件を変えて試す`}
+            counterpartHref={page.fundId === "schd" ? "/compare/schd-vs-vym" : page.fundId === "vym" ? undefined : page.fundId === "fangplus" ? `/simulate/fangplus/${page.simYear}` : `/${page.fundId === "orcan" ? "orukan" : page.fundId}`}
+            counterpartLabel={page.fundId === "schd" ? "SCHDとVYMの商品属性を比較する" : page.fundId === "vym" ? undefined : `${enc.nickname}の積立条件を変えて試す`}
           />
 
           {/* ── 基本情報テーブル ────────────────────────────────── */}
@@ -296,7 +303,7 @@ export default async function FundPage({ params }: Props) {
           </section>
 
           {/* ── シミュレーション ─────────────────────────────────── */}
-          <section
+          {result ? <section
             className="rounded-2xl p-5 space-y-4"
             style={{
               background: `${fund.color}10`,
@@ -389,7 +396,23 @@ export default async function FundPage({ params }: Props) {
               自分の条件でシミュレーション
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </section>
+          </section> : (
+            <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5 space-y-3">
+              <ReturnQualityPill fundId={page.fundId} />
+              <h2 className="text-base font-bold text-white">参考系列のため積立評価額は掲載していません</h2>
+              <p className="text-sm leading-relaxed text-zinc-400">
+                SCHDの月次系列はG品質・原典未検証です。このページでは正式商品、指数設計、分配方針、費用など確認できる商品属性を掲載し、未検証系列から計算した評価額・利益・推移グラフは表示しません。
+              </p>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <Link href="/about/data-sources" className="inline-flex items-center justify-center gap-1 rounded-xl border border-amber-400/25 px-4 py-2.5 text-xs font-bold text-amber-200">
+                  データ品質の基準を見る<ArrowRight className="h-3 w-3" />
+                </Link>
+                <Link href="/compare/schd-vs-vym" className="inline-flex items-center justify-center gap-1 rounded-xl border border-white/10 px-4 py-2.5 text-xs font-bold text-zinc-300">
+                  商品属性を比較する<ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </section>
+          )}
 
           {/* ── 商品選択時の確認事項 ─────────────────────────────── */}
           {enc.forWhom && <section className="space-y-3">
@@ -545,7 +568,7 @@ export default async function FundPage({ params }: Props) {
           )}
 
           {/* ── CTA ─────────────────────────────────────────────── */}
-          <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
+          {isVerifiedSeries && <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-emerald-400" />
               <h2
@@ -566,7 +589,7 @@ export default async function FundPage({ params }: Props) {
               {enc.nickname}でシミュレーション開始
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </section>
+          </section>}
 
           <DisclaimerBar />
         </div>

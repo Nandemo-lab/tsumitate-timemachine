@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function generateStaticParams() {
-  return FUND_SEO_PAGES.map((p) => ({ slug: p.slug }));
+  return FUND_SEO_PAGES.filter((p) => p.slug !== "schd").map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -335,7 +335,7 @@ export default async function FundLandingPage({ params }: Props) {
               その他の銘柄を見る
             </p>
             <div className="flex flex-wrap gap-2">
-              {FUND_SEO_PAGES.filter((p) => p.slug !== page.slug).map((p) => {
+              {FUND_SEO_PAGES.filter((p) => p.slug !== page.slug && p.slug !== "schd").map((p) => {
                 const f = FUNDS[p.fundId];
                 return (
                   <Link

@@ -395,6 +395,12 @@ for (const label of ["ボラティリティ", "リスクレベル", "推奨投�
 for (const required of [FUNDS.schd.encyclopedia.catchCopy, "G品質", "原典未検証", "リスク等級や下落耐性は判定していない"]) {
   if (!schdBody.includes(required)) throw new Error(`SCHD rendered boundary missing: ${required}`);
 }
+for (const forbidden of ["もし2020年から積み立てていたら？", "現在資産", "積立推移チャート", "SCHDでシミュレーション開始"]) {
+  if (schdBody.includes(forbidden)) throw new Error(`SCHD rendered unverified result: ${forbidden}`);
+}
+for (const required of ["参考系列のため積立評価額は掲載していません", "データ品質の基準を見る"]) {
+  if (!schdBody.includes(required)) throw new Error(`SCHD G-quality explanation missing: ${required}`);
+}
 const otherFundHtml = read(".next/server/app/fund/sp500.html");
 for (const label of ["ボラティリティ", "リスクレベル", "推奨投資期間", "こんな人におすすめ"]) {
   if (otherFundHtml.includes(label)) throw new Error(`Subjective fund assessment restored: ${label}`);
@@ -409,7 +415,6 @@ for (const relative of [
   ".next/server/app/compare/schd-vs-vym.html",
   ".next/server/app/compare/schd-vs-sp500.html",
   ".next/server/app/compare/orukan-vs-schd.html",
-  ".next/server/app/schd.html",
 ]) {
   const html = read(relative).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
   for (const forbidden of ["積立シミュレーション比較", "現在資産", "積立推移チャート"]) {
@@ -418,7 +423,7 @@ for (const relative of [
 }
 console.log("PASS: G-quality pages do not render simulated performance panels");
 
-// トップ階層 /schd と共有カテゴリ説明に、G品質からは判定できない安定性・優劣・推奨が戻っていないか検査。
+// 統合前のSCHD定義と共有カテゴリ説明にも、G品質から判定できない安定性・優劣・推奨を戻さない。
 if (FUND_CATEGORIES.dividend.description !== "配当を重視する株式商品") {
   throw new Error("dividend category description is not neutral");
 }
@@ -430,15 +435,12 @@ for (const phrase of ["比較的安定した値動き", "中級者以上の方�
 for (const phrase of ["G品質（参考データ・原典未検証）", "値動きの安定性", "適性は判定していません"]) {
   if (!legacySchdText.includes(phrase)) throw new Error(`legacy SCHD evidence boundary missing: ${phrase}`);
 }
-const legacySchdHtml = read(".next/server/app/schd.html");
-const legacySchdBody = legacySchdHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, "");
-for (const phrase of ["比較的安定した値動き", "中級者以上の方に向いています", "VYMより増配率・トータルリターン", "10年平均で年約11〜12%", "こんな人におすすめ"]) {
-  if (legacySchdBody.includes(phrase)) throw new Error(`/schd rendered unsupported claim: ${phrase}`);
-}
-for (const phrase of ["商品選択時の確認ポイント", "G品質", "原典未検証", "個人への適性は判断できません"]) {
-  if (!legacySchdBody.includes(phrase)) throw new Error(`/schd rendered boundary missing: ${phrase}`);
-}
-console.log("PASS: legacy /schd and dividend category evidence boundaries");
+const sitemapSource = read("app/sitemap.ts");
+const staticParamSource = read("app/[slug]/page.tsx");
+const proxySource = read("proxy.ts");
+if (!sitemapSource.includes('p.slug !== "schd"') || !staticParamSource.includes('p.slug !== "schd"')) throw new Error("legacy /schd is still generated or included in sitemap");
+if (!proxySource.includes('"/schd": "/fund/schd"')) throw new Error("legacy /schd permanent redirect missing");
+console.log("PASS: /schd consolidation and dividend category evidence boundaries");
 
 // VTIの現在銘柄数はSSOTから生成し、旧固定値を本文・FAQ・生成HTMLへ戻さない。
 const vtiShareCount = FUNDS.vti.shareCount;
