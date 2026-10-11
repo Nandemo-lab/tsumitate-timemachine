@@ -24,6 +24,8 @@ const simulatePage = read("app/simulate/[fund]/[year]/page.tsx");
 const ogRoute = read("app/api/og/route.tsx");
 const sitemap = read("app/sitemap.ts");
 const monthly = read("lib/monthly-pages.ts");
+const dataSourcesPage = read("app/about/data-sources/page.tsx");
+const returnDataSources = read("lib/return-data-sources.ts");
 
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
 assert(guides.includes("nisaMonthly10kExample.finalValue"), "NISA実績例がsimulate結果を参照していない");
@@ -46,6 +48,10 @@ assert(!compares.includes("過去20年のデータではS&P500"), "商品設定�
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年8月まで"), "トップでデータ終端を開示していない");
+assert(dataSourcesPage.includes("現在の収録最終月は2026年8月です"), "Data SourcesがA品質系列の最新終端2026年8月を明示していない");
+assert(dataSourcesPage.includes("9つのA系列"), "Data Sourcesが最新終端の対象をA品質9系列に限定していない");
+assert(returnDataSources.includes('dataThrough: verified ? definition.endMonth : "原典検証待ち（公開計算の対象外）"'), "Data SourcesがG品質系列を検証済み終端として表示する可能性がある");
+assert(returnDataSources.includes('granularity: verified ? `${definition.startMonth}〜${definition.endMonth}の月次データ` : "検証済み月次系列なし"'), "Data SourcesがG品質系列を検証済み月次系列として表示する可能性がある");
 for (const [source, text] of [
   ["年別ページ", years],
   ["比較ページ", compares],
@@ -85,6 +91,12 @@ if (fs.existsSync(path.join(root, ".next/server/app/guide/nisa-tsumitate-ikura.h
   const expectedDisplay = `${Math.round(expectedValue).toLocaleString("ja-JP")}円`;
   assert(!built.includes("約162万円"), "生成HTMLに旧評価額が残存");
   assert(built.includes(expectedDisplay), `生成HTMLにSSOT評価額（${expectedDisplay}）が見つからない`);
+}
+
+if (fs.existsSync(path.join(root, ".next/server/app/about/data-sources.html"))) {
+  const built = read(".next/server/app/about/data-sources.html");
+  assert(built.includes("現在の収録最終月は2026年8月です"), "Data Sourcesの生成HTMLにA品質系列の最新終端がない");
+  assert(built.includes("G：参考データ・原典未検証") && built.includes("原典未検証の年次参考系列"), "Data Sourcesの生成HTMLでSCHDのG品質境界が不明確");
 }
 
 if (failures.length) {
