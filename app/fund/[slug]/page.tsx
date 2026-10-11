@@ -212,9 +212,11 @@ export default async function FundPage({ params }: Props) {
           </section>
 
           <PageRoleGuide
-            label="正式商品・費用・データ品質を確認する資料"
-            description="商品の設定日、投資対象、費用、NISA区分、検証できる実績期間と一次情報を確認します。積立条件を変える操作はシミュレーション入口に分けています。"
-            counterpartHref={page.fundId === "vym" ? undefined : `/${page.fundId === "orcan" ? "orukan" : page.fundId === "fangplus" ? "fang" : page.fundId}`}
+            label={page.fundId === "fangplus" ? "商品情報と積立結果を一つのページで確認する" : "正式商品・費用・データ品質を確認する資料"}
+            description={page.fundId === "fangplus"
+              ? "正式商品、設定日、費用、データ品質を確認し、このページの検証済み結果から条件変更シミュレーターへ進めます。"
+              : "商品の設定日、投資対象、費用、NISA区分、検証できる実績期間と一次情報を確認します。積立条件を変える操作はシミュレーション入口に分けています。"}
+            counterpartHref={page.fundId === "vym" ? undefined : page.fundId === "fangplus" ? `/simulate/fangplus/${page.simYear}` : `/${page.fundId === "orcan" ? "orukan" : page.fundId}`}
             counterpartLabel={page.fundId === "vym" ? undefined : `${enc.nickname}の積立条件を変えて試す`}
           />
 
@@ -265,7 +267,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {enc.nickname}が選ばれる理由・メリット
+              {page.fundId === "fangplus" ? `${enc.nickname}の商品設計` : `${enc.nickname}が選ばれる理由・メリット`}
             </h2>
             <div className="space-y-2">
               {enc.pros.map((p) => (
@@ -289,7 +291,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {enc.nickname}のリスク・デメリット・注意点
+              {page.fundId === "fangplus" ? `${enc.nickname}を確認するときの注意点` : `${enc.nickname}のリスク・デメリット・注意点`}
             </h2>
             <div className="space-y-2">
               {enc.cons.map((c) => (
@@ -406,7 +408,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              こんな人におすすめ
+              {page.fundId === "fangplus" ? "商品選択時の確認ポイント" : "こんな人におすすめ"}
             </h2>
             <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-4 space-y-2">
               {enc.forWhom.split("・").map((w) => (

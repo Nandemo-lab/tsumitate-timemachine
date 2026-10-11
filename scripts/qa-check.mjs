@@ -195,6 +195,10 @@ async function main() {
   const known = buildKnownRoutes(files);
   const robots = readRobotsTxt();
 
+  if (known.routes.has("/fang")) {
+    report("ERROR", "/fang", "統合済みの旧FANG+ページが静的ルートとして残っています");
+  }
+
   const titleMap = new Map();
   const descMap = new Map();
   const canonicalMap = new Map();
@@ -396,6 +400,9 @@ async function main() {
     const brokenLinks = new Set();
     for (const hm of hrefMatches) {
       const href = hm[1];
+      if (href === "/fang") {
+        report("ERROR", url, "統合済みの旧FANG+ URLへの内部リンクが残っています");
+      }
       if (!isKnownRoute(href, known)) brokenLinks.add(href);
     }
     for (const bl of brokenLinks) {
@@ -445,6 +452,28 @@ async function main() {
   // --- --server 指定時: canonical / OGP画像 / sitemap掲載URL の実HTTPステータス確認 ---
   if (SERVER_URL) {
     console.log(`\n--server 指定あり。${SERVER_URL} に対してライブHTTPチェックを実行します...`);
+
+    try {
+      const oldFangUrl = `${SERVER_URL}/fang?source=redirect-audit`;
+      const oldFangResponse = await fetch(oldFangUrl, { redirect: "manual" });
+      const expectedLocation = `${SERVER_URL}/fund/fangplus?source=redirect-audit`;
+      const actualLocation = oldFangResponse.headers.get("location");
+      const resolvedLocation = actualLocation ? new URL(actualLocation, oldFangUrl).href : null;
+      if (oldFangResponse.status !== 301 || resolvedLocation !== expectedLocation) {
+        report(
+          "ERROR",
+          "/fang",
+          `FANG+統合リダイレクト不一致: status=${oldFangResponse.status}, location=${actualLocation ?? "なし"}`
+        );
+      }
+
+      const fangplusStatus = await fetchStatus(`${SERVER_URL}/fund/fangplus`);
+      if (fangplusStatus !== 200) {
+        report("ERROR", "/fund/fangplus", `統合先HTTP確認NG → ステータス: ${fangplusStatus ?? "取得失敗"}`);
+      }
+    } catch {
+      report("ERROR", "/fang", "FANG+統合リダイレクトを取得できませんでした");
+    }
 
     for (const target of liveCheckTargets) {
       const local = toLocalUrl(target);

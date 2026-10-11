@@ -51,6 +51,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     ],
     "orukan-vs-nasdaq100": ["初心者にはオルカンとNASDAQ100のどちらが向いていますか？"],
     "nasdaq100-vs-fangplus": [
+      "NASDAQ100とFANG+の違いは何ですか？",
       "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
       "リスクが高いのはNASDAQ100とFANG+のどちらですか？",
       "暴落時に強いのはNASDAQ100とFANG+のどちらですか？",
@@ -92,7 +93,9 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはどちらですか？",
     ],
     "orukan-vs-fangplus": [
+      "オルカンとFANG+はどっちがおすすめですか？",
       "初心者にはどちらが向いていますか？",
+      "オルカンとFANG+を両方持つのはありですか？",
       "FANG+の大きな下落から回復するまでどのくらいかかりますか？",
     ],
     "orukan-vs-vym": [
@@ -112,7 +115,7 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     if (newFaq.q !== oldFaq.q) throw new Error(`FAQ question regression ${previous.slug}`);
     if (!(authorizedFaqs[previous.slug] ?? []).includes(oldFaq.q) && newFaq.a !== oldFaq.a) throw new Error(`unexpected FAQ regression ${previous.slug}`);
   }
-  const authorizedMetadata = new Set(["orukan-vs-sp500", "vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500", "orukan-vs-schd"]);
+  const authorizedMetadata = new Set(["orukan-vs-sp500", "vt-vs-sp500", "schd-vs-vym", "schd-vs-sp500", "orukan-vs-schd", "nasdaq100-vs-fangplus", "orukan-vs-fangplus"]);
   if (!authorizedMetadata.has(previous.slug) && (current.metaTitle !== previous.metaTitle || current.metaDescription !== previous.metaDescription)) throw new Error(`metadata regression ${previous.slug}`);
 }
 console.log("PASS: all 15 compare H1/slug/simulation unchanged; only authorized fact-correction FAQs changed; metadata changes limited to authorized fact corrections");

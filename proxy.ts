@@ -5,12 +5,22 @@ const NEW_HOST = "tsumitate-timemachine.com";
 
 export function proxy(req: NextRequest) {
   const host = req.headers.get("host") ?? "";
+  const url = req.nextUrl.clone();
+  let shouldRedirect = false;
 
-  // 旧ドメインへのアクセスを新ドメインへ 301 リダイレクト
+  // 旧ドメインと統合済みURLを、一段の恒久リダイレクトで正規URLへ寄せる。
   if (host === OLD_HOST) {
-    const url = req.nextUrl.clone();
     url.host = NEW_HOST;
     url.protocol = "https:";
+    shouldRedirect = true;
+  }
+
+  if (url.pathname === "/fang") {
+    url.pathname = "/fund/fangplus";
+    shouldRedirect = true;
+  }
+
+  if (shouldRedirect) {
     return NextResponse.redirect(url, { status: 301 });
   }
 

@@ -49,7 +49,16 @@ function csv(value) {
 
 const plans = [
   {
-    match: (path) => /^\/(orukan|sp500|nasdaq100|vti|schd|vt)$/.test(path) || path === "/fang",
+    match: (path) => path === "/fund/fangplus",
+    evidence: ["商品情報と積立結果を一つのページで確認する", "設定日"],
+    delta: 4,
+    overlap: "旧商品Landingを統合し、正式情報と積立検証を単一URLで提供",
+    gap: "商品情報と積立条件変更が別URLに分かれ、役割が重複していた",
+    improvement: "正式情報、データ品質、固定条件の結果と条件変更導線を一つのページへ統合",
+    action: "MERGE",
+  },
+  {
+    match: (path) => /^\/(orukan|sp500|nasdaq100|vti|schd|vt)$/.test(path),
     evidence: ["条件を変えて積立結果を確かめる入口", "検証済み月次実績"],
     delta: 4,
     overlap: "銘柄詳細と商品名が重複。Landingは条件変更と結果確認に限定",

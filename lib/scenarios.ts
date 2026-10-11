@@ -56,13 +56,13 @@ export const QUICK_SCENARIOS: QuickScenario[] = [
   },
   {
     id: "fang-2019",
-    label: "FANG+で攻めていたら",
+    label: "FANG+を積み立てていたら",
     emoji: "🚀",
     fundId: "fangplus",
     startYear: 2019, startMonth: 1,
     monthlyAmount: 50000,
     description: "2019年1月・FANG+・月5万円",
-    tag: "高リスク",
+    tag: "10銘柄集中",
   },
   {
     id: "india-5yr",
