@@ -62,3 +62,16 @@
 ## 最終判定
 
 **NO-GO。** ローカルrelease candidateでは修正可能なP0/P1を解消したが、本番は `54d01e7` のままでG品質数値共有と今回訂正した表現を含む。新規commitの公開と公開後実地確認までは再申請しない。Googleの承認は保証しない。
+
+## 2026-10-11 G品質境界release candidate
+
+- 実装commit: `df58f47` (`fix: enforce verified simulation boundaries`)
+- 共通境界: `simulate()`、高度シミュレーション、月次リターン取得はA品質だけを受理。
+- SCHD直接URL: HTTP 200、`noindex, follow`、canonicalなし。商品属性・品質・出典だけを表示。
+- 比較/選択/図鑑: SCHD数値・グラフ・シミュレーションリンクを出さず、商品属性へ誘導。
+- 共有/OGP: G品質・不正商品・不正年月・不正金額を既定値へ置換せず拒否。拒否共有ページもnoindex/canonicalなし。
+- A品質検算: 9系列、欠損0、look-ahead 0、fallback 0。終端は2026-08。
+- QA: lint、TypeScript、Build 219 pages、通常/ライブQA 128 pages・100/100・ERROR 0・WARNING 0、全関連audit PASS。
+- 実画面: PC/375/390pxで横溢れなし。比較SVGはPC 480×288、375px 339×240、390px 354×240。切替ボタン44px。
+
+公開後のSource SHA、本番直接URL、共有、OGP再確認を終えるまでは最終GOとしない。

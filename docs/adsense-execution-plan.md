@@ -22,3 +22,7 @@
 - 金融数値は `lib/funds.ts`、制度数値は `lib/nisa.ts` を正とする。
 - URL統合、redirect、canonical、index/noindex変更は承認候補として止める。
 - 新規commitはローカル保存までとし、既存 `54d01e7` 以外は公開しない。
+
+## 2026-10-11 追加スプリント
+
+ユーザー承認に基づき、G品質境界を画面別ではなく計算・データ取得の共通層へ実装する。`df58f47` を公開候補とし、通常push、自動デプロイ、本番直接URL・共有・OGP再検証まで行う。AdSense再申請、Search Console書き込み、X投稿は対象外とする。
