@@ -175,6 +175,22 @@ export default async function FromYearPage({ params }: Props) {
   }).sort((a, b) => b.result.returnRate - a.result.returnRate);
 
   const winner = ranked[0] ?? null;
+  const pathAnalyses = ranked.map(({ fund, result }) => {
+    const belowPrincipal = result.dataPoints.filter((point) => point.value < point.principal);
+    const worstPoint = result.dataPoints.reduce((worst, point) => {
+      const gapRate = point.principal > 0 ? point.profit / point.principal : 0;
+      const worstRate = worst.principal > 0 ? worst.profit / worst.principal : 0;
+      return gapRate < worstRate ? point : worst;
+    }, result.dataPoints[0]);
+    return {
+      fund,
+      result,
+      belowPrincipalMonths: belowPrincipal.length,
+      firstBelowPrincipal: belowPrincipal[0]?.date ?? null,
+      lastBelowPrincipal: belowPrincipal.at(-1)?.date ?? null,
+      worstPoint,
+    };
+  });
   const yearContext = YEAR_CONTEXT[yearNum] ?? "";
   const faqs = [...(YEAR_FAQS[yearNum] ?? [])];
   if (yearNum === 2020 && winner) {
@@ -327,6 +343,44 @@ export default async function FromYearPage({ params }: Props) {
               <p className="text-sm text-zinc-400">この期間を検証済みデータで計算できる銘柄はありません。</p>
             </section>
           )}
+
+          <section className="space-y-3" data-start-year-analysis={yearNum}>
+            <div className="space-y-1">
+              <h2 className="text-base font-bold text-white">{year}年開始で、途中の元本割れは何か月あったか</h2>
+              <p className="text-xs leading-relaxed text-zinc-500">
+                月初に3万円を追加した直後の月末評価額を、同月までの拠出元本と比較しています。日中の最大下落率や将来の回復期間ではありません。
+              </p>
+            </div>
+            <div className="overflow-x-auto rounded-xl border border-white/[0.08]">
+              <table className="w-full min-w-[460px] text-left text-xs">
+                <thead className="bg-white/[0.04] text-zinc-500">
+                  <tr>
+                    <th className="px-3 py-2 font-medium">商品</th>
+                    <th className="px-3 py-2 font-medium">元本割れ月数</th>
+                    <th className="px-3 py-2 font-medium">確認された期間</th>
+                    <th className="px-3 py-2 font-medium">月末の最大乖離</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/[0.06]">
+                  {pathAnalyses.map(({ fund, belowPrincipalMonths, firstBelowPrincipal, lastBelowPrincipal, worstPoint }) => (
+                    <tr key={fund.id}>
+                      <td className="px-3 py-2.5 font-bold" style={{ color: fund.color }}>{fund.shortName}</td>
+                      <td className="px-3 py-2.5 text-zinc-300">{belowPrincipalMonths}か月</td>
+                      <td className="px-3 py-2.5 text-zinc-400">
+                        {firstBelowPrincipal ? `${firstBelowPrincipal}〜${lastBelowPrincipal}` : "該当なし"}
+                      </td>
+                      <td className="px-3 py-2.5 text-zinc-400">
+                        {worstPoint ? `${worstPoint.date} ${worstPoint.profit >= 0 ? "+" : ""}${formatCurrency(worstPoint.profit)}` : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[11px] leading-relaxed text-zinc-500">
+              開始年が違えば積立回数と元本も変わるため、別の開始年ページとの評価額だけの比較はできません。この表は各開始年の中で、同じ月額・終了月の商品差を確認するためのものです。
+            </p>
+          </section>
 
           {/* ── 全銘柄ランキング ─────────────────────────────────── */}
           <section>

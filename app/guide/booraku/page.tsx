@@ -126,6 +126,23 @@ export default function BoorakuGuideIndexPage() {
             </p>
           </section>
 
+          <section className="space-y-3" aria-labelledby="drawdown-route-heading">
+            <h2 id="drawdown-route-heading" className="text-sm font-bold text-white">確認したい数値・判断から選ぶ</h2>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {[
+                ["指数の過去下落率", "/guide/sp500-booraku-taisho", "米ドル建て配当込み指数のイベント期間を確認"],
+                ["積立を止めるか迷う", "/guide/booraku-tsumitate-yameru", "停止・保有・売却を分けて確認"],
+                ["NISA口座で下落した", "/guide/shinnisa-booraku-dousuru", "非課税枠と損失の制度上の扱いを確認"],
+                ["積立経過を見たい", "/guide/lehman-kyuu-tsumitate-kensho", "指数下落率と積立評価額を別々に確認"],
+              ].map(([label, href, detail]) => (
+                <Link key={href} href={href} className="rounded-xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-colors">
+                  <p className="text-sm font-bold text-white">{label}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-zinc-500">{detail}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
           <div className="space-y-3">
             {boorakuGuides.map(({ order, slug, page }) => (
               <Link

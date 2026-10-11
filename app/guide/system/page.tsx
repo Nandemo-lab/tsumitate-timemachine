@@ -126,6 +126,23 @@ export default function SystemGuideIndexPage() {
             </p>
           </section>
 
+          <section className="space-y-3" aria-labelledby="system-route-heading">
+            <h2 id="system-route-heading" className="text-sm font-bold text-white">手続き・枠の疑問から選ぶ</h2>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {[
+                ["2つの投資枠を比べる", "/guide/nisa-tsumitate-vs-seicho", "対象商品と年間投資枠の違いを確認"],
+                ["毎月の積立額を決める", "/guide/nisa-tsumitate-ikura", "家計と年間枠を分けて確認"],
+                ["旧NISA資産がある", "/guide/kyuu-nisa-kara-ikou", "非課税期間と新NISAとの関係を確認"],
+                ["金融機関を変更したい", "/guide/nisa-kinyuukikan-henkou", "変更時期・書類・保有商品の扱いを確認"],
+              ].map(([label, href, detail]) => (
+                <Link key={href} href={href} className="rounded-xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-colors">
+                  <p className="text-sm font-bold text-white">{label}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-zinc-500">{detail}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
           <div className="space-y-3">
             {systemGuides.map(({ order, slug, page }) => (
               <Link

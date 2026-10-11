@@ -26,6 +26,21 @@ interface Props {
 export default function RankingView({ page }: Props) {
   const isRoot = page.slug === "";
   const breadcrumbSlug = isRoot ? null : page.slug;
+  const preparedEntries = page.funds.map((entry) => {
+    const verified = getReturnSeriesDefinition(entry.fundId).quality === "A";
+    const result = verified ? simulate({
+      fundId: entry.fundId,
+      startYear: page.simYear,
+      startMonth: page.simMonth,
+      monthlyAmount: page.simAmount,
+    }) : null;
+    return { entry, verified, result };
+  });
+  const rankedEntries = preparedEntries
+    .filter((item) => item.verified && item.result)
+    .map((item) => ({ ...item, result: item.result! }))
+    .sort((a, b) => (b.result?.finalValue ?? 0) - (a.result?.finalValue ?? 0));
+  const referenceEntries = preparedEntries.filter((item) => !item.verified || !item.result);
 
   // fangplus には /fund/fangplus がある
   const FUND_SLUG_MAP: Record<string, string> = {
@@ -98,9 +113,12 @@ export default function RankingView({ page }: Props) {
           </section>
 
           <section className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.05] p-4 space-y-2">
-            <h2 className="text-xs font-bold text-indigo-200">順位を見る前に：対象と除外条件</h2>
+            <h2 className="text-xs font-bold text-indigo-200">数値順位の計算方法</h2>
             <p className="text-xs leading-relaxed text-zinc-400">
-              実績値は{page.simYear}年{page.simMonth}月開始・月{formatCurrency(page.simAmount)}の同一条件です。A品質の検証済み月次系列だけを数値比較し、商品設定前や欠損月を別系列で補いません。G品質は商品属性の参考表示に限り、実績順位から除外します。
+              {page.simYear}年{page.simMonth}月から2026年8月まで、月初に{formatCurrency(page.simAmount)}を積み立てた期間末評価額の高い順です。候補商品のうち、期間全体を計算できるA品質の検証済み月次系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。
+            </p>
+            <p className="text-[11px] leading-relaxed text-zinc-500">
+              候補商品はこのページの目的に沿って絞っています。順位は将来予測、推奨順位、価格変動の小ささを表すものではありません。G品質は順位外の参考情報として分けます。
             </p>
             <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-indigo-300 hover:text-indigo-200">
               対象系列と検証方法を見る<ArrowRight className="h-3 w-3" />
@@ -136,16 +154,9 @@ export default function RankingView({ page }: Props) {
             >
               条件別の比較結果
             </h2>
-            {page.funds.map((entry) => {
+            {rankedEntries.map(({ entry, result }, index) => {
               const fund = FUNDS[entry.fundId];
               const enc = fund.encyclopedia;
-              const verified = getReturnSeriesDefinition(entry.fundId).quality === "A";
-              const result = verified ? simulate({
-                fundId: entry.fundId,
-                startYear: page.simYear,
-                startMonth: page.simMonth,
-                monthlyAmount: page.simAmount,
-              }) : null;
               const isProfit = (result?.profit ?? 0) >= 0;
               const fundPageSlug = entry.fundSlug ?? FUND_SLUG_MAP[entry.fundId];
 
@@ -158,7 +169,7 @@ export default function RankingView({ page }: Props) {
                   {/* ランク＋銘柄名ヘッダー */}
                   <div className="px-4 pt-4 pb-3 space-y-2">
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl leading-none">{entry.badge}</span>
+                      <span className="text-sm font-black text-amber-300">{index + 1}位</span>
                       <div className="flex-1 min-w-0">
                         <span
                           className="text-base font-black text-white"
@@ -171,7 +182,7 @@ export default function RankingView({ page }: Props) {
                         className="text-[10px] font-black px-2 py-0.5 rounded flex-shrink-0"
                         style={{ background: `${fund.color}25`, color: fund.color }}
                       >
-                        {entry.metricValue}
+                        A品質・実績順位
                       </span>
                     </div>
                     <p className="text-xs text-zinc-400 leading-snug">{entry.highlight}</p>
@@ -202,9 +213,7 @@ export default function RankingView({ page }: Props) {
                         評価額 {formatCurrency(result.finalValue)}
                       </span>
                     </div>
-                  </div> : <div className="mx-4 mb-3 rounded-xl border border-amber-500/20 bg-amber-500/[0.06] px-3 py-2.5 text-[10px] text-amber-300">
-                    G：参考データ・原典未検証のため、実績値による順位比較には使用していません。
-                  </div>}
+                  </div> : null}
 
                   {/* メリット・注意点 */}
                   <div className="px-4 pb-3 space-y-2">
@@ -265,6 +274,31 @@ export default function RankingView({ page }: Props) {
               );
             })}
           </section>
+
+          {referenceEntries.length > 0 && (
+            <section className="space-y-3">
+              <div>
+                <h2 className="text-base font-bold text-white">順位外の参考商品</h2>
+                <p className="mt-1 text-xs leading-relaxed text-zinc-500">原典未検証のG品質系列、または対象期間全体を計算できない商品です。商品属性は確認できますが、上の数値順位には混ぜません。</p>
+              </div>
+              {referenceEntries.map(({ entry }) => {
+                const fund = FUNDS[entry.fundId];
+                const fundPageSlug = entry.fundSlug ?? FUND_SLUG_MAP[entry.fundId];
+                return (
+                  <div key={entry.fundId} className="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</p>
+                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{entry.highlight}</p>
+                      </div>
+                      <span className="shrink-0 rounded bg-amber-500/10 px-2 py-1 text-[10px] font-bold text-amber-300">順位外</span>
+                    </div>
+                    {fundPageSlug && <Link href={`/fund/${fundPageSlug}`} className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-amber-200">商品属性を確認<ArrowRight className="h-3 w-3" /></Link>}
+                  </div>
+                );
+              })}
+            </section>
+          )}
 
           {/* ── 関連比較ページ ───────────────────────────────── */}
           {page.relatedCompareSlugs.length > 0 && (

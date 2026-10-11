@@ -129,6 +129,23 @@ export default function TaxGuideIndexPage() {
             </p>
           </section>
 
+          <section className="space-y-3" aria-labelledby="tax-route-heading">
+            <h2 id="tax-route-heading" className="text-sm font-bold text-white">疑問から読む記事を選ぶ</h2>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {[
+                ["NISAと課税口座の違い", "/guide/nisa-vs-tokutei-tax", "非課税と損益通算の扱いを確認"],
+                ["分配金を受け取った", "/guide/bunpaikin-to-zeikin", "普通分配金・特別分配金と税金を確認"],
+                ["損失と利益がある", "/guide/songai-tsuusan-kurikoshi-koujo", "損益通算と繰越控除の条件を確認"],
+                ["確定申告が必要か迷う", "/guide/toushi-kakuteishinkoku-necessary-cases", "口座・所得・取引別の確認順序を見る"],
+              ].map(([label, href, detail]) => (
+                <Link key={href} href={href} className="rounded-xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-colors">
+                  <p className="text-sm font-bold text-white">{label}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-zinc-500">{detail}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
           <div className="space-y-3">
             {taxGuides.map(({ order, slug, page }) => (
               <Link
