@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId, EventType, InvestmentEvent, AdvancedSimulationResult } from "@/types";
 import { FUNDS, FUND_LIST } from "@/lib/funds";
+import { isVerifiedReturnSeries } from "@/lib/return-series";
 import { simulateAdvanced, formatCurrency, START_YEAR_OPTIONS, MONTH_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
 import { Plus, Trash2, PlayCircle, BarChart3 } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
@@ -110,7 +111,7 @@ function EventRow({
               onChange={(e) => onChange({ ...event, fundId: e.target.value as FundId })}
               className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
             >
-              {FUND_LIST.map((f) => (
+              {FUND_LIST.filter((f) => isVerifiedReturnSeries(f.id)).map((f) => (
                 <option key={f.id} value={f.id} className="bg-zinc-900">{f.encyclopedia.nickname}（{f.shortName}）</option>
               ))}
             </select>

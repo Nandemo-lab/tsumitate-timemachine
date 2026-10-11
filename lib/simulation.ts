@@ -3,7 +3,7 @@ import {
   RankingItem, FundId, InvestmentEvent, AdvancedSimulationResult, AdvancedDataPoint
 } from "@/types";
 import { FUNDS, FUND_LIST } from "./funds";
-import { VERIFIED_FUND_IDS, getAvailableEndMonth, getCommonStartMonth, getMonthlyJpyReturn } from "./return-series";
+import { VERIFIED_FUND_IDS, UnverifiedReturnSeriesError, getAvailableEndMonth, getCommonStartMonth, getMonthlyJpyReturn, isVerifiedReturnSeries } from "./return-series";
 
 export const CURRENT_YEAR = 2026;
 export const CURRENT_MONTH = 8;
@@ -19,6 +19,7 @@ function endParts(fundIds: FundId[]): [number, number] {
 
 export function simulate(params: SimulationParams): SimulationResult {
   const { fundId, startYear, startMonth, monthlyAmount } = params;
+  if (!isVerifiedReturnSeries(fundId)) throw new UnverifiedReturnSeriesError(fundId);
   const fund = FUNDS[fundId];
   const dataPoints: MonthlyDataPoint[] = [];
 
@@ -78,6 +79,8 @@ export function simulateAdvanced(events: InvestmentEvent[]): AdvancedSimulationR
   const sorted = [...events].sort((a, b) =>
     a.year !== b.year ? a.year - b.year : a.month - b.month
   );
+  const unverifiedFund = sorted.find((event) => event.fundId && !isVerifiedReturnSeries(event.fundId))?.fundId;
+  if (unverifiedFund) throw new UnverifiedReturnSeriesError(unverifiedFund);
 
   // Per-fund state: { value, monthlyAmount }
   const fundStates = new Map<FundId, { value: number; monthlyAmount: number }>();

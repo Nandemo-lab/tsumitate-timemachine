@@ -7,6 +7,8 @@ import { FundId, FundCategory } from "@/types";
 import { FUNDS, FUND_CATEGORIES, CATEGORY_ORDER, getFundsByCategory } from "@/lib/funds";
 import { simulate, formatCurrency, START_YEAR_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
 import { ChevronRight, BookOpen, TrendingUp, AlertTriangle, CheckCircle, ChevronDown } from "lucide-react";
+import { isVerifiedReturnSeries } from "@/lib/return-series";
+import Link from "next/link";
 
 function InlineSimulator({
   fundId,
@@ -18,6 +20,20 @@ function InlineSimulator({
   const fund = FUNDS[fundId];
   const [year, setYear] = useState(2020);
   const [amount, setAmount] = useState(30000);
+
+  if (!isVerifiedReturnSeries(fundId)) {
+    return (
+      <div className="space-y-3 rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4">
+        <p className="text-xs font-bold text-amber-200">G品質・数値シミュレーション対象外</p>
+        <p className="text-xs leading-relaxed text-zinc-400">
+          月次原典、通貨、分配金、費用、為替処理が未検証のため、評価額・利益・リターンは表示しません。
+        </p>
+        <Link href="/fund/schd" className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-white/10 px-3 text-xs font-bold text-zinc-200">
+          商品属性を確認する
+        </Link>
+      </div>
+    );
+  }
 
   const result = simulate({ fundId, startYear: year, startMonth: 1, monthlyAmount: amount });
   const isProfit = result.profit >= 0;

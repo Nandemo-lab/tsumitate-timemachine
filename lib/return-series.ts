@@ -1,5 +1,4 @@
 import { FundId, ReturnCalculationMode, ReturnSeriesQuality } from "@/types";
-import { FUNDS } from "@/lib/funds";
 import vt from "@/data/verified/vt-monthly.json";
 import vti from "@/data/verified/vti-monthly.json";
 import vym from "@/data/verified/vym-monthly.json";
@@ -146,6 +145,14 @@ export class UnsupportedReturnPeriodError extends Error {
   }
 }
 
+export class UnverifiedReturnSeriesError extends Error {
+  constructor(public readonly fundId: FundId) {
+    const definition = RETURN_SERIES_REGISTRY[fundId];
+    super(`${definition.formalProductName}は${definition.quality}品質のため、積立結果を計算・公開できません`);
+    this.name = "UnverifiedReturnSeriesError";
+  }
+}
+
 export function monthKey(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, "0")}`;
 }
@@ -154,12 +161,16 @@ export function getReturnSeriesDefinition(fundId: FundId): ReturnSeriesDefinitio
   return RETURN_SERIES_REGISTRY[fundId];
 }
 
+export function isVerifiedReturnSeries(fundId: FundId): boolean {
+  return RETURN_SERIES_REGISTRY[fundId].quality === "A";
+}
+
 export function isReturnMonthAvailable(fundId: FundId, year: number, month: number): boolean {
   const key = monthKey(year, month);
   const definition = RETURN_SERIES_REGISTRY[fundId];
+  if (definition.quality !== "A") return false;
   if (key < definition.startMonth || key > definition.endMonth) return false;
-  if (definition.quality === "A") return monthlyMaps[fundId]?.has(key) === true;
-  return FUNDS[fundId].annualReturns[year] !== undefined;
+  return monthlyMaps[fundId]?.has(key) === true;
 }
 
 export function assertReturnMonthAvailable(fundId: FundId, year: number, month: number): void {
@@ -167,12 +178,9 @@ export function assertReturnMonthAvailable(fundId: FundId, year: number, month: 
 }
 
 export function getMonthlyJpyReturn(fundId: FundId, year: number, month: number): number {
+  if (!isVerifiedReturnSeries(fundId)) throw new UnverifiedReturnSeriesError(fundId);
   assertReturnMonthAvailable(fundId, year, month);
-  const definition = RETURN_SERIES_REGISTRY[fundId];
-  if (definition.quality === "A") return monthlyMaps[fundId]!.get(monthKey(year, month))!;
-  const annual = FUNDS[fundId].annualReturns[year];
-  if (annual === undefined) throw new UnsupportedReturnPeriodError(fundId, monthKey(year, month));
-  return Math.pow(1 + annual, 1 / 12) - 1;
+  return monthlyMaps[fundId]!.get(monthKey(year, month))!;
 }
 
 export function getAvailableStartMonth(fundId: FundId): string {

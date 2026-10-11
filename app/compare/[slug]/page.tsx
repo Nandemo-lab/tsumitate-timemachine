@@ -12,7 +12,7 @@ import { getArticlesRelatedToFunds } from "@/lib/article-pages";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import ComparePageClient from "./ComparePageClient";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
-import { getCommonEndMonth, getReturnSeriesDefinition } from "@/lib/return-series";
+import { getCommonEndMonth, getReturnSeriesDefinition, isVerifiedReturnSeries } from "@/lib/return-series";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -85,7 +85,7 @@ export default async function ComparePage({ params }: Props) {
       return relatedFunds.includes(page.fundAId) && relatedFunds.includes(page.fundBId);
     });
 
-  const resultA = simulate({
+  const resultA = hasReferenceSeries ? null : simulate({
     fundId: page.fundAId,
     startYear: page.simYear,
     startMonth: page.simMonth,
@@ -93,7 +93,7 @@ export default async function ComparePage({ params }: Props) {
     endYear: commonEndYear,
     endMonth: commonEndMonth,
   });
-  const resultB = simulate({
+  const resultB = hasReferenceSeries ? null : simulate({
     fundId: page.fundBId,
     startYear: page.simYear,
     startMonth: page.simMonth,
@@ -187,7 +187,7 @@ export default async function ComparePage({ params }: Props) {
                 G品質系列を含むため、評価額・利益・推移グラフは表示しません。投資対象、銘柄選定、分散範囲、費用、分配方法を確認できます。月次原典、通貨、配当、費用、為替の扱いを検証できるまでは、A品質商品との実績優劣を数値で示しません。
               </p>
             </section>
-          ) : <ComparePageClient resultA={resultA} resultB={resultB} />}
+          ) : resultA && resultB && <ComparePageClient resultA={resultA} resultB={resultB} />}
 
           {/* ── 比較表 ─────────────────────────────────────────── */}
           <section>
@@ -227,7 +227,7 @@ export default async function ComparePage({ params }: Props) {
             counterpartLabel={relatedArticle ? "商品構造と比較結果の読み方を見る" : undefined}
           />
 
-          {!hasReferenceSeries && page.mixExamples && page.mixExamples.length > 0 && (
+          {!hasReferenceSeries && resultA && resultB && page.mixExamples && page.mixExamples.length > 0 && (
             <section className="space-y-4">
               <div className="space-y-2">
                 <h2
@@ -297,19 +297,19 @@ export default async function ComparePage({ params }: Props) {
             </p>
             <div className="flex flex-col gap-2">
               <Link
-                href={`/simulate/${page.fundAId}/2020`}
+                href={isVerifiedReturnSeries(page.fundAId) ? `/simulate/${page.fundAId}/2020` : `/fund/${getFundPageSlug(page.fundAId) ?? "schd"}`}
                 className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white transition-opacity hover:opacity-90"
                 style={{ background: fundA.color }}
               >
-                {fundA.shortName}でシミュレーション
+                {isVerifiedReturnSeries(page.fundAId) ? `${fundA.shortName}でシミュレーション` : `${fundA.shortName}の商品属性を見る`}
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href={`/simulate/${page.fundBId}/2020`}
+                href={isVerifiedReturnSeries(page.fundBId) ? `/simulate/${page.fundBId}/2020` : `/fund/${getFundPageSlug(page.fundBId) ?? "schd"}`}
                 className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white transition-opacity hover:opacity-90"
                 style={{ background: fundB.color }}
               >
-                {fundB.shortName}でシミュレーション
+                {isVerifiedReturnSeries(page.fundBId) ? `${fundB.shortName}でシミュレーション` : `${fundB.shortName}の商品属性を見る`}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -414,7 +414,7 @@ export default async function ComparePage({ params }: Props) {
           {/* ── 他の人気シミュレーション ──────────────────────────── */}
           {(() => {
             const involved = new Set([page.fundAId, page.fundBId]);
-            const simLinks = YEAR_PAGES.filter((yp) => involved.has(yp.fundId)).slice(0, 4);
+            const simLinks = YEAR_PAGES.filter((yp) => involved.has(yp.fundId) && isVerifiedReturnSeries(yp.fundId)).slice(0, 4);
             if (simLinks.length === 0) return null;
             return (
               <section>

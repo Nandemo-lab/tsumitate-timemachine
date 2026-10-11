@@ -10,6 +10,7 @@
     "qa": "node scripts/qa-check.mjs",
     "qa:zero-page-audit": "node scripts/qa-zero-page-audit.mjs",
     "og-comparison-audit": "node scripts/og-comparison-audit.mjs",
+    "g-quality-boundary-audit": "node scripts/g-quality-boundary-audit.mjs",
     "content-trust-audit": "node scripts/content-trust-audit.mjs",
     "structure-consolidation-audit": "node scripts/structure-consolidation-audit.mjs",
     "content-value-audit": "node scripts/cd-value-sprint-audit.mjs",

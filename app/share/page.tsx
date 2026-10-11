@@ -22,7 +22,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       title: "積立タイムマシン｜もしあの時から積み立てていたら？",
       openGraph: { images: [{ url: `${BASE_URL}/api/og`, width: 1200, height: 630 }] },
       twitter: { card: "summary_large_image", images: [`${BASE_URL}/api/og`] },
-      alternates: { canonical: BASE_URL },
+      robots: { index: false, follow: true },
+      alternates: { canonical: null },
     };
   }
 

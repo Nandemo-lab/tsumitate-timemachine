@@ -8,7 +8,7 @@ import SimulatePageClient from "./SimulatePageClient";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { isProgrammaticIndexException } from "@/lib/index-policy";
 import { getReturnDataSource } from "@/lib/return-data-sources";
-import { getAvailableStartMonth, isReturnMonthAvailable } from "@/lib/return-series";
+import { getAvailableStartMonth, isReturnMonthAvailable, isVerifiedReturnSeries } from "@/lib/return-series";
 
 interface Props {
   params: Promise<{ fund: string; year: string }>;
@@ -20,7 +20,7 @@ function isValidFundId(id: string): id is FundId {
 }
 
 export async function generateStaticParams() {
-  const funds = FUND_LIST.map((f) => f.id);
+  const funds = FUND_LIST.filter((f) => isVerifiedReturnSeries(f.id)).map((f) => f.id);
   const years = ["2015", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
   const paths = [];
   for (const fund of funds) {
@@ -41,6 +41,14 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const pathname = `/simulate/${fund}/${year}`;
   const keepIndexed = isProgrammaticIndexException(pathname);
   const monthlyAmount = parseInt(amount ?? "30000");
+  if (!isVerifiedReturnSeries(fund)) {
+    return {
+      title: `${fundData.shortName}のデータ品質と商品情報`,
+      description: `${fundData.shortName}は参考系列（G品質）のため、未検証の評価額・利益・リターンは表示しません。確認済みの商品属性とデータ品質をご案内します。`,
+      robots: { index: false, follow: true },
+      alternates: { canonical: null },
+    };
+  }
   if (!isReturnMonthAvailable(fund, startYear, 1)) {
     const available = getAvailableStartMonth(fund);
     return {
@@ -94,6 +102,30 @@ export default async function SimulatePage({ params, searchParams }: Props) {
 
   const monthlyAmount = parseInt(amount ?? "30000");
   const fundData = FUNDS[fund];
+  if (!isVerifiedReturnSeries(fund)) {
+    return (
+      <main className="min-h-dvh bg-zinc-950 text-zinc-50">
+        <div className="mx-auto max-w-2xl px-4 py-16">
+          <nav className="mb-8 text-xs text-zinc-400"><Link href="/">トップ</Link> / {fundData.shortName}</nav>
+          <div className="space-y-4 rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-6">
+            <p className="text-xs font-bold text-amber-200">G品質・参考系列</p>
+            <h1 className="text-2xl font-bold">未検証の積立結果は表示していません</h1>
+            <p className="text-sm leading-relaxed text-zinc-300">
+              {fundData.encyclopedia.formalName}の商品属性は確認できますが、当サイトの月次リターン系列は原典未検証です。評価額・利益・リターン・推移グラフは、月次原典、通貨、分配金、費用、為替処理を検証できるまで公開しません。
+            </p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link href="/fund/schd" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-amber-400 px-4 py-3 text-sm font-bold text-zinc-950">
+                商品属性を確認する
+              </Link>
+              <Link href="/about/data-sources" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-200">
+                データ品質と出典を見る
+              </Link>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
   if (!isReturnMonthAvailable(fund, startYear, 1)) {
     const available = getAvailableStartMonth(fund);
     const firstYear = Number(available.slice(0, 4));

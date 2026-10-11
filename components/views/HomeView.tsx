@@ -11,7 +11,7 @@ import { COMPARE_PAGES } from "@/lib/compare-pages";
 import { GUIDE_SERIES } from "@/lib/guide-pages";
 import { MainTab } from "@/components/layout/BottomNav";
 import SiteFooter from "@/components/layout/SiteFooter";
-import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
+import { RETURN_SERIES_REGISTRY, VERIFIED_FUND_IDS } from "@/lib/return-series";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
@@ -33,7 +33,7 @@ const getJstPickIndex = () => {
   const day = Number(
     new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Tokyo", day: "numeric" }).format(new Date())
   );
-  return day % FUND_LIST.length;
+  return day % VERIFIED_FUND_IDS.length;
 };
 
 export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props) {
@@ -56,7 +56,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
 
   // 日替わりの検証例
   const todayPick = useMemo(() => {
-    const fund = FUND_LIST[todayPickIndex];
+    const fund = FUNDS[VERIFIED_FUND_IDS[todayPickIndex]];
     const result = simulate({ fundId: fund.id, startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
     return { fund, result };
   }, [todayPickIndex]);

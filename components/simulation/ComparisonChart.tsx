@@ -128,7 +128,7 @@ export default function ComparisonChart({ planA, planB }: Props) {
           <button
             key={m}
             onClick={() => setMode(m)}
-            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
+            className={`min-h-11 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-200 ${
               mode === m ? "bg-white/15 text-white" : "text-zinc-400 hover:text-zinc-300"
             }`}
           >

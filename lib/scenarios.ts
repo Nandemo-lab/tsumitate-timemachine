@@ -1,5 +1,6 @@
 import { FundId } from "@/types";
 import { simulate, formatCurrency } from "./simulation";
+import { VERIFIED_FUND_IDS } from "./return-series";
 
 export interface QuickScenario {
   id: string;
@@ -91,7 +92,7 @@ export function getScenarioResults() {
 
 // SEO用: 全組み合わせのスタティックパスを生成
 export function getStaticSimPaths() {
-  const fundIds: FundId[] = ["sp500", "orcan", "nasdaq100", "fangplus", "vti", "vym", "schd", "india"];
+  const fundIds: FundId[] = [...VERIFIED_FUND_IDS];
   const years = [2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
   const amounts = [30000, 50000, 100000];
 

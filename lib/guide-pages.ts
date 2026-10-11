@@ -172,7 +172,7 @@ export const GUIDE_PAGES: GuidePage[] = [
         ],
       },
       {
-        h2: "オルカン・S&P500・NASDAQ100の実績比較（2020〜2025年）",
+        h2: `オルカン・S&P500・NASDAQ100の実績比較（2020年〜${CURRENT_YEAR}年${CURRENT_MONTH}月）`,
         body: `積立タイムマシンのシミュレーションで2020年1月から月3万円を積み立てた場合の利益額を比較すると、NASDAQ100 > S&P500 > オルカンの順です。一方、2022年の円ベース・分配金再投資込みの暦年リターンはNASDAQ100が${formatAnnualReturn("nasdaq100", 2022)}でした。これは年中の最大下落率ではありません。値動きの大きさも確認した上で商品を比較する必要があります。[3銘柄の直接比較はこちら](/compare/orukan-vs-sp500)。`,
         simCallout: 0,
       },

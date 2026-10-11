@@ -5,6 +5,7 @@ import { FundId, FundCategory } from "@/types";
 import { FUNDS, FUND_CATEGORIES, CATEGORY_ORDER, getFundsByCategory } from "@/lib/funds";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { isVerifiedReturnSeries } from "@/lib/return-series";
 
 interface Props {
   value: FundId;
@@ -17,7 +18,7 @@ export default function FundSelector({ value, onChange, label }: Props) {
   const currentFund = FUNDS[value];
   const [activeCategory, setActiveCategory] = useState<FundCategory>(currentFund.category);
 
-  const fundsInCategory = getFundsByCategory(activeCategory);
+  const fundsInCategory = getFundsByCategory(activeCategory).filter((fund) => isVerifiedReturnSeries(fund.id));
 
   return (
     <div className="space-y-3">
@@ -34,7 +35,7 @@ export default function FundSelector({ value, onChange, label }: Props) {
         {CATEGORY_ORDER.map((catId) => {
           const cat = FUND_CATEGORIES[catId];
           const isActive = activeCategory === catId;
-          const hasSelected = getFundsByCategory(catId).some((f) => f.id === value);
+          const hasSelected = getFundsByCategory(catId).some((f) => f.id === value && isVerifiedReturnSeries(f.id));
           return (
             <button
               key={catId}
