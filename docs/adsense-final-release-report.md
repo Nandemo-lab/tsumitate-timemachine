@@ -75,3 +75,17 @@
 - 実画面: PC/375/390pxで横溢れなし。比較SVGはPC 480×288、375px 339×240、390px 354×240。切替ボタン44px。
 
 公開後のSource SHA、本番直接URL、共有、OGP再確認を終えるまでは最終GOとしない。
+
+## 2026-10-11 独立レッドチームrelease candidate
+
+- A品質9系列のraw snapshot SHA-256とmanifestが一致し、rawから再構築した全月ledgerとの差分は0。欠損・重複・未来参照・設定前補完も0。
+- SCHDはG品質のまま、共通計算層・直接URL・共有・比較・OGP・ランキングで数値公開を拒否。
+- 不正な商品、部分一致の整数、負数、0、100万円超の月額、範囲外年月を既定値へ置換せず停止。
+- Next.js 16.3.8、sharp 0.35.5へ更新し、production dependenciesの既知脆弱性は0。
+- 問い合わせフォームとGA4に合わせてPrivacyを訂正。本番の管理画面を404化し、拡大禁止を解除、skip linkと基本security headersを追加。
+- VTI正式名、SCHDデータ境界、記事と月額ページの期間、助言的・人気訴求を修正。
+- 全96 URLの現行ローカルproduction台帳は `docs/audits/red-team-96-url-ledger-2026-10-11.csv`。KEEP 84、ROLE SEPARATION 11、IMPROVE 1。
+- lint/TypeScript/build（Next 16.3.8、218 static pages）/QA/live QA（127 pages、100/100、ERROR 0、WARNING 0）/全関連auditが合格。
+- 実画面は375/390/1280pxで横溢れ0、比較SVGは339×240・354×240・480×288、切替ボタン60×44、console error/warning 0。
+
+このrelease candidateをcommit・pushし、CI/Vercelと本番出力を再検証するまでは再申請判定を確定しない。

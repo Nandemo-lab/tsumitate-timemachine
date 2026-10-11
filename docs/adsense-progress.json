@@ -1,29 +1,22 @@
 {
-  "project": "AdSense全問題一括修正・自律完走スプリント",
+  "project": "AdSense再申請前・独立レッドチーム完全監査＆一括修復",
   "phase": 10,
-  "status": "release_candidate",
-  "progressPercent": 95,
+  "status": "local_release_candidate",
+  "progressPercent": 88,
   "completedTasks": [
-    "G品質を共通計算層で拒否し、年次リターンから月次値を生成するfallbackを廃止",
-    "SCHD直接シミュレーションを200/noindex/follow/canonicalなしの品質説明へ変更",
-    "比較・選択UI・高度シミュレーション・銘柄図鑑・日替わり導線からG品質の数値計算を除外",
-    "共有・OGPでG品質と不正条件を拒否し、拒否ページをnoindex/canonicalなしへ統一",
-    "A品質9系列の開始月・終端月・積立回数・元本・評価額を検証台帳で独立確認",
-    "比較チャート切替ボタンを44pxへ拡大し、NISA比較期間見出しをSSOT終端へ追随",
-    "専用G品質境界auditを追加",
-    "lint/TypeScript/build/QA/live QA/関連audit/PC・375px・390px確認を完了"
+    "本番起点の反証監査と8領域の視点別レビュー",
+    "A品質9系列のraw snapshot SHA-256・全月・独立積立計算の照合",
+    "G品質を共通計算層・直接URL・比較・共有・OGP・ランキングで拒否",
+    "直接URL・共有・OGPの整数・月額上限・期間入力の厳格化",
+    "Next.jsとsharpの本番到達可能な脆弱性を修正版へ更新",
+    "プライバシー説明・管理画面公開・セキュリティヘッダー・拡大禁止を修正",
+    "古い2025年6月表示、助言的表現、根拠のない人気表示を中立化",
+    "全96 index URLのローカルproduction HTML台帳を再生成",
+    "lint・TypeScript・build・QA・live QA・全関連audit・375/390/PC実測を完了"
   ],
-  "pendingTasks": [
-    "commit df58f47をorigin/mainへ通常push",
-    "GitHub ActionsとVercel Productionの成功・Source SHA一致を確認",
-    "本番96URLとSCHD直接URL・共有・OGPを再検証"
-  ],
+  "pendingTasks": ["論理単位のcommitと通常push", "GitHub ActionsとVercel ProductionのSource SHA一致確認", "本番96 URL・直接URL・共有・OGPの最終反証監査"],
   "blockers": [],
-  "commitSHA": "df58f47",
-  "verifiedAt": "2026-10-11T22:30:00+09:00",
-  "evidencePaths": [
-    "scripts/g-quality-boundary-audit.mjs",
-    "docs/adsense-blockers.md",
-    "docs/adsense-final-release-report.md"
-  ]
+  "commitSHA": null,
+  "verifiedAt": "2026-10-11T23:10:00+09:00",
+  "evidencePaths": ["docs/audits/red-team-96-url-ledger-2026-10-11.csv", "docs/adsense-blockers.md", "docs/adsense-final-release-report.md", "scripts/g-quality-boundary-audit.mjs", "scripts/content-trust-audit.mjs"]
 }
