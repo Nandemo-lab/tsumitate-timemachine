@@ -78,14 +78,6 @@ function NisaLabel({
   return <>非対応</>;
 }
 
-const RISK_LABELS: Record<number, string> = {
-  1: "超安定（★☆☆☆☆）",
-  2: "安定（★★☆☆☆）",
-  3: "標準（★★★☆☆）",
-  4: "高リスク（★★★★☆）",
-  5: "超高リスク（★★★★★）",
-};
-
 export default async function FundPage({ params }: Props) {
   const { slug } = await params;
   const page = getFundPage(slug);
@@ -242,9 +234,6 @@ export default async function FundPage({ params }: Props) {
                     />
                   ),
                 },
-                { label: "ボラティリティ", value: enc.volatility },
-                { label: "リスクレベル", value: fund.riskLevel === null ? null : RISK_LABELS[fund.riskLevel] },
-                { label: "推奨投資期間", value: enc.expectedHorizon },
               ].filter(({ value }) => value !== null).map(({ label, value }, i) => (
                 <div
                   key={label}
@@ -267,7 +256,7 @@ export default async function FundPage({ params }: Props) {
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {page.fundId === "fangplus" ? `${enc.nickname}の商品設計` : `${enc.nickname}が選ばれる理由・メリット`}
+              {enc.nickname}の商品設計・確認できる特徴
             </h2>
             <div className="space-y-2">
               {enc.pros.map((p) => (
@@ -402,13 +391,13 @@ export default async function FundPage({ params }: Props) {
             </Link>
           </section>
 
-          {/* ── こんな人におすすめ ───────────────────────────────── */}
+          {/* ── 商品選択時の確認事項 ─────────────────────────────── */}
           {enc.forWhom && <section className="space-y-3">
             <h2
               className="text-base font-bold text-white"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {page.fundId === "fangplus" ? "商品選択時の確認ポイント" : "こんな人におすすめ"}
+              商品選択時の確認ポイント
             </h2>
             <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-4 space-y-2">
               {enc.forWhom.split("・").map((w) => (

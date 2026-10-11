@@ -390,9 +390,26 @@ for (const required of [FUNDS.schd.encyclopedia.catchCopy, "G品質", "原典未
 }
 const otherFundHtml = read(".next/server/app/fund/sp500.html");
 for (const label of ["ボラティリティ", "リスクレベル", "推奨投資期間", "こんな人におすすめ"]) {
-  if (!otherFundHtml.includes(label)) throw new Error(`Other fund section unexpectedly removed: ${label}`);
+  if (otherFundHtml.includes(label)) throw new Error(`Subjective fund assessment restored: ${label}`);
 }
-console.log("PASS: rendered SCHD assessment boundaries and other fund sections");
+for (const required of ["商品選択時の確認ポイント", "商品設計・確認できる特徴"]) {
+  if (!otherFundHtml.includes(required)) throw new Error(`Objective fund guidance missing: ${required}`);
+}
+console.log("PASS: rendered assessment boundaries and objective fund guidance");
+
+// G品質を含む比較・商品入口では、擬似月次評価額や推移を実績として表示しない。
+for (const relative of [
+  ".next/server/app/compare/schd-vs-vym.html",
+  ".next/server/app/compare/schd-vs-sp500.html",
+  ".next/server/app/compare/orukan-vs-schd.html",
+  ".next/server/app/schd.html",
+]) {
+  const html = read(relative).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
+  for (const forbidden of ["積立シミュレーション比較", "現在資産", "積立推移チャート"]) {
+    if (html.includes(forbidden)) throw new Error(`G numeric output restored in ${relative}: ${forbidden}`);
+  }
+}
+console.log("PASS: G-quality pages do not render simulated performance panels");
 
 // トップ階層 /schd と共有カテゴリ説明に、G品質からは判定できない安定性・優劣・推奨が戻っていないか検査。
 if (FUND_CATEGORIES.dividend.description !== "配当を重視する株式商品") {
@@ -411,7 +428,7 @@ const legacySchdBody = legacySchdHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>
 for (const phrase of ["比較的安定した値動き", "中級者以上の方に向いています", "VYMより増配率・トータルリターン", "10年平均で年約11〜12%", "こんな人におすすめ"]) {
   if (legacySchdBody.includes(phrase)) throw new Error(`/schd rendered unsupported claim: ${phrase}`);
 }
-for (const phrase of ["商品選択時の確認ポイント", "G品質", "原典未検証", "適性は判定していません"]) {
+for (const phrase of ["商品選択時の確認ポイント", "G品質", "原典未検証", "個人への適性は判断できません"]) {
   if (!legacySchdBody.includes(phrase)) throw new Error(`/schd rendered boundary missing: ${phrase}`);
 }
 console.log("PASS: legacy /schd and dividend category evidence boundaries");

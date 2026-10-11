@@ -6,36 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FundId, FundCategory } from "@/types";
 import { FUNDS, FUND_CATEGORIES, CATEGORY_ORDER, getFundsByCategory } from "@/lib/funds";
 import { simulate, formatCurrency, START_YEAR_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
-import { ChevronRight, BookOpen, Star, TrendingUp, AlertTriangle, CheckCircle, ChevronDown } from "lucide-react";
-
-function RiskBadge({ level }: { level: number }) {
-  const colors = ["", "#10b981", "#22c55e", "#f59e0b", "#f97316", "#ef4444"];
-  const labels = ["", "超安定", "安定", "標準", "高リスク", "超高リスク"];
-  return (
-    <span
-      className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold"
-      style={{ background: `${colors[level]}20`, color: colors[level] }}
-    >
-      {labels[level]}
-    </span>
-  );
-}
-
-function BeginnerScore({ score }: { score: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className="h-3 w-3"
-          fill={i < score ? "#f59e0b" : "none"}
-          stroke={i < score ? "#f59e0b" : "#3f3f46"}
-        />
-      ))}
-      <span className="text-[10px] text-zinc-400 ml-1">初心者向け</span>
-    </div>
-  );
-}
+import { ChevronRight, BookOpen, TrendingUp, AlertTriangle, CheckCircle, ChevronDown } from "lucide-react";
 
 function InlineSimulator({
   fundId,
@@ -185,28 +156,20 @@ function FundDetailCard({
           ))}
         </div>
 
-        {enc.beginnerScore !== null && <BeginnerScore score={enc.beginnerScore} />}
+        <ReturnQualityPill fundId={fund.id} />
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 px-5 pb-3">
+      <div className="grid grid-cols-1 gap-3 px-5 pb-3">
         <div>
           <p className="text-[10px] text-zinc-400 mb-0.5">信託報酬</p>
           <p className="text-xs font-bold text-zinc-300">{enc.managementFee}</p>
         </div>
-        {enc.volatility !== null && <div>
-          <p className="text-[10px] text-zinc-400 mb-0.5">ボラティリティ</p>
-          <p className="text-xs font-bold text-zinc-300">{enc.volatility}</p>
-        </div>}
-        {enc.expectedHorizon !== null && <div>
-          <p className="text-[10px] text-zinc-400 mb-0.5">推奨期間</p>
-          <p className="text-xs font-bold text-zinc-300">{enc.expectedHorizon}</p>
-        </div>}
       </div>
 
       {/* For whom */}
       {enc.forWhom && <div className="px-5 pb-3">
-        <p className="text-[10px] text-zinc-400 mb-1 font-black tracking-widest uppercase">こんな人向け</p>
+        <p className="text-[10px] text-zinc-400 mb-1 font-black tracking-widest uppercase">選ぶ前の確認事項</p>
         <p className="text-xs text-zinc-400 leading-relaxed">{enc.forWhom}</p>
       </div>}
 
@@ -311,7 +274,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                           成長投資枠
                         </span>
                       )}
-                      {fund.riskLevel !== null ? <RiskBadge level={fund.riskLevel} /> : <ReturnQualityPill fundId={fund.id} />}
+                      <ReturnQualityPill fundId={fund.id} />
                     </div>
                     <p className="text-[10px] text-zinc-400 truncate mt-0.5">{enc.formalName}</p>
                   </div>

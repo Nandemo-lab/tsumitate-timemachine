@@ -377,6 +377,7 @@ export default async function FromYearPage({ params }: Props) {
                 </tbody>
               </table>
             </div>
+            <p className="text-[11px] text-zinc-500 sm:hidden">表は横にスクロールして全項目を確認できます。</p>
             <p className="text-[11px] leading-relaxed text-zinc-500">
               開始年が違えば積立回数と元本も変わるため、別の開始年ページとの評価額だけの比較はできません。この表は各開始年の中で、同じ月額・終了月の商品差を確認するためのものです。
             </p>

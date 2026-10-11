@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ChevronRight, TrendingUp, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
+import { ChevronRight, TrendingUp, ArrowRight, ShieldCheck } from "lucide-react";
 import { getFundSeoPage, FUND_SEO_PAGES, FundSeoPage } from "@/lib/fund-seo";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
@@ -75,6 +75,17 @@ export default async function FundLandingPage({ params }: Props) {
   const fund = FUNDS[page.fundId];
   const fundDetailSlug = getFundPageSlug(page.fundId);
   const returnDefinition = getReturnSeriesDefinition(page.fundId);
+  const objectiveFeatures = [
+    { title: "投資対象", description: fund.description },
+    { title: "構成銘柄数", description: fund.shareCount },
+    { title: "費用", description: fund.encyclopedia.managementFee },
+    { title: "検証できる実績期間", description: returnDefinition.quality === "A" ? `${returnDefinition.startMonth}〜${returnDefinition.endMonth}` : "参考データ・月次原典未検証" },
+  ];
+  const displayedFaqs = [
+    { q: `${fund.shortName}を確認するときの要点は？`, a: `投資対象は${fund.description}、構成は${fund.shareCount}、費用は${fund.encyclopedia.managementFee}です。商品設定日、NISA対象区分、許容できる値動きも正式資料で確認してください。` },
+    { q: "このページの積立結果は将来予測ですか？", a: "いいえ。商品設定後の収録済み月次データに同じ計算条件を適用した過去結果です。税金、売買手数料、実際の約定価格は個別計算していません。" },
+    { q: "データ品質はどこで確認できますか？", a: returnDefinition.quality === "A" ? `A品質です。${returnDefinition.seriesName}を${returnDefinition.startMonth}から${returnDefinition.endMonth}まで収録しています。` : "G品質（参考データ・原典未検証）です。検証済み実績と同じ確度の数値比較には使用しません。" },
+  ];
   const result = simulate({
     fundId: page.fundId,
     startYear: page.simYear,
@@ -89,7 +100,7 @@ export default async function FundLandingPage({ params }: Props) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: page.faqs.map((faq) => ({
+    mainEntity: displayedFaqs.map((faq) => ({
       "@type": "Question",
       name: faq.q,
       acceptedAnswer: { "@type": "Answer", text: faq.a },
@@ -159,9 +170,9 @@ export default async function FundLandingPage({ params }: Props) {
             >
               {page.heroTitle}
             </h1>
-            <p className="text-base text-zinc-400 mb-4">{page.heroSubtitle}</p>
+            <p className="text-base text-zinc-400 mb-4">{fund.encyclopedia.formalName}</p>
             <p className="text-sm text-zinc-400 leading-relaxed max-w-lg mx-auto mb-8">
-              {page.heroDescription}
+              {fund.description}。このページでは商品設定後の収録データだけを使い、開始年と積立額を変えて期間末評価額を確認できます。
             </p>
             <Link
               href={`/simulate/${page.fundId}/${page.simYear}`}
@@ -186,15 +197,14 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── Features ─────────────────────────────────────────── */}
           <section className="mb-12">
-            <SectionHeading>{fund.shortName}の特徴・メリット</SectionHeading>
+            <SectionHeading>{fund.shortName}の確認できる商品情報</SectionHeading>
             <div className="grid grid-cols-2 gap-3">
-              {page.features.map((f) => (
+              {objectiveFeatures.map((f) => (
                 <div
                   key={f.title}
                   className="rounded-xl border border-white/8 p-4"
                   style={{ background: "rgba(255,255,255,0.02)" }}
                 >
-                  <span className="text-2xl mb-2 block">{f.icon}</span>
                   <p className="font-bold text-white text-sm mb-1">{f.title}</p>
                   <p className="text-xs text-zinc-400 leading-relaxed">{f.description}</p>
                 </div>
@@ -204,25 +214,17 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── For Whom ─────────────────────────────────────────── */}
           <section className="mb-12">
-            <SectionHeading>{returnDefinition.quality === "G" ? "商品選択時の確認ポイント" : "こんな人におすすめ"}</SectionHeading>
+            <SectionHeading>商品選択時の確認ポイント</SectionHeading>
             <div
               className="rounded-2xl border border-white/10 p-5 space-y-3"
               style={{ background: "rgba(255,255,255,0.03)" }}
             >
-              {page.forWhom.map((w) => (
-                <div key={w} className="flex items-start gap-3">
-                  <CheckCircle2
-                    className="h-4 w-4 mt-0.5 flex-shrink-0"
-                    style={{ color: fund.color }}
-                  />
-                  <p className="text-sm text-zinc-200 leading-relaxed">{w}</p>
-                </div>
-              ))}
+              <p className="text-sm text-zinc-200 leading-relaxed">投資対象、構成銘柄数、費用、商品設定日、NISA対象区分、資金を使う時期、許容できる値動きを確認してください。過去の一期間の結果だけでは、将来の成果や個人への適性は判断できません。</p>
             </div>
           </section>
 
           {/* ── Simulation Result ─────────────────────────────────── */}
-          <section className="mb-12">
+          {returnDefinition.quality === "A" ? <section className="mb-12">
             <SectionHeading>{returnDefinition.quality === "A" ? "公式月次データによるシミュレーション" : "参考データによるシミュレーション"}</SectionHeading>
             <div className="mb-3"><ReturnQualityPill fundId={page.fundId} /></div>
             <p className="text-xs text-zinc-400 mb-4">
@@ -282,7 +284,11 @@ export default async function FundLandingPage({ params }: Props) {
               自分の条件でシミュレーションしてみる
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </section>
+          </section> : <section className="mb-12 rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] p-5 space-y-2">
+            <ReturnQualityPill fundId={page.fundId} />
+            <p className="text-sm font-bold text-amber-200">参考系列の評価額は表示しません</p>
+            <p className="text-xs leading-relaxed text-zinc-400">月次原典、通貨、配当、費用、為替の扱いが未検証のため、積立評価額・利益・推移を検証済み実績として表示しません。商品属性と一次情報を確認できます。</p>
+          </section>}
 
           {/* ── Related Funds ─────────────────────────────────────── */}
           <section className="mb-12">
@@ -349,7 +355,7 @@ export default async function FundLandingPage({ params }: Props) {
           <section className="mb-12">
             <SectionHeading>よくある質問（FAQ）</SectionHeading>
             <div className="space-y-3">
-              {page.faqs.map((faq) => (
+              {displayedFaqs.map((faq) => (
                 <div
                   key={faq.q}
                   className="rounded-xl border border-white/8 p-5"

@@ -132,7 +132,7 @@ export default function DataSourcesPage() {
                     {source.sourceStatus === "verified" ? "A：公式月次データ" : "G：参考データ・原典未検証"}
                   </span>
                 </div>
-                <div className="grid grid-cols-1 gap-1.5 text-[11px]">
+                <div className="grid grid-cols-1 gap-2 text-xs leading-relaxed">
                   <div className="flex gap-2">
                     <span className="text-zinc-600 flex-shrink-0 w-20">運用会社</span>
                     <span className="text-zinc-400">{source.manager}</span>
@@ -196,24 +196,24 @@ export default function DataSourcesPage() {
                   href={source.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
                 >
                   <ExternalLink className="h-2.5 w-2.5" />
                   {source.sourceName}
                 </a>
                 {source.rawDataUrl && source.rawDataUrl !== source.sourceUrl && (
-                  <a href={source.rawDataUrl} target="_blank" rel="noopener noreferrer" className="ml-3 inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors">
+                  <a href={source.rawDataUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors">
                     <ExternalLink className="h-2.5 w-2.5" />
                     元データ
                   </a>
                 )}
                 {source.fxSourceUrl && (
-                  <a href={source.fxSourceUrl} target="_blank" rel="noopener noreferrer" className="ml-3 inline-flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors">
+                  <a href={source.fxSourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors">
                     <ExternalLink className="h-2.5 w-2.5" />
                     {source.fxSourceName}
                   </a>
                 )}
-                <p className="text-[10px] text-zinc-600 leading-relaxed">{source.notes}</p>
+                <p className="text-xs text-zinc-500 leading-relaxed">{source.notes}</p>
               </div>
             )})}
           </div>

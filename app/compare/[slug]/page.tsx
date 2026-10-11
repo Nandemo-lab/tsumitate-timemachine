@@ -31,6 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!page) return {};
   const fundA = FUNDS[page.fundAId];
   const fundB = FUNDS[page.fundBId];
+  const hasReferenceSeries = getReturnSeriesDefinition(page.fundAId).quality === "G" || getReturnSeriesDefinition(page.fundBId).quality === "G";
+  const ogUrl = hasReferenceSeries
+    ? `${BASE_URL}/api/og?static=1`
+    : `${BASE_URL}/api/og?fund=${page.fundAId}&fundB=${page.fundBId}&year=${page.simYear}&amount=${page.simAmount}`;
   return {
     title: page.metaTitle,
     description: page.metaDescription,
@@ -44,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "ja_JP",
       images: [
         {
-          url: `${BASE_URL}/api/og?fund=${page.fundAId}&fundB=${page.fundBId}&year=${page.simYear}&amount=${page.simAmount}`,
+          url: ogUrl,
           width: 1200,
           height: 630,
           alt: `${fundA.shortName} vs ${fundB.shortName} 積立比較`,
@@ -56,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${fundA.shortName} vs ${fundB.shortName} | 積立タイムマシン`,
       description: page.metaDescription,
       images: [
-        `${BASE_URL}/api/og?fund=${page.fundAId}&fundB=${page.fundBId}&year=${page.simYear}&amount=${page.simAmount}`,
+        ogUrl,
       ],
     },
   };
@@ -176,7 +180,14 @@ export default async function ComparePage({ params }: Props) {
           </section>
 
           {/* ── 積立シミュレーション比較（クライアント） ─────────── */}
-          <ComparePageClient resultA={resultA} resultB={resultB} />
+          {hasReferenceSeries ? (
+            <section className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] p-5 space-y-2">
+              <h2 className="text-sm font-bold text-amber-200">この組み合わせは商品属性だけを比較します</h2>
+              <p className="text-xs leading-relaxed text-zinc-400">
+                G品質系列を含むため、評価額・利益・推移グラフは表示しません。投資対象、銘柄選定、分散範囲、費用、分配方法を確認できます。月次原典、通貨、配当、費用、為替の扱いを検証できるまでは、A品質商品との実績優劣を数値で示しません。
+              </p>
+            </section>
+          ) : <ComparePageClient resultA={resultA} resultB={resultB} />}
 
           {/* ── 比較表 ─────────────────────────────────────────── */}
           <section>
@@ -216,7 +227,7 @@ export default async function ComparePage({ params }: Props) {
             counterpartLabel={relatedArticle ? "商品構造と比較結果の読み方を見る" : undefined}
           />
 
-          {page.mixExamples && page.mixExamples.length > 0 && (
+          {!hasReferenceSeries && page.mixExamples && page.mixExamples.length > 0 && (
             <section className="space-y-4">
               <div className="space-y-2">
                 <h2

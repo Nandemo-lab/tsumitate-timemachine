@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { RankingPageData, RANKING_LABELS } from "@/lib/ranking-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
-import { FUNDS } from "@/lib/funds";
+import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import { FUND_SEO_MAP } from "@/lib/fund-seo";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -41,6 +41,17 @@ export default function RankingView({ page }: Props) {
     .map((item) => ({ ...item, result: item.result! }))
     .sort((a, b) => (b.result?.finalValue ?? 0) - (a.result?.finalValue ?? 0));
   const referenceEntries = preparedEntries.filter((item) => !item.verified || !item.result);
+  const displayedCriteria = [
+    { label: "期間末評価額", description: "同じ開始月・月額・終了月で計算した円単位の評価額" },
+    { label: "データ品質", description: "対象期間全体を計算できるA品質系列だけを数値順位に使用" },
+    { label: "投資対象", description: "地域・銘柄範囲・商品形式は順位とは分けて確認" },
+    { label: "費用", description: "信託報酬・経費率は商品情報のSSOTから表示" },
+  ];
+  const displayedFaqs = [
+    { q: "このページの順位は何を示しますか？", a: `${page.simYear}年${page.simMonth}月から2026年8月まで、月初に${formatCurrency(page.simAmount)}を積み立てた期間末評価額の順です。将来の成果、適性、価格変動の小ささを示す順位ではありません。` },
+    { q: "商品設定前や欠損月はどう扱いますか？", a: "別の商品や指数で補完しません。対象期間全体をA品質の月次系列で計算できる商品だけを数値順位へ掲載します。" },
+    { q: "G品質の商品はどう扱いますか？", a: "商品属性は順位外の参考情報として表示しますが、原典未検証の月次系列をA品質商品の数値順位へ混ぜません。" },
+  ];
 
   // fangplus には /fund/fangplus がある
   const FUND_SLUG_MAP: Record<string, string> = {
@@ -68,7 +79,7 @@ export default function RankingView({ page }: Props) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: page.faqs.map((f) => ({
+    mainEntity: displayedFaqs.map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -134,7 +145,7 @@ export default function RankingView({ page }: Props) {
               評価基準
             </h2>
             <div className="grid grid-cols-2 gap-2">
-              {page.criteria.map((c) => (
+              {displayedCriteria.map((c) => (
                 <div
                   key={c.label}
                   className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3 space-y-1"
@@ -185,7 +196,7 @@ export default function RankingView({ page }: Props) {
                         A品質・実績順位
                       </span>
                     </div>
-                    <p className="text-xs text-zinc-400 leading-snug">{entry.highlight}</p>
+                    <p className="text-xs text-zinc-400 leading-snug">{fund.description}。構成は{fund.shareCount}、費用は{formatExpenseRatio(entry.fundId)}です。</p>
                   </div>
 
                   {/* シミュレーション結果 */}
@@ -215,22 +226,8 @@ export default function RankingView({ page }: Props) {
                     </div>
                   </div> : null}
 
-                  {/* メリット・注意点 */}
-                  <div className="px-4 pb-3 space-y-2">
-                    <div className="space-y-1">
-                      {entry.pros.map((p) => (
-                        <div key={p} className="flex items-start gap-1.5">
-                          <span className="text-emerald-400 text-xs mt-0.5 flex-shrink-0">✓</span>
-                          <p className="text-xs text-zinc-300">{p}</p>
-                        </div>
-                      ))}
-                    </div>
-                    {entry.cons.map((c) => (
-                      <div key={c} className="flex items-start gap-1.5">
-                        <span className="text-amber-400 text-xs mt-0.5 flex-shrink-0">!</span>
-                        <p className="text-xs text-zinc-500">{c}</p>
-                      </div>
-                    ))}
+                  <div className="px-4 pb-3 text-xs leading-relaxed text-zinc-500">
+                    数値順位とは別に、投資対象、費用、商品設定日、NISAの対象枠、許容できる値動きを商品詳細で確認してください。
                   </div>
 
                   {/* リンク行 */}
@@ -289,7 +286,7 @@ export default function RankingView({ page }: Props) {
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <p className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</p>
-                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{entry.highlight}</p>
+                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{fund.description}。費用は{formatExpenseRatio(entry.fundId)}です。</p>
                       </div>
                       <span className="shrink-0 rounded bg-amber-500/10 px-2 py-1 text-[10px] font-bold text-amber-300">順位外</span>
                     </div>
@@ -343,7 +340,7 @@ export default function RankingView({ page }: Props) {
               よくある質問
             </h2>
             <div className="space-y-4">
-              {page.faqs.map((faq, i) => (
+              {displayedFaqs.map((faq, i) => (
                 <div
                   key={i}
                   className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"

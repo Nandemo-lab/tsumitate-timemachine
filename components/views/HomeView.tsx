@@ -12,6 +12,7 @@ import { GUIDE_SERIES } from "@/lib/guide-pages";
 import { MainTab } from "@/components/layout/BottomNav";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
+import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
   { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "2020年のコロナショック直後に始めていたら" },
@@ -74,9 +75,9 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
     []
   );
 
-  // 初心者向けランキング
-  const beginnerRanking = useMemo(
-    () => FUND_LIST.filter((fund) => fund.encyclopedia.beginnerScore !== null).sort((a, b) => (b.encyclopedia.beginnerScore ?? 0) - (a.encyclopedia.beginnerScore ?? 0)).slice(0, 4),
+  // 銘柄図鑑の入口。根拠を公開できない「初心者向け」順位にはしない。
+  const encyclopediaExamples = useMemo(
+    () => FUND_LIST.filter((fund) => RETURN_SERIES_REGISTRY[fund.id].quality === "A").slice(0, 4),
     []
   );
 
@@ -231,16 +232,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
               {(pickEnc.nisaSupport.tsumitate || pickEnc.nisaSupport.growth) && (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300">NISA対応</span>
               )}
-              {pickEnc.beginnerScore !== null && <div className="flex items-center gap-0.5 ml-auto">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <Star
-                    key={j}
-                    className="h-2.5 w-2.5"
-                    fill={j < (pickEnc.beginnerScore ?? 0) ? "#f59e0b" : "none"}
-                    stroke={j < (pickEnc.beginnerScore ?? 0) ? "#f59e0b" : "#52525b"}
-                  />
-                ))}
-              </div>}
+              <span className="ml-auto"><ReturnQualityPill fundId={pick.id} /></span>
             </div>
 
             {/* 銘柄名（やや目立たせる） */}
@@ -327,7 +319,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </div>
       </motion.section>
 
-      {/* ── 初心者向けランキング ── */}
+      {/* ── 銘柄図鑑への入口 ── */}
       <motion.section
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -337,7 +329,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-emerald-400" />
-            <p className="font-heading text-sm font-semibold text-white">初心者向けランキング</p>
+            <p className="font-heading text-sm font-semibold text-white">銘柄図鑑から探す</p>
           </div>
           <button
             onClick={() => onNavigate("encyclopedia")}
@@ -348,10 +340,9 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </div>
 
         <div className="space-y-2">
-          {beginnerRanking.map((fund, i) => {
+          {encyclopediaExamples.map((fund, i) => {
             const enc = fund.encyclopedia;
             const tags = getFundTags(fund);
-            const medals = ["🥇", "🥈", "🥉", "4️⃣"];
             return (
               <motion.button
                 key={fund.id}
@@ -363,7 +354,6 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
                 style={{ minHeight: 56 }}
                 whileTap={{ scale: 0.99 }}
               >
-                <span className="text-lg flex-shrink-0">{medals[i]}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
                     <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
@@ -519,7 +509,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         </motion.section>
       )}
 
-      {/* ── 人気比較ランキング ── */}
+      {/* ── 比較ページへの入口 ── */}
       <motion.section
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -528,20 +518,18 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       >
         <div className="flex items-center gap-2">
           <BarChart2 className="h-4 w-4 text-violet-400" />
-          <p className="font-heading text-sm font-semibold text-white">人気比較ランキング</p>
+          <p className="font-heading text-sm font-semibold text-white">比較ページを選ぶ</p>
         </div>
         <div className="space-y-2">
-          {COMPARE_PAGES.slice(0, 5).map((cp, i) => {
+          {COMPARE_PAGES.slice(0, 5).map((cp) => {
             const fA = FUNDS[cp.fundAId];
             const fB = FUNDS[cp.fundBId];
-            const RANK = ["🥇", "🥈", "🥉", "4位", "5位"];
             return (
               <Link
                 key={cp.slug}
                 href={`/compare/${cp.slug}`}
                 className="flex items-center gap-3 rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 hover:bg-white/[0.06] transition-colors"
               >
-                <span className="text-sm w-6 text-center flex-shrink-0">{RANK[i]}</span>
                 <span className="flex items-center gap-1.5 text-sm font-bold flex-1 min-w-0">
                   <span style={{ color: fA.color }}>{fA.shortName}</span>
                   <span className="text-zinc-500 text-xs">vs</span>
