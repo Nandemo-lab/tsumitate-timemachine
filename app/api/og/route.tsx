@@ -159,15 +159,21 @@ export async function GET(req: NextRequest) {
   const fundBParam = searchParams.get("fundB");
   const yearParam = searchParams.get("year") ?? "2020";
   const monthParam = searchParams.get("month") ?? "1";
+  const endYearParam = searchParams.get("endYear");
+  const endMonthParam = searchParams.get("endMonth");
   const amountParam = searchParams.get("amount") ?? "30000";
   const startYear = Number(yearParam);
   const startMonth = Number(monthParam);
   const monthlyAmount = Number(amountParam);
+  const endYear = endYearParam === null ? undefined : Number(endYearParam);
+  const endMonth = endMonthParam === null ? undefined : Number(endMonthParam);
   const isFundId = (value: string | null): value is FundId => value !== null && Object.hasOwn(FUNDS, value);
   const validNumbers =
     Number.isInteger(startYear) &&
     Number.isInteger(startMonth) && startMonth >= 1 && startMonth <= 12 &&
-    Number.isInteger(monthlyAmount) && monthlyAmount > 0;
+    Number.isInteger(monthlyAmount) && monthlyAmount > 0 &&
+    (endYear === undefined || Number.isInteger(endYear)) &&
+    (endMonth === undefined || (Number.isInteger(endMonth) && endMonth >= 1 && endMonth <= 12));
 
   if (!isFundId(fundParam) || (fundBParam !== null && !isFundId(fundBParam)) || !validNumbers) {
     return new Response("Invalid OGP parameters", { status: 400 });
@@ -178,7 +184,7 @@ export async function GET(req: NextRequest) {
   const fund = FUNDS[fundId];
   let result;
   try {
-    result = simulate({ fundId, startYear, startMonth, monthlyAmount });
+    result = simulate({ fundId, startYear, startMonth, monthlyAmount, endYear, endMonth });
   } catch {
     return new Response("Unsupported OGP simulation period", { status: 422 });
   }
@@ -186,7 +192,7 @@ export async function GET(req: NextRequest) {
   let resultB = null;
   if (fundBId) {
     try {
-      resultB = simulate({ fundId: fundBId, startYear, startMonth, monthlyAmount });
+      resultB = simulate({ fundId: fundBId, startYear, startMonth, monthlyAmount, endYear, endMonth });
     } catch {
       resultB = null;
     }

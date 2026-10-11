@@ -196,19 +196,19 @@ export default function DataSourcesPage() {
                   href={source.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+                  className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-lg px-2 text-left text-xs text-zinc-400 hover:text-zinc-200 transition-colors break-words"
                 >
                   <ExternalLink className="h-2.5 w-2.5" />
-                  {source.sourceName}
+                  <span className="min-w-0 break-words">{source.sourceName}</span>
                 </a>
                 {source.rawDataUrl && source.rawDataUrl !== source.sourceUrl && (
-                  <a href={source.rawDataUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors">
+                  <a href={source.rawDataUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-lg px-2 text-left text-xs text-zinc-400 hover:text-zinc-200 transition-colors break-words">
                     <ExternalLink className="h-2.5 w-2.5" />
                     元データ
                   </a>
                 )}
                 {source.fxSourceUrl && (
-                  <a href={source.fxSourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors">
+                  <a href={source.fxSourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-lg px-2 text-left text-xs text-zinc-400 hover:text-zinc-200 transition-colors break-words">
                     <ExternalLink className="h-2.5 w-2.5" />
                     {source.fxSourceName}
                   </a>

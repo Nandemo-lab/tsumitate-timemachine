@@ -7,6 +7,8 @@ import { Copy, Check } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { trackShareClick } from "@/lib/analytics";
+import { buildShareUrl } from "@/lib/utils/shareUrl";
+import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 
 interface Props {
   planA: SimulationResult;
@@ -23,20 +25,32 @@ const getServerSnapshot = () => false;
 export default function ShareCard({ planA, planB, startYear, startMonth, monthlyAmount }: Props) {
   const [copied, setCopied] = useState(false);
   const mounted = useSyncExternalStore(subscribeToClient, getClientSnapshot, getServerSnapshot);
-  const sorted = planB ? [planA, planB].sort((a, b) => b.profit - a.profit) : [planA];
+  const includesReferenceSeries = [planA, planB].some((plan) => plan && RETURN_SERIES_REGISTRY[plan.fundId].quality !== "A");
+  const sorted = planB && !includesReferenceSeries ? [planA, planB].sort((a, b) => b.finalValue - a.finalValue) : [planA, ...(planB ? [planB] : [])];
   const winner = sorted[0];
   const loser = sorted[1];
   const diff = loser ? winner.profit - loser.profit : null;
 
-  const url = "https://tsumitate-timemachine.com";
+  const lastPoint = planA.dataPoints.at(-1);
+  const [endYear, endMonth] = (lastPoint?.date ?? `${startYear}/${startMonth}`).split("/").map(Number);
+  const url = buildShareUrl({
+    fund: planA.fundId,
+    fundB: planB?.fundId,
+    year: startYear,
+    month: startMonth,
+    endYear,
+    endMonth,
+    amount: monthlyAmount,
+  });
+  const formatSignedCurrency = (value: number) => `${value >= 0 ? "+" : "−"}${formatCurrency(Math.abs(value))}`;
   const shareText = planB && loser
     ? `もし${startYear}年${startMonth}月から${winner.fundName}を
 毎月${formatCurrency(monthlyAmount)}積み立てていたら
 
-+${formatCurrency(winner.profit)}（+${winner.returnRate.toFixed(1)}%）
+${formatSignedCurrency(winner.profit)}（${winner.returnRate >= 0 ? "+" : ""}${winner.returnRate.toFixed(1)}%）
 
 vs ${loser.fundName}
-+${formatCurrency(loser.profit)}（+${loser.returnRate.toFixed(1)}%）
+${formatSignedCurrency(loser.profit)}（${loser.returnRate >= 0 ? "+" : ""}${loser.returnRate.toFixed(1)}%）
 
 差額 ${formatCurrency(diff!)} の違いに！
 
@@ -47,7 +61,7 @@ ${url}
     : `もし${startYear}年${startMonth}月から${winner.fundName}を
 毎月${formatCurrency(monthlyAmount)}積み立てていたら
 
-+${formatCurrency(winner.profit)}（+${winner.returnRate.toFixed(1)}%）
+${formatSignedCurrency(winner.profit)}（${winner.returnRate >= 0 ? "+" : ""}${winner.returnRate.toFixed(1)}%）
 元本 ${formatCurrency(planA.totalPrincipal)} → ${formatCurrency(planA.finalValue)}
 
 📊 積立タイムマシン
@@ -102,13 +116,13 @@ ${url}
             {sorted.map((r, i) => (
               <div key={r.fundId} className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm">{i === 0 ? "🏆" : "  "}</span>
+                  <span className="text-sm">{!includesReferenceSeries && planB && i === 0 ? "🏆" : "  "}</span>
                   <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
                   <span className="text-sm font-bold" style={{ color: r.fundColor }}>{r.fundName}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-black text-white">+{formatCurrency(r.profit)}</span>
-                  <span className="text-xs text-emerald-400 ml-1.5">{r.returnRate.toFixed(0)}%</span>
+                  <span className="text-sm font-black text-white">{formatSignedCurrency(r.profit)}</span>
+                  <span className="text-xs text-emerald-400 ml-1.5">{r.returnRate >= 0 ? "+" : ""}{r.returnRate.toFixed(0)}%</span>
                 </div>
               </div>
             ))}
@@ -119,6 +133,9 @@ ${url}
               <p className="text-sm font-black text-white">{formatCurrency(diff)}</p>
             </div>
           )}
+          <p className="mt-3 text-[10px] leading-relaxed text-zinc-400">
+            {includesReferenceSeries ? "参考比較：G系列を含むため優劣ラベルは表示しません。" : "同じ開始月・終了月・積立額で計算した過去結果です。"}
+          </p>
         </div>
       </div>
 
