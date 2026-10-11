@@ -43,7 +43,13 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはどちらですか？",
       "長期投資に向いているのはどちらですか？",
     ],
-    "sp500-vs-nasdaq100": ["リスクが高いのはS&P500とNASDAQ100のどちらですか？"],
+    "sp500-vs-nasdaq100": [
+      "リスクが高いのはS&P500とNASDAQ100のどちらですか？",
+      "長期投資ならS&P500とNASDAQ100どちらがおすすめですか？",
+      "暴落時に強いのはS&P500とNASDAQ100のどちらですか？",
+      "初心者向きなのはS&P500とNASDAQ100のどちらですか？",
+    ],
+    "orukan-vs-nasdaq100": ["初心者にはオルカンとNASDAQ100のどちらが向いていますか？"],
     "nasdaq100-vs-fangplus": [
       "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
       "リスクが高いのはNASDAQ100とFANG+のどちらですか？",
@@ -53,10 +59,15 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
     "vti-vs-orukan": [
       "VTIとオルカンの違いは何ですか？",
       "分散性が高いのはVTIとオルカンのどちらですか？",
+      "初心者に向いているのはVTIとオルカンのどちらですか？",
+      "新NISAならVTIとオルカンどちらが向いていますか？",
     ],
+    "vt-vs-orukan": ["新NISAでVTとオルカンどちらを使うべきですか？"],
     "vti-vs-sp500": [
       "VTIとS&P500の実績に大きな差はありますか？",
       "VTIはS&P500より分散が効いていますか？",
+      "VTIとS&P500、長期ではどちらが有利ですか？",
+      "初心者にはVTIとS&P500どちらが向いていますか？",
     ],
     "schd-vs-vym": [
       "配当金が多いのはSCHDとVYMのどちらですか？",
@@ -75,8 +86,24 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "オルカンとSCHDを両方持つのはありですか？",
       "配当を再投資すればオルカンと同じ効果になりますか？",
     ],
-    "vt-vs-sp500": ["暴落時に強いのはどちらですか？"],
-    "orukan-vs-fangplus": ["FANG+の大きな下落から回復するまでどのくらいかかりますか？"],
+    "vt-vs-sp500": [
+      "VTとS&P500はどっちがおすすめですか？",
+      "初心者にはどちらが向いていますか？",
+      "暴落時に強いのはどちらですか？",
+    ],
+    "orukan-vs-fangplus": [
+      "初心者にはどちらが向いていますか？",
+      "FANG+の大きな下落から回復するまでどのくらいかかりますか？",
+    ],
+    "orukan-vs-vym": [
+      "初心者にはどちらが向いていますか？",
+      "暴落時に強いのはどちらですか？",
+    ],
+    "india-vs-emerging": ["初心者にはどちらが向いていますか？"],
+    "vti-vs-nasdaq100": [
+      "初心者にはどちらが向いていますか？",
+      "暴落時に強いのはどちらですか？",
+    ],
   };
   if (current.faqs.length !== previous.faqs.length) throw new Error(`FAQ count regression ${previous.slug}`);
   for (let index = 0; index < previous.faqs.length; index++) {

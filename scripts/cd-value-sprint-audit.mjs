@@ -193,7 +193,10 @@ for (const row of targets) {
   const plan = plans.find((candidate) => candidate.match(path));
   const response = await fetch(`${baseUrl}${path}`);
   const html = await response.text();
-  const evidenceOk = plan ? plan.evidence.every((token) => html.includes(token)) : false;
+  // React may insert empty comments between adjacent text nodes in streamed HTML.
+  // Remove only those serialization markers so the audit checks what readers see.
+  const renderedText = html.replaceAll("<!-- -->", "");
+  const evidenceOk = plan ? plan.evidence.every((token) => renderedText.includes(token)) : false;
   if (plan && !evidenceOk) throw new Error(`${path}: rendered evidence missing (${plan.evidence.join(" / ")})`);
   const beforeScore = Number(row["品質点"]);
   const afterScore = beforeScore + (evidenceOk ? plan.delta : 0);

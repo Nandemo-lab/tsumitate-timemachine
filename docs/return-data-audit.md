@@ -1,5 +1,7 @@
 # 年次リターン系列 監査台帳
 
+> **履歴資料**: 冒頭の110値一覧は2026-08-21時点の旧年次系列を棚卸しした記録であり、現在のシミュレーション品質を表しません。現在は `data/verified/manifest.json` と `data/verified/*-monthly.json` を正とし、A品質9系列は2026年8月まで、SCHDはG品質の参考系列です。現行状態は `npm run verified-ledger-audit` と `npm run return-series-audit` で確認してください。
+
 - 監査日: 2026-08-21
 - 保存場所: `lib/funds.ts` の `FUNDS[fundId].annualReturns`
 - 利用箇所: `lib/simulation.ts` の `simulate` / `simulateAdvanced` / `simulateAll`

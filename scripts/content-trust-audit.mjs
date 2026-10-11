@@ -10,6 +10,9 @@ const guides = read("lib/guide-pages.ts");
 const years = read("lib/year-pages.ts");
 const compares = read("lib/compare-pages.ts");
 const article = read("content/articles/orukan-vs-sp500.tsx");
+const returnArticle = read("content/articles/sp500-vs-nasdaq100.tsx");
+const fundSeo = read("lib/fund-seo.ts");
+const fundSeoPages = read("lib/fund-seo-pages.ts");
 const home = read("components/views/HomeView.tsx");
 
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
@@ -22,6 +25,19 @@ assert(!compares.includes("過去20年のデータではS&P500"), "商品設定�
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年8月まで"), "トップでデータ終端を開示していない");
+for (const [source, text] of [
+  ["年別ページ", years],
+  ["比較ページ", compares],
+  ["商品Landing", fundSeo],
+  ["商品詳細", fundSeoPages],
+]) {
+  for (const phrase of ["今すぐ始めることが最善", "積み立てを続けること」が最善", "初心者にはおすすめしません"]) {
+    assert(!text.includes(phrase), `${source}に未検証の投資行動・適性断定が再混入: ${phrase}`);
+  }
+}
+assert(!guides.includes("損失になった事例はほぼゼロ"), "ガイドに条件不明の長期損失確率が再混入");
+assert(!guides.includes("変えないことが成功の鍵"), "ガイドに未検証の成功断定が再混入");
+assert(!returnArticle.includes("NASDAQ100の回復力が際立つ"), "暦年リターンを回復力として説明している");
 
 if (fs.existsSync(path.join(root, ".next/server/app/guide/nisa-tsumitate-ikura.html"))) {
   const built = read(".next/server/app/guide/nisa-tsumitate-ikura.html");
