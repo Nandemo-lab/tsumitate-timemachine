@@ -178,11 +178,17 @@ export default function DataSourcesPage() {
                     <span className="text-zinc-400">{source.feeTreatment}／{source.fxTreatment}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span className="text-zinc-600 flex-shrink-0 w-20">収録期間</span>
+                    <span className="text-zinc-600 flex-shrink-0 w-20">{source.sourceStatus === "verified" ? "収録期間" : "参考系列"}</span>
                     <span className="text-zinc-400">{source.startMonth}〜{source.endMonth}</span>
                   </div>
+                  {source.sourceStatus !== "verified" && (
+                    <div className="flex gap-2">
+                      <span className="text-zinc-600 flex-shrink-0 w-20">公開計算</span>
+                      <span className="text-amber-300">{source.dataThrough}</span>
+                    </div>
+                  )}
                   <div className="flex gap-2">
-                    <span className="text-zinc-600 flex-shrink-0 w-20">台帳確認日</span>
+                    <span className="text-zinc-600 flex-shrink-0 w-20">{source.sourceStatus === "verified" ? "台帳確認日" : "参考確認日"}</span>
                     <span className="text-zinc-400">{source.retrievedAt}</span>
                   </div>
                   <div className="flex gap-2">

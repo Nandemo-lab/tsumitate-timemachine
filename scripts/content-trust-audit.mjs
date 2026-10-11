@@ -97,6 +97,7 @@ if (fs.existsSync(path.join(root, ".next/server/app/about/data-sources.html"))) 
   const built = read(".next/server/app/about/data-sources.html");
   assert(built.includes("現在の収録最終月は2026年8月です"), "Data Sourcesの生成HTMLにA品質系列の最新終端がない");
   assert(built.includes("G：参考データ・原典未検証") && built.includes("原典未検証の年次参考系列"), "Data Sourcesの生成HTMLでSCHDのG品質境界が不明確");
+  assert(built.includes("参考系列") && built.includes("原典検証待ち（公開計算の対象外）"), "Data Sourcesの生成HTMLがSCHDの参考期間と公開計算対象外を区別していない");
 }
 
 if (failures.length) {
