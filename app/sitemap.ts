@@ -12,20 +12,19 @@ const BASE_URL = "https://tsumitate-timemachine.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
-    { url: BASE_URL,                               lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
-    { url: `${BASE_URL}/about`,                    lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE_URL}/about/data-sources`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE_URL}/terms`,                    lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
-    { url: `${BASE_URL}/privacy`,                  lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
-    { url: `${BASE_URL}/disclaimer`,               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
-    { url: `${BASE_URL}/ad-policy`,                lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
-    { url: `${BASE_URL}/contact`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+    { url: BASE_URL,                               changeFrequency: "weekly",  priority: 1.0 },
+    { url: `${BASE_URL}/about`,                    changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/about/data-sources`,       changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/terms`,                    changeFrequency: "yearly",  priority: 0.3 },
+    { url: `${BASE_URL}/privacy`,                  changeFrequency: "yearly",  priority: 0.3 },
+    { url: `${BASE_URL}/disclaimer`,               changeFrequency: "yearly",  priority: 0.3 },
+    { url: `${BASE_URL}/ad-policy`,                changeFrequency: "yearly",  priority: 0.3 },
+    { url: `${BASE_URL}/contact`,                  changeFrequency: "monthly", priority: 0.4 },
   ];
 
   // 銘柄ランディングページ（SEO重点ページ）
   const fundLandingPages: MetadataRoute.Sitemap = FUND_SEO_PAGES.filter((p) => p.slug !== "schd").map((p) => ({
     url: `${BASE_URL}/${p.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
@@ -33,7 +32,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 比較ページ
   const comparePages: MetadataRoute.Sitemap = COMPARE_PAGES.map((p) => ({
     url: `${BASE_URL}/compare/${p.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
@@ -41,7 +39,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 銘柄解説ページ（/fund/[slug]）
   const fundArticlePages: MetadataRoute.Sitemap = FUND_PAGES.map((p) => ({
     url: `${BASE_URL}/fund/${p.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
@@ -49,7 +46,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 年別総合ランキングページ（/from/[year]）
   const fromYearPages: MetadataRoute.Sitemap = [2019, 2020, 2021, 2022, 2023, 2024].map((y) => ({
     url: `${BASE_URL}/from/${y}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.85,
   }));
@@ -59,17 +55,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((p) => isProgrammaticIndexException(`/${p.fundSlug}/monthly/${p.amount}`))
     .map((p) => ({
       url: `${BASE_URL}/${p.fundSlug}/monthly/${p.amount}`,
-      lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.85,
     }));
 
   // ランキングページ（/ranking, /ranking/[category]）
   const rankingPages: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/ranking`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
+    { url: `${BASE_URL}/ranking`, changeFrequency: "monthly" as const, priority: 0.9 },
     ...RANKING_CATEGORY_SLUGS.map((s) => ({
       url: `${BASE_URL}/ranking/${s}`,
-      lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),
@@ -78,50 +72,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 目的別ガイドページ（/guide/[slug]）
   const guideArticlePages: MetadataRoute.Sitemap = GUIDE_PAGES.map((p) => ({
     url: `${BASE_URL}/guide/${p.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
 
   // 投資ガイド一覧（/guide）
   const guideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+    { url: `${BASE_URL}/guide`, changeFrequency: "weekly" as const, priority: 0.85 },
   ];
 
   // 税金ガイド一覧（/guide/tax）
   const taxGuideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide/tax`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
+    { url: `${BASE_URL}/guide/tax`, changeFrequency: "monthly" as const, priority: 0.85 },
   ];
 
   // 制度ガイド一覧（/guide/system）
   const systemGuideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide/system`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
+    { url: `${BASE_URL}/guide/system`, changeFrequency: "monthly" as const, priority: 0.85 },
   ];
 
   // 暴落ガイド一覧（/guide/booraku）
   const boorakuGuideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide/booraku`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.85 },
+    { url: `${BASE_URL}/guide/booraku`, changeFrequency: "monthly" as const, priority: 0.85 },
   ];
 
   // 比較一覧（/compare）
   const compareIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/compare`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+    { url: `${BASE_URL}/compare`, changeFrequency: "weekly" as const, priority: 0.85 },
   ];
 
   // 銘柄解説一覧（/fund）
   const fundIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/fund`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+    { url: `${BASE_URL}/fund`, changeFrequency: "weekly" as const, priority: 0.85 },
   ];
 
   // コラム一覧（/articles）
   const articleIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${BASE_URL}/articles`, changeFrequency: "weekly" as const, priority: 0.8 },
   ];
 
   // コラム記事（/articles/[slug]）
   const articlePages: MetadataRoute.Sitemap = ARTICLE_PAGES.map((p) => ({
     url: `${BASE_URL}/articles/${p.slug}`,
-    lastModified: new Date(p.publishedAt),
     changeFrequency: "monthly" as const,
     priority: 0.85,
   }));

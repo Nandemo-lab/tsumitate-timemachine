@@ -54,14 +54,14 @@ export const RETURN_DATA_SOURCES = Object.fromEntries(
       dividendTreatment: definition.dividendTreatment,
       feeTreatment: definition.feeTreatment,
       fxTreatment: definition.fxTreatment,
-      dataThrough: definition.endMonth,
+      dataThrough: verified ? definition.endMonth : "原典検証待ち（公開計算の対象外）",
       retrievedAt: definition.retrievedAt,
       notes: verified
         ? `${definition.inceptionTreatment}。${definition.missingValueTreatment}。`
         : "米国ETF SCHDの商品定義のみ確認済み。月次リターンの原典検証完了までは参考系列として扱います。楽天SCHDとは別商品です。",
-      granularity: `${definition.startMonth}〜${definition.endMonth}の月次データ`,
-      calculationMethod: verified ? "検証済み月次リターンを月ごとに適用" : "年次参考値を一定月次率へ換算",
-      investmentTiming: definition.investmentTiming,
+      granularity: verified ? `${definition.startMonth}〜${definition.endMonth}の月次データ` : "検証済み月次系列なし",
+      calculationMethod: verified ? "検証済み月次リターンを月ごとに適用" : "原典未検証の参考値は公開シミュレーションに使用しない",
+      investmentTiming: verified ? definition.investmentTiming : "公開シミュレーションには使用しない",
       missingValueTreatment: definition.missingValueTreatment,
       manager: definition.manager,
       inceptionDate: definition.inceptionDate,

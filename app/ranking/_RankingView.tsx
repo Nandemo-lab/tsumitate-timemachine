@@ -417,7 +417,7 @@ export default function RankingView({ page }: Props) {
             </h2>
             <div className="space-y-2">
               {[
-                { label: "新NISAおすすめ銘柄ガイド",     href: "/guide/nisa-beginner" },
+                { label: "新NISAの商品比較ガイド",       href: "/guide/nisa-beginner" },
                 { label: "インデックス投資とは？",        href: "/guide/index-investing" },
                 { label: "積立投資の始め方",              href: "/guide/how-to-start" },
                 { label: "ドルコスト平均法の効果",        href: "/guide/dollar-cost-averaging" },

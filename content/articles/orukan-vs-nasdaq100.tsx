@@ -8,7 +8,7 @@ import {
   BookOpen,
   ArrowRight,
 } from "lucide-react";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
@@ -20,7 +20,7 @@ import type { ArticleMeta } from "@/lib/article-pages";
 
 export const meta: ArticleMeta = {
   slug: "orukan-vs-nasdaq100",
-  h1: "オルカンとNASDAQ100どっち？違い・過去実績・向いている人を徹底比較",
+  h1: "オルカンとNASDAQ100どっち？違い・過去実績・判断材料を比較",
   metaTitle: "オルカンとNASDAQ100どっち？違い・過去実績・どちらが向いているかを比較",
   metaDescription:
     "オルカン（全世界株）とNASDAQ100の投資範囲・銘柄集中・費用・新NISAでの取扱いを整理。過去シミュレーションの条件と結果の読み方を確認できます。",
@@ -203,7 +203,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </table>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※暦年リターンは円ベース・分配金再投資込みで、年中の高値から安値までの最大下落率ではありません。信託報酬はeMAXIS Slim全世界株式（オール・カントリー）、iFreeNEXT NASDAQ100インデックスの2025年6月時点の税込数値。
+          ※暦年リターンは円ベース・分配金再投資込みで、年中の高値から安値までの最大下落率ではありません。信託報酬はサイト共通の商品定義を参照し、最新値は各運用会社の交付目論見書でも確認してください。
         </p>
       </section>
 
@@ -215,7 +215,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2020年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+            【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="オルカン" color="#6366f1" sim={simOrcan} />
@@ -224,7 +224,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </div>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-              【2018年11月〜2025年6月】毎月{formatCurrency(30000)}積立（両商品の公式実績が揃う期間）
+              【2018年11月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立（両商品の検証済み実績が揃う期間）
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="オルカン" color="#6366f1" sim={simOrcanLong} />

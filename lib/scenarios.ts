@@ -23,7 +23,7 @@ export const QUICK_SCENARIOS: QuickScenario[] = [
     startYear: 2020, startMonth: 4,
     monthlyAmount: 30000,
     description: "2020年4月・S&P500・月3万円",
-    tag: "人気No.1",
+    tag: "2020年4月開始",
   },
   {
     id: "nisa-2024",
@@ -43,7 +43,7 @@ export const QUICK_SCENARIOS: QuickScenario[] = [
     startYear: 2020, startMonth: 1,
     monthlyAmount: 30000,
     description: "2020年1月・NASDAQ100・月3万円",
-    tag: "ハイリターン",
+    tag: "米国大型テック中心",
   },
   {
     id: "orcan-10yr",

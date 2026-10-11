@@ -8,7 +8,7 @@ import {
   BookOpen,
   ArrowRight,
 } from "lucide-react";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FUNDS, formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
@@ -216,7 +216,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2020年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+            【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="VTI" color={FUNDS.vti.color} sim={simVti} />
@@ -225,7 +225,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </div>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-              【2018年11月〜2025年6月】毎月{formatCurrency(30000)}積立（両商品の公式実績が揃う期間）
+              【2018年11月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立（両商品の検証済み実績が揃う期間）
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="VTI" color={FUNDS.vti.color} sim={simVtiLong} />

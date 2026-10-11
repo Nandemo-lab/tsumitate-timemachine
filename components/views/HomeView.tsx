@@ -134,7 +134,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         <p className="text-[11px] leading-relaxed text-zinc-400">過去実績であり、将来の成果や商品の優劣を示すものではありません。</p>
       </div>
 
-      {/* ── 人気のたられば ── */}
+      {/* ── 条件別の検証例 ── */}
       <motion.section
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -142,7 +142,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
       >
         <div className="flex items-center gap-2 px-4 mb-3">
           <Sparkles className="h-4 w-4 text-amber-400" />
-          <p className="font-heading text-sm font-semibold text-white">人気のたられば</p>
+          <p className="font-heading text-sm font-semibold text-white">条件別の検証例</p>
           <span className="text-[11px] text-zinc-400">タップして体験</span>
         </div>
 
@@ -452,7 +452,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
             { label: "S&P500が暴落したらどうなる？",   href: "/guide/sp500-booraku-taisho",      sub: "過去の暴落データと積立継続の効果" },
             { label: "オルカン一本だけでいい？",       href: "/guide/orukan-ippon-de-ii",        sub: "1本投資の合理的な理由と注意点" },
             { label: "新NISAは月いくら？",   href: "/guide/nisa-tsumitate-ikura",      sub: "家計と過去実績から確認" },
-            { label: "新NISAのおすすめ積立先は？",     href: "/guide/nisa-beginner",             sub: "オルカン・S&P500・NASDAQ100を比較" },
+            { label: "新NISAの商品選択で確認すること", href: "/guide/nisa-beginner",             sub: "オルカン・S&P500・NASDAQ100を比較" },
             { label: "ドルコスト平均法とは？",         href: "/guide/dollar-cost-averaging",     sub: "定額積立の仕組みと注意点" },
             { label: "積立投資の失敗パターン5つ",      href: "/guide/index-shippai-pattern",     sub: "やってはいけない行動と回避法" },
             { label: "積立vs一括投資どっちが有利？",   href: "/guide/tsumitate-vs-ikkatu",       sub: "過去データで比較検証" },

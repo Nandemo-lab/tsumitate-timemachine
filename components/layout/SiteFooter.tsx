@@ -28,7 +28,7 @@ const SECTIONS = [
   {
     title: "投資ガイド",
     links: [
-      { href: "/guide/nisa-beginner",            label: "新NISAおすすめ" },
+      { href: "/guide/nisa-beginner",            label: "新NISAの商品比較" },
       { href: "/guide/orukan-yameta-houga-ii",   label: "オルカンはやめたほうがいい？" },
       { href: "/guide/orukan-ippon-de-ii",       label: "オルカン一本でいい？" },
       { href: "/guide/sp500-booraku-taisho",     label: "S&P500暴落リスクと対応" },

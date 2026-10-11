@@ -8,7 +8,7 @@ import {
   BookOpen,
   ArrowRight,
 } from "lucide-react";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import { NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
@@ -43,8 +43,8 @@ export const meta: ArticleMeta = {
 
 // ─── シミュレーションデータ ─────────────────────────────────────────────────
 
-const simVym      = simulate({ fundId: "vym",  startYear: 2020, startMonth: 1, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
-const simVymLong  = simulate({ fundId: "vym",  startYear: 2016, startMonth: 1, monthlyAmount: 30000, endYear: 2025, endMonth: 6 });
+const simVym      = simulate({ fundId: "vym",  startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
+const simVymLong  = simulate({ fundId: "vym",  startYear: 2016, startMonth: 1, monthlyAmount: 30000 });
 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
@@ -209,7 +209,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2020年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+            【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-1 gap-3">
             <SimCard name="VYM" color="#38bdf8" sim={simVym} />
@@ -217,7 +217,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </div>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2016年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+            【2016年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-1 gap-3">
             <SimCard name="VYM" color="#38bdf8" sim={simVymLong} />

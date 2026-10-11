@@ -8,7 +8,7 @@ import {
   BookOpen,
   ArrowRight,
 } from "lucide-react";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { formatAnnualReturn, formatExpenseRatio } from "@/lib/funds";
 import { NISA_LIMITS, formatManEn, NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
@@ -20,11 +20,11 @@ import type { ArticleMeta } from "@/lib/article-pages";
 
 export const meta: ArticleMeta = {
   slug: "orukan-vs-sp500",
-  h1: "オルカンとS&P500どっち？違い・過去実績・向いている人を徹底比較",
-  metaTitle: "オルカンとS&P500どっち？違い・過去実績・どちらが向いているかを比較",
+  h1: "オルカンとS&P500どっち？違い・過去実績・判断材料を比較",
+  metaTitle: "オルカンとS&P500どっち？違い・過去実績・判断材料を比較",
   metaDescription:
-    "オルカン（全世界株）とS&P500の違いを過去シミュレーション・暴落耐性・コスト・新NISAでの選び方から徹底比較。初心者にも分かりやすく中立的に解説します。",
-  lastUpdated: "2025年6月",
+    "オルカン（全世界株）とS&P500の商品構造・費用・同条件の積立実績を比較し、数値の読み方と確認事項を整理します。",
+  lastUpdated: "2026年10月",
   publishedAt: "2025-06-01",
   category: "比較コラム",
   ogFundA: "orcan",
@@ -203,7 +203,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </table>
         </div>
         <p className="text-xs text-zinc-500 leading-relaxed">
-          ※信託報酬はeMAXIS Slim全世界株式（オール・カントリー）、eMAXIS Slim米国株式（S&P500）の2025年6月時点の税込数値。
+          ※信託報酬はサイト共通の商品定義を参照しています。最新値は各運用会社の交付目論見書でも確認してください。
         </p>
       </section>
 
@@ -215,7 +215,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </p>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-            【2020年1月〜2025年6月】毎月{formatCurrency(30000)}積立
+            【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="オルカン" color="#6366f1" sim={simOrcan} />
@@ -224,7 +224,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         </div>
         <div className="space-y-2">
           <p className="text-xs font-bold text-zinc-400">
-              【2018年11月〜2025年6月】毎月{formatCurrency(30000)}積立（両商品の公式実績が揃う期間）
+              【2018年11月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立（両商品の検証済み実績が揃う期間）
           </p>
           <div className="grid grid-cols-2 gap-3">
             <SimCard name="オルカン" color="#6366f1" sim={simOrcanLong} />
@@ -424,7 +424,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <ul className="space-y-2">
             {[
               { href: "/guide/orukan-ippon-de-ii",   label: "オルカン一本でいい？詳しく解説" },
-              { href: "/guide/nisa-beginner",         label: "新NISAのおすすめ銘柄を解説" },
+              { href: "/guide/nisa-beginner",         label: "新NISAの商品選択で確認すること" },
               { href: "/fund/orukan",                 label: "オルカン銘柄詳細ページ" },
               { href: "/fund/sp500",                  label: "S&P500銘柄詳細ページ" },
               { href: "/compare/sp500-vs-nasdaq100",  label: "S&P500 vs NASDAQ100 比較" },

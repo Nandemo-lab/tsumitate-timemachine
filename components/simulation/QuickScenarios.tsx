@@ -27,7 +27,7 @@ export default function QuickScenarios({ onSelect }: Props) {
     <div>
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">人気のたられば</p>
+        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">条件別の検証例</p>
         <span className="text-[10px] text-zinc-400">タップで即試せる</span>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory"

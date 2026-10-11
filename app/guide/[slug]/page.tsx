@@ -41,7 +41,7 @@ const GUIDE_LABELS: Record<string, string> = {
   "kodomo-nisa-vs-gakushi-hoken": "こどもNISA vs 学資保険",
   "kodomo-nisa-hikidashi":       "こどもNISAの引き出し",
   "kodomo-nisa-daigaku-shikin-deguchi": "こどもNISAで大学資金",
-  "nisa-beginner":              "新NISAおすすめ",
+  "nisa-beginner":              "新NISAの商品比較",
   "index-investing":            "インデックス投資とは",
   "how-to-start":               "積立投資の始め方",
   "dollar-cost-averaging":      "ドルコスト平均法",
@@ -545,7 +545,7 @@ export default async function GuidePage({ params }: Props) {
               className="text-base font-bold text-white mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              おすすめ銘柄を詳しく見る
+              商品ごとの確認項目を見る
             </h2>
             <div className="space-y-3">
               {page.fundCards.map((card, i) => {
