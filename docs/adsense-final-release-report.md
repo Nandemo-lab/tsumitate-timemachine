@@ -89,3 +89,17 @@
 - 実画面は375/390/1280pxで横溢れ0、比較SVGは339×240・354×240・480×288、切替ボタン60×44、console error/warning 0。
 
 このrelease candidateをcommit・pushし、CI/Vercelと本番出力を再検証するまでは再申請判定を確定しない。
+
+### 公開後確認
+
+- 公開SHA: `8f6f7149a0b3e5b0cba9c51e806a9352d3db7c6b`
+- GitHub Actions: `38145294359`、lint → build → production server → live QA → stop server の全step success。
+- Vercel deployment: `6996581837`、Production success、deployment URL `https://tsumitate-timemachine-5ry7owfw9-nandemo-labs-projects.vercel.app`。
+- 本番live QA: 127 pages、100/100、ERROR 0、WARNING 0。
+- 本番sitemap: 96 URL、HTTP 200は96/96。台帳は `docs/audits/red-team-96-url-production-2026-10-11.csv`。
+- 本番SCHD直接URL: 200、noindex/follow、canonicalなし、数値・グラフなし。
+- 本番共有: A品質2商品の条件・元本・評価額・損益・80回が一致。G品質は停止画面、noindex/follow、canonicalなし。
+- 本番OGP: G品質422、不正金額400。管理画面404、ads.txt/robots.txt 200。
+- 390px実画面: 横溢れなし、比較SVG 354×240、console error/warning 0。
+
+最終判定は、サイト側で修正可能な重大問題を本番確認できたためGO。ただしGoogleの承認を保証せず、AdSense再申請自体はユーザー判断まで実行しない。
