@@ -23,7 +23,7 @@ export const meta: ArticleMeta = {
   h1: "オルカンとNASDAQ100どっち？違い・過去実績・向いている人を徹底比較",
   metaTitle: "オルカンとNASDAQ100どっち？違い・過去実績・どちらが向いているかを比較",
   metaDescription:
-    "オルカン（全世界株）とNASDAQ100の違いを過去シミュレーション・暴落耐性・コスト・新NISAでの選び方から徹底比較。ハイリターンと安定分散、どちらが自分に向いているか判断できます。",
+    "オルカン（全世界株）とNASDAQ100の投資範囲・銘柄集中・費用・新NISAでの取扱いを整理。過去シミュレーションの条件と結果の読み方を確認できます。",
   lastUpdated: "2026年7月",
   publishedAt: "2026-07-03",
   category: "比較コラム",
@@ -83,7 +83,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {meta.h1}
         </h1>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          「オルカンで安定を取るか、NASDAQ100でリターンを狙うか」——新NISAで積立を始めた多くの人が一度は迷うポイントです。この記事では両者の違いを事実ベースで比較し、どちらが自分に向いているかを判断する材料を提供します。
+          オルカンとNASDAQ100は、投資する国・業種・銘柄数が異なります。この記事では商品構造と費用、2本を併用したときの重複、過去シミュレーションを読む際の条件を整理します。
         </p>
       </section>
 
@@ -115,8 +115,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
-              "「大きな下落局面でも積立を続けられる自信がある」→ NASDAQ100で攻める選択肢もある",
-              "「値動きの大きさに不安を感じる」→ オルカンの世界分散が安心材料になる",
+              "投資範囲：オルカンは全世界、NASDAQ100は米国の非金融大型株が中心",
+              "集中度：NASDAQ100は業種・上位銘柄への集中が相対的に高い",
               "2本を併用すると米国大型テクノロジー株の重複が増えるため、配分前に重複を確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
@@ -145,7 +145,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          世界中の企業へ自動的に分散されるため、「1本選ぶならまずこれ」という定番の位置づけを持つ商品です。特定のセクターに偏らないため、値動きの振れ幅も比較的穏やかです。
+          世界中の企業へ時価総額比率で投資する商品です。NASDAQ100と比べて対象地域・業種が広い一方、株式市場や為替の影響は受けます。
         </p>
       </section>
 
@@ -153,7 +153,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="NASDAQ100とは？特徴と仕組み" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          NASDAQ100は、米国ナスダック市場に上場する非金融企業のうち時価総額上位100社で構成される株価指数です。Apple・Microsoft・NVIDIA・Googleなどテクノロジー企業が上位を占め、AI・半導体・クラウドなど成長分野の恩恵を強く受けます。日本では「iFreeNEXT NASDAQ100インデックス」が代表的な商品です。
+          NASDAQ100は、米国ナスダック市場に上場する非金融企業のうち時価総額上位100社で構成される株価指数です。情報技術など一部業種と上位銘柄の比率が高く、日本では「iFreeNEXT NASDAQ100インデックス」などが連動を目指します。
         </p>
         <SpecCard rows={[
           ["対象", "米国ナスダック非金融上位100社"],
@@ -188,7 +188,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["対象国",     "約47カ国（全世界）",     "米国のみ"],
                 ["銘柄数",     FUNDS.orcan.shareCount,    FUNDS.nasdaq100.shareCount],
                 ["分散度",     "◎ 地域・業種とも分散",   "△ テック業種に集中"],
-                ["過去リターン", "○ 安定的な水準",       "◎ 好調期は圧倒的に高い"],
+                ["実績の確認", "共通条件で再計算",       "共通条件で再計算"],
                 ["信託報酬",   formatExpenseRatio("orcan"), formatExpenseRatio("nasdaq100")],
                 ["2022年の暦年リターン", formatAnnualReturn("orcan", 2022), formatAnnualReturn("nasdaq100", 2022)],
                 ["保有時の確認", "米国を含む全世界分散",  "非金融大型株への集中"],
@@ -238,8 +238,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </p>
           <ul className="space-y-1.5 pl-5">
             {[
-              "過去の成績ではNASDAQ100がオルカンを大きく上回っている期間が多い",
-              "ただしNASDAQ100は下落局面での振れ幅もオルカンよりはるかに大きい",
+              "この表の2期間ではNASDAQ100の期末評価額がオルカンを上回った",
+              "この結果だけから、別の開始月や将来の順位は判断できない",
               "開始年・期間によって差は大きく変動する（特定の期間が未来を保証しない）",
             ].map((t, i) => (
               <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
@@ -288,7 +288,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-zinc-300 leading-relaxed">
-            NASDAQ100は好調期のリターンが大きい分、下落局面での振れ幅も非常に大きい商品です。「下がったときに積立をやめてしまう」ことが最大のリスクになります。続けられる金額・比率で保有することが重要です。
+            NASDAQ100は対象業種と上位銘柄への集中度が高い商品です。暦年リターンだけでは年中の最大下落率や回復期間を判断できないため、商品構造、資金を使う時期、許容できる値動きを分けて確認します。
           </p>
         </div>
       </section>
@@ -300,7 +300,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           新NISA（2024年〜）のつみたて投資枠は年間{formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠と合わせた年間投資枠は{formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は{formatManEn(NISA_LIMITS.lifetimeTotal)}です。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          金融庁は「長期・積立・分散」の原則を推奨しています。この観点からは、まず47カ国・約3,000銘柄に分散するオルカンをコアに据え、NASDAQ100はリスク許容度に応じてサテライトとして組み合わせる方法が一般的です。
+          金融庁は資産形成の基本として長期・積立・分散を説明しています。2商品を併用すると米国大型株の重複が増えるため、商品名だけでなく投資地域・業種・上位銘柄の重なりを確認します。
         </p>
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
           <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
@@ -308,8 +308,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "どちらもつみたて投資枠・成長投資枠で購入可能",
               "毎月定額の積立ならどちらもドルコスト平均法の効果を受けられる",
-              "「オルカンをコア、NASDAQ100をサテライト」という組み合わせも人気",
-              "NASDAQ100を単独で全額投資するのは初心者にはリスクが高い",
+              "2商品を併用する場合は米国大型株の重複と配分を確認する",
+              "一方だけを選ぶ場合も、集中度と資金を使う時期を確認する",
               "資金を使う時期と許容できる値動きを先に確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
@@ -331,11 +331,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "「大きな値下がりで不安になりたくない」人",
-              "投資の細かい判断をできるだけ減らしたい初心者",
-              "1本だけでシンプルに世界経済全体に投資したい人",
-              "10〜20年以上の超長期でコツコツ資産形成したい人",
-              "特定のセクターへの集中リスクを避けたい人",
+              "先進国・新興国を含む全世界株式が対象",
+              "時価総額の変化に応じて国・地域の比率が変わる",
+              "NASDAQ100にも含まれる米国大型株を多く含む",
+              "現在の費用・設定日・対象指数はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-indigo-400 font-bold flex-shrink-0">→</span>
@@ -356,11 +355,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "「今後もAI・テクノロジーの成長が続く」と考える人",
-              "オルカンより高いリターンを狙いたい上級者",
-              "-30%クラスの下落でも積立を止めずに続けられる人",
-              "長期（10年以上）保有を前提にできる人",
-              "オルカンをコアに据えた上でサテライトとして活用したい人",
+              "ナスダック上場の非金融大型株が対象",
+              "業種と上位銘柄への集中度が高い",
+              "オルカンと併用すると保有銘柄が重複する",
+              "現在の費用・設定日・対象指数はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-violet-400 font-bold flex-shrink-0">→</span>
@@ -373,7 +371,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* まとめ */}
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">まとめ：リスク許容度で選ぶ</p>
+        <p className="text-xs font-bold text-zinc-300">まとめ：投資範囲と集中度を確認する</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
           オルカンは全世界株式、NASDAQ100は米国の非金融大型株が中心で、分散範囲と集中度が異なります。過去の結果は開始月と期間で変わるため、<strong className="text-zinc-200">保有商品の重複、資金を使う時期、許容できる値動き</strong>を分けて確認します。
         </p>
@@ -386,7 +384,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={9} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           「もし○○年から積み立てていたら？」を、オルカン・NASDAQ100それぞれで実際に確かめてみましょう。
-          あなた自身の開始年・毎月の積立額で、リアルな数字を体感できます。
+          開始年と毎月の積立額を変え、同じ条件で期末評価額と元本を再計算できます。
         </p>
         <Link
           href="/compare/orukan-vs-nasdaq100"

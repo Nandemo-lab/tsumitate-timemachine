@@ -23,7 +23,7 @@ export const meta: ArticleMeta = {
   h1: "VTIとオルカンどっち？ETFと投資信託・米国集中と全世界分散を比較",
   metaTitle: "VTIとオルカンどっち？ETFと投資信託、米国集中と全世界分散の違いを比較",
   metaDescription:
-    "VTI（バンガード・トータル・ストック・マーケットETF）とオルカン（全世界株式）の違いを過去実績・銘柄数・買い方から比較。ETFと投資信託どちらが積立に向いているか判断材料を整理しました。",
+    "VTI（米国ETF）とオルカン（国内投信）の投資地域・銘柄数・費用・売買方法を整理。過去シミュレーションの条件と結果の読み方を確認できます。",
   lastUpdated: "2026年8月",
   publishedAt: "2026-08-04",
   category: "比較コラム",
@@ -84,7 +84,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {meta.h1}
         </h1>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          「米国市場全体に投資するETF」VTIと「全世界に分散する投資信託」オルカン。どちらも長期積立の定番として名前が挙がりますが、投資対象の範囲だけでなく、ETFと投資信託という買い方そのものが異なります。この記事では両者の違いを事実ベースで比較し、判断材料を整理します。
+          「米国市場全体に投資するETF」VTIと「全世界に分散する投資信託」オルカンは、投資対象の範囲だけでなく、ETFと投資信託という買い方そのものが異なります。この記事では両者の違いを事実ベースで整理します。
         </p>
       </section>
 
@@ -262,13 +262,13 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {[
             {
               event: "インフレ・利上げショック（2022年）",
-              body: `2022年のVTIは${formatAnnualReturn("vti", 2022)}、オルカンは${formatAnnualReturn("orcan", 2022)}でした。米国市場全体が下落した局面では、米国比率が約6割のオルカンも連動して下落しますが、非米国資産を含む分だけ振れ幅がやや異なります。`,
-              diff: "両者とも下落、振れ幅に差",
+              body: `2022年のVTIは${formatAnnualReturn("vti", 2022)}、オルカンは${formatAnnualReturn("orcan", 2022)}でした。いずれも円ベース・分配金再投資込みの暦年リターンで、年中の最大下落率ではありません。`,
+              diff: "両者とも暦年リターンはマイナス",
               diffColor: "text-amber-400",
             },
             {
               event: "コロナショック後の回復局面（2020年）",
-              body: `2020年のVTIは${formatAnnualReturn("vti", 2020)}、オルカンは${formatAnnualReturn("orcan", 2020)}でした。米国株比率が高いオルカンも米国市場の回復の恩恵を受けましたが、VTIは米国100%であるためより直接的に反映されました。`,
+              body: `2020年のVTIは${formatAnnualReturn("vti", 2020)}、オルカンは${formatAnnualReturn("orcan", 2020)}でした。いずれも円ベース・分配金再投資込みの暦年リターンで、指数水準の回復期間を示すものではありません。`,
               diff: "VTIの方が米国相場に直結",
               diffColor: "text-blue-400",
             },
@@ -348,10 +348,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "米国市場に集中して投資したい人",
-              "S&P500より広く、中小型株も含めて米国全体をカバーしたい人",
-              "ETFとして自分のタイミングで売買したい人",
-              "米国が今後も世界経済をけん引すると考える人",
+              "米国の大型・中小型株まで含むETF",
+              "市場取引時間中に口数単位で売買する",
+              "分配、為替、売買方法を国内投信と分けて確認する",
+              "現在の経費率・設定日・データ品質はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-blue-400 font-bold flex-shrink-0">→</span>
@@ -372,10 +372,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "米国以外の地域にも分散したい人",
-              "証券会社の自動積立で手間をかけずに続けたい初心者",
-              "つみたて投資枠をフル活用したい人",
-              "1本でシンプルに世界経済全体に投資したい人",
+              "先進国・新興国を含む全世界株式が対象",
+              "国内投信として金額指定の自動積立に対応する",
+              "つみたて投資枠と成長投資枠の対象商品",
+              "現在の信託報酬・設定日・データ品質はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-indigo-400 font-bold flex-shrink-0">→</span>
@@ -413,7 +413,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             },
             {
               q: "VTIとオルカンを両方持つのはありですか？",
-              a: "見られる組み合わせの一つです。オルカンをコアとして世界分散を確保しつつ、VTIで米国への配分を厚くする方法です。ただしオルカンにも米国株が含まれるため、両方持つと結果的に米国比率がさらに高まる点は理解しておく必要があります。",
+              a: "併用するとオルカンに含まれる米国株とVTIが重複し、米国比率が上がります。購入順序や優劣ではなく、現在の保有商品を含めた地域配分、売買方法、利用するNISA枠を確認します。",
             },
           ].map((faq) => (
             <div
@@ -443,7 +443,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={11} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           実際にVTIとオルカンを同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
-          あなた自身の開始年・毎月の積立額で、リアルな数字を体感できます。
+          開始年と毎月の積立額を変え、同じ条件で期末評価額と元本を再計算できます。
         </p>
         <Link
           href="/compare/vti-vs-orukan"

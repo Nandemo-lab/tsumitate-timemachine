@@ -23,7 +23,7 @@ export const meta: ArticleMeta = {
   h1: "S&P500とNASDAQ100どっち？違い・過去実績・向いている人を徹底比較",
   metaTitle: "S&P500とNASDAQ100どっち？違い・過去実績・どちらが向いているかを比較",
   metaDescription:
-    "S&P500とNASDAQ100の違いを過去シミュレーション・暴落耐性・コスト・新NISAでの選び方から徹底比較。安定分散とハイテク集中、どちらが自分に向いているか判断できます。",
+    "S&P500とNASDAQ100の対象業種・銘柄集中・費用・新NISAでの取扱いを整理。過去シミュレーションの条件と結果の読み方を確認できます。",
   lastUpdated: "2026年7月",
   publishedAt: "2026-07-03",
   category: "比較コラム",
@@ -83,7 +83,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           {meta.h1}
         </h1>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          米国株への積立で人気の2大インデックス、「S&P500」と「NASDAQ100」。どちらも新NISAの対象商品ですが、業種の分散度合いや下落局面での値動きに違いがあります。この記事では両者の違いを事実ベースで比較し、どちらが自分に向いているかを判断する材料を提供します。
+          S&amp;P500とNASDAQ100はいずれも米国大型株が中心ですが、採用基準・対象業種・銘柄集中が異なります。この記事では商品構造と費用、2本を併用したときの重複、過去シミュレーションを読む際の条件を整理します。
         </p>
       </section>
 
@@ -145,7 +145,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-zinc-400 leading-relaxed">
-          過去数十年にわたり、世界の主要指数の中でも高いリターンを誇ってきた実績があります。金融・ヘルスケアなど非テクノロジー業種も含むため、NASDAQ100と比べると値動きは比較的穏やかです。
+          金融・ヘルスケアなど非テクノロジー業種も含み、NASDAQ100より対象業種と銘柄数が広い指数です。どちらも米国株式の値動きと為替の影響を受けます。
         </p>
       </section>
 
@@ -153,7 +153,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="NASDAQ100とは？特徴と仕組み" />
         <p className="text-sm text-zinc-300 leading-relaxed">
-          NASDAQ100は、米国ナスダック市場に上場する非金融企業のうち時価総額上位100社で構成される株価指数です。Apple・Microsoft・NVIDIA・Googleなどテクノロジー企業が上位を占め、AI・半導体・クラウドなど成長分野の恩恵を強く受けます。日本では「iFreeNEXT NASDAQ100インデックス」が代表的な商品です。
+          NASDAQ100は、米国ナスダック市場に上場する非金融企業のうち時価総額上位100社で構成される株価指数です。情報技術など一部業種と上位銘柄の比率が高く、日本では「iFreeNEXT NASDAQ100インデックス」などが連動を目指します。
         </p>
         <SpecCard rows={[
           ["対象", "米国ナスダック非金融上位100社"],
@@ -238,8 +238,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </p>
           <ul className="space-y-1.5 pl-5">
             {[
-              "過去の成績ではNASDAQ100がS&P500を上回っている期間が多い",
-              "NASDAQ100の下落局面での振れ幅はS&P500よりも大きい",
+              "この表の2期間ではNASDAQ100の期末評価額がS&P500を上回った",
+              "この表の2期間ではNASDAQ100の期末評価額がS&P500を上回った",
               "開始年・期間によって差は大きく変動する（特定の期間が未来を保証しない）",
             ].map((t, i) => (
               <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
@@ -288,7 +288,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-zinc-300 leading-relaxed">
-            NASDAQ100は好調期のリターンが大きい分、下落局面での振れ幅もS&P500より大きい商品です。積立を継続できる金額・比率で保有することが、長期的な成果につながります。
+            NASDAQ100はS&amp;P500より対象業種と銘柄が集中しています。過去の単年リターンだけで将来の振れ幅や成果を決めつけず、資金を使う時期と保有商品の重複を確認します。
           </p>
         </div>
       </section>
@@ -300,7 +300,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           新NISA（2024年〜）のつみたて投資枠は年間{formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠と合わせた年間投資枠は{formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は{formatManEn(NISA_LIMITS.lifetimeTotal)}です。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          残高・購入額の実績ではS&P500が上位を占めており、まずS&P500をコアに据え、NASDAQ100はリスク許容度に応じてサテライトとして組み合わせる方法が一般的です。
+          どちらも米国大型株が中心で、2商品を併用すると上位銘柄が重複します。制度枠だけでなく、業種構成・重複・費用を同じ基準で確認します。
         </p>
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
           <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
@@ -308,8 +308,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "どちらもつみたて投資枠・成長投資枠で購入可能",
               "毎月定額の積立ならどちらもドルコスト平均法の効果を受けられる",
-              "「S&P500をコア、NASDAQ100をサテライト」という組み合わせも一般的",
-              "NASDAQ100を単独で全額投資する場合は下落局面の振れ幅を理解しておく",
+              "2商品を併用する場合は上位銘柄の重複と配分を確認する",
+              "一方だけを選ぶ場合も、対象業種と上位銘柄への集中度を確認する",
               "資金を使う時期と許容できる値動きを先に確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
@@ -331,11 +331,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "業種の集中リスクを抑えて米国株に投資したい人",
-              "大きな値下がりで不安になりたくない人",
-              "米国株の定番として長期実績を重視する人",
-              "投資の細かい判断をできるだけ減らしたい初心者",
-              "オルカンに加えて米国比率を高めたい人",
+              "米国大型株を複数業種に分散する指数",
+              "NASDAQ100にも含まれる上位銘柄を多く含む",
+              "金融を含む業種構成と時価総額加重を採用",
+              "現在の費用・設定日・対象指数はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-amber-400 font-bold flex-shrink-0">→</span>
@@ -356,11 +355,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
           <ul className="space-y-2.5">
             {[
-              "「今後もAI・テクノロジーの成長が続く」と考える人",
-              "S&P500より高いリターンを狙いたい上級者",
-              "-30%クラスの下落でも積立を止めずに続けられる人",
-              "長期（10年以上）保有を前提にできる人",
-              "S&P500をコアに据えた上でサテライトとして活用したい人",
+              "ナスダック上場の非金融大型株が対象",
+              "S&P500より業種と上位銘柄への集中度が高い",
+              "S&P500と併用すると保有銘柄が重複する",
+              "現在の費用・設定日・対象指数はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-violet-400 font-bold flex-shrink-0">→</span>
@@ -386,7 +384,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={9} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           「もし○○年から積み立てていたら？」を、S&P500・NASDAQ100それぞれで実際に確かめてみましょう。
-          あなた自身の開始年・毎月の積立額で、リアルな数字を体感できます。
+          開始年と毎月の積立額を変え、同じ条件で期末評価額と元本を再計算できます。
         </p>
         <Link
           href="/compare/sp500-vs-nasdaq100"
