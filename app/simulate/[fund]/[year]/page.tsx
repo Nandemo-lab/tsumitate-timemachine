@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { simulate, formatCurrency, calcElapsedYears, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
+import { simulate, formatCurrency, calcElapsedYears, CURRENT_YEAR, CURRENT_MONTH, isValidMonthlyAmount, parseStrictInteger } from "@/lib/simulation";
 import { FUNDS, FUND_LIST } from "@/lib/funds";
 import { FundId } from "@/types";
 import SimulatePageClient from "./SimulatePageClient";
@@ -37,10 +37,19 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!isValidFundId(fund)) return {};
 
   const fundData = FUNDS[fund];
-  const startYear = parseInt(year);
+  const startYear = parseStrictInteger(year);
+  if (startYear === null) return {};
   const pathname = `/simulate/${fund}/${year}`;
   const keepIndexed = isProgrammaticIndexException(pathname);
-  const monthlyAmount = parseInt(amount ?? "30000");
+  const monthlyAmount = parseStrictInteger(amount ?? "30000");
+  if (monthlyAmount === null || !isValidMonthlyAmount(monthlyAmount)) {
+    return {
+      title: "積立額の指定を確認してください",
+      description: "積立額は1円以上100万円以下の整数で指定してください。計算できない条件では結果を表示しません。",
+      robots: { index: false, follow: true },
+      alternates: { canonical: null },
+    };
+  }
   if (!isVerifiedReturnSeries(fund)) {
     return {
       title: `${fundData.shortName}のデータ品質と商品情報`,
@@ -97,10 +106,24 @@ export default async function SimulatePage({ params, searchParams }: Props) {
 
   if (!isValidFundId(fund)) notFound();
 
-  const startYear = parseInt(year);
-  if (isNaN(startYear) || startYear < 2015 || startYear > 2024) notFound();
+  const startYear = parseStrictInteger(year);
+  if (startYear === null || startYear < 2015 || startYear > 2024) notFound();
 
-  const monthlyAmount = parseInt(amount ?? "30000");
+  const monthlyAmount = parseStrictInteger(amount ?? "30000");
+  if (monthlyAmount === null || !isValidMonthlyAmount(monthlyAmount)) {
+    return (
+      <main className="min-h-dvh bg-zinc-950 text-zinc-50">
+        <div className="mx-auto max-w-2xl px-4 py-16">
+          <nav className="mb-8 text-xs text-zinc-400"><Link href="/">トップ</Link> / 入力条件</nav>
+          <div className="space-y-4 rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-6">
+            <h1 className="text-2xl font-bold">積立額の指定を確認してください</h1>
+            <p className="text-sm leading-relaxed text-zinc-300">積立額は1円以上100万円以下の整数で指定してください。不正な値を既定額へ置き換えず、計算を停止しました。</p>
+            <Link href="/" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">条件を選び直す</Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
   const fundData = FUNDS[fund];
   if (!isVerifiedReturnSeries(fund)) {
     return (

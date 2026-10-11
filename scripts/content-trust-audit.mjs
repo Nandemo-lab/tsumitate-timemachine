@@ -19,6 +19,11 @@ const schdSp500Article = read("content/articles/schd-vs-sp500.tsx");
 const fundSeo = read("lib/fund-seo.ts");
 const fundSeoPages = read("lib/fund-seo-pages.ts");
 const home = read("components/views/HomeView.tsx");
+const simulation = read("lib/simulation.ts");
+const simulatePage = read("app/simulate/[fund]/[year]/page.tsx");
+const ogRoute = read("app/api/og/route.tsx");
+const sitemap = read("app/sitemap.ts");
+const monthly = read("lib/monthly-pages.ts");
 
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
 assert(guides.includes("nisaMonthly10kExample.finalValue"), "NISA実績例がsimulate結果を参照していない");
@@ -59,6 +64,14 @@ assert(!schdSp500Article.includes('simulate({ fundId: "schd"'), "SCHDのG品質�
 assert(!compares.includes("★★★★★") && !compares.includes("★★★★") && !compares.includes("★★★"), "尺度のないリスク星が比較表へ再混入");
 assert(!fundSeoPages.includes("過去40年以上の年平均リターンは約10%"), "商品ページに指数と商品の期間を混同する長期実績が再混入");
 assert(!fundSeoPages.includes("10〜20年の長期保有を前提にすれば歴史的には回復"), "商品ページに根拠不明の回復主張が再混入");
+assert(simulation.includes("MAX_MONTHLY_AMOUNT = 1_000_000") && simulation.includes("Number.isSafeInteger"), "積立額の共通上限検証がない");
+assert(shareUrl.includes("parseStrictInteger") && simulatePage.includes("parseStrictInteger"), "共有・直接URLが部分一致の数値を受理する可能性がある");
+assert(ogRoute.includes("isValidMonthlyAmount(monthlyAmount)"), "OGP APIに積立額の共通境界が適用されていない");
+assert(!sitemap.includes("lastModified: new Date()"), "実更新日ではないデプロイ時刻がsitemap lastmodへ再混入");
+assert(!monthly.includes("5年間の評価額") && !monthly.includes("5年でいくら"), "80か月の月額ページが5年間と表示されている");
+for (const currentArticle of [article, returnArticle, schdVymArticle, schdSp500Article, read("content/articles/orukan-vs-nasdaq100.tsx"), read("content/articles/vti-vs-orukan.tsx")]) {
+  assert(!currentArticle.includes("2020年1月〜2025年6月"), "比較記事に旧終端2025年6月が残っている");
+}
 
 if (fs.existsSync(path.join(root, ".next/server/app/guide/nisa-tsumitate-ikura.html"))) {
   const built = read(".next/server/app/guide/nisa-tsumitate-ikura.html");

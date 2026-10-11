@@ -9,6 +9,17 @@ export const CURRENT_YEAR = 2026;
 export const CURRENT_MONTH = 8;
 export const DATA_SOURCE = "一次情報から検証した月次円建てリターン（A系列）と、原典未検証の年次参考モデル（G系列）";
 export const DATA_UPDATED = "2026年10月11日（収録最終月：2026年8月）";
+export const MAX_MONTHLY_AMOUNT = 1_000_000;
+
+export function isValidMonthlyAmount(value: number): boolean {
+  return Number.isSafeInteger(value) && value > 0 && value <= MAX_MONTHLY_AMOUNT;
+}
+
+export function parseStrictInteger(value: string | null | undefined): number | null {
+  if (value == null || !/^[0-9]+$/.test(value)) return null;
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) ? parsed : null;
+}
 
 function endParts(fundIds: FundId[]): [number, number] {
   const end = fundIds.map(getAvailableEndMonth).sort().at(0) ?? `${CURRENT_YEAR}-${String(CURRENT_MONTH).padStart(2, "0")}`;
@@ -20,6 +31,7 @@ function endParts(fundIds: FundId[]): [number, number] {
 export function simulate(params: SimulationParams): SimulationResult {
   const { fundId, startYear, startMonth, monthlyAmount } = params;
   if (!isVerifiedReturnSeries(fundId)) throw new UnverifiedReturnSeriesError(fundId);
+  if (!isValidMonthlyAmount(monthlyAmount)) throw new RangeError("monthlyAmount must be a positive integer no greater than 1,000,000");
   const fund = FUNDS[fundId];
   const dataPoints: MonthlyDataPoint[] = [];
 

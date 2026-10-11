@@ -2,6 +2,7 @@ import { FundId } from "@/types";
 import { SITE_URL } from "@/lib/site";
 import { FUNDS } from "@/lib/funds";
 import { getAvailableEndMonth, isReturnMonthAvailable, RETURN_SERIES_REGISTRY } from "@/lib/return-series";
+import { isValidMonthlyAmount, parseStrictInteger } from "@/lib/simulation";
 
 const VALID_FUNDS = Object.keys(FUNDS) as FundId[];
 
@@ -56,17 +57,17 @@ export function parseShareParams(search: string): ShareParams | null {
   if (fundB && !VALID_FUNDS.includes(fundB)) return null;
   if (RETURN_SERIES_REGISTRY[fund].quality !== "A" || (fundB && RETURN_SERIES_REGISTRY[fundB].quality !== "A")) return null;
 
-  const year = parseInt(yearRaw, 10);
-  const month = parseInt(monthRaw ?? "1", 10);
+  const year = parseStrictInteger(yearRaw);
+  const month = parseStrictInteger(monthRaw ?? "1");
   const defaultEnd = [fund, fundB].filter((id): id is FundId => Boolean(id)).map(getAvailableEndMonth).sort()[0];
-  const endYear = parseInt(endYearRaw ?? defaultEnd.slice(0, 4), 10);
-  const endMonth = parseInt(endMonthRaw ?? defaultEnd.slice(5, 7), 10);
-  const amount = parseInt(amountRaw, 10);
+  const endYear = parseStrictInteger(endYearRaw ?? defaultEnd.slice(0, 4));
+  const endMonth = parseStrictInteger(endMonthRaw ?? defaultEnd.slice(5, 7));
+  const amount = parseStrictInteger(amountRaw);
 
-  if ([year, month, endYear, endMonth, amount].some(Number.isNaN)) return null;
+  if (year === null || month === null || endYear === null || endMonth === null || amount === null) return null;
   if (month < 1 || month > 12) return null;
   if (endMonth < 1 || endMonth > 12) return null;
-  if (amount <= 0) return null;
+  if (!isValidMonthlyAmount(amount)) return null;
   if (!isReturnMonthAvailable(fund, year, month) || !isReturnMonthAvailable(fund, endYear, endMonth)) return null;
   if (fundB && (!isReturnMonthAvailable(fundB, year, month) || !isReturnMonthAvailable(fundB, endYear, endMonth))) return null;
   if (endYear < year || (endYear === year && endMonth < month)) return null;

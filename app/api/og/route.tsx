@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-import { simulate, formatCurrency } from "@/lib/simulation";
+import { simulate, formatCurrency, isValidMonthlyAmount } from "@/lib/simulation";
 import { FUNDS } from "@/lib/funds";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { getOgComparisonState } from "@/lib/og-comparison.mjs";
@@ -171,7 +171,7 @@ export async function GET(req: NextRequest) {
   const validNumbers =
     Number.isInteger(startYear) &&
     Number.isInteger(startMonth) && startMonth >= 1 && startMonth <= 12 &&
-    Number.isInteger(monthlyAmount) && monthlyAmount > 0 &&
+    isValidMonthlyAmount(monthlyAmount) &&
     (endYear === undefined || Number.isInteger(endYear)) &&
     (endMonth === undefined || (Number.isInteger(endMonth) && endMonth >= 1 && endMonth <= 12));
 

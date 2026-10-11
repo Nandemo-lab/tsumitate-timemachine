@@ -1,6 +1,7 @@
 import fs from "fs";
 import nodePath from "path";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import { MONTHLY_PAGES } from "@/lib/monthly-pages";
@@ -15,6 +16,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://tsumitate-timemachine.com/admin/seo" },
   robots: { index: false, follow: false },
 };
+
+// Productionでは404にし、開発時だけ使う内部監査画面。静的HTMLへ出力しない。
+export const dynamic = "force-dynamic";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -333,6 +337,7 @@ function buildPages(): PageSeoData[] {
 }
 
 export default function SeoAdminPage() {
+  if (process.env.NODE_ENV === "production") notFound();
   const pages = buildPages();
   return (
     <div className="min-h-screen bg-zinc-950">

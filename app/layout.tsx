@@ -71,7 +71,6 @@ export const viewport: Viewport = {
   themeColor: "#09090b",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
 
 const organizationLd = {
@@ -134,7 +133,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-dvh bg-zinc-950 text-zinc-50 antialiased">
-        {children}
+        <a href="#main-content" className="sr-only z-[100] rounded-lg bg-white px-4 py-3 text-zinc-950 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+          本文へ移動
+        </a>
+        <div id="main-content" tabIndex={-1}>{children}</div>
         <InteractionSpark />
       </body>
       {process.env.NODE_ENV === "production" && (
