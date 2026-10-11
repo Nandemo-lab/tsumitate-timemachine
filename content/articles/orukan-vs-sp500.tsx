@@ -52,15 +52,15 @@ const simSp500Long  = simulate({ fundId: "sp500",  startYear: 2018, startMonth: 
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
 const TOC = [
-  "結論：どちらを選ぶべきか",
+  "先に確認する3つの違い",
   "オルカンとは？特徴と仕組み",
   "S&P500とは？特徴と仕組み",
   "オルカンとS&P500の違いを比較",
   "過去の積立シミュレーションで比較",
   "暴落時の動き方の違い",
-  "新NISAではどちらが向いているか",
-  "こんな人はオルカン",
-  "こんな人はS&P500",
+  "新NISAで確認する条件",
+  "オルカンで確認する商品条件",
+  "S&P500で確認する商品条件",
   "積立タイムマシンで実際に確かめよう",
 ];
 
@@ -110,14 +110,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 0. 結論 */}
       <section id="section-0" className="space-y-4">
-        <SectionHeading index={0} title="結論：どちらを選ぶべきか" />
+        <SectionHeading index={0} title="先に確認する3つの違い" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
-          <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
+          <p className="text-sm font-bold text-indigo-200">購入判断の前に、次の条件を分けて確認します。</p>
           <ul className="space-y-2">
             {[
-              "「米国1国への集中リスクが気になる」→ オルカンが向いている",
-              "「過去の実績と成長力で米国を信頼している」→ S&P500が向いている",
-              "「どちらか迷っている」→ オルカン1本が最もシンプルで損のない選択",
+              "投資地域：オルカンは全世界、S&P500は米国大型株に集中",
+              "重複：オルカンにも米国株が含まれるため、2本保有時は米国比率が上がる",
+              "実績：同じ開始月・月額・終了月にそろえた結果は比較ページで再計算する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -126,7 +126,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             ))}
           </ul>
           <p className="text-xs text-zinc-500 leading-relaxed pt-1">
-            ※ どちらも長期的に世界経済の成長を享受できる優良なインデックスです。どちらが必ず良い・悪いと断言できるものではありません。
+            ※ 過去の積立結果は開始月と期間で変わります。この記事は商品構造と結果の読み方を整理し、購入を推奨するものではありません。
           </p>
         </div>
       </section>
@@ -188,9 +188,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["対象国",     "約47カ国（全世界）",     "米国のみ"],
                 ["銘柄数",     "約3,000銘柄",           "約500銘柄"],
                 ["分散度",     "◎ 地域・国際分散",      "△ 米国集中"],
-                ["過去リターン", "○ 高水準",             "◎ さらに高水準"],
+                ["実績の確認", "共通条件で再計算",        "共通条件で再計算"],
                 ["信託報酬",   formatExpenseRatio("orcan"), formatExpenseRatio("sp500")],
-                ["暴落リスク", "やや緩和（米国外分散）",  "米国に連動"],
+                ["地域集中",   "米国以外も含む",          "米国大型株に集中"],
                 ["シンプルさ", "◎ 1本で世界完結",        "◎ 米国特化で明快"],
               ].map(([k, o, s]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
@@ -295,7 +295,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 6. 新NISA */}
       <section id="section-6" className="space-y-4">
-        <SectionHeading index={6} title="新NISAではどちらが向いているか" />
+        <SectionHeading index={6} title="新NISAで確認する条件" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           新NISA（2024年〜）のつみたて投資枠は年間{formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠と合わせた年間投資枠は{formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は{formatManEn(NISA_LIMITS.lifetimeTotal)}です。{NISA_SYSTEM_DISCLAIMER}
         </p>
@@ -308,9 +308,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             {[
               "どちらもつみたて投資枠・成長投資枠で購入可能",
               "毎月定額の積立ならどちらもドルコスト平均法の効果を受けられる",
-              "「迷ったらオルカン」が多くのFPが挙げるシンプルな答え",
-              "S&P500への強い確信があれば、それも合理的な選択",
-              "どちらか一方に決めたら、長期で保有し続けることが最重要",
+              "保有中の商品と投資地域が重複していないか確認する",
+              "資金を使う時期と、許容できる値動きの範囲を確認する",
+              "比較ページで開始月と積立額を変え、期間依存の差を確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
                 <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -323,19 +323,18 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. こんな人はオルカン */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="こんな人はオルカン" />
+        <SectionHeading index={7} title="オルカンで確認する商品条件" />
         <div className="rounded-xl bg-indigo-500/6 border border-indigo-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Globe className="h-4 w-4 text-indigo-400" />
-            <p className="text-sm font-bold text-indigo-200">オルカンが向いている人</p>
+            <p className="text-sm font-bold text-indigo-200">オルカン側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[
-              "「米国1国への集中リスクが気になる」人",
-              "「将来どの国・地域が成長するか分からない」と考える人",
-              "なるべくシンプルに、1本だけで済ませたい人",
-              "10〜20年以上の超長期で世界経済全体の成長を取り込みたい人",
-              "投資の細かい判断をできるだけ減らしたい初心者",
+              "投資対象に米国以外の先進国・新興国も含まれる",
+              "時価総額の変化に応じて国・地域の構成比が変わる",
+              "円建て国内投信として自動積立できる",
+              "現在の費用・対象指数・設定日はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-indigo-400 font-bold flex-shrink-0">→</span>
@@ -348,19 +347,18 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はS&P500 */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="こんな人はS&P500" />
+        <SectionHeading index={8} title="S&P500で確認する商品条件" />
         <div className="rounded-xl bg-amber-500/6 border border-amber-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Flag className="h-4 w-4 text-amber-400" />
-            <p className="text-sm font-bold text-amber-200">S&P500が向いている人</p>
+            <p className="text-sm font-bold text-amber-200">S&amp;P500側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[
-              "「今後もAI・テクノロジーを中心に米国が世界を牽引する」と考える人",
-              "過去の長期リターンを重視し、米国株の実績に強い確信がある人",
-              "オルカンの新興国・欧州部分は不要と考える人",
-              "「将来的にS&P500と他の地域ETFを組み合わせたい」と考えている人",
-              "すでに日本株や他の資産を持っており、米国株で補いたい人",
+              "投資対象が米国大型株に限定される",
+              "オルカンより投資地域が集中する",
+              "円建て国内投信として自動積立できる",
+              "現在の費用・対象指数・設定日はFund詳細で確認できる",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <span className="text-amber-400 font-bold flex-shrink-0">→</span>

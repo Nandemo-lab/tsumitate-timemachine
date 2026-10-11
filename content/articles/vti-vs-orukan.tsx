@@ -51,16 +51,16 @@ const simOrcanLong = simulate({ fundId: "orcan", startYear: 2018, startMonth: 11
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
 const TOC = [
-  "結論：どちらを選ぶべきか",
+  "先に確認する3つの違い",
   "VTIとは？特徴と仕組み",
   "オルカンとは？特徴と仕組み",
   "VTIとオルカンの違いを比較",
   "過去の積立シミュレーションで比較",
   "2022年など暴落時の違い",
   "ETFと投資信託、買い方の違い",
-  "新NISAではどちらが向いているか",
-  "こんな人はVTI",
-  "こんな人はオルカン",
+  "新NISAで確認する条件",
+  "VTI側の確認項目",
+  "オルカン側の確認項目",
   "よくある質問",
   "積立タイムマシンで実際に確かめよう",
 ];
@@ -111,14 +111,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 0. 結論 */}
       <section id="section-0" className="space-y-4">
-        <SectionHeading index={0} title="結論：どちらを選ぶべきか" />
+        <SectionHeading index={0} title="先に確認する3つの違い" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
               "「米国市場にまとめて投資したい」→ VTIが選択肢になる",
               "「世界全体に分散し、証券会社の自動積立で手間をかけたくない」→ オルカンが選択肢になる",
-              "「どちらか迷っている」→ つみたて投資枠にも対応するオルカンをコアにし、VTIは成長投資枠で追加する組み合わせもある",
+              "2本を併用すると米国株の重複が増えるため、追加前に地域配分と利用するNISA枠を確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -316,7 +316,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. 新NISA */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="新NISAではどちらが向いているか" />
+        <SectionHeading index={7} title="新NISAで確認する条件" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           新NISA（2024年〜）のつみたて投資枠は、金融庁の基準を満たした投資信託・ETFのみが対象です。オルカンはつみたて投資枠・成長投資枠の両方で購入できますが、VTI（ETF本体）は成長投資枠での購入となります。
         </p>
@@ -340,11 +340,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はVTI */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="こんな人はVTI" />
+        <SectionHeading index={8} title="VTI側の確認項目" />
         <div className="rounded-xl bg-blue-500/6 border border-blue-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Flag className="h-4 w-4 text-blue-400" />
-            <p className="text-sm font-bold text-blue-200">VTIが向いている人</p>
+            <p className="text-sm font-bold text-blue-200">VTI側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[
@@ -364,11 +364,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 9. こんな人はオルカン */}
       <section id="section-9" className="space-y-4">
-        <SectionHeading index={9} title="こんな人はオルカン" />
+        <SectionHeading index={9} title="オルカン側の確認項目" />
         <div className="rounded-xl bg-indigo-500/6 border border-indigo-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Globe className="h-4 w-4 text-indigo-400" />
-            <p className="text-sm font-bold text-indigo-200">オルカンが向いている人</p>
+            <p className="text-sm font-bold text-indigo-200">オルカン側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[

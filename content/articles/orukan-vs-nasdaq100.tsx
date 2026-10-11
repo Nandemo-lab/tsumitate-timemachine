@@ -52,15 +52,15 @@ const simNasdaqLong = simulate({ fundId: "nasdaq100", startYear: 2018, startMont
 // ─── 目次 ────────────────────────────────────────────────────────────────────
 
 const TOC = [
-  "結論：どちらを選ぶべきか",
+  "先に確認する3つの違い",
   "オルカンとは？特徴と仕組み",
   "NASDAQ100とは？特徴と仕組み",
   "オルカンとNASDAQ100の違いを比較",
   "過去の積立シミュレーションで比較",
   "暴落時の動き方の違い",
-  "新NISAではどちらが向いているか",
-  "こんな人はオルカン",
-  "こんな人はNASDAQ100",
+  "新NISAで確認する条件",
+  "オルカン側の確認項目",
+  "NASDAQ100側の確認項目",
   "積立タイムマシンで実際に確かめよう",
 ];
 
@@ -110,14 +110,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 0. 結論 */}
       <section id="section-0" className="space-y-4">
-        <SectionHeading index={0} title="結論：どちらを選ぶべきか" />
+        <SectionHeading index={0} title="先に確認する3つの違い" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
           <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
               "「大きな下落局面でも積立を続けられる自信がある」→ NASDAQ100で攻める選択肢もある",
               "「値動きの大きさに不安を感じる」→ オルカンの世界分散が安心材料になる",
-              "「どちらか迷っている」→ オルカンをメインに、NASDAQ100はサテライトとして少額から",
+              "2本を併用すると米国大型テクノロジー株の重複が増えるため、配分前に重複を確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                 <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -191,7 +191,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["過去リターン", "○ 安定的な水準",       "◎ 好調期は圧倒的に高い"],
                 ["信託報酬",   formatExpenseRatio("orcan"), formatExpenseRatio("nasdaq100")],
                 ["2022年の暦年リターン", formatAnnualReturn("orcan", 2022), formatAnnualReturn("nasdaq100", 2022)],
-                ["向いている使い方", "コア（主力）向き",  "サテライト（一部）向き"],
+                ["保有時の確認", "米国を含む全世界分散",  "非金融大型株への集中"],
               ].map(([k, o, s]) => (
                 <tr key={k} className="hover:bg-white/[0.02] transition-colors">
                   <td className="px-4 py-3 text-xs text-zinc-400 font-medium">{k}</td>
@@ -295,7 +295,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 6. 新NISA */}
       <section id="section-6" className="space-y-4">
-        <SectionHeading index={6} title="新NISAではどちらが向いているか" />
+        <SectionHeading index={6} title="新NISAで確認する条件" />
         <p className="text-sm text-zinc-300 leading-relaxed">
           新NISA（2024年〜）のつみたて投資枠は年間{formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠と合わせた年間投資枠は{formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は{formatManEn(NISA_LIMITS.lifetimeTotal)}です。{NISA_SYSTEM_DISCLAIMER}
         </p>
@@ -310,7 +310,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "毎月定額の積立ならどちらもドルコスト平均法の効果を受けられる",
               "「オルカンをコア、NASDAQ100をサテライト」という組み合わせも人気",
               "NASDAQ100を単独で全額投資するのは初心者にはリスクが高い",
-              "どちらか一方に決めたら、下落時にも積立を続けられるかが最重要",
+              "資金を使う時期と許容できる値動きを先に確認する",
             ].map((t, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
                 <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
@@ -323,11 +323,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. こんな人はオルカン */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="こんな人はオルカン" />
+        <SectionHeading index={7} title="オルカン側の確認項目" />
         <div className="rounded-xl bg-indigo-500/6 border border-indigo-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Globe className="h-4 w-4 text-indigo-400" />
-            <p className="text-sm font-bold text-indigo-200">オルカンが向いている人</p>
+            <p className="text-sm font-bold text-indigo-200">オルカン側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[
@@ -348,11 +348,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はNASDAQ100 */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="こんな人はNASDAQ100" />
+        <SectionHeading index={8} title="NASDAQ100側の確認項目" />
         <div className="rounded-xl bg-violet-500/6 border border-violet-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Cpu className="h-4 w-4 text-violet-400" />
-            <p className="text-sm font-bold text-violet-200">NASDAQ100が向いている人</p>
+            <p className="text-sm font-bold text-violet-200">NASDAQ100側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[
@@ -375,7 +375,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
         <p className="text-xs font-bold text-zinc-300">まとめ：リスク許容度で選ぶ</p>
         <p className="text-xs text-zinc-400 leading-relaxed">
-          オルカンは世界分散による安定性、NASDAQ100はテクノロジー成長への集中による高リターンが特徴です。どちらが絶対に優れているという答えはなく、<strong className="text-zinc-200">下落局面でも積立を続けられるかどうか</strong>が最終的な選択基準になります。迷ったら、まずオルカンをコアにして始めるのが無難な出発点です。
+          オルカンは全世界株式、NASDAQ100は米国の非金融大型株が中心で、分散範囲と集中度が異なります。過去の結果は開始月と期間で変わるため、<strong className="text-zinc-200">保有商品の重複、資金を使う時期、許容できる値動き</strong>を分けて確認します。
         </p>
       </div>
 
