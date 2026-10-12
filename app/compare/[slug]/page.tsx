@@ -133,8 +133,8 @@ export default async function ComparePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
+      <div className="min-h-dvh overflow-x-hidden bg-zinc-950 text-zinc-50">
+        <div className="mx-auto w-full min-w-0 max-w-lg space-y-10 px-4 pb-16 pt-8">
 
           {/* パンくず */}
           <nav className="flex items-center gap-1 text-xs text-zinc-500">
@@ -154,9 +154,15 @@ export default async function ComparePage({ params }: Props) {
               {page.h1}
             </h1>
             <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 text-xs text-zinc-400">{fundA.shortName}<ReturnQualityPill fundId={page.fundAId} /></span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-zinc-400">{fundB.shortName}<ReturnQualityPill fundId={page.fundBId} /></span>
+            {page.searchIntentAnswer && (
+              <div className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4">
+                <p className="mb-1 text-[11px] font-bold tracking-wide text-indigo-300">検索者への短い回答</p>
+                <p className="text-sm leading-relaxed text-zinc-200">{page.searchIntentAnswer}</p>
+              </div>
+            )}
+            <div className="grid min-w-0 grid-cols-1 gap-2 sm:flex sm:flex-wrap">
+              <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-zinc-400">{fundA.shortName}<ReturnQualityPill fundId={page.fundAId} /></span>
+              <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-zinc-400">{fundB.shortName}<ReturnQualityPill fundId={page.fundBId} /></span>
             </div>
             {hasReferenceSeries && (
               <p className="rounded-xl border border-amber-400/20 bg-amber-400/5 px-3 py-2 text-[11px] leading-relaxed text-amber-200/90">
@@ -199,7 +205,7 @@ export default async function ComparePage({ params }: Props) {
             </h2>
             <div className="rounded-xl border border-white/[0.08] overflow-hidden">
               {/* ヘッダー */}
-              <div className="grid grid-cols-3 bg-white/[0.06] px-4 py-2.5">
+              <div className="grid grid-cols-[minmax(4.5rem,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] bg-white/[0.06] px-3 py-2.5 min-[390px]:px-4">
                 <span className="text-xs text-zinc-500">項目</span>
                 <span className="text-xs font-bold" style={{ color: fundA.color }}>{fundA.shortName}</span>
                 <span className="text-xs font-bold" style={{ color: fundB.color }}>{fundB.shortName}</span>
@@ -207,11 +213,11 @@ export default async function ComparePage({ params }: Props) {
               {page.specs.map((spec, i) => (
                 <div
                   key={spec.label}
-                  className={`grid grid-cols-3 px-4 py-3 gap-2 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
+                  className={`grid grid-cols-[minmax(4.5rem,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-3 py-3 min-[390px]:px-4 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
                 >
                   <span className="text-xs text-zinc-500 self-center">{spec.label}</span>
-                  <span className="text-xs text-zinc-300 self-center">{spec.a}</span>
-                  <span className="text-xs text-zinc-300 self-center">{spec.b}</span>
+                  <span className="min-w-0 break-words text-xs text-zinc-300 self-center">{spec.a}</span>
+                  <span className="min-w-0 break-words text-xs text-zinc-300 self-center">{spec.b}</span>
                   {spec.note && (
                     <p className="col-span-3 text-xs text-zinc-400 leading-relaxed">{spec.note}</p>
                   )}

@@ -20,7 +20,7 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
   const compareHref = `/?tab=compare&fund=${resultA.fundId}&fundB=${resultB.fundId}&year=${resultA.startYear}&month=${resultA.startMonth}&amount=${resultA.monthlyAmount}`;
 
   return (
-    <div className="space-y-8">
+    <div className="min-w-0 space-y-8">
       {/* シミュレーション結果カード */}
       <section>
         <h2
@@ -34,16 +34,16 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
           {(resultA.monthlyAmount / 10000).toFixed(0)}万円積立
         </p>
 
-        <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="mb-4 grid grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
           {[resultA, resultB].map((r) => (
             <div
               key={r.fundId}
-              className="rounded-xl border p-4 space-y-3"
+              className="min-w-0 space-y-3 rounded-xl border p-3 min-[390px]:p-4"
               style={{ borderColor: r.fundColor + "44", background: r.fundColor + "0a" }}
             >
               <div className="flex items-center gap-2 leading-tight">
                 <div className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
-                <span className="text-sm font-bold text-white">{r.fundName}</span>
+                <span className="min-w-0 break-words text-sm font-bold text-white">{r.fundName}</span>
               </div>
               <div>
                 <p className="text-[10px] text-zinc-500">評価額</p>

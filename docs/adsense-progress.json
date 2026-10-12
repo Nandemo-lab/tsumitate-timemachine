@@ -1,25 +1,20 @@
 {
-  "project": "積立タイムマシン2.0 プロダクト再構築",
-  "phase": 15,
+  "project": "GSC実測連携・検索流入成長スプリント",
+  "phase": 9,
   "status": "local_release_candidate_verified",
-  "progressPercent": 100,
+  "progressPercent": 85,
   "completedTasks": [
-    "GSC最新28日・直前28日・3か月のページ別実測を再集計",
-    "国内外10サービスの競合比較と収益感度を作成",
-    "B:シミュレーター入口 + C:公式データ検証基盤のコンセプトを採用",
-    "月末元本割れ月数・最長連続月数・最大月末評価損を純粋関数で実装",
-    "9つのA品質系列について独立期待値を持つ回帰auditを追加",
-    "ShareCardの同額・優位表示と重複keyを修正",
-    "損失表示、Ranking品質注記、選択UIのアクセシビリティを修正",
-    "8領域の反証レビューと90日・180日ロードマップを作成",
+    "GSC直近28日・前28日・3か月の基準値を照合",
+    "上位3 CompareのQuery×Pageとデバイス別実績を取得",
+    "GA4直近28日のイベント表を確認し新ファネルをNOT MEASUREDと判定",
+    "検索流入上位3 Compareへ検索意図別の短い回答を実装",
+    "375px・390px・PCの比較ページと条件引き継ぎE2Eを確認",
     "lint・TypeScript・build・127ページQA・全関連auditを完了",
-    "隔離production serverでlive QA 100/100を完了",
-    "375/390/768/1280pxの実ブラウザE2Eとコンソール確認を完了",
-    "機能変更をe1b1fd8へローカルcommit"
+    "隔離production serverでlive QA 100/100を完了"
   ],
-  "pendingTasks": ["ユーザー承認後の本番公開と公開後実測"],
-  "blockers": ["本番公開はユーザー承認待ち"],
-  "commitSHA": "e1b1fd8",
-  "verifiedAt": "2026-10-12T23:30:00+09:00",
-  "evidencePaths": ["docs/audits/timemachine-2-product-rebuild-2026-10-12.md", "scripts/simulation-insights-audit.mjs", "lib/simulation-insights.ts", "components/simulation/PathInsights.tsx"]
+  "pendingTasks": ["commit・push・GitHub Actions追跡", "Vercel Production反映", "公開後QA"],
+  "blockers": [],
+  "commitSHA": "d9274237e5dfb0ed565219911fad84666325835b",
+  "verifiedAt": "2026-10-12T23:45:00+09:00",
+  "evidencePaths": ["docs/audits/gsc-growth-sprint-2026-10-12.md", "scripts/content-trust-audit.mjs"]
 }

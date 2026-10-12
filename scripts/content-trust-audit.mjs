@@ -37,6 +37,14 @@ const compareClient = read("app/compare/[slug]/ComparePageClient.tsx");
 const analytics = read("lib/analytics.ts");
 const recentConditions = read("components/simulation/RecentConditions.tsx");
 
+for (const snippet of [
+  "同じ開始月・終了月・月額で期間末評価額だけでなく、月末時点の元本割れ月数と最大評価損も比較できます",
+  "SCHDはG品質のため、当サイトでは両者の評価額・利益・元本割れ期間の優劣を数値で示しません",
+  "このページのFANG+は、国内投信のiFreeNEXT FANG+インデックスです",
+]) {
+  assert(compares.includes(snippet), `検索流入上位Compareの短い回答が欠落しています: ${snippet}`);
+}
+
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
 assert(guides.includes("nisaMonthly10kExample.finalValue"), "NISA実績例がsimulate結果を参照していない");
 assert(!years.includes("年間リターンは約−18%"), "S&P500の旧固定リターンが再混入");
@@ -63,6 +71,8 @@ assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf
 assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseComparePreset"), "静的Compareから同じ2商品の比較フォームへ条件を引き継いでいない");
 assert(analytics.includes("trackShareSuccess") && !analytics.includes('track("compare_click", params);\n  track("compare_start", params);'), "共有成功または比較開始の計測定義がクリックと混在している");
 assert(recentConditions.includes("ttm:last-seen-date:v1") && recentConditions.includes("previous < today"), "同日内の表示を再訪として計測する可能性がある");
+assert(compareClient.includes("repeat(2,minmax(0,1fr))") && compareClient.includes("min-w-0 space-y-3"), "Compare結果カードがモバイル幅を押し広げる可能性がある");
+assert(homePage.includes("parseComparePreset"), "比較条件のURL復元が欠落している");
 assert(!timeMachine.includes("2025 + 5 / 12") && timeMachine.includes("getAvailableEndMonth"), "期間表示が旧終端2025年6月へ固定されている");
 assert(timeMachine.includes("year: startYear, month: startMonth, amount: monthlyAmount") && homePage.includes("initialAmount={displayedComparePreset.amount}"), "単一結果から比較へ開始年月・月額を引き継いでいない");
 assert(homePage.includes("useLayoutEffect") && homePage.includes("}, [displayedTab])") && !homePage.includes('behavior: "smooth"'), "SPA画面切替のスクロールが遷移後も中間位置へ残る可能性がある");

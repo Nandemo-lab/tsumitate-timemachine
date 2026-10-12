@@ -29,6 +29,7 @@ export interface ComparePage {
   relatedDescription: string; // 関連比較カードに表示するひと言説明
   h1: string;
   intro: string;
+  searchIntentAnswer?: string;
   conclusionA: string;        // "分散重視 → オルカン"
   conclusionB: string;        // "リターン重視 → S&P500"
   simYear: number;
@@ -161,6 +162,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "オルカンとNASDAQ100、世界分散とテック集中どっちを選ぶ？",
     intro:
       "オルカンは全世界株式への分散、NASDAQ100は米国の非金融大型株への集中が特徴です。分散を優先するならオルカン、値動きの大きさを許容して米国大型グロース株を重視するならNASDAQ100が比較対象になります。2020年から月3万円を積み立てた実績と下落時の差を数字で確認します。",
+    searchIntentAnswer:
+      "違いは投資範囲です。オルカンは先進国・新興国を含む全世界株式、NASDAQ100はNASDAQ上場の非金融大型株100社を対象とします。このページでは、同じ開始月・終了月・月額で期間末評価額だけでなく、月末時点の元本割れ月数と最大評価損も比較できます。",
     conclusionA: "地域分散を確認 → オルカン",
     conclusionB: "米国大型グロース株を重視 → NASDAQ100",
     simYear: 2020,
@@ -555,6 +558,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "オルカンとSCHD、どちらを積み立てるべき？",
     intro:
       "オルカンは円建ての国内投資信託、SCHDは米国の配当株へ投資するUSD建て米国ETFです。投資対象・分散範囲・分配方針・費用を比較します。SCHDのリターン系列は原典未検証の参考データとして明示します。",
+    searchIntentAnswer:
+      "比較できるのは商品構造です。オルカンは全世界株式へ投資してファンド内で分配金を再投資する国内投信、SCHDは米国配当株を対象に四半期分配を行う米国ETFです。SCHDはG品質のため、当サイトでは両者の評価額・利益・元本割れ期間の優劣を数値で示しません。",
     conclusionA: "全世界へ分散する円建て投信 → オルカン",
     conclusionB: "四半期分配を行うUSD建てETF → SCHD",
     simYear: 2020,
@@ -609,6 +614,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "オルカンとFANG+、どちらを積み立てるべき？",
     intro:
       "オルカンは先進国・新興国の株式、FANG+は大型テクノロジー企業など10銘柄を対象とします。投資範囲・指数構造・費用と、共通条件の過去の積立結果を分けて整理します。",
+    searchIntentAnswer:
+      "このページのFANG+は、国内投信のiFreeNEXT FANG+インデックスです。オルカンは全世界株式へ広く分散し、FANG+は10銘柄を均等加重するため、銘柄集中度が異なります。公式月次データがそろう共通期間に限り、同じ月額の積立経路を比較します。",
     conclusionA: "全世界の地域分散 → オルカン",
     conclusionB: "10銘柄への集中度を確認 → FANG+",
     simYear: 2020,
