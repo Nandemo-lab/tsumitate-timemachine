@@ -237,58 +237,58 @@ export default async function FromYearPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-zinc-500">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">ホーム</Link>
+          <nav className="flex items-center gap-1 text-xs text-slate-500">
+            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-zinc-400">{year}年から積み立てていたら</span>
+            <span className="text-slate-600">{year}年から積み立てていたら</span>
           </nav>
 
           {/* ── H1 ───────────────────────────────────────────────── */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-amber-400 flex-shrink-0" />
+              <Trophy className="h-5 w-5 text-orange-600 flex-shrink-0" />
               <h1
-                className="text-2xl font-black text-white leading-tight"
+                className="text-2xl font-black text-[#263A53] leading-tight"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
               {year}年から積み立てていたら？<br />検証済み銘柄リターンランキング
               </h1>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               月3万円 / {year}年{SIM_MONTH}月スタート / 2026年8月までの検証済み実績
             </p>
 
             {winner && (
               <div className="grid grid-cols-3 gap-2" aria-label={`${year}年開始の計算条件`}>
-                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
-                  <p className="text-[10px] text-zinc-500">積立回数</p>
-                  <p className="mt-1 text-sm font-bold text-white">{winner.result.monthsElapsed}回</p>
+                <div className="rounded-xl border border-[#D9E3E8] bg-white p-3">
+                  <p className="text-[10px] text-slate-500">積立回数</p>
+                  <p className="mt-1 text-sm font-bold text-[#263A53]">{winner.result.monthsElapsed}回</p>
                 </div>
-                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
-                  <p className="text-[10px] text-zinc-500">共通元本</p>
-                  <p className="mt-1 text-sm font-bold text-white">{formatCurrency(winner.result.totalPrincipal)}</p>
+                <div className="rounded-xl border border-[#D9E3E8] bg-white p-3">
+                  <p className="text-[10px] text-slate-500">共通元本</p>
+                  <p className="mt-1 text-sm font-bold text-[#263A53]">{formatCurrency(winner.result.totalPrincipal)}</p>
                 </div>
-                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
-                  <p className="text-[10px] text-zinc-500">順位対象</p>
-                  <p className="mt-1 text-sm font-bold text-white">A品質 {ranked.length}銘柄</p>
+                <div className="rounded-xl border border-[#D9E3E8] bg-white p-3">
+                  <p className="text-[10px] text-slate-500">順位対象</p>
+                  <p className="mt-1 text-sm font-bold text-[#263A53]">A品質 {ranked.length}銘柄</p>
                 </div>
               </div>
             )}
-            <p className="text-xs leading-relaxed text-zinc-500">
+            <p className="text-xs leading-relaxed text-slate-500">
               このページ固有の比較は、{year}年1月から同じ月額を積み立てた経過です。単年リターンではなく、毎月の追加投資を含む期間全体の評価額を比較します。
             </p>
 
             {/* 年の背景 */}
             {yearContext && (
-              <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-4">
-                <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500 mb-2">
+              <div className="rounded-xl bg-white border border-[#DDE6EA] px-4 py-4">
+                <p className="text-[10px] font-black tracking-widest uppercase text-slate-500 mb-2">
                   {year}年の市場
                 </p>
-                <p className="text-sm text-zinc-400 leading-relaxed">{yearContext}</p>
+                <p className="text-sm text-slate-600 leading-relaxed">{yearContext}</p>
               </div>
             )}
           </section>
@@ -309,7 +309,7 @@ export default async function FromYearPage({ params }: Props) {
               border: `1px solid ${winner.fund.color}40`,
             }}
           >
-            <p className="text-xs font-black tracking-widest uppercase text-zinc-400">
+            <p className="text-xs font-black tracking-widest uppercase text-slate-600">
               🥇 {year}年スタート 最高リターン
             </p>
             <div className="flex items-end justify-between">
@@ -333,27 +333,27 @@ export default async function FromYearPage({ params }: Props) {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-[10px] text-zinc-500 mb-0.5">評価額</p>
-                <p className="text-sm font-bold text-zinc-300">{formatCurrency(winner.result.finalValue)}</p>
-                <p className="text-[10px] text-zinc-500">元本 {formatCurrency(winner.result.totalPrincipal)}</p>
+                <p className="text-[10px] text-slate-500 mb-0.5">評価額</p>
+                <p className="text-sm font-bold text-slate-700">{formatCurrency(winner.result.finalValue)}</p>
+                <p className="text-[10px] text-slate-500">元本 {formatCurrency(winner.result.totalPrincipal)}</p>
               </div>
             </div>
           </section> : (
-            <section className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
-              <p className="text-sm text-zinc-400">この期間を検証済みデータで計算できる銘柄はありません。</p>
+            <section className="rounded-2xl border border-[#D9E3E8] bg-white p-5">
+              <p className="text-sm text-slate-600">この期間を検証済みデータで計算できる銘柄はありません。</p>
             </section>
           )}
 
           <section className="space-y-3" data-start-year-analysis={yearNum}>
             <div className="space-y-1">
-              <h2 className="text-base font-bold text-white">{year}年開始で、途中の元本割れは何か月あったか</h2>
-              <p className="text-xs leading-relaxed text-zinc-500">
+              <h2 className="text-base font-bold text-[#263A53]">{year}年開始で、途中の元本割れは何か月あったか</h2>
+              <p className="text-xs leading-relaxed text-slate-500">
                 月初に3万円を追加した直後の月末評価額を、同月までの拠出元本と比較しています。日中の最大下落率や将来の回復期間ではありません。
               </p>
             </div>
-            <div className="overflow-x-auto rounded-xl border border-white/[0.08]">
+            <div className="overflow-x-auto rounded-xl border border-[#D9E3E8]">
               <table className="w-full min-w-[460px] text-left text-xs">
-                <thead className="bg-white/[0.04] text-zinc-500">
+                <thead className="bg-[#F7FAFB] text-slate-500">
                   <tr>
                     <th className="px-3 py-2 font-medium">商品</th>
                     <th className="px-3 py-2 font-medium">元本割れ月数</th>
@@ -365,11 +365,11 @@ export default async function FromYearPage({ params }: Props) {
                   {pathAnalyses.map(({ fund, belowPrincipalMonths, firstBelowPrincipal, lastBelowPrincipal, worstPoint }) => (
                     <tr key={fund.id}>
                       <td className="px-3 py-2.5 font-bold" style={{ color: fund.color }}>{fund.shortName}</td>
-                      <td className="px-3 py-2.5 text-zinc-300">{belowPrincipalMonths}か月</td>
-                      <td className="px-3 py-2.5 text-zinc-400">
+                      <td className="px-3 py-2.5 text-slate-700">{belowPrincipalMonths}か月</td>
+                      <td className="px-3 py-2.5 text-slate-600">
                         {firstBelowPrincipal ? `${firstBelowPrincipal}〜${lastBelowPrincipal}` : "該当なし"}
                       </td>
-                      <td className="px-3 py-2.5 text-zinc-400">
+                      <td className="px-3 py-2.5 text-slate-600">
                         {worstPoint ? `${worstPoint.date} ${worstPoint.profit >= 0 ? "+" : ""}${formatCurrency(worstPoint.profit)}` : "—"}
                       </td>
                     </tr>
@@ -377,8 +377,8 @@ export default async function FromYearPage({ params }: Props) {
                 </tbody>
               </table>
             </div>
-            <p className="text-[11px] text-zinc-500 sm:hidden">表は横にスクロールして全項目を確認できます。</p>
-            <p className="text-[11px] leading-relaxed text-zinc-500">
+            <p className="text-[11px] text-slate-500 sm:hidden">表は横にスクロールして全項目を確認できます。</p>
+            <p className="text-[11px] leading-relaxed text-slate-500">
               開始年が違えば積立回数と元本も変わるため、別の開始年ページとの評価額だけの比較はできません。この表は各開始年の中で、同じ月額・終了月の商品差を確認するためのものです。
             </p>
           </section>
@@ -386,7 +386,7 @@ export default async function FromYearPage({ params }: Props) {
           {/* ── 全銘柄ランキング ─────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {year}年スタート・検証済み{ranked.length}銘柄リターンランキング
@@ -410,7 +410,7 @@ export default async function FromYearPage({ params }: Props) {
                         className="h-2 w-2 rounded-full flex-shrink-0"
                         style={{ background: fund.color }}
                       />
-                      <p className="text-sm font-bold text-white">{fund.encyclopedia.nickname}</p>
+                      <p className="text-sm font-bold text-[#263A53]">{fund.encyclopedia.nickname}</p>
                     </div>
 
                     {/* リターン・評価額 */}
@@ -422,12 +422,12 @@ export default async function FromYearPage({ params }: Props) {
                         >
                           {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
                         </p>
-                        <p className="text-[10px] text-zinc-500">
+                        <p className="text-[10px] text-slate-500">
                           {isProfit ? "+" : ""}{formatCurrency(result.profit)}
                         </p>
                       </div>
                       {hasYearPage && (
-                        <ChevronRight className="h-4 w-4 text-zinc-500 flex-shrink-0" />
+                        <ChevronRight className="h-4 w-4 text-slate-500 flex-shrink-0" />
                       )}
                     </div>
                   </>
@@ -436,8 +436,8 @@ export default async function FromYearPage({ params }: Props) {
                 const baseClass =
                   "flex items-center justify-between rounded-xl px-4 py-3 transition-colors " +
                   (i === 0
-                    ? "bg-white/[0.06] border border-white/[0.12]"
-                    : "bg-white/[0.03] border border-white/[0.07]");
+                    ? "bg-[#EFF5F7] border border-[#C7D6DE]"
+                    : "bg-white border border-[#DDE6EA]");
 
                 return hasYearPage ? (
                   <Link
@@ -463,12 +463,12 @@ export default async function FromYearPage({ params }: Props) {
                 );
               })}
               {ranked.length === 0 && (
-                <p className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-zinc-400">
+                <p className="rounded-xl border border-[#D9E3E8] bg-white px-4 py-3 text-sm text-slate-600">
                   順位付けできる検証済み銘柄がありません。
                 </p>
               )}
             </div>
-            <p className="text-[10px] text-zinc-600 mt-3 text-center">
+            <p className="text-[10px] text-slate-500 mt-3 text-center">
               ※月3万円 / {year}年{SIM_MONTH}月〜{CURRENT_YEAR}年{CURRENT_MONTH}月 / 検証済み月次データを使用
             </p>
           </section>
@@ -476,7 +476,7 @@ export default async function FromYearPage({ params }: Props) {
           {referenceFunds.length > 0 && (
             <section className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] px-4 py-4 space-y-2">
               <p className="text-xs font-bold text-amber-200">順位外の参考系列</p>
-              <p className="text-xs leading-relaxed text-zinc-400">
+              <p className="text-xs leading-relaxed text-slate-600">
                 {referenceFunds.map((fund) => fund.shortName).join("・")}は原典未検証の参考データ（G品質）のため、数値順位には含めていません。
               </p>
               <div className="flex flex-wrap gap-3 text-xs">
@@ -496,7 +496,7 @@ export default async function FromYearPage({ params }: Props) {
           {yearPageLinks.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 銘柄別の詳細シミュレーション
@@ -514,7 +514,7 @@ export default async function FromYearPage({ params }: Props) {
                     <Link
                       key={yp.fundSlug}
                       href={`/${yp.fundSlug}/${yearNum}`}
-                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <span
@@ -522,8 +522,8 @@ export default async function FromYearPage({ params }: Props) {
                           style={{ background: f.color }}
                         />
                         <div>
-                          <p className="text-sm font-bold text-white">{f.encyclopedia.nickname}</p>
-                          <p className="text-[10px] text-zinc-500">{year}年から積み立てていたら？</p>
+                          <p className="text-sm font-bold text-[#263A53]">{f.encyclopedia.nickname}</p>
+                          <p className="text-[10px] text-slate-500">{year}年から積み立てていたら？</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -533,7 +533,7 @@ export default async function FromYearPage({ params }: Props) {
                         >
                           {r.returnRate >= 0 ? "+" : ""}{r.returnRate.toFixed(1)}%
                         </span>
-                        <ChevronRight className="h-4 w-4 text-zinc-500" />
+                        <ChevronRight className="h-4 w-4 text-slate-500" />
                       </div>
                     </Link>
                   );
@@ -545,7 +545,7 @@ export default async function FromYearPage({ params }: Props) {
           {/* ── 他の年との比較 ───────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               他の年から積み立てていたら？
@@ -562,9 +562,9 @@ export default async function FromYearPage({ params }: Props) {
                   <Link
                     key={y}
                     href={`/from/${y}`}
-                    className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    className="flex flex-col gap-1 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                   >
-                    <span className="text-xs font-bold text-zinc-300">{y}年〜</span>
+                    <span className="text-xs font-bold text-slate-700">{y}年〜</span>
                     <span
                       className="font-number text-sm font-bold"
                       style={{ color: topResult.returnRate >= 0 ? "#10b981" : "#ef4444" }}
@@ -581,7 +581,7 @@ export default async function FromYearPage({ params }: Props) {
           {relatedCompares.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 上位銘柄の比較記事
@@ -594,14 +594,14 @@ export default async function FromYearPage({ params }: Props) {
                     <Link
                       key={cp.slug}
                       href={`/compare/${cp.slug}`}
-                      className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex flex-col gap-1 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
-                      <span className="flex items-center gap-2 text-sm font-bold text-white">
+                      <span className="flex items-center gap-2 text-sm font-bold text-[#263A53]">
                         <span style={{ color: fA.color }}>{fA.shortName}</span>
-                        <span className="text-zinc-500 text-xs">vs</span>
+                        <span className="text-slate-500 text-xs">vs</span>
                         <span style={{ color: fB.color }}>{fB.shortName}</span>
                       </span>
-                      <span className="text-xs text-zinc-500">{cp.relatedDescription}</span>
+                      <span className="text-xs text-slate-500">{cp.relatedDescription}</span>
                     </Link>
                   );
                 })}
@@ -612,20 +612,20 @@ export default async function FromYearPage({ params }: Props) {
           {/* ── CTA ─────────────────────────────────────────────── */}
           <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-emerald-400" />
+              <TrendingUp className="h-5 w-5 text-emerald-700" />
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 自分の条件でシミュレーション
               </h2>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               銘柄・開始年・月額を自由に変えて、あなただけの「たられば」を計算できます。
             </p>
             <Link
               href="/"
-              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white bg-emerald-600 hover:bg-emerald-500 transition-colors"
+              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] bg-emerald-600 hover:bg-emerald-500 transition-colors"
             >
               積立タイムマシンで試す
               <ArrowRight className="h-4 w-4" />
@@ -636,7 +636,7 @@ export default async function FromYearPage({ params }: Props) {
           {faqs.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-5"
+                className="text-base font-bold text-[#263A53] mb-5"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 よくある質問
@@ -645,10 +645,10 @@ export default async function FromYearPage({ params }: Props) {
                 {faqs.map((faq, i) => (
                   <div
                     key={i}
-                    className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"
+                    className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
                   >
-                    <p className="text-sm font-bold text-white">Q. {faq.q}</p>
-                    <p className="text-sm text-zinc-400 leading-relaxed">A. {faq.a}</p>
+                    <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
                   </div>
                 ))}
               </div>

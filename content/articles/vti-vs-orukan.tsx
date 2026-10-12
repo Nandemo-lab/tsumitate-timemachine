@@ -74,16 +74,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* カテゴリバッジ + H1 + 導入 */}
       <section className="space-y-3">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1">
-          <BookOpen className="h-3 w-3 text-indigo-400" />
-          <span className="text-[11px] font-bold text-indigo-400">{meta.category}</span>
+          <BookOpen className="h-3 w-3 text-[#236B8E]" />
+          <span className="text-xs font-bold text-[#236B8E]">{meta.category}</span>
         </div>
         <h1
-          className="text-2xl font-black text-white leading-tight"
+          className="text-2xl font-black text-[#263A53] leading-tight"
           style={{ fontFamily: "var(--font-serif-jp), serif" }}
         >
           {meta.h1}
         </h1>
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           「米国市場全体に投資するETF」VTIと「全世界に分散する投資信託」オルカンは、投資対象の範囲だけでなく、ETFと投資信託という買い方そのものが異なります。この記事では両者の違いを事実ベースで整理します。
         </p>
       </section>
@@ -92,15 +92,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <GuideEeat lastUpdated={meta.lastUpdated} />
 
       {/* 目次 */}
-      <nav className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">目次</p>
+      <nav className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+        <p className="text-xs font-bold text-slate-700">目次</p>
         <ol className="space-y-1.5">
           {TOC.map((title, i) => (
             <li key={i} className="flex items-start gap-2">
-              <span className="text-[10px] font-bold text-indigo-400 mt-0.5 flex-shrink-0">{i + 1}.</span>
+              <span className="text-xs font-bold text-[#236B8E] mt-0.5 flex-shrink-0">{i + 1}.</span>
               <a
                 href={`#section-${i}`}
-                className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors leading-snug"
+                className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
               >
                 {title}
               </a>
@@ -113,20 +113,20 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-0" className="space-y-4">
         <SectionHeading index={0} title="先に確認する3つの違い" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
-          <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
+          <p className="text-sm font-bold text-[#236B8E]">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
               "「米国市場にまとめて投資したい」→ VTIが選択肢になる",
               "「世界全体に分散し、証券会社の自動積立で手間をかけたくない」→ オルカンが選択肢になる",
               "2本を併用すると米国株の重複が増えるため、追加前に地域配分と利用するNISA枠を確認する",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <CheckCircle2 className="h-4 w-4 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
           </ul>
-          <p className="text-xs text-zinc-500 leading-relaxed pt-1">
+          <p className="text-xs text-slate-500 leading-relaxed pt-1">
             ※ どちらも低コストで長期積立に使われる商品であり、優劣を断定できるものではありません。投資対象の範囲と買い方の違いで選択が分かれます。
           </p>
         </div>
@@ -135,7 +135,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 1. VTIとは */}
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="VTIとは？特徴と仕組み" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           VTI（バンガード・トータル・ストック・マーケットETF）は、バンガード社が運用するETFで、米国の上場株式ほぼ全銘柄を対象にしています。大型株中心のS&P500と異なり、中小型株も含めて{FUNDS.vti.shareCount}をカバーする点が特徴です。日本では楽天証券の「楽天・全米株式インデックス・ファンド（楽天VTI）」として投資信託化されており、証券会社を通じて円建てで積み立てることもできます。
         </p>
         <SpecCard rows={[
@@ -145,7 +145,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["経費率", `${formatExpenseRatio("vti")}（ETFとして世界最低水準）`],
           ["新NISA対応", "成長投資枠（ETF）／楽天VTIはつみたて投資枠にも対応"],
         ]} />
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           米国市場を「1銘柄漏らさずまとめて買う」設計のため、S&P500より裾野の広い米国分散ができます。ETF本体（VTI）は米国市場での売買が必要ですが、楽天VTIのような投資信託経由であれば国内証券会社から円貨で積立設定ができます。
         </p>
       </section>
@@ -153,8 +153,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 2. オルカンとは */}
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="オルカンとは？特徴と仕組み" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
-          「オルカン」は<strong className="text-white">「eMAXIS Slim全世界株式（オール・カントリー）」</strong>の愛称で、MSCI ACWI（All Country World Index）に連動する投資信託です。先進国・新興国を合わせた{FUNDS.orcan.shareCount}をカバーし、時価総額の比率に応じて世界全体に自動で分散投資します。
+        <p className="text-sm text-slate-700 leading-relaxed">
+          「オルカン」は<strong className="text-[#263A53]">「eMAXIS Slim全世界株式（オール・カントリー）」</strong>の愛称で、MSCI ACWI（All Country World Index）に連動する投資信託です。先進国・新興国を合わせた{FUNDS.orcan.shareCount}をカバーし、時価総額の比率に応じて世界全体に自動で分散投資します。
         </p>
         <SpecCard rows={[
           ["対象", "先進国・新興国（全世界）"],
@@ -163,7 +163,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["経費率", `${formatExpenseRatio("orcan")}（投資信託として最安クラス）`],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           米国だけでなく日本・欧州・新興国も含めて世界全体へ分散されるのが最大の特徴です。証券会社の100円からの自動積立に対応しており、投資信託として購入・売却の手間が少ない設計になっています。
         </p>
       </section>
@@ -171,15 +171,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 3. 比較表 */}
       <section id="section-3" className="space-y-4">
         <SectionHeading index={3} title="VTIとオルカンの違いを比較" />
-        <div className="rounded-xl overflow-hidden border border-white/[0.08]">
+        <div className="rounded-xl overflow-hidden border border-[#D9E3E8]">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-white/[0.05]">
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-zinc-400 w-1/3">項目</th>
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-blue-400">
+              <tr className="bg-[#F4F7F8]">
+                <th className="text-left px-4 py-3 text-xs font-bold text-slate-600 w-1/3">項目</th>
+                <th className="text-left px-4 py-3 text-xs font-bold text-blue-400">
                   <Flag className="h-3 w-3 inline mr-1" />VTI
                 </th>
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-indigo-400">
+                <th className="text-left px-4 py-3 text-xs font-bold text-[#236B8E]">
                   <Globe className="h-3 w-3 inline mr-1" />オルカン
                 </th>
               </tr>
@@ -194,16 +194,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
                 ["経費率",         formatExpenseRatio("vti"),             formatExpenseRatio("orcan")],
                 ["NISA対応",       "○ 成長投資枠（楽天VTIはつみたても可）", "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
-                <tr key={k} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="px-4 py-3 text-xs text-zinc-400 font-medium">{k}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-200">{a}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-200">{b}</td>
+                <tr key={k} className="hover:bg-white transition-colors">
+                  <td className="px-4 py-3 text-xs text-slate-600 font-medium">{k}</td>
+                  <td className="px-4 py-3 text-xs text-slate-700">{a}</td>
+                  <td className="px-4 py-3 text-xs text-slate-700">{b}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-zinc-500 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed">
           ※経費率・年間リターンはlib/funds.tsのデータに基づく参考値です。ETF本体VTIの経費率は米国上場ETFとしての水準、楽天VTI（投資信託）は別途信託報酬が設定されています。
         </p>
       </section>
@@ -211,11 +211,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 4. 過去シミュレーション */}
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           VTIは公式NAV Total Returnと日銀USD/JPY、オルカンは公式の分配金再投資基準価額から検証した、月次実績を使った計算結果です。
         </p>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-zinc-400">
+          <p className="text-xs font-bold text-slate-600">
             【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-2 gap-3">
@@ -224,7 +224,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-zinc-400">
+          <p className="text-xs font-bold text-slate-600">
               【2018年11月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立（両商品の検証済み実績が揃う期間）
           </p>
           <div className="grid grid-cols-2 gap-3">
@@ -232,9 +232,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
             <SimCard name="オルカン" color={FUNDS.orcan.color} sim={simOrcanLong} />
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 space-y-1.5">
-          <p className="text-xs font-bold text-zinc-300 flex items-center gap-1.5">
-            <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-1.5">
+          <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+            <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
             読み取れること
           </p>
           <ul className="space-y-1.5 pl-5">
@@ -243,11 +243,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "両者は値動きの傾向が近く、大きな乖離が続くわけではない",
               "開始年・期間によって差は変動する（特定の期間が未来を保証しない）",
             ].map((t, i) => (
-              <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
+              <li key={i} className="text-xs text-slate-600 list-disc">{t}</li>
             ))}
           </ul>
         </div>
-        <p className="text-xs text-zinc-500 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed">
           ※両系列とも「A：公式月次データ」です。オルカンは商品設定後のみを使用し、将来の成果を示すものではありません。
         </p>
       </section>
@@ -255,7 +255,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 5. 暴落時 */}
       <section id="section-5" className="space-y-4">
         <SectionHeading index={5} title="2022年など暴落時の違い" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           下落局面での値動きの差は、この2商品を比較するうえで重要なポイントです。
         </p>
         <div className="space-y-3">
@@ -264,7 +264,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               event: "インフレ・利上げショック（2022年）",
               body: `2022年のVTIは${formatAnnualReturn("vti", 2022)}、オルカンは${formatAnnualReturn("orcan", 2022)}でした。いずれも円ベース・分配金再投資込みの暦年リターンで、年中の最大下落率ではありません。`,
               diff: "両者とも暦年リターンはマイナス",
-              diffColor: "text-amber-400",
+              diffColor: "text-orange-600",
             },
             {
               event: "コロナショック後の回復局面（2020年）",
@@ -273,16 +273,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               diffColor: "text-blue-400",
             },
           ].map((item, i) => (
-            <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-              <p className="text-xs font-bold text-white">{item.event}</p>
-              <p className="text-xs text-zinc-400 leading-relaxed">{item.body}</p>
-              <p className={`text-[11px] font-bold ${item.diffColor}`}>▶ {item.diff}</p>
+            <div key={i} className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+              <p className="text-xs font-bold text-[#263A53]">{item.event}</p>
+              <p className="text-xs text-slate-600 leading-relaxed">{item.body}</p>
+              <p className={`text-xs font-bold ${item.diffColor}`}>▶ {item.diff}</p>
             </div>
           ))}
         </div>
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
-          <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-zinc-300 leading-relaxed">
+          <AlertTriangle className="h-4 w-4 text-orange-600 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-slate-700 leading-relaxed">
             VTIは米国市場に100%連動するため、米国の景気動向・金利政策の影響を直接受けます。オルカンは非米国資産も含むため、米国以外の地域の動きが下支え・下押しの両方に働くことがあります。
           </p>
         </div>
@@ -291,10 +291,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 6. ETFと投資信託の違い */}
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="ETFと投資信託、買い方の違い" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           VTIとオルカンを比較するうえで、投資対象の違いと同じくらい重要なのが「買い方」の違いです。
         </p>
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
+        <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-3">
           <ul className="space-y-2">
             {[
               "VTI（ETF本体）は米国市場の取引時間中に、株式と同じように口数単位で売買する",
@@ -302,14 +302,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "楽天VTIのようにVTIを投資信託化した商品であれば、オルカンと同じ感覚で円貨積立ができる",
               "ETF本体は購入のたびに為替（円→ドル）が発生し、投資信託は基準価格ベースで円建て取引になる",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
           </ul>
         </div>
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           「自動積立の手軽さ」を重視する場合はオルカン、または投資信託化された楽天VTIが選ばれます。「ETFとして自分のタイミングで売買したい」場合はVTI本体が選択肢になります。
         </p>
       </section>
@@ -317,11 +317,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 7. 新NISA */}
       <section id="section-7" className="space-y-4">
         <SectionHeading index={7} title="新NISAで確認する条件" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           新NISA（2024年〜）のつみたて投資枠は、金融庁の基準を満たした投資信託・ETFのみが対象です。オルカンはつみたて投資枠・成長投資枠の両方で購入できますが、VTI（ETF本体）は成長投資枠での購入となります。
         </p>
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
-          <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
+        <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-3">
+          <p className="text-xs font-bold text-slate-700">新NISAで選ぶ際のポイント</p>
           <ul className="space-y-2">
             {[
               `オルカンはつみたて投資枠（年${formatManEn(NISA_LIMITS.tsumitateAnnual)}）・成長投資枠の両方で積立設定が可能`,
@@ -329,8 +329,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "楽天VTI（投資信託）はつみたて投資枠での積立にも対応する商品として扱われている場合がある",
               "証券会社によって取扱商品が異なるため、購入前に対応状況の確認が必要",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
@@ -353,7 +353,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "分配、為替、売買方法を国内投信と分けて確認する",
               "現在の経費率・設定日・データ品質はFund詳細で確認できる",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
                 <span className="text-blue-400 font-bold flex-shrink-0">→</span>
                 {t}
               </li>
@@ -367,8 +367,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={9} title="オルカン側の確認項目" />
         <div className="rounded-xl bg-indigo-500/6 border border-indigo-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
-            <Globe className="h-4 w-4 text-indigo-400" />
-            <p className="text-sm font-bold text-indigo-200">オルカン側の確認項目</p>
+            <Globe className="h-4 w-4 text-[#236B8E]" />
+            <p className="text-sm font-bold text-[#236B8E]">オルカン側の確認項目</p>
           </div>
           <ul className="space-y-2.5">
             {[
@@ -377,8 +377,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "つみたて投資枠と成長投資枠の対象商品",
               "現在の信託報酬・設定日・データ品質はFund詳細で確認できる",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <span className="text-indigo-400 font-bold flex-shrink-0">→</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <span className="text-[#236B8E] font-bold flex-shrink-0">→</span>
                 {t}
               </li>
             ))}
@@ -418,21 +418,21 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ].map((faq) => (
             <div
               key={faq.q}
-              className="rounded-xl border border-white/8 p-5"
-              style={{ background: "rgba(255,255,255,0.025)" }}
+              className="rounded-xl border border-[#D9E3E8] p-5"
+              style={{ background: "#FFFFFF" }}
             >
-              <p className="font-bold text-white text-sm mb-2 leading-snug">Q. {faq.q}</p>
-              <p className="text-sm text-zinc-400 leading-relaxed">{faq.a}</p>
+              <p className="font-bold text-[#263A53] text-sm mb-2 leading-snug">Q. {faq.q}</p>
+              <p className="text-sm text-slate-600 leading-relaxed">{faq.a}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* まとめ */}
-      <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">まとめ：投資対象の範囲と買い方の違い</p>
-        <p className="text-xs text-zinc-400 leading-relaxed">
-          VTIは米国市場への集中投資、オルカンは全世界への分散投資という違いに加え、ETFと投資信託という買い方の違いもあります。どちらが絶対に優れているという答えはなく、<strong className="text-zinc-200">投資対象の範囲をどこまで広げたいか、自動積立の手軽さを重視するか</strong>で選択が分かれます。
+      <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+        <p className="text-xs font-bold text-slate-700">まとめ：投資対象の範囲と買い方の違い</p>
+        <p className="text-xs text-slate-600 leading-relaxed">
+          VTIは米国市場への集中投資、オルカンは全世界への分散投資という違いに加え、ETFと投資信託という買い方の違いもあります。どちらが絶対に優れているという答えはなく、<strong className="text-slate-700">投資対象の範囲をどこまで広げたいか、自動積立の手軽さを重視するか</strong>で選択が分かれます。
         </p>
       </div>
 
@@ -441,7 +441,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 11. CTA */}
       <section id="section-11" className="space-y-4">
         <SectionHeading index={11} title="積立タイムマシンで実際に確かめよう" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           実際にVTIとオルカンを同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
           開始年と毎月の積立額を変え、同じ条件で期末評価額と元本を再計算できます。
         </p>
@@ -450,36 +450,36 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           className="block rounded-2xl p-5 space-y-2 transition-all hover:opacity-90 active:scale-[0.99]"
           style={{ background: "linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #4f46e5 100%)" }}
         >
-          <p className="text-xs font-bold text-white/80">積立タイムマシン 比較モード</p>
-          <p className="text-lg font-black text-white leading-tight">
+          <p className="text-xs font-bold text-[#263A53]/80">積立タイムマシン 比較モード</p>
+          <p className="text-lg font-black text-[#263A53] leading-tight">
             VTIとオルカンを<br />実際に比較してみませんか？
           </p>
-          <p className="text-xs text-white/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
+          <p className="text-xs text-[#263A53]/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
           <div className="flex items-center gap-1.5 mt-3">
             <span className="text-sm font-black text-white">比較シミュレーションを開く</span>
-            <ArrowRight className="h-4 w-4 text-white" />
+            <ArrowRight className="h-4 w-4 text-[#263A53]" />
           </div>
         </Link>
         <Link
           href="/"
-          className="block rounded-2xl border border-white/10 bg-white/[0.05] p-5 space-y-2 transition-all hover:bg-white/[0.08] active:scale-[0.99]"
+          className="block rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] p-5 space-y-2 transition-all hover:bg-white/[0.08] active:scale-[0.99]"
         >
-          <p className="text-xs font-bold text-zinc-400">積立タイムマシン</p>
-          <p className="text-base font-black text-white leading-tight">
+          <p className="text-xs font-bold text-slate-600">積立タイムマシン</p>
+          <p className="text-base font-black text-[#263A53] leading-tight">
             あの時から積み立てていたら<br />いくらになっていた？
           </p>
           <div className="flex items-center gap-1.5 mt-2">
             <span
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-black text-white"
-              style={{ background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }}
+              style={{ background: "#236B8E" }}
             >
               無料でシミュレーションする
               <ArrowRight className="h-4 w-4" />
             </span>
           </div>
         </Link>
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 space-y-2">
-          <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+          <p className="text-xs font-bold text-slate-600">関連ページ</p>
           <ul className="space-y-2">
             {[
               { href: "/guide/orukan-ippon-de-ii",          label: "オルカン一本でいい？詳しく解説" },
@@ -491,9 +491,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               <li key={href}>
                 <Link
                   href={href}
-                  className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+                  className="flex items-center gap-2 text-xs text-slate-600 hover:text-slate-700 transition-colors"
                 >
-                  <ArrowRight className="h-3 w-3 text-indigo-400 flex-shrink-0" />
+                  <ArrowRight className="h-3 w-3 text-[#236B8E] flex-shrink-0" />
                   {label}
                 </Link>
               </li>

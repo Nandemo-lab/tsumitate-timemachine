@@ -41,7 +41,7 @@ const SECTIONS = [
 
 export default function DisclaimerPage() {
   return (
-    <div className="min-h-dvh bg-zinc-950 text-zinc-50" style={{ fontFamily: "var(--font-sans-jp), sans-serif" }}>
+    <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]" style={{ fontFamily: "var(--font-sans-jp), sans-serif" }}>
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl"
@@ -49,11 +49,11 @@ export default function DisclaimerPage() {
         />
       </div>
 
-      <nav className="relative border-b border-white/8 px-4 py-3">
-        <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400">
-          <Link href="/" className="hover:text-zinc-200 transition-colors">積立タイムマシン</Link>
+      <nav className="relative border-b border-[#D9E3E8] px-4 py-3">
+        <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
+          <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
           <ChevronRight className="h-3 w-3 flex-shrink-0" />
-          <span className="text-zinc-200">免責事項</span>
+          <span className="text-slate-700">免責事項</span>
         </div>
       </nav>
 
@@ -63,10 +63,10 @@ export default function DisclaimerPage() {
             className="flex items-center justify-center h-10 w-10 rounded-xl"
             style={{ background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)" }}
           >
-            <AlertTriangle className="h-5 w-5 text-amber-400" />
+            <AlertTriangle className="h-5 w-5 text-orange-600" />
           </div>
           <h1
-            className="text-xl font-bold text-white"
+            className="text-xl font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             免責事項
@@ -74,7 +74,7 @@ export default function DisclaimerPage() {
         </div>
 
         <div
-          className="rounded-2xl border border-amber-500/20 p-5 mb-8 text-sm text-zinc-400 leading-relaxed"
+          className="rounded-2xl border border-amber-500/20 p-5 mb-8 text-sm text-slate-600 leading-relaxed"
           style={{ background: "rgba(245,158,11,0.05)" }}
         >
           本サービス「積立タイムマシン」をご利用いただく前に、以下の免責事項をご確認ください。
@@ -84,24 +84,24 @@ export default function DisclaimerPage() {
           {SECTIONS.map((section) => (
             <div
               key={section.title}
-              className="rounded-xl border border-white/8 p-5"
-              style={{ background: "rgba(255,255,255,0.025)" }}
+              className="rounded-xl border border-[#D9E3E8] p-5"
+              style={{ background: "#FFFFFF" }}
             >
-              <h2 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <h2 className="text-sm font-bold text-[#263A53] mb-2 flex items-center gap-2">
                 <span>{section.icon}</span>
                 {section.title}
               </h2>
-              <p className="text-sm text-zinc-400 leading-relaxed">{section.body}</p>
+              <p className="text-sm text-slate-600 leading-relaxed">{section.body}</p>
             </div>
           ))}
         </div>
 
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 mt-8 text-xs text-zinc-500 leading-relaxed">
-          より詳しい運営方針は<Link href="/about" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">このサービスについて</Link>、データの出典は<Link href="/about/data-sources" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">データソース・計算方法</Link>のページをご覧ください。
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-5 mt-8 text-xs text-slate-500 leading-relaxed">
+          より詳しい運営方針は<Link href="/about" className="text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors">このサービスについて</Link>、データの出典は<Link href="/about/data-sources" className="text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors">データソース・計算方法</Link>のページをご覧ください。
         </div>
 
         <div className="mt-8 text-center">
-          <Link href="/" className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
+          <Link href="/" className="text-xs text-slate-500 hover:text-slate-700 transition-colors">
             ← トップページへ戻る
           </Link>
         </div>

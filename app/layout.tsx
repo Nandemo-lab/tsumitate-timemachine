@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_JP, Noto_Serif_JP, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import InteractionSpark from "@/components/effects/InteractionSpark";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -68,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
+  themeColor: "#FAFAF7",
   width: "device-width",
   initialScale: 1,
 };
@@ -120,7 +119,7 @@ const webappLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable} ${geistMono.variable} dark`}>
+    <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable} ${geistMono.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
@@ -132,12 +131,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
       </head>
-      <body className="min-h-dvh bg-zinc-950 text-zinc-50 antialiased">
-        <a href="#main-content" className="sr-only z-[100] rounded-lg bg-white px-4 py-3 text-zinc-950 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+      <body className="min-h-dvh bg-[#FAFAF7] text-[#263A53] antialiased">
+        <a href="#main-content" className="sr-only z-[100] rounded-xl bg-[#263A53] px-4 py-3 text-[#263A53] focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
           本文へ移動
         </a>
         <div id="main-content" tabIndex={-1}>{children}</div>
-        <InteractionSpark />
       </body>
       {process.env.NODE_ENV === "production" && (
         <GoogleAnalytics gaId="G-0MWMWGWGBT" />

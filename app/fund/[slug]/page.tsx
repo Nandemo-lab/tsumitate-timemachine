@@ -155,16 +155,16 @@ export default async function FundPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-zinc-500">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">ホーム</Link>
+          <nav className="flex items-center gap-1 text-xs text-slate-500">
+            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3" />
             <span>銘柄解説</span>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-zinc-400">{enc.nickname}</span>
+            <span className="text-slate-600">{enc.nickname}</span>
           </nav>
 
           {/* ── ファーストビュー ─────────────────────────────────── */}
@@ -177,9 +177,9 @@ export default async function FundPage({ params }: Props) {
                 <BookOpen className="h-6 w-6" style={{ color: fund.color }} />
               </div>
               <div>
-                <p className="text-xs text-zinc-400 font-medium">{enc.formalName}</p>
+                <p className="text-xs text-slate-600 font-medium">{enc.formalName}</p>
                 <h1
-                  className="text-2xl font-black text-white leading-tight"
+                  className="text-2xl font-black text-[#263A53] leading-tight"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   {page.h1 ?? page.metaTitle}
@@ -223,12 +223,12 @@ export default async function FundPage({ params }: Props) {
           {page.contextualComparison && <GuideBodyText body={page.contextualComparison} />}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {enc.nickname}の基本情報・信託報酬・NISA対応
             </h2>
-            <div className="rounded-xl border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl border border-[#D9E3E8] overflow-hidden">
               {[
                 { label: "投資対象", value: fund.description },
                 { label: page.fundId === "schd" ? "経費率" : "信託報酬・経費率", value: enc.managementFee },
@@ -245,13 +245,13 @@ export default async function FundPage({ params }: Props) {
                 <div
                   key={label}
                   className={`grid grid-cols-2 px-4 py-3 gap-4 ${
-                    i % 2 === 0 ? "bg-white/[0.02]" : ""
+                    i % 2 === 0 ? "bg-white" : ""
                   }`}
                 >
-                  <span className="text-xs text-zinc-500 self-center font-medium">
+                  <span className="text-xs text-slate-500 self-center font-medium">
                     {label}
                   </span>
-                  <span className="text-xs text-zinc-300 self-center">{value}</span>
+                  <span className="text-xs text-slate-700 self-center">{value}</span>
                 </div>
               ))}
             </div>
@@ -260,7 +260,7 @@ export default async function FundPage({ params }: Props) {
           {/* ── メリット ────────────────────────────────────────── */}
           <section className="space-y-3">
             <h2
-              className="text-base font-bold text-white"
+              className="text-base font-bold text-[#263A53]"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {enc.nickname}の商品設計・確認できる特徴
@@ -269,13 +269,13 @@ export default async function FundPage({ params }: Props) {
               {enc.pros.map((p) => (
                 <div
                   key={p}
-                  className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3"
+                  className="flex items-start gap-3 rounded-xl bg-white border border-[#E1E8EC] px-4 py-3"
                 >
                   <CheckCircle2
                     className="h-4 w-4 flex-shrink-0 mt-0.5"
                     style={{ color: fund.color }}
                   />
-                  <p className="text-sm text-zinc-300">{p}</p>
+                  <p className="text-sm text-slate-700">{p}</p>
                 </div>
               ))}
             </div>
@@ -284,7 +284,7 @@ export default async function FundPage({ params }: Props) {
           {/* ── デメリット ──────────────────────────────────────── */}
           <section className="space-y-3">
             <h2
-              className="text-base font-bold text-white"
+              className="text-base font-bold text-[#263A53]"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {page.fundId === "fangplus" ? `${enc.nickname}を確認するときの注意点` : `${enc.nickname}のリスク・デメリット・注意点`}
@@ -293,10 +293,10 @@ export default async function FundPage({ params }: Props) {
               {enc.cons.map((c) => (
                 <div
                   key={c}
-                  className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3"
+                  className="flex items-start gap-3 rounded-xl bg-white border border-[#E1E8EC] px-4 py-3"
                 >
-                  <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-zinc-300">{c}</p>
+                  <AlertTriangle className="h-4 w-4 text-orange-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-slate-700">{c}</p>
                 </div>
               ))}
             </div>
@@ -312,10 +312,10 @@ export default async function FundPage({ params }: Props) {
           >
             <ReturnQualityPill fundId={page.fundId} />
             <div>
-              <p className="text-xs font-black tracking-widest uppercase text-zinc-400 mb-1">
+              <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-1">
                 もし{page.simYear}年から積み立てていたら？
               </p>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-slate-500">
                 月{(page.simAmount / 10000).toFixed(0)}万円 / {page.simYear}年{page.simMonth}月スタート
               </p>
             </div>
@@ -324,7 +324,7 @@ export default async function FundPage({ params }: Props) {
             <div className="space-y-3">
               <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
+                  <p className="text-[10px] text-slate-600 mb-0.5">利益</p>
                   <div className="flex items-baseline gap-1.5">
                     <p
                       className="font-heading font-number text-3xl font-bold"
@@ -341,18 +341,18 @@ export default async function FundPage({ params }: Props) {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[10px] text-zinc-400 mb-0.5">期間末評価額</p>
-                  <p className="text-sm font-bold text-zinc-300">
+                  <p className="text-[10px] text-slate-600 mb-0.5">期間末評価額</p>
+                  <p className="text-sm font-bold text-slate-700">
                     {formatCurrency(result.finalValue)}
                   </p>
-                  <p className="text-[10px] text-zinc-500">
+                  <p className="text-[10px] text-slate-500">
                     元本 {formatCurrency(totalPrincipal)}
                   </p>
                 </div>
               </div>
 
               {/* プログレスバー */}
-              <div className="h-2 rounded-full bg-white/8 overflow-hidden">
+              <div className="h-2 rounded-full bg-[#EAF3F7] overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all"
                   style={{
@@ -365,19 +365,19 @@ export default async function FundPage({ params }: Props) {
               {/* 3カラム */}
               <div className="grid grid-cols-3 gap-3 pt-1">
                 <div className="text-center">
-                  <p className="text-[9px] text-zinc-500 mb-0.5">積立期間</p>
-                  <p className="text-xs font-bold text-zinc-300">
+                  <p className="text-[9px] text-slate-500 mb-0.5">積立期間</p>
+                  <p className="text-xs font-bold text-slate-700">
                     {Math.floor(result.monthsElapsed / 12)}年{result.monthsElapsed % 12}ヶ月
                   </p>
                 </div>
-                <div className="text-center border-x border-white/[0.07]">
-                  <p className="text-[9px] text-zinc-500 mb-0.5">評価額</p>
-                  <p className="text-xs font-bold text-zinc-300">
+                <div className="text-center border-x border-[#DDE6EA]">
+                  <p className="text-[9px] text-slate-500 mb-0.5">評価額</p>
+                  <p className="text-xs font-bold text-slate-700">
                     {formatCurrency(result.finalValue)}
                   </p>
                 </div>
                 <div className="text-center">
-                  <p className="text-[9px] text-zinc-500 mb-0.5">リターン</p>
+                  <p className="text-[9px] text-slate-500 mb-0.5">リターン</p>
                   <p
                     className="text-xs font-bold"
                     style={{ color: isProfit ? "#10b981" : "#ef4444" }}
@@ -390,7 +390,7 @@ export default async function FundPage({ params }: Props) {
 
             <Link
               href={`/simulate/${page.fundId}/${page.simYear}`}
-              className="flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
+              className="flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-[#263A53] transition-opacity hover:opacity-90"
               style={{ background: fund.color }}
             >
               自分の条件でシミュレーション
@@ -399,15 +399,15 @@ export default async function FundPage({ params }: Props) {
           </section> : (
             <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5 space-y-3">
               <ReturnQualityPill fundId={page.fundId} />
-              <h2 className="text-base font-bold text-white">参考系列のため積立評価額は掲載していません</h2>
-              <p className="text-sm leading-relaxed text-zinc-400">
+              <h2 className="text-base font-bold text-[#263A53]">参考系列のため積立評価額は掲載していません</h2>
+              <p className="text-sm leading-relaxed text-slate-600">
                 SCHDの月次系列はG品質・原典未検証です。このページでは正式商品、指数設計、分配方針、費用など確認できる商品属性を掲載し、未検証系列から計算した評価額・利益・推移グラフは表示しません。
               </p>
               <div className="flex flex-col gap-2 sm:flex-row">
                 <Link href="/about/data-sources" className="inline-flex items-center justify-center gap-1 rounded-xl border border-amber-400/25 px-4 py-2.5 text-xs font-bold text-amber-200">
                   データ品質の基準を見る<ArrowRight className="h-3 w-3" />
                 </Link>
-                <Link href="/compare/schd-vs-vym" className="inline-flex items-center justify-center gap-1 rounded-xl border border-white/10 px-4 py-2.5 text-xs font-bold text-zinc-300">
+                <Link href="/compare/schd-vs-vym" className="inline-flex items-center justify-center gap-1 rounded-xl border border-[#D2DEE4] px-4 py-2.5 text-xs font-bold text-slate-700">
                   商品属性を比較する<ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
@@ -417,19 +417,19 @@ export default async function FundPage({ params }: Props) {
           {/* ── 商品選択時の確認事項 ─────────────────────────────── */}
           {enc.forWhom && <section className="space-y-3">
             <h2
-              className="text-base font-bold text-white"
+              className="text-base font-bold text-[#263A53]"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               商品選択時の確認ポイント
             </h2>
-            <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-4 space-y-2">
+            <div className="rounded-xl bg-white border border-[#DDE6EA] px-4 py-4 space-y-2">
               {enc.forWhom.split("・").map((w) => (
                 <div key={w} className="flex items-center gap-2.5">
                   <span
                     className="h-1.5 w-1.5 rounded-full flex-shrink-0"
                     style={{ background: fund.color }}
                   />
-                  <p className="text-sm text-zinc-300">{w}</p>
+                  <p className="text-sm text-slate-700">{w}</p>
                 </div>
               ))}
             </div>
@@ -438,7 +438,7 @@ export default async function FundPage({ params }: Props) {
           {/* ── よくある質問 ─────────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-5"
+              className="text-base font-bold text-[#263A53] mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {enc.nickname}に関するよくある質問
@@ -447,10 +447,10 @@ export default async function FundPage({ params }: Props) {
               {page.faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"
+                  className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
                 >
-                  <p className="text-sm font-bold text-white">Q. {faq.q}</p>
-                  <p className="text-sm text-zinc-400 leading-relaxed">A. {faq.a}</p>
+                  <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
                 </div>
               ))}
             </div>
@@ -460,7 +460,7 @@ export default async function FundPage({ params }: Props) {
           {relatedCompares.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {enc.nickname}の比較記事
@@ -474,14 +474,14 @@ export default async function FundPage({ params }: Props) {
                     <Link
                       key={cp.slug}
                       href={`/compare/${cp.slug}`}
-                      className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex flex-col gap-1 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
-                      <span className="flex items-center gap-2 text-sm font-bold text-white">
+                      <span className="flex items-center gap-2 text-sm font-bold text-[#263A53]">
                         <span style={{ color: fA.color }}>{fA.shortName}</span>
-                        <span className="text-zinc-500 text-xs">vs</span>
+                        <span className="text-slate-500 text-xs">vs</span>
                         <span style={{ color: fB.color }}>{fB.shortName}</span>
                       </span>
-                      <span className="text-xs text-zinc-500">{cp.relatedDescription}</span>
+                      <span className="text-xs text-slate-500">{cp.relatedDescription}</span>
                     </Link>
                   );
                 })}
@@ -493,7 +493,7 @@ export default async function FundPage({ params }: Props) {
           {relatedFunds.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 関連する銘柄解説
@@ -503,17 +503,17 @@ export default async function FundPage({ params }: Props) {
                   <Link
                     key={fSlug}
                     href={`/fund/${fSlug}`}
-                    className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    className="flex items-center gap-3 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                   >
                     <span
                       className="h-2 w-2 rounded-full flex-shrink-0"
                       style={{ background: relFund.color }}
                     />
                     <div>
-                      <p className="text-sm font-bold text-white">{relFund.shortName}</p>
-                      <p className="text-[10px] text-zinc-500">{relFund.encyclopedia.nickname}とは？</p>
+                      <p className="text-sm font-bold text-[#263A53]">{relFund.shortName}</p>
+                      <p className="text-[10px] text-slate-500">{relFund.encyclopedia.nickname}とは？</p>
                     </div>
-                    <ChevronRight className="h-3.5 w-3.5 text-zinc-500 ml-auto" />
+                    <ChevronRight className="h-3.5 w-3.5 text-slate-500 ml-auto" />
                   </Link>
                 ))}
               </div>
@@ -524,7 +524,7 @@ export default async function FundPage({ params }: Props) {
           {fundYearPages.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {enc.nickname}のたられば：年別シミュレーション
@@ -541,7 +541,7 @@ export default async function FundPage({ params }: Props) {
                     <Link
                       key={yp.year}
                       href={`/${yp.fundSlug}/${yp.year}`}
-                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <span
@@ -550,7 +550,7 @@ export default async function FundPage({ params }: Props) {
                         >
                           {yp.year}年〜
                         </span>
-                        <span className="text-sm text-zinc-300">
+                        <span className="text-sm text-slate-700">
                           {yp.year}年から積み立てていたら？
                         </span>
                       </div>
@@ -570,20 +570,20 @@ export default async function FundPage({ params }: Props) {
           {/* ── CTA ─────────────────────────────────────────────── */}
           {isVerifiedSeries && <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-emerald-400" />
+              <TrendingUp className="h-5 w-5 text-emerald-700" />
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {enc.nickname}でシミュレーション
               </h2>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               積立開始年・月額を変えて、あなたの「たられば」を計算できます。
             </p>
             <Link
               href={`/simulate/${page.fundId}/2020`}
-              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white transition-opacity hover:opacity-90"
+              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] transition-opacity hover:opacity-90"
               style={{ background: fund.color }}
             >
               {enc.nickname}でシミュレーション開始

@@ -70,16 +70,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* カテゴリバッジ + H1 + 導入 */}
       <section className="space-y-3">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1">
-          <BookOpen className="h-3 w-3 text-indigo-400" />
-          <span className="text-[11px] font-bold text-indigo-400">{meta.category}</span>
+          <BookOpen className="h-3 w-3 text-[#236B8E]" />
+          <span className="text-xs font-bold text-[#236B8E]">{meta.category}</span>
         </div>
         <h1
-          className="text-2xl font-black text-white leading-tight"
+          className="text-2xl font-black text-[#263A53] leading-tight"
           style={{ fontFamily: "var(--font-serif-jp), serif" }}
         >
           {meta.h1}
         </h1>
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           米国高配当ETFのSCHDとVYMについて、指数の銘柄選定方法・分散範囲・費用を整理します。SCHDのリターン系列はG品質のため、検証済み実績による優劣は判定しません。
         </p>
       </section>
@@ -88,15 +88,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <GuideEeat lastUpdated={meta.lastUpdated} />
 
       {/* 目次 */}
-      <nav className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">目次</p>
+      <nav className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+        <p className="text-xs font-bold text-slate-700">目次</p>
         <ol className="space-y-1.5">
           {TOC.map((title, i) => (
             <li key={i} className="flex items-start gap-2">
-              <span className="text-[10px] font-bold text-indigo-400 mt-0.5 flex-shrink-0">{i + 1}.</span>
+              <span className="text-xs font-bold text-[#236B8E] mt-0.5 flex-shrink-0">{i + 1}.</span>
               <a
                 href={`#section-${i}`}
-                className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors leading-snug"
+                className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
               >
                 {title}
               </a>
@@ -109,20 +109,20 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-0" className="space-y-4">
         <SectionHeading index={0} title="結論：比較時の確認点" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
-          <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
+          <p className="text-sm font-bold text-[#236B8E]">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
               `財務比率等を用いて${FUNDS.schd.shareCount}を選定する指数への連動を重視する場合はSCHDの設計を確認`,
               "より広い銘柄分散を重視する場合はVYMの設計を確認",
               "分配利回りや増配率は基準日と集計期間をそろえて公式資料で確認",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <CheckCircle2 className="h-4 w-4 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
           </ul>
-          <p className="text-xs text-zinc-500 leading-relaxed pt-1">
+          <p className="text-xs text-slate-500 leading-relaxed pt-1">
             ※ どちらも米国高配当株への投資であり、優劣を断定できるものではありません。銘柄選定の思想の違いを理解した上で選ぶことが重要です。
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 1. SCHDとは */}
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="SCHDとは？特徴と仕組み" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。財務健全性や増配実績などを基準に銘柄を選定します。SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
         </p>
         <SpecCard rows={[
@@ -140,7 +140,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["分配利回り", "時点により変動（公式値を確認）"],
           ["経費率", formatExpenseRatio("schd")],
         ]} />
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           銘柄数を絞ることで「配当を増やし続けられる質の高い企業」に的を絞っているのが特徴です。その分、個別銘柄への集中度はVYMよりやや高くなります。
         </p>
       </section>
@@ -148,7 +148,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 2. VYMとは */}
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="VYMとは？特徴と仕組み" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           VYM（Vanguard High Dividend Yield ETF）は、バンガードが運用する米国高配当ETFです。配当利回りが平均以上の米国株、{FUNDS.vym.shareCount}に幅広く分散投資します。SCHDより銘柄数が多く、1社あたりの影響を受けにくい構造です。
         </p>
         <SpecCard rows={[
@@ -157,7 +157,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["分配利回り", "時点により変動（公式値を確認）"],
           ["経費率", formatExpenseRatio("vym")],
         ]} />
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           VYMはSCHDより多い銘柄へ分散します。ただし、銘柄数の違いだけで値動きの安定性や将来の成果は決まりません。
         </p>
       </section>
@@ -165,15 +165,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 3. 比較表 */}
       <section id="section-3" className="space-y-4">
         <SectionHeading index={3} title="SCHDとVYMの違いを比較" />
-        <div className="rounded-xl overflow-hidden border border-white/[0.08]">
+        <div className="rounded-xl overflow-hidden border border-[#D9E3E8]">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-white/[0.05]">
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-zinc-400 w-1/3">項目</th>
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-emerald-400">
+              <tr className="bg-[#F4F7F8]">
+                <th className="text-left px-4 py-3 text-xs font-bold text-slate-600 w-1/3">項目</th>
+                <th className="text-left px-4 py-3 text-xs font-bold text-emerald-700">
                   <Coins className="h-3 w-3 inline mr-1" />SCHD
                 </th>
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-sky-400">
+                <th className="text-left px-4 py-3 text-xs font-bold text-sky-400">
                   <Layers className="h-3 w-3 inline mr-1" />VYM
                 </th>
               </tr>
@@ -187,16 +187,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               ["経費率", formatExpenseRatio("schd"), formatExpenseRatio("vym")],
                 ["NISA対応",   "○ 成長投資枠（ETF）",       "○ 成長投資枠（ETF）"],
               ].map(([k, a, b]) => (
-                <tr key={k} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="px-4 py-3 text-xs text-zinc-400 font-medium">{k}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-200">{a}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-200">{b}</td>
+                <tr key={k} className="hover:bg-white transition-colors">
+                  <td className="px-4 py-3 text-xs text-slate-600 font-medium">{k}</td>
+                  <td className="px-4 py-3 text-xs text-slate-700">{a}</td>
+                  <td className="px-4 py-3 text-xs text-slate-700">{b}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-zinc-500 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed">
           ※分配利回りは市場価格と分配実績により変動します。購入時点の各運用会社公式ページで同じ基準日の値をご確認ください。経費率はSSOTの登録値です。
         </p>
       </section>
@@ -204,11 +204,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 4. 過去シミュレーション */}
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           数値はA品質のVYMだけを表示します。SCHDは原典未検証のG品質系列であるため、この記事では評価額・利益の数値比較に使用しません。
         </p>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-zinc-400">
+          <p className="text-xs font-bold text-slate-600">
             【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-1 gap-3">
@@ -216,16 +216,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-zinc-400">
+          <p className="text-xs font-bold text-slate-600">
             【2016年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-1 gap-3">
             <SimCard name="VYM" color="#38bdf8" sim={simVymLong} />
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 space-y-1.5">
-          <p className="text-xs font-bold text-zinc-300 flex items-center gap-1.5">
-            <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-1.5">
+          <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+            <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
             読み取れること
           </p>
           <ul className="space-y-1.5 pl-5">
@@ -234,11 +234,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "両者は銘柄選定方法と分散範囲が異なるが、その違いだけで値動きの大小は断定できない",
               "開始年・期間によって参考結果は変わり、将来の成果を示すものではない",
             ].map((t, i) => (
-              <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
+              <li key={i} className="text-xs text-slate-600 list-disc">{t}</li>
             ))}
           </ul>
         </div>
-        <p className="text-xs text-zinc-500 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed">
           ※SCHDは「G：参考データ・原典未検証」です。VYMの「A：公式月次データ」と同じ精度の実績としては扱えません。詳しくはデータ出典ページをご確認ください。
         </p>
       </section>
@@ -246,7 +246,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 5. 配当・増配率 */}
       <section id="section-5" className="space-y-4">
         <SectionHeading index={5} title="分配方針と銘柄選定の違い" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           分配実績を比べる場合は、対象期間・基準日・集計方法をそろえる必要があります。このページでは同一条件の一次資料による増配率を確認していないため、商品設計の違いに限定して整理します。
         </p>
         <div className="space-y-3">
@@ -255,13 +255,13 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               event: "現在の配当利回り",
               body: "両ETFの分配利回りは市場価格と分配実績により変動します。同じ基準日の各運用会社公式ページで確認する必要があります。",
               diff: "固定値では比較しない",
-              diffColor: "text-emerald-400",
+              diffColor: "text-emerald-700",
             },
             {
               event: "増配率の比較",
               body: "増配率は対象期間、分配金の集計方法、基準日によって変わります。同一条件の一次資料を確認していない数値は掲載せず、公式資料で個別に確認します。",
               diff: "数値による優劣は未判定",
-              diffColor: "text-emerald-400",
+              diffColor: "text-emerald-700",
             },
             {
               event: "銘柄数と組入比率",
@@ -270,16 +270,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               diffColor: "text-sky-400",
             },
           ].map((item, i) => (
-            <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-              <p className="text-xs font-bold text-white">{item.event}</p>
-              <p className="text-xs text-zinc-400 leading-relaxed">{item.body}</p>
-              <p className={`text-[11px] font-bold ${item.diffColor}`}>▶ {item.diff}</p>
+            <div key={i} className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+              <p className="text-xs font-bold text-[#263A53]">{item.event}</p>
+              <p className="text-xs text-slate-600 leading-relaxed">{item.body}</p>
+              <p className={`text-xs font-bold ${item.diffColor}`}>▶ {item.diff}</p>
             </div>
           ))}
         </div>
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
-          <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-zinc-300 leading-relaxed">
+          <AlertTriangle className="h-4 w-4 text-orange-600 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-slate-700 leading-relaxed">
             分配利回りと増配率は市場環境や集計期間により変動します。過去の値が将来も続くことや、トータルリターンの優劣を保証するものではありません。
           </p>
         </div>
@@ -288,14 +288,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 6. 新NISA */}
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="新NISAで確認する点" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           米国ETF SCHDとVYMは、取扱証券会社や商品区分を確認したうえで検討する必要があります。SCHDを主要投資対象とする国内投信は別商品で、積立設定・費用・NISA区分も異なります。{NISA_SYSTEM_DISCLAIMER}
         </p>
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           NISA口座で米国ETFを保有する場合も、米国側の外国源泉税や取扱証券会社の分配金処理を確認する必要があります。分配金を受け取るか再投資するかも含めて商品性を確認してください。
         </p>
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
-          <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
+        <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-3">
+          <p className="text-xs font-bold text-slate-700">新NISAで選ぶ際のポイント</p>
           <ul className="space-y-2">
             {[
               "どちらも成長投資枠（ETF）またはそれに連動する投資信託で購入可能",
@@ -304,8 +304,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "商品を比較する際は、分配方針だけでなくトータルリターンの定義とデータ品質も確認する",
               "分配実績を比べる場合は、同じ基準日・期間・算出方法の公式資料を確認する",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
@@ -318,7 +318,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={7} title="SCHDの商品属性" />
         <div className="rounded-xl bg-emerald-500/6 border border-emerald-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
-            <Coins className="h-4 w-4 text-emerald-400" />
+            <Coins className="h-4 w-4 text-emerald-700" />
             <p className="text-sm font-bold text-emerald-200">SCHDを確認する観点</p>
           </div>
           <ul className="space-y-2.5">
@@ -328,8 +328,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "四半期分配を行う米国ETFの商品性を理解している人",
               "米国ETFを外貨建てで保有する方法を理解している人",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <span className="text-emerald-400 font-bold flex-shrink-0">→</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <span className="text-emerald-700 font-bold flex-shrink-0">→</span>
                 {t}
               </li>
             ))}
@@ -352,7 +352,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "配当利回りより幅広い分散を優先したい人",
               "組入銘柄と比率を確認して保有商品との重複を判断したい人",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
                 <span className="text-sky-400 font-bold flex-shrink-0">→</span>
                 {t}
               </li>
@@ -362,10 +362,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       </section>
 
       {/* まとめ */}
-      <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">まとめ：銘柄選定方法と分散範囲の違い</p>
-        <p className="text-xs text-zinc-400 leading-relaxed">
-          SCHDは財務比率等を用いて{FUNDS.schd.shareCount}を選定し、VYMは{FUNDS.vym.shareCount}へ分散します。SCHDのリターン系列はG品質のため、<strong className="text-zinc-200">未検証の増配率やトータルリターンを根拠に優劣を判定しません</strong>。
+      <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+        <p className="text-xs font-bold text-slate-700">まとめ：銘柄選定方法と分散範囲の違い</p>
+        <p className="text-xs text-slate-600 leading-relaxed">
+          SCHDは財務比率等を用いて{FUNDS.schd.shareCount}を選定し、VYMは{FUNDS.vym.shareCount}へ分散します。SCHDのリターン系列はG品質のため、<strong className="text-slate-700">未検証の増配率やトータルリターンを根拠に優劣を判定しません</strong>。
         </p>
       </div>
 
@@ -374,7 +374,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 9. CTA */}
       <section id="section-9" className="space-y-4">
         <SectionHeading index={9} title="積立タイムマシンで実際に確かめよう" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           実際にSCHDとVYMを同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
           開始年・毎月の積立額を変え、参考値と検証済み実績の品質差を確認できます。
         </p>
@@ -383,36 +383,36 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           className="block rounded-2xl p-5 space-y-2 transition-all hover:opacity-90 active:scale-[0.99]"
           style={{ background: "linear-gradient(135deg, #10b981 0%, #0ea5e9 50%, #4f46e5 100%)" }}
         >
-          <p className="text-xs font-bold text-white/80">積立タイムマシン 比較モード</p>
-          <p className="text-lg font-black text-white leading-tight">
+          <p className="text-xs font-bold text-[#263A53]/80">積立タイムマシン 比較モード</p>
+          <p className="text-lg font-black text-[#263A53] leading-tight">
             SCHDとVYMを<br />実際に比較してみませんか？
           </p>
-          <p className="text-xs text-white/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
+          <p className="text-xs text-[#263A53]/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
           <div className="flex items-center gap-1.5 mt-3">
             <span className="text-sm font-black text-white">比較シミュレーションを開く</span>
-            <ArrowRight className="h-4 w-4 text-white" />
+            <ArrowRight className="h-4 w-4 text-[#263A53]" />
           </div>
         </Link>
         <Link
           href="/"
-          className="block rounded-2xl border border-white/10 bg-white/[0.05] p-5 space-y-2 transition-all hover:bg-white/[0.08] active:scale-[0.99]"
+          className="block rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] p-5 space-y-2 transition-all hover:bg-white/[0.08] active:scale-[0.99]"
         >
-          <p className="text-xs font-bold text-zinc-400">積立タイムマシン</p>
-          <p className="text-base font-black text-white leading-tight">
+          <p className="text-xs font-bold text-slate-600">積立タイムマシン</p>
+          <p className="text-base font-black text-[#263A53] leading-tight">
             あの時から積み立てていたら<br />いくらになっていた？
           </p>
           <div className="flex items-center gap-1.5 mt-2">
             <span
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-black text-white"
-              style={{ background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }}
+              style={{ background: "#236B8E" }}
             >
               無料でシミュレーションする
               <ArrowRight className="h-4 w-4" />
             </span>
           </div>
         </Link>
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 space-y-2">
-          <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+          <p className="text-xs font-bold text-slate-600">関連ページ</p>
           <ul className="space-y-2">
             {[
               { href: "/fund/schd",                     label: "米国ETF SCHDの商品情報・データ品質" },
@@ -423,9 +423,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               <li key={href}>
                 <Link
                   href={href}
-                  className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+                  className="flex items-center gap-2 text-xs text-slate-600 hover:text-slate-700 transition-colors"
                 >
-                  <ArrowRight className="h-3 w-3 text-indigo-400 flex-shrink-0" />
+                  <ArrowRight className="h-3 w-3 text-[#236B8E] flex-shrink-0" />
                   {label}
                 </Link>
               </li>
@@ -436,4 +436,3 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
     </div>
   );
 }
-

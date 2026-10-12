@@ -85,38 +85,38 @@ const SECTIONS = [
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-white/[0.08] bg-black/30 pt-10 pb-8 px-4">
-      <div className="max-w-lg mx-auto">
+    <footer className="border-t border-[#D9E3E8] bg-white px-4 pb-24 pt-10 md:pb-10">
+      <div className="mx-auto max-w-5xl">
         {/* グリッドリンク */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 mb-8 sm:grid-cols-3">
+        <div className="mb-8 grid gap-3 md:grid-cols-3 md:gap-x-8 md:gap-y-8">
           {SECTIONS.map((section) => (
-            <div key={section.title}>
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-500 mb-3">
+            <details key={section.title} className="footer-group rounded-xl border border-[#E1E8EC] bg-[#FAFAF7] px-4 py-3 md:border-0 md:bg-transparent md:p-0">
+              <summary className="cursor-pointer list-none text-sm font-bold text-[#263A53] md:cursor-default">
                 {section.title}
-              </p>
-              <ul className="space-y-2">
+              </summary>
+              <ul className="mt-3 space-y-2">
                 {section.links.map(({ href, label }) => (
                   <li key={href}>
                     <Link
                       href={href}
-                      className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors leading-snug"
+                      className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
                     >
                       {label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </details>
           ))}
         </div>
 
         {/* ブランド + コピーライト */}
-        <div className="border-t border-white/[0.06] pt-6 text-center space-y-1">
-          <p className="text-xs font-bold text-zinc-500">積立タイムマシン</p>
-          <p className="text-[10px] text-zinc-600 leading-relaxed">
-            ※シミュレーションは検証済み月次実績を使用し、参考系列は品質を明示しています。<Link href="/about/data-sources" className="ml-1 underline underline-offset-2 hover:text-zinc-500">データについて</Link>
+        <div className="border-t border-[#E1E8EC] pt-6 text-center space-y-1">
+          <p className="text-xs font-bold text-slate-500">積立タイムマシン</p>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            ※シミュレーションは検証済み月次実績を使用し、参考系列は品質を明示しています。<Link href="/about/data-sources" className="ml-1 underline underline-offset-2 hover:text-slate-500">データについて</Link>
           </p>
-          <p className="text-[10px] text-zinc-700">© {new Date().getFullYear()} 積立タイムマシン</p>
+          <p className="text-xs text-slate-400">© {new Date().getFullYear()} 積立タイムマシン</p>
         </div>
       </div>
     </footer>

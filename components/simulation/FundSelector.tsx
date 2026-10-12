@@ -23,7 +23,7 @@ export default function FundSelector({ value, onChange, label }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">{label}</p>
+        <p className="text-xs font-black tracking-widest uppercase text-slate-600">{label}</p>
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-1.5 rounded-full" style={{ background: currentFund.color }} />
           <p className="text-xs font-bold" style={{ color: currentFund.color }}>{currentFund.shortName}</p>
@@ -44,8 +44,8 @@ export default function FundSelector({ value, onChange, label }: Props) {
               className={cn(
                 "flex-shrink-0 flex min-h-11 items-center gap-1 rounded-lg px-3 py-2 text-xs font-bold transition-all border",
                 isActive
-                  ? "bg-white/15 text-white border-white/20"
-                  : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300 hover:bg-white/8"
+                  ? "bg-[#DCEFFA] text-[#263A53] border-[#B9CBD4]"
+                  : "bg-[#F4F7F8] text-slate-600 border-[#D9E3E8] hover:text-slate-700 hover:bg-[#EAF3F7]"
               )}
             >
               <span>{cat.emoji}</span>
@@ -74,12 +74,12 @@ export default function FundSelector({ value, onChange, label }: Props) {
               style={
                 isSelected
                   ? {
-                      background: "rgba(255,255,255,0.03)",
+                      background: "#F8FBFC",
                       borderColor: `${fund.color}60`,
                     }
                   : {
-                      background: "rgba(255,255,255,0.02)",
-                      borderColor: "rgba(255,255,255,0.08)",
+                      background: "#FFFFFF",
+                      borderColor: "#D9E3E8",
                     }
               }
             >
@@ -87,9 +87,9 @@ export default function FundSelector({ value, onChange, label }: Props) {
               <div className="flex items-center justify-between mb-2">
                 <div
                   className="h-1 w-5 rounded-full"
-                  style={{ background: isSelected ? fund.color : "rgba(255,255,255,0.15)" }}
+                  style={{ background: isSelected ? fund.color : "#C7D6DE" }}
                 />
-                {isSelected && <span className="text-xs font-bold text-zinc-300">選択中</span>}
+                {isSelected && <span className="text-xs font-bold text-slate-700">選択中</span>}
               </div>
               <p
                 className="font-heading text-sm font-semibold leading-tight"
@@ -97,14 +97,14 @@ export default function FundSelector({ value, onChange, label }: Props) {
               >
                 {fund.shortName}
               </p>
-              <p className="mt-0.5 text-[10px] text-zinc-400 line-clamp-1">{fund.description}</p>
+              <p className="mt-0.5 text-xs text-slate-600 line-clamp-1">{fund.description}</p>
             </motion.button>
           );
         })}
       </div>
 
       {/* カテゴリ説明 */}
-      <p className="text-[10px] text-zinc-400">
+      <p className="text-xs text-slate-600">
         {FUND_CATEGORIES[activeCategory].description}
       </p>
     </div>

@@ -45,24 +45,24 @@ export default function SimulatePageClient({ fundId, result }: Props) {
           />
         </p>
         <div className="flex items-center gap-1.5 mb-5">
-          <TrendingUp className="h-4 w-4 text-emerald-400" />
-          <span className="text-sm text-emerald-400 font-bold">+{result.returnRate.toFixed(1)}%</span>
+          <TrendingUp className="h-4 w-4 text-emerald-700" />
+          <span className="text-sm text-emerald-700 font-bold">+{result.returnRate.toFixed(1)}%</span>
         </div>
-        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#D2DEE4]">
           <div>
-            <p className="text-xs text-zinc-400 mb-0.5">現在評価額</p>
-            <p className="text-lg font-black text-white">{formatCurrency(result.finalValue)}</p>
+            <p className="text-xs text-slate-600 mb-0.5">現在評価額</p>
+            <p className="text-lg font-black text-[#263A53]">{formatCurrency(result.finalValue)}</p>
           </div>
           <div>
-            <p className="text-xs text-zinc-400 mb-0.5">投資元本</p>
-            <p className="text-lg font-bold text-zinc-300">{formatCurrency(result.totalPrincipal)}</p>
+            <p className="text-xs text-slate-600 mb-0.5">投資元本</p>
+            <p className="text-lg font-bold text-slate-700">{formatCurrency(result.totalPrincipal)}</p>
           </div>
         </div>
       </div>
 
       {/* Fake comparison chart (compare to principal) */}
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-        <p className="text-xs font-black tracking-widest uppercase text-zinc-400 mb-4">
+      <div className="rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] p-5">
+        <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-4">
           資産推移グラフ
         </p>
         {/* Use comparison chart with the same fund but showing data */}

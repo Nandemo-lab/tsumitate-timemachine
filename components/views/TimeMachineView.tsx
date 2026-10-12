@@ -10,6 +10,7 @@ import EmotionalMessage from "@/components/simulation/EmotionalMessage";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
 import PathInsights from "@/components/simulation/PathInsights";
+import SimulationChart from "@/components/simulation/SimulationChart";
 import RankingView from "@/components/simulation/RankingView";
 import QuickScenarios from "@/components/simulation/QuickScenarios";
 import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
@@ -135,7 +136,7 @@ export default function TimeMachineView({
   };
 
   return (
-    <div className="pt-6 pb-28 px-4 space-y-5">
+    <div className="mx-auto max-w-3xl space-y-5 px-4 pb-28 pt-6 md:pt-10">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -143,29 +144,29 @@ export default function TimeMachineView({
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className="text-center"
       >
-        <h2 className="font-heading text-xl font-semibold text-white mb-1 flex items-center justify-center gap-2">
-          <Clock3 className="h-5 w-5 text-indigo-300" />
+        <h2 className="font-heading text-xl font-semibold text-[#263A53] mb-1 flex items-center justify-center gap-2">
+          <Clock3 className="h-5 w-5 text-[#236B8E]" />
           積立タイムマシン
         </h2>
-        <p className="text-sm text-zinc-400">あの時から積み立てていたら、いくらになった？</p>
+        <p className="text-sm text-slate-600">あの時から積み立てていたら、いくらになった？</p>
       </motion.div>
 
       {/* Quick Scenarios */}
       <QuickScenarios onSelect={handleScenario} />
 
       {/* Sub mode */}
-      <div className="flex rounded-xl border border-white/10 bg-white/[0.04] p-1 gap-1">
+      <div className="flex rounded-xl border border-[#D2DEE4] bg-[#F7FAFB] p-1 gap-1">
         <button
           onClick={() => selectMode("single")}
           aria-pressed={subMode === "single"}
-          className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-white/15 text-white" : "text-zinc-400"}`}
+          className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-[#DCEFFA] text-[#263A53]" : "text-slate-600"}`}
         >
           <span className="inline-flex items-center gap-1"><Target className="h-3.5 w-3.5" />銘柄ひとつ</span>
         </button>
         <button
           onClick={() => selectMode("ranking")}
           aria-pressed={subMode === "ranking"}
-          className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "ranking" ? "bg-white/15 text-white" : "text-zinc-400"}`}
+          className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "ranking" ? "bg-[#DCEFFA] text-[#263A53]" : "text-slate-600"}`}
         >
           <Trophy className="h-3.5 w-3.5" />
           全銘柄ランキング
@@ -173,12 +174,12 @@ export default function TimeMachineView({
       </div>
 
       {/* Inputs */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-5">
+      <div className="rounded-2xl border border-[#D2DEE4] bg-[#F7FAFB] p-4 space-y-5">
         {/* Start year — chips */}
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">積立開始年</p>
-            <p className="text-[11px] text-zinc-400">
+            <p className="text-xs font-black tracking-widest uppercase text-slate-600">積立開始年</p>
+            <p className="text-xs text-slate-600">
               約{yearsElapsed.toFixed(1)}年間
             </p>
           </div>
@@ -190,8 +191,8 @@ export default function TimeMachineView({
                 aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
-                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
-                    : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300"
+                    ? "bg-[#EAF3F7] text-[#236B8E] border-[#78B6D0]"
+                    : "bg-[#F4F7F8] text-slate-600 border-[#D9E3E8] hover:text-slate-700"
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
               >
@@ -208,8 +209,8 @@ export default function TimeMachineView({
                 aria-pressed={startMonth === m}
                 className={`flex-shrink-0 rounded-lg text-xs font-bold transition-all ${
                   startMonth === m
-                    ? "bg-white/15 text-white"
-                    : "text-zinc-400 hover:text-zinc-400"
+                    ? "bg-[#DCEFFA] text-[#263A53]"
+                    : "text-slate-600 hover:text-slate-600"
                 }`}
                 style={{ minHeight: 44, minWidth: 44, padding: "0 8px" }}
               >
@@ -222,7 +223,7 @@ export default function TimeMachineView({
         {/* Monthly amount */}
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">毎月の積立額</p>
+            <p className="text-xs font-black tracking-widest uppercase text-slate-600">毎月の積立額</p>
             <span className="text-xl font-black text-white">{formatCurrency(monthlyAmount)}</span>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -233,8 +234,8 @@ export default function TimeMachineView({
                 aria-pressed={monthlyAmount === a}
                 className={`rounded-xl text-sm font-black transition-all border ${
                   monthlyAmount === a
-                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
-                    : "bg-white/5 text-zinc-400 border-white/8 hover:bg-white/10 hover:text-zinc-300"
+                    ? "bg-[#EAF3F7] text-[#236B8E] border-[#78B6D0]"
+                    : "bg-[#F4F7F8] text-slate-600 border-[#D9E3E8] hover:bg-[#E6F0F4] hover:text-slate-700"
                 }`}
                 style={{ minHeight: 48 }}
               >
@@ -255,7 +256,7 @@ export default function TimeMachineView({
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
+            <div className="rounded-2xl border border-[#D9E3E8] bg-white p-5">
               <FundSelector
                 value={fund}
                 onChange={selectFund}
@@ -273,7 +274,7 @@ export default function TimeMachineView({
         onClick={run}
         className="w-full relative overflow-hidden rounded-2xl py-5 text-base font-black text-white"
         style={{
-          background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
+          background: "#236B8E",
           boxShadow: "0 8px 24px #6366f130",
         }}
       >
@@ -285,15 +286,15 @@ export default function TimeMachineView({
 
       {/* Advanced toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-px bg-white/[0.06]" />
+        <div className="flex-1 h-px bg-[#EFF5F7]" />
         <button
           onClick={() => setShowAdvanced((v) => !v)}
-          className="flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-xs text-zinc-300 hover:bg-white/5 transition-colors"
+          className="flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-xs text-slate-700 hover:bg-[#F4F7F8] transition-colors"
         >
           <Settings2 className="h-3 w-3" />
           {showAdvanced ? "詳細設定を閉じる" : "詳細シミュレーション（上級者向け）"}
         </button>
-        <div className="flex-1 h-px bg-white/[0.06]" />
+        <div className="flex-1 h-px bg-[#EFF5F7]" />
       </div>
 
       <AnimatePresence>
@@ -305,7 +306,7 @@ export default function TimeMachineView({
             transition={{ duration: 0.35 }}
             className="overflow-hidden"
           >
-            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5">
+            <div className="rounded-2xl border border-[#D9E3E8] bg-white p-5">
               <AdvancedSimulation />
             </div>
           </motion.div>
@@ -317,6 +318,9 @@ export default function TimeMachineView({
         {showResult && subMode === "single" && result && (
           <motion.div
             id="tm-result"
+            role="region"
+            aria-live="polite"
+            aria-label="シミュレーション結果"
             key="single-result"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -324,8 +328,8 @@ export default function TimeMachineView({
             className="space-y-5"
           >
             <div className="text-center">
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-1">シミュレーション結果</p>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-1">シミュレーション結果</p>
+              <p className="text-xs text-slate-600">
                 {startYear}年{startMonth}月〜{result?.dataPoints.at(-1)?.date.replace("/", "年")}月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
@@ -334,32 +338,31 @@ export default function TimeMachineView({
             <div
               className="rounded-2xl p-6 text-center"
               style={{
-                background: "rgba(255,255,255,0.02)",
+                background: "#FFFFFF",
                 border: `1px solid ${result.fundColor}30`,
                 boxShadow: `0 0 22px ${result.fundColor}10`,
               }}
             >
-              <p className="text-xs text-zinc-400 mb-1">{result.fundName}の損益</p>
-              <div className="flex items-baseline justify-center gap-2 mb-1">
-                <p className={`font-heading font-number text-5xl font-bold ${result.profit >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                  {result.profit >= 0 ? "+" : ""}{formatCurrency(result.profit)}
-                </p>
-                <p className={`font-number text-base font-semibold ${result.returnRate >= 0 ? "text-emerald-300" : "text-rose-300"}`}>
-                  （{result.returnRate >= 0 ? "+" : ""}{result.returnRate.toFixed(1)}%）
-                </p>
+              <p className="mb-4 text-sm font-bold text-[#263A53]">{result.fundName}の結果</p>
+              <div className="grid grid-cols-2 gap-3 text-left sm:grid-cols-3">
+                <div><p className="text-xs text-slate-600">元本</p><p className="mt-1 font-number text-xl font-bold text-[#263A53]">{formatCurrency(result.totalPrincipal)}</p></div>
+                <div><p className="text-xs text-slate-600">期間末評価額</p><p className="mt-1 font-number text-xl font-bold text-[#263A53]">{formatCurrency(result.finalValue)}</p></div>
+                <div className="col-span-2 sm:col-span-1"><p className="text-xs text-slate-600">損益</p><p className={`mt-1 font-number text-xl font-bold ${result.profit >= 0 ? "text-emerald-700" : "text-rose-700"}`}>{result.profit >= 0 ? "+" : ""}{formatCurrency(result.profit)} <span className="text-sm">（{result.returnRate >= 0 ? "+" : ""}{result.returnRate.toFixed(1)}%）</span></p></div>
               </div>
-              <p className="text-sm text-zinc-400">
-                {formatCurrency(result.totalPrincipal)} → {formatCurrency(result.finalValue)}
-              </p>
 
               {/* 信頼性の根拠（常時表示） */}
-              <div className="mt-4 pt-3 border-t border-white/8 flex items-center justify-center gap-1.5 text-[10px] text-zinc-400">
+              <div className="mt-4 pt-3 border-t border-[#D9E3E8] flex items-center justify-center gap-1.5 text-xs text-slate-600">
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
                 <span>{getReturnDataSource(fund).sourceStatus === "verified" ? "公式月次データ・税金等は個別計算なし" : "参考データ・原典未検証"}</span>
               </div>
             </div>
 
-            <PathInsights result={result} />
+            <SimulationChart result={result} />
+
+            <details className="rounded-2xl border border-[#D9E3E8] bg-white p-1 open:p-0">
+              <summary className="cursor-pointer list-none rounded-xl px-4 py-4 text-sm font-bold text-[#263A53]">途中の元本割れ分析を見る</summary>
+              <PathInsights result={result} />
+            </details>
 
             {/* 優先順位2位：人生換算 */}
             <EmotionalMessage result={result} yearsElapsed={yearsElapsed} />
@@ -367,7 +370,7 @@ export default function TimeMachineView({
             {/* 優先順位3位：シェア */}
             <button
               onClick={() => setShowShare((v) => !v)}
-              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-300 hover:bg-white/8 transition-colors"
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] py-3.5 text-sm font-bold text-slate-700 hover:bg-[#EAF3F7] transition-colors"
             >
               <Share2 className="h-4 w-4" />
               {showShare ? "閉じる" : "この結果をシェアする"}
@@ -395,7 +398,7 @@ export default function TimeMachineView({
                 trackCompareClick({ fund_id: fund });
                 onCompare(fund, { year: startYear, month: startMonth, amount: monthlyAmount });
               }}
-              className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors py-1"
+              className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-700 transition-colors py-1"
             >
               <GitCompareArrows className="h-3.5 w-3.5" />
               他の銘柄と比較する
@@ -404,7 +407,7 @@ export default function TimeMachineView({
             {/* 計算条件（折りたたみ・デフォルト非表示でスクロールを圧縮） */}
             <button
               onClick={() => setShowCalcDetails((v) => !v)}
-              className="w-full flex items-center justify-center gap-1.5 text-[11px] text-zinc-400 hover:text-zinc-200 transition-colors"
+              className="w-full flex items-center justify-center gap-1.5 text-xs text-slate-600 hover:text-slate-700 transition-colors"
             >
               <ChevronDown
                 className="h-3 w-3 transition-transform duration-200"
@@ -425,7 +428,7 @@ export default function TimeMachineView({
               )}
             </AnimatePresence>
 
-            <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
+            <p className="text-center text-xs text-slate-600 px-4 leading-relaxed">
               {getReturnDataSource(fund).sourceStatus === "verified"
                 ? "※ 一次情報から検証した月次データによる計算です。売買手数料・税金・為替スプレッドは個別計算していません。"
                 : "※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の運用成果を示すものではありません。"}
@@ -447,7 +450,7 @@ export default function TimeMachineView({
               startYear={startYear}
               startMonth={startMonth}
             />
-            <p className="mt-4 text-center text-xs text-zinc-400 px-4 leading-relaxed">
+            <p className="mt-4 text-center text-xs text-slate-600 px-4 leading-relaxed">
               ※ A品質の検証済み月次実績だけを、同じ開始月・終了月・積立額で比較しています。過去実績であり、将来の成果を示すものではありません。
             </p>
           </motion.div>

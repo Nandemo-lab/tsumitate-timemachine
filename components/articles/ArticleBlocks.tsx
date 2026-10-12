@@ -8,10 +8,10 @@ import { formatCurrency } from "@/lib/simulation";
 export function SectionHeading({ index, title }: { index: number; title: string }) {
   return (
     <h2
-      className="text-lg font-black text-white flex items-start gap-2 leading-tight"
+      className="flex items-start gap-2 text-xl font-black leading-snug text-[#263A53] md:text-2xl"
       style={{ fontFamily: "var(--font-serif-jp), serif" }}
     >
-      <span className="text-indigo-400 font-black text-base mt-0.5 flex-shrink-0">{index + 1}.</span>
+      <span className="text-[#236B8E] font-black text-base mt-0.5 flex-shrink-0">{index + 1}.</span>
       {title}
     </h2>
   );
@@ -19,15 +19,15 @@ export function SectionHeading({ index, title }: { index: number; title: string 
 
 export function SpecCard({ rows }: { rows: [string, string][] }) {
   return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
-      <ul className="space-y-2">
+    <div className="rounded-2xl bg-white border border-[#DDE6EA] p-5">
+      <dl className="space-y-3">
         {rows.map(([k, v]) => (
-          <li key={k} className="flex items-start gap-3 text-sm">
-            <span className="text-zinc-500 w-20 flex-shrink-0">{k}</span>
-            <span className="text-zinc-200">{v}</span>
-          </li>
+          <div key={k} className="grid gap-1 text-sm sm:grid-cols-[8rem_1fr] sm:gap-4">
+            <dt className="font-bold text-slate-600">{k}</dt>
+            <dd className="leading-6 text-slate-700">{v}</dd>
+          </div>
         ))}
-      </ul>
+      </dl>
     </div>
   );
 }
@@ -45,14 +45,14 @@ export function SimCard({ name, color, sim }: {
         border: `1px solid ${color}30`,
       }}
     >
-      <p className="text-[11px] font-bold" style={{ color }}>{name}</p>
-      <p className="text-xl font-black text-emerald-400 leading-none">
-        +{formatCurrency(sim.profit)}
+      <p className="text-xs font-bold" style={{ color }}>{name}</p>
+      <p className={`text-xl font-black leading-none ${sim.profit >= 0 ? "text-emerald-700" : "text-rose-700"}`}>
+        {sim.profit >= 0 ? "+" : ""}{formatCurrency(sim.profit)}
       </p>
-      <p className="text-[11px] text-emerald-300">+{sim.returnRate.toFixed(1)}%</p>
-      <div className="pt-1 border-t border-white/[0.06] space-y-0.5">
-        <p className="text-[10px] text-zinc-500">元本 {formatCurrency(sim.totalPrincipal)}</p>
-        <p className="text-[10px] text-zinc-400">評価額 {formatCurrency(sim.finalValue)}</p>
+      <p className={`text-xs ${sim.returnRate >= 0 ? "text-emerald-700" : "text-rose-700"}`}>{sim.returnRate >= 0 ? "+" : ""}{sim.returnRate.toFixed(1)}%</p>
+      <div className="pt-1 border-t border-[#E1E8EC] space-y-0.5">
+        <p className="text-xs text-slate-500">元本 {formatCurrency(sim.totalPrincipal)}</p>
+        <p className="text-xs text-slate-600">評価額 {formatCurrency(sim.finalValue)}</p>
       </div>
     </div>
   );

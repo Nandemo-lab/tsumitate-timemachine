@@ -1,28 +1,16 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
-import { motion } from "framer-motion";
-import { FundId } from "@/types";
-import { FUNDS, FUND_LIST, FUND_CATEGORIES, getFundTags, FUND_SHORT_DESC } from "@/lib/funds";
-import { simulate, formatCurrency } from "@/lib/simulation";
-import { ChevronRight, Sparkles, TrendingUp, Zap, Star, Clock3, BarChart2, BookOpen } from "lucide-react";
+import { useMemo, useState } from "react";
+import { BarChart3, BookOpen, ChevronRight, Database, GitCompareArrows, ShieldCheck } from "lucide-react";
 import Link from "next/link";
-import { COMPARE_PAGES } from "@/lib/compare-pages";
-import { GUIDE_SERIES } from "@/lib/guide-pages";
+import { FundId } from "@/types";
+import { FUNDS } from "@/lib/funds";
+import { simulate, formatCurrency } from "@/lib/simulation";
 import { MainTab } from "@/components/layout/BottomNav";
 import SiteFooter from "@/components/layout/SiteFooter";
-import { RETURN_SERIES_REGISTRY, VERIFIED_FUND_IDS } from "@/lib/return-series";
-import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import RecentConditions from "@/components/simulation/RecentConditions";
 import { RecentSimulation } from "@/lib/recent-simulations";
 import { trackSourceView } from "@/lib/analytics";
-
-const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
-  { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "2020年のコロナショック直後に始めていたら" },
-  { fundId: "sp500",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "米国大型株へ積み立てていたら" },
-  { fundId: "orcan",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "世界全体にコツコツ分散していたら" },
-  { fundId: "india",     startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "成長する新興国に早くから注目していたら" },
-];
 
 interface Props {
   onNavigate: (tab: MainTab) => void;
@@ -31,538 +19,48 @@ interface Props {
   onRestoreRecent: (item: RecentSimulation) => void;
 }
 
-const subscribeToJstDate = () => () => {};
-const getServerPickIndex = () => 0;
-const getJstPickIndex = () => {
-  const day = Number(
-    new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Tokyo", day: "numeric" }).format(new Date())
-  );
-  return day % VERIFIED_FUND_IDS.length;
-};
+const PICKS: FundId[] = ["orcan", "sp500", "nasdaq100"];
+const AMOUNTS = [10000, 30000, 50000];
+const POPULAR_COMPARE = [
+  { href: "/compare/orukan-vs-sp500", label: "オルカン vs S&P500" },
+  { href: "/compare/orukan-vs-nasdaq100", label: "オルカン vs NASDAQ100" },
+  { href: "/compare/vt-vs-orukan", label: "VT vs オルカン" },
+];
 
-export default function HomeView({ onNavigate, onFundSelect, onTaraeba, onRestoreRecent }: Props) {
-  // SSR/hydrationは固定snapshot、hydration後はJSTの日付snapshotを使う。
-  const todayPickIndex = useSyncExternalStore(
-    subscribeToJstDate,
-    getJstPickIndex,
-    getServerPickIndex
-  );
-
-  const taraeba = useMemo(
-    () =>
-      TARAEBA.map((p) => ({
-        ...p,
-        result: simulate({ fundId: p.fundId, startYear: p.startYear, startMonth: p.startMonth, monthlyAmount: p.monthlyAmount }),
-        fund: FUNDS[p.fundId],
-      })),
-    []
-  );
-
-  // 日替わりの検証例
-  const todayPick = useMemo(() => {
-    const fund = FUNDS[VERIFIED_FUND_IDS[todayPickIndex]];
-    const result = simulate({ fundId: fund.id, startYear: 2020, startMonth: 1, monthlyAmount: 30000 });
-    return { fund, result };
-  }, [todayPickIndex]);
-
-  // 全銘柄2020年〜月3万円の成績（上位5件）
-  const topFunds = useMemo(
-    () =>
-      FUND_LIST
-        .filter((fund) => RETURN_SERIES_REGISTRY[fund.id].quality === "A")
-        .map((fund) => ({
-          fund,
-          result: simulate({ fundId: fund.id, startYear: 2020, startMonth: 1, monthlyAmount: 30000 }),
-        }))
-        .sort((a, b) => b.result.profit - a.result.profit)
-        .slice(0, 5),
-    []
-  );
-
-  // 銘柄図鑑の入口。根拠を公開できない「初心者向け」順位にはしない。
-  const encyclopediaExamples = useMemo(
-    () => FUND_LIST.filter((fund) => RETURN_SERIES_REGISTRY[fund.id].quality === "A").slice(0, 4),
-    []
-  );
-
-  // クラスタガイド一覧（GUIDE_SERIES から自動生成。hubSlug が設定されたクラスタのみ表示）
-  // 新しいクラスタのハブページ（例: /guide/booraku）が追加されても、ここは自動で反映される。
-  const clusterHubs = useMemo(
-    () =>
-      Object.values(GUIDE_SERIES)
-        .filter((series) => series.hubSlug)
-        .map((series) => ({
-          href: `/guide/${series.hubSlug}`,
-          label: `${series.label}一覧`,
-          sub: `${series.slugs.length}記事をまとめて読む`,
-        })),
-    []
-  );
-
-  const { fund: pick, result: pickResult } = todayPick;
-  const pickEnc = pick.encyclopedia;
+export default function HomeView({ onNavigate, onTaraeba, onRestoreRecent }: Props) {
+  const [fund, setFund] = useState<FundId>("orcan");
+  const [startYear, setStartYear] = useState(2020);
+  const [amount, setAmount] = useState(30000);
+  const preview = useMemo(() => simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount: amount }), [fund, startYear, amount]);
 
   return (
-    <div className="pt-3 pb-28 space-y-7">
+    <div className="pb-28 pt-5 md:pt-10">
+      <section className="px-4 text-center md:px-8">
+        <p className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-[#DCEFFA] px-4 py-2 text-xs font-bold text-[#236B8E]"><BarChart3 className="h-4 w-4" /> 公式月次データで過去を検証</p>
+        <h1 className="font-heading text-[2rem] font-bold leading-[1.35] tracking-tight text-[#263A53] md:text-5xl">あの時から積み立てていたら、<br className="hidden sm:block" />いくらになった？</h1>
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-600 md:text-base">商品・開始年・月額を選ぶだけ。過去の月次実績から、元本と期間末評価額を同じ条件で確かめられます。</p>
+      </section>
 
-      {/* ── Hero（コンパクト・静的表示） ── */}
-      <div className="px-3 text-center">
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 mb-2">
-          <Clock3 className="h-3 w-3 text-indigo-300" />
-          <span className="text-xs font-semibold text-indigo-300">積立タイムマシン</span>
-        </div>
-        <h1 className="font-heading text-[1.4rem] font-semibold text-white leading-[1.45] tracking-[0.01em] mb-1.5">
-          もしあの時から
-          <span
-            className="text-transparent bg-clip-text"
-            style={{ backgroundImage: "linear-gradient(135deg, #a5b4fc 0%, #fbbf24 100%)" }}
-          >
-            積み立てていたら？
-          </span>
-        </h1>
-        <p className="text-sm text-zinc-400">商品・開始月・月額を選び、過去の積立結果を再現する</p>
-      </div>
-
-      <div className="mx-4 rounded-2xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4 space-y-2">
-        <p className="text-sm font-bold text-white">このツールで確認できること</p>
-        <p className="text-xs leading-relaxed text-zinc-300">
-          運用会社などの一次情報から検証した月次データで、同じ開始月・積立額・終了月を比較します。商品設定前の期間や欠損値は別系列で補いません。
-        </p>
-        <div className="flex flex-wrap gap-2 text-[11px] text-zinc-300">
-          <span className="rounded-full bg-white/[0.06] px-2.5 py-1">実績期間：2026年8月まで</span>
-          <span className="rounded-full bg-white/[0.06] px-2.5 py-1">A品質9系列・G参考1系列</span>
-          <Link href="/about/data-sources" onClick={() => trackSourceView("home_trust_panel")} className="inline-flex min-h-11 items-center rounded-full bg-indigo-400/15 px-3 py-2 text-xs font-bold text-indigo-200 underline underline-offset-2">
-            出典と計算方法
-          </Link>
-        </div>
-        <p className="text-[11px] leading-relaxed text-zinc-400">過去実績であり、将来の成果や商品の優劣を示すものではありません。</p>
-      </div>
-
-      {/* ── 主行動：条件を選んで検証する ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-        className="px-4 space-y-3"
-      >
-        <div className="grid grid-cols-3 gap-2" aria-label="シミュレーションの流れ">
-          {["商品を選ぶ", "開始月・月額", "結果を確認"].map((label, index) => (
-            <div key={label} className="rounded-xl border border-white/8 bg-white/[0.025] px-2 py-2.5 text-center">
-              <p className="text-[10px] font-bold text-indigo-300">STEP {index + 1}</p>
-              <p className="mt-1 text-[11px] font-semibold text-zinc-200">{label}</p>
-            </div>
-          ))}
-        </div>
-        <button
-          onClick={() => onNavigate("timemachine")}
-          className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl px-4 py-4 text-base font-bold text-white"
-          style={{
-            background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
-            boxShadow: "0 8px 24px #6366f130",
-          }}
-        >
-          <Zap className="h-5 w-5" />
-          条件を選んで積立実績を調べる
-        </button>
-        <p className="text-center text-[11px] leading-relaxed text-zinc-400">
-          元本・期間末評価額・損益を、検証済みの月次データで確認できます
-        </p>
-      </motion.div>
-
-      <RecentConditions onRestore={onRestoreRecent} />
-
-      {/* ── 条件別の検証例 ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className="flex items-center gap-2 px-4 mb-3">
-          <Sparkles className="h-4 w-4 text-amber-400" />
-          <p className="font-heading text-sm font-semibold text-white">条件別の検証例</p>
-          <span className="text-[11px] text-zinc-400">タップして体験</span>
-        </div>
-
-        <div className="flex gap-3 overflow-x-auto px-4 pb-2 scroll-touch" style={{ scrollbarWidth: "none" }}>
-          {taraeba.map(({ fund, result, startYear, monthlyAmount, scene }, i) => (
-            <motion.button
-              key={fund.id}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 + i * 0.06 }}
-              onClick={() => onTaraeba(fund.id, startYear, 1, monthlyAmount)}
-              className="flex-shrink-0 w-56 rounded-2xl p-4 text-left border border-white/8 bg-white/[0.02]"
-              whileTap={{ scale: 0.97 }}
-            >
-              <div className="flex items-center gap-1.5 mb-1">
-                <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: fund.color }} />
-                <p className="font-heading text-xs font-semibold text-zinc-300">{fund.encyclopedia.nickname}</p>
-              </div>
-              <div className="flex items-baseline gap-1 mb-1.5 whitespace-nowrap">
-                <p className="font-heading font-number text-2xl font-bold text-emerald-400 leading-none">
-                  +{formatCurrency(result.profit)}
-                </p>
-                <p className="font-number text-xs font-bold text-emerald-300">
-                  （+{result.returnRate.toFixed(1)}%）
-                </p>
-              </div>
-              <p className="text-[11px] text-zinc-400">
-                月{(monthlyAmount / 10000).toFixed(0)}万円 {startYear}年〜
-              </p>
-              <p className="text-[11px] text-zinc-500 mt-2 pt-2 border-t border-white/8 leading-snug">
-                {scene}
-              </p>
-            </motion.button>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* ── 今日の検証例 ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="px-4"
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <Star className="h-4 w-4 text-amber-400" fill="#f59e0b" />
-          <p className="font-heading text-sm font-semibold text-white">今日の検証例</p>
-        </div>
-
-        <motion.button
-          onClick={() => { onFundSelect(pick.id); onNavigate("encyclopedia"); }}
-          className="w-full rounded-2xl text-left overflow-hidden border border-white/8"
-          style={{ background: "rgba(255,255,255,0.02)" }}
-          whileTap={{ scale: 0.99 }}
-        >
-          {/* Top section */}
-          <div className="p-4 pb-3">
-            {/* Category + NISA */}
-            <div className="flex items-center gap-2 mb-2.5">
-              <span className="text-xs">{FUND_CATEGORIES[pick.category].emoji}</span>
-              <span className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">
-                {FUND_CATEGORIES[pick.category].label}
-              </span>
-              {(pickEnc.nisaSupport.tsumitate || pickEnc.nisaSupport.growth) && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300">NISA対応</span>
-              )}
-              <span className="ml-auto"><ReturnQualityPill fundId={pick.id} /></span>
-            </div>
-
-            {/* 銘柄名（やや目立たせる） */}
-            <h3 className="font-heading text-lg font-bold text-white mb-2">{pickEnc.nickname}</h3>
-
-            {/* HERO: 利益額 → リターン率 */}
-            <p className="text-[11px] text-zinc-400 mb-1">2020年から月3万円積立なら</p>
-            <div className="flex items-baseline gap-1.5 mb-2.5">
-              <p className="font-heading font-number text-[1.9rem] font-bold text-emerald-400 leading-none">
-                +{formatCurrency(pickResult.profit)}
-              </p>
-              <p className="font-number text-sm font-bold text-emerald-300">（+{pickResult.returnRate.toFixed(1)}%）</p>
-            </div>
-
-            {/* Catchcopy — 最大2行 */}
-            <p className="text-sm text-zinc-300 leading-relaxed line-clamp-2">{pickEnc.catchCopy}</p>
+      <section className="mx-4 mt-7 rounded-[1.75rem] border border-[#D9E3E8] bg-white p-5 shadow-[0_18px_45px_rgba(38,58,83,0.08)] md:mx-auto md:max-w-3xl md:p-8" aria-labelledby="quick-start-title">
+        <div className="mb-6 flex items-center justify-between gap-4"><div><p className="text-xs font-bold text-[#236B8E]">3つ選んですぐ確認</p><h2 id="quick-start-title" className="mt-1 text-xl font-bold text-[#263A53]">積立条件を選ぶ</h2></div><span className="rounded-full bg-[#CDEFE2] px-3 py-1.5 text-xs font-bold text-emerald-800">無料・登録不要</span></div>
+        <div className="space-y-5">
+          <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">1. 商品</legend><div className="grid grid-cols-3 gap-2">{PICKS.map((id) => <button key={id} type="button" aria-pressed={fund === id} onClick={() => setFund(id)} className={`min-h-12 rounded-xl border px-2 text-sm font-bold ${fund === id ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{FUNDS[id].shortName}</button>)}</div></fieldset>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">2. 開始年</legend><div className="grid grid-cols-3 gap-2">{[2018, 2020, 2022].map((year) => <button key={year} type="button" aria-pressed={startYear === year} onClick={() => setStartYear(year)} className={`min-h-12 rounded-xl border text-sm font-bold ${startYear === year ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{year}年</button>)}</div></fieldset>
+            <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">3. 毎月の積立額</legend><div className="grid grid-cols-3 gap-2">{AMOUNTS.map((value) => <button key={value} type="button" aria-pressed={amount === value} onClick={() => setAmount(value)} className={`min-h-12 rounded-xl border text-sm font-bold ${amount === value ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{value / 10000}万円</button>)}</div></fieldset>
           </div>
-
-          {/* Feature tags — 1行に収める */}
-          <div className="px-4 pb-3 flex gap-1.5 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            {pickEnc.features.slice(0, 3).map((f) => (
-              <span
-                key={f}
-                className="flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium border border-white/8 text-zinc-300 whitespace-nowrap"
-              >
-                {f}
-              </span>
-            ))}
-          </div>
-
-          {/* CTA row */}
-          <div className="px-4 py-3 flex items-center justify-between border-t border-white/8">
-            <p className="text-xs font-bold text-zinc-300">詳しく見る</p>
-            <ChevronRight className="h-4 w-4 text-zinc-400" />
-          </div>
-        </motion.button>
-      </motion.section>
-
-      {/* ── 積立開始年ランキング ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.25 }}
-        className="px-4 space-y-3"
-      >
-        <div>
-          <div className="flex items-center gap-2 mb-0.5">
-            <TrendingUp className="h-4 w-4 text-emerald-400" />
-            <p className="font-heading text-sm font-semibold text-white">積立開始年ランキング</p>
-          </div>
-          <p className="text-[11px] text-zinc-500 pl-6">何年から始めた人が一番増えた？</p>
         </div>
+        <button type="button" onClick={() => onTaraeba(fund, startYear, 1, amount)} className="tm-primary-button mt-6 flex w-full items-center justify-center gap-2 px-5 py-4 text-base">条件を選んで積立実績を調べる <ChevronRight className="h-5 w-5" /></button>
+        <p className="mt-3 text-center text-xs leading-5 text-slate-600">過去実績であり、将来の成果を示すものではありません。</p>
+      </section>
 
-        <div
-          className="flex gap-3 overflow-x-auto pb-1"
-          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-        >
-          {[
-            { year: 2020, label: "コロナ急落を含む期間", color: "#10b981" },
-            { year: 2021, label: "相場回復局面から", color: "#3b82f6" },
-            { year: 2022, label: "下落相場を経験",   color: "#f59e0b" },
-            { year: 2023, label: "AIブーム期から",   color: "#8b5cf6" },
-            { year: 2024, label: "新NISA元年",       color: "#ec4899" },
-          ].map(({ year, label, color }) => (
-            <Link
-              key={year}
-              href={`/from/${year}`}
-              className="flex-shrink-0 w-36 rounded-2xl border border-white/[0.08] p-4 space-y-2 hover:bg-white/[0.06] transition-colors"
-              style={{ background: "rgba(255,255,255,0.03)" }}
-            >
-              <span
-                className="text-[10px] font-black px-2 py-0.5 rounded inline-block"
-                style={{ background: `${color}20`, color }}
-              >
-                {year}年〜
-              </span>
-              <p className="text-sm font-bold text-white leading-snug">{year}年から<br />積み立てたら</p>
-              <p className="text-[11px] text-zinc-500 leading-snug">{label}</p>
-              <p className="text-[10px] font-bold text-zinc-400 flex items-center gap-1">
-                詳細を見る <ChevronRight className="h-3 w-3" />
-              </p>
-            </Link>
-          ))}
-        </div>
-      </motion.section>
+      <section className="mx-4 mt-6 rounded-2xl bg-[#EFF8F4] p-5 md:mx-auto md:max-w-3xl" aria-label="条件別の検証例"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-bold text-emerald-800">条件別の検証例</p><p className="mt-1 text-sm text-slate-600">{FUNDS[fund].shortName}・{startYear}年1月〜・月{formatCurrency(amount)}</p></div><div className="text-right"><p className="text-xs text-slate-600">期間末評価額</p><p className="font-number text-2xl font-bold text-[#263A53]">{formatCurrency(preview.finalValue)}</p></div></div></section>
 
-      {/* ── 銘柄図鑑への入口 ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
-        className="px-4"
-      >
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-emerald-400" />
-            <p className="font-heading text-sm font-semibold text-white">銘柄図鑑から探す</p>
-          </div>
-          <button
-            onClick={() => onNavigate("encyclopedia")}
-            className="text-[11px] text-zinc-400 hover:text-zinc-200 flex items-center gap-0.5"
-          >
-            図鑑へ <ChevronRight className="h-3 w-3" />
-          </button>
-        </div>
-
-        <div className="space-y-2">
-          {encyclopediaExamples.map((fund, i) => {
-            const enc = fund.encyclopedia;
-            const tags = getFundTags(fund);
-            return (
-              <motion.button
-                key={fund.id}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.28 + i * 0.05 }}
-                onClick={() => { onFundSelect(fund.id); onNavigate("encyclopedia"); }}
-                className="w-full flex items-center gap-3 rounded-xl p-3.5 border border-white/8 bg-white/[0.015] hover:bg-white/[0.04] transition-colors text-left"
-                style={{ minHeight: 56 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
-                    <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
-                    {tags.map((t) => (
-                      <span key={t} className="text-[10px] font-medium px-1.5 py-0.5 rounded border border-white/10 text-zinc-400">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-[11px] text-zinc-400 truncate">{FUND_SHORT_DESC[fund.id]}</p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-zinc-400 flex-shrink-0" />
-              </motion.button>
-            );
-          })}
-        </div>
-      </motion.section>
-
-      {/* ── 全銘柄ランキング（上位5件） ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        className="px-4"
-      >
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <p className="font-heading text-sm font-semibold text-white">全銘柄ランキング</p>
-            <p className="text-[11px] text-zinc-400">2020年〜 月3万円 利益額順</p>
-          </div>
-          <button
-            onClick={() => onNavigate("timemachine")}
-            className="text-[11px] text-zinc-400 hover:text-zinc-200 flex items-center gap-0.5"
-          >
-            全部試す <ChevronRight className="h-3 w-3" />
-          </button>
-        </div>
-
-        <div className="space-y-1.5">
-          {topFunds.map(({ fund, result }, i) => {
-            const enc = fund.encyclopedia;
-            const tags = getFundTags(fund);
-            const medals = ["🥇", "🥈", "🥉", "4", "5"];
-            return (
-              <motion.button
-                key={fund.id}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.34 + i * 0.04 }}
-                onClick={() => onTaraeba(fund.id, 2020, 1, 30000)}
-                className="w-full flex items-center gap-3 rounded-xl px-3 py-3 border border-white/8 bg-white/[0.012] hover:bg-white/[0.035] transition-colors text-left"
-                style={{ minHeight: 52 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                <span className="text-sm flex-shrink-0 w-6 text-center">
-                  {i < 3 ? medals[i] : <span className="text-zinc-400 font-bold">{i + 1}</span>}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
-                    {tags.slice(0, 2).map((t) => (
-                      <span key={t} className="text-[10px] font-medium px-1.5 py-0.5 rounded border border-white/10 text-zinc-400">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <p className="font-number text-sm font-bold text-emerald-400">+{formatCurrency(result.profit)}</p>
-                  <p className="font-number text-[10px] text-emerald-300">（+{result.returnRate.toFixed(0)}%）</p>
-                </div>
-              </motion.button>
-            );
-          })}
-        </div>
-      </motion.section>
-
-      <p className="text-center text-xs text-zinc-400 px-6 leading-relaxed">
-        9系列は一次情報から検証した月次実績を使用しています。参考系列は品質を明示し、手数料・税金は個別計算していません。
-      </p>
-
-      {/* ── 人気ガイド ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.33 }}
-        className="px-4 space-y-3"
-      >
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-4 w-4 text-indigo-400" />
-          <p className="font-heading text-sm font-semibold text-white">投資ガイド</p>
-        </div>
-        <div className="grid grid-cols-1 gap-2">
-          {[
-            { label: "オルカンはやめたほうがいい？",   href: "/guide/orukan-yameta-houga-ii",    sub: "6つの懸念点を実績データで検証" },
-            { label: "S&P500が暴落したらどうなる？",   href: "/guide/sp500-booraku-taisho",      sub: "過去の暴落データと積立継続の効果" },
-            { label: "オルカン一本だけでいい？",       href: "/guide/orukan-ippon-de-ii",        sub: "1本投資の合理的な理由と注意点" },
-            { label: "新NISAは月いくら？",   href: "/guide/nisa-tsumitate-ikura",      sub: "家計と過去実績から確認" },
-            { label: "新NISAの商品選択で確認すること", href: "/guide/nisa-beginner",             sub: "オルカン・S&P500・NASDAQ100を比較" },
-            { label: "ドルコスト平均法とは？",         href: "/guide/dollar-cost-averaging",     sub: "定額積立の仕組みと注意点" },
-            { label: "積立投資の失敗パターン5つ",      href: "/guide/index-shippai-pattern",     sub: "やってはいけない行動と回避法" },
-            { label: "積立vs一括投資どっちが有利？",   href: "/guide/tsumitate-vs-ikkatu",       sub: "過去データで比較検証" },
-            { label: "老後資金シミュレーション",       href: "/guide/retirement-investing",      sub: "30代・40代の積立プラン" },
-          ].map(({ label, href, sub }) => (
-            <Link
-              key={href}
-              href={href}
-              className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 hover:bg-white/[0.06] transition-colors"
-            >
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white">{label}</p>
-                <p className="text-[11px] text-zinc-500 mt-0.5">{sub}</p>
-              </div>
-              <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
-            </Link>
-          ))}
-          <Link
-            href="/guide"
-            className="flex items-center justify-center gap-1 rounded-xl px-4 py-3 text-xs font-bold text-indigo-300 hover:text-indigo-200 transition-colors"
-          >
-            投資ガイドをもっと見る <ChevronRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-      </motion.section>
-
-      {/* ── まとめて読む（クラスタガイド） ── */}
-      {clusterHubs.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.34 }}
-          className="px-4 space-y-3"
-        >
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-emerald-400" />
-            <p className="font-heading text-sm font-semibold text-white">まとめて読む</p>
-          </div>
-          <div className="grid grid-cols-1 gap-2">
-            {clusterHubs.map(({ label, href, sub }) => (
-              <Link
-                key={href}
-                href={href}
-                className="flex items-center justify-between rounded-xl bg-emerald-500/[0.04] border border-emerald-500/15 px-4 py-3 hover:bg-emerald-500/[0.08] transition-colors"
-              >
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white">{label}</p>
-                  <p className="text-[11px] text-zinc-500 mt-0.5">{sub}</p>
-                </div>
-                <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
-              </Link>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* ── 比較ページへの入口 ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.35 }}
-        className="px-4 space-y-3"
-      >
-        <div className="flex items-center gap-2">
-          <BarChart2 className="h-4 w-4 text-violet-400" />
-          <p className="font-heading text-sm font-semibold text-white">比較ページを選ぶ</p>
-        </div>
-        <div className="space-y-2">
-          {COMPARE_PAGES.slice(0, 5).map((cp) => {
-            const fA = FUNDS[cp.fundAId];
-            const fB = FUNDS[cp.fundBId];
-            return (
-              <Link
-                key={cp.slug}
-                href={`/compare/${cp.slug}`}
-                className="flex items-center gap-3 rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 hover:bg-white/[0.06] transition-colors"
-              >
-                <span className="flex items-center gap-1.5 text-sm font-bold flex-1 min-w-0">
-                  <span style={{ color: fA.color }}>{fA.shortName}</span>
-                  <span className="text-zinc-500 text-xs">vs</span>
-                  <span style={{ color: fB.color }}>{fB.shortName}</span>
-                </span>
-                <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
-              </Link>
-            );
-          })}
-          <Link
-            href="/compare"
-            className="flex items-center justify-center gap-1 rounded-xl px-4 py-3 text-xs font-bold text-violet-300 hover:text-violet-200 transition-colors"
-          >
-            比較をもっと見る <ChevronRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-      </motion.section>
-
-      <SiteFooter />
+      <div className="mx-4 mt-8 md:mx-auto md:max-w-3xl"><RecentConditions onRestore={onRestoreRecent} /></div>
+      <section className="mx-4 mt-10 md:mx-auto md:max-w-3xl"><div className="mb-4 flex items-end justify-between gap-3"><div><p className="text-xs font-bold text-[#236B8E]">人気の比較</p><h2 className="mt-1 text-xl font-bold text-[#263A53]">同じ条件で比べる</h2></div><button type="button" onClick={() => onNavigate("compare")} className="min-h-11 text-sm font-bold text-[#236B8E]">比較を試す</button></div><div className="grid gap-3 md:grid-cols-3">{POPULAR_COMPARE.map((item) => <Link key={item.href} href={item.href} className="flex min-h-14 items-center justify-between rounded-2xl border border-[#D9E3E8] bg-white px-4 py-3 text-sm font-bold text-[#263A53] shadow-sm"><span>{item.label}</span><GitCompareArrows className="h-4 w-4 text-[#4E94B3]" /></Link>)}</div></section>
+      <section className="mx-4 mt-10 grid gap-3 md:mx-auto md:max-w-3xl md:grid-cols-2"><Link href="/about/data-sources" onClick={() => trackSourceView("home_trust_panel")} className="rounded-2xl bg-[#DCEFFA] p-5 text-[#263A53]"><Database className="h-5 w-5 text-[#236B8E]" /><h2 className="mt-3 font-bold">データの根拠を公開</h2><p className="mt-2 text-sm leading-6 text-slate-700">一次情報、計算方法、収録期間を商品ごとに確認できます。</p></Link><Link href="/guide" className="rounded-2xl bg-[#FFEEE3] p-5 text-[#263A53]"><BookOpen className="h-5 w-5 text-[#A65335]" /><h2 className="mt-3 font-bold">結果の読み方を知る</h2><p className="mt-2 text-sm leading-6 text-slate-700">過去実績と将来予測を分けて、積立の考え方を整理します。</p></Link></section>
+      <div className="mx-4 mt-8 flex items-start gap-2 rounded-2xl border border-[#D9E3E8] bg-white p-4 text-xs leading-6 text-slate-600 md:mx-auto md:max-w-3xl"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" /><span>A品質9系列の実績期間：2026年8月まで。商品設定前の期間や欠損値は別系列で補いません。参考系列は数値シミュレーションから分離しています。</span></div>
+      <div className="mt-12"><SiteFooter /></div>
     </div>
   );
 }

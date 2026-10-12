@@ -49,24 +49,24 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #fafaf7;
+  --foreground: #263a53;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --primary: #236b8e;
+  --primary-foreground: #ffffff;
+  --secondary: #dceffa;
+  --secondary-foreground: #263a53;
+  --muted: #f0f4f3;
+  --muted-foreground: #56697d;
+  --accent: #cdefe2;
+  --accent-foreground: #263a53;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #d9e3e8;
+  --input: #d9e3e8;
+  --ring: #236b8e;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -124,8 +124,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: #09090b;
-    color: #fafafa;
+    background: #fafaf7;
+    color: #263a53;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -155,14 +155,49 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ffffff20;
+  background: #b5c6cf;
   border-radius: 4px;
 }
 
 /* Number input accent */
 input[type="range"] {
-  accent-color: #6366f1;
+  accent-color: #236b8e;
 }
+
+::selection {
+  background: #cde8f5;
+  color: #1f354c;
+}
+
+:focus-visible {
+  outline: 3px solid #69a9c6;
+  outline-offset: 3px;
+}
+
+.tm-shell {
+  min-height: 100dvh;
+  background: #fafaf7;
+  color: #263a53;
+}
+
+.tm-surface {
+  border: 1px solid #d9e3e8;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 28px rgb(38 58 83 / 6%);
+}
+
+.tm-primary-button {
+  min-height: 48px;
+  border-radius: 1rem;
+  background: #236b8e;
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgb(35 107 142 / 18%);
+}
+
+.tm-primary-button:hover { background: #1d5b79; }
+.tm-primary-button:active { transform: translateY(1px); }
 
 /* Safe area utilities */
 .pb-safe {
@@ -266,7 +301,26 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
   .interaction-layer {
     display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer-group > summary {
+    pointer-events: none;
+  }
+
+  .footer-group:not([open]) > :not(summary) {
+    display: block;
   }
 }

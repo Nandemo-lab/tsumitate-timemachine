@@ -171,39 +171,39 @@ export default async function GuidePage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-zinc-500 flex-wrap">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">ホーム</Link>
+          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
+            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-500">投資ガイド</span>
+            <span className="text-slate-500">投資ガイド</span>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-400">{GUIDE_LABELS[slug]}</span>
+            <span className="text-slate-600">{GUIDE_LABELS[slug]}</span>
           </nav>
 
           {/* ── H1 ────────────────────────────────────────────── */}
           <section className="space-y-3">
             <div className="flex items-start gap-3">
-              <BookOpen className="h-6 w-6 flex-shrink-0 text-indigo-400 mt-0.5" />
+              <BookOpen className="h-6 w-6 flex-shrink-0 text-[#236B8E] mt-0.5" />
               <h1
-                className="text-2xl font-black text-white leading-tight"
+                className="text-2xl font-black text-[#263A53] leading-tight"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {page.h1}
               </h1>
             </div>
-            <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
+            <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
           </section>
 
           {/* ── 結論（最初に表示。検索から来た読者が数秒で要点を掴む）─ */}
           {page.conclusion && page.conclusion.length > 0 && (
-            <section className="rounded-xl bg-white/[0.04] border border-white/[0.1] p-4 space-y-2">
-              <p className="text-xs font-bold text-white">結論</p>
+            <section className="rounded-xl bg-[#F7FAFB] border border-[#D2DEE4] p-4 space-y-2">
+              <p className="text-xs font-bold text-[#263A53]">結論</p>
               <div className="space-y-1.5">
                 {page.conclusion.map((line, i) => (
-                  <p key={i} className="text-sm text-zinc-200 leading-relaxed">{line}</p>
+                  <p key={i} className="text-sm text-slate-700 leading-relaxed">{line}</p>
                 ))}
               </div>
             </section>
@@ -212,27 +212,27 @@ export default async function GuidePage({ params }: Props) {
           {/* ── ◯分で分かること（読了時間を前面に出す）───────────── */}
           {page.tldr && (
             <section className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2">
-              <p className="text-xs font-bold text-indigo-300">
-                <span className="text-indigo-300">⏱ {page.tldr.readTime}</span>
-                <span className="text-zinc-500 font-normal"> ・ {page.tldr.forWho}</span>
+              <p className="text-xs font-bold text-[#236B8E]">
+                <span className="text-[#236B8E]">⏱ {page.tldr.readTime}</span>
+                <span className="text-slate-500 font-normal"> ・ {page.tldr.forWho}</span>
               </p>
 
               {page.tldr.forWhoBullets && page.tldr.forWhoBullets.length > 0 && (
                 <div className="space-y-1 pt-0.5">
-                  <p className="text-xs font-bold text-white">こんな人向け</p>
+                  <p className="text-xs font-bold text-[#263A53]">こんな人向け</p>
                   <ul className="space-y-0.5">
                     {page.tldr.forWhoBullets.map((b, i) => (
-                      <li key={i} className="text-sm text-zinc-300">・{b}</li>
+                      <li key={i} className="text-sm text-slate-700">・{b}</li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              <p className="text-xs font-bold text-white pt-0.5">この記事で分かること</p>
+              <p className="text-xs font-bold text-[#263A53] pt-0.5">この記事で分かること</p>
               <ul className="space-y-1">
                 {page.tldr.bullets.map((b, i) => (
-                  <li key={i} className="flex items-start gap-1.5 text-sm text-zinc-200">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+                  <li key={i} className="flex items-start gap-1.5 text-sm text-slate-700">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0 mt-0.5" />
                     <span>{b}</span>
                   </li>
                 ))}
@@ -243,7 +243,7 @@ export default async function GuidePage({ params }: Props) {
           {/* ── 要点3つ（判断基準・理由の詳細）─────────────────── */}
           <section className="space-y-4">
             <h2
-              className="text-base font-bold text-white"
+              className="text-base font-bold text-[#263A53]"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               この記事のポイント
@@ -251,13 +251,13 @@ export default async function GuidePage({ params }: Props) {
             {page.points.map((pt, i) => (
               <div
                 key={i}
-                className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"
+                className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
               >
                 <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-indigo-400 mt-0.5" />
-                  <p className="text-sm font-bold text-white">{pt.title}</p>
+                  <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[#236B8E] mt-0.5" />
+                  <p className="text-sm font-bold text-[#263A53]">{pt.title}</p>
                 </div>
-                <p className="text-sm text-zinc-400 leading-relaxed pl-6">{pt.body}</p>
+                <p className="text-sm text-slate-600 leading-relaxed pl-6">{pt.body}</p>
               </div>
             ))}
           </section>
@@ -272,7 +272,7 @@ export default async function GuidePage({ params }: Props) {
           {page.systemCheck && page.systemCheck.length > 0 && (
             <section className="rounded-xl bg-emerald-500/[0.04] border border-emerald-500/15 p-4 space-y-2.5">
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-700 flex-shrink-0" />
                 <p className="text-xs font-bold text-emerald-200">制度情報の確認状況</p>
               </div>
               <ul className="space-y-1.5">
@@ -280,7 +280,7 @@ export default async function GuidePage({ params }: Props) {
                   <li
                     key={i}
                     data-system-check-date={sc.lastConfirmed}
-                    className="text-[11px] text-zinc-400 leading-relaxed"
+                    className="text-[11px] text-slate-600 leading-relaxed"
                   >
                     「{sc.topic}」を{sc.lastConfirmed}に{sc.source}で確認
                     {sc.sourceUrl && (
@@ -290,7 +290,7 @@ export default async function GuidePage({ params }: Props) {
                           href={sc.sourceUrl}
                           target="_blank"
                           rel="noopener noreferrer nofollow"
-                          className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2"
+                          className="text-emerald-700 hover:text-emerald-700 underline underline-offset-2"
                         >
                           出典を見る
                         </a>
@@ -305,10 +305,10 @@ export default async function GuidePage({ params }: Props) {
 
           {/* ── クラスタ内シリーズナビ（前へ・次へ）───────────── */}
           {seriesInfo && (
-            <section className="rounded-xl border border-white/[0.08] p-4 space-y-3">
+            <section className="rounded-xl border border-[#D9E3E8] p-4 space-y-3">
               <div className="flex items-center gap-1.5">
-                <ListOrdered className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
-                <p className="text-xs font-bold text-indigo-300">
+                <ListOrdered className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
+                <p className="text-xs font-bold text-[#236B8E]">
                   {seriesInfo.series.label}（{seriesInfo.index + 1}/{seriesInfo.series.slugs.length}）
                 </p>
               </div>
@@ -316,10 +316,10 @@ export default async function GuidePage({ params }: Props) {
                 {seriesPrev ? (
                   <Link
                     href={`/guide/${seriesPrev}`}
-                    className="flex items-center gap-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors px-3 py-2.5 min-w-0"
+                    className="flex items-center gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0"
                   >
-                    <ArrowLeft className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
-                    <span className="text-xs text-zinc-400 truncate">{GUIDE_LABELS[seriesPrev] ?? seriesPrev}</span>
+                    <ArrowLeft className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
+                    <span className="text-xs text-slate-600 truncate">{GUIDE_LABELS[seriesPrev] ?? seriesPrev}</span>
                   </Link>
                 ) : (
                   <span />
@@ -327,19 +327,19 @@ export default async function GuidePage({ params }: Props) {
                 {seriesNext ? (
                   <Link
                     href={`/guide/${seriesNext}`}
-                    className="flex items-center justify-end gap-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors px-3 py-2.5 min-w-0 text-right"
+                    className="flex items-center justify-end gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0 text-right"
                   >
-                    <span className="text-xs text-zinc-400 truncate">{GUIDE_LABELS[seriesNext] ?? seriesNext}</span>
-                    <ArrowRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                    <span className="text-xs text-slate-600 truncate">{GUIDE_LABELS[seriesNext] ?? seriesNext}</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                   </Link>
                 ) : (
                   seriesInfo.series.hubSlug && (
                     <Link
                       href={`/guide/${seriesInfo.series.hubSlug}`}
-                      className="flex items-center justify-end gap-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors px-3 py-2.5 min-w-0 text-right"
+                      className="flex items-center justify-end gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0 text-right"
                     >
-                      <span className="text-xs text-zinc-400 truncate">一覧に戻る</span>
-                      <ArrowRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                      <span className="text-xs text-slate-600 truncate">一覧に戻る</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                     </Link>
                   )
                 )}
@@ -349,15 +349,15 @@ export default async function GuidePage({ params }: Props) {
 
           {/* ── 目次 ────────────────────────────────────────── */}
           {page.sections && page.sections.length > 0 && (
-            <nav className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-2">
-              <p className="text-xs font-bold text-zinc-300">目次</p>
+            <nav className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+              <p className="text-xs font-bold text-slate-700">目次</p>
               <ol className="space-y-1.5">
                 {page.sections.map((sec, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <span className="text-[10px] font-bold text-indigo-400 mt-0.5 flex-shrink-0">{i + 1}.</span>
+                    <span className="text-[10px] font-bold text-[#236B8E] mt-0.5 flex-shrink-0">{i + 1}.</span>
                     <a
                       href={`#section-${i}`}
-                      className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors leading-snug"
+                      className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
                     >
                       {sec.h2}
                     </a>
@@ -373,7 +373,7 @@ export default async function GuidePage({ params }: Props) {
             return (
               <section key={i} id={`section-${i}`} className="space-y-4">
                 <h2
-                  className="text-base font-bold text-white"
+                  className="text-base font-bold text-[#263A53]"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   {sec.h2}
@@ -381,7 +381,7 @@ export default async function GuidePage({ params }: Props) {
                 <GuideBodyText body={sec.body} />
                 {sec.subsections?.map((sub, j) => (
                   <div key={j} className="pl-4 border-l-2 border-indigo-500/30 space-y-1.5">
-                    <h3 className="text-sm font-bold text-zinc-200">{sub.h3}</h3>
+                    <h3 className="text-sm font-bold text-slate-700">{sub.h3}</h3>
                     <GuideBodyText body={sub.body} />
                   </div>
                 ))}
@@ -392,7 +392,7 @@ export default async function GuidePage({ params }: Props) {
                   return (
                     <Link
                       href={`/${row.fundSlug}/${row.year}`}
-                      className="block rounded-xl border border-white/[0.08] overflow-hidden hover:bg-white/[0.04] transition-colors"
+                      className="block rounded-xl border border-[#D9E3E8] overflow-hidden hover:bg-[#F7FAFB] transition-colors"
                       style={{ background: `${fund.color}08` }}
                     >
                       <div className="px-4 py-3 space-y-1.5">
@@ -403,16 +403,16 @@ export default async function GuidePage({ params }: Props) {
                           >
                             {fund.shortName}
                           </span>
-                          <span className="text-[10px] text-zinc-500">
+                          <span className="text-[10px] text-slate-500">
                             {formatYearMonth(row.year, row.month)}〜{CURRENT_YEAR}年{CURRENT_MONTH}月
                           </span>
                         </div>
-                        <p className="text-[10px] text-zinc-500">
+                        <p className="text-[10px] text-slate-500">
                           月{row.amount >= 10000 ? `${row.amount / 10000}万円` : `${row.amount}円`}積立・積立タイムマシン実績データ
                         </p>
                         <div className="flex items-baseline gap-3">
                           <div>
-                            <span className="text-[10px] text-zinc-500">利益</span>
+                            <span className="text-[10px] text-slate-500">利益</span>
                             <span
                               className="ml-1 text-lg font-black font-number"
                               style={{ color: isProfit ? "#10b981" : "#ef4444" }}
@@ -427,13 +427,13 @@ export default async function GuidePage({ params }: Props) {
                             </span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 text-[10px] text-zinc-500">
-                          <span>元本 <span className="font-bold text-zinc-300">{formatCurrency(result.totalPrincipal)}</span></span>
-                          <span>評価額 <span className="font-bold text-zinc-300">{formatCurrency(result.finalValue)}</span></span>
+                        <div className="flex items-center gap-4 text-[10px] text-slate-500">
+                          <span>元本 <span className="font-bold text-slate-700">{formatCurrency(result.totalPrincipal)}</span></span>
+                          <span>評価額 <span className="font-bold text-slate-700">{formatCurrency(result.finalValue)}</span></span>
                         </div>
                       </div>
-                      <div className="px-4 py-2 border-t border-white/[0.06] flex items-center justify-end">
-                        <span className="text-[10px] font-bold text-indigo-400 flex items-center gap-1">
+                      <div className="px-4 py-2 border-t border-[#E1E8EC] flex items-center justify-end">
+                        <span className="text-[10px] font-bold text-[#236B8E] flex items-center gap-1">
                           詳細を見る <ArrowRight className="h-2.5 w-2.5" />
                         </span>
                       </div>
@@ -449,7 +449,7 @@ export default async function GuidePage({ params }: Props) {
                         href={sl.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 bg-white/[0.03] border border-white/[0.07] rounded px-2 py-1 transition-colors"
+                        className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-700 bg-white border border-[#DDE6EA] rounded px-2 py-1 transition-colors"
                       >
                         <ExternalLink className="h-2.5 w-2.5 flex-shrink-0" />
                         {sl.label}
@@ -461,12 +461,12 @@ export default async function GuidePage({ params }: Props) {
                 {i === 1 && (
                   <div className="rounded-xl bg-indigo-500/[0.08] border border-indigo-500/20 p-4 flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="text-xs font-bold text-indigo-300">実際の数字をシミュレーションしてみる</p>
-                      <p className="text-[10px] text-zinc-500 mt-0.5">自分の積立開始年・金額で試せます</p>
+                      <p className="text-xs font-bold text-[#236B8E]">実際の数字をシミュレーションしてみる</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">自分の積立開始年・金額で試せます</p>
                     </div>
                     <Link
                       href="/"
-                      className="flex-shrink-0 flex items-center gap-1 text-xs font-bold text-indigo-400 border border-indigo-500/30 rounded-lg px-3 py-1.5 hover:bg-indigo-500/10 transition-colors"
+                      className="flex-shrink-0 flex items-center gap-1 text-xs font-bold text-[#236B8E] border border-indigo-500/30 rounded-lg px-3 py-1.5 hover:bg-indigo-500/10 transition-colors"
                     >
                       <BarChart2 className="h-3 w-3" />
                       試す
@@ -480,7 +480,7 @@ export default async function GuidePage({ params }: Props) {
           {/* ── シミュレーション結果 ─────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               実際の積立シミュレーション
@@ -492,7 +492,7 @@ export default async function GuidePage({ params }: Props) {
                   <Link
                     key={`${row.fundSlug}-${row.year}-${row.amount}`}
                     href={`/${row.fundSlug}/${row.year}`}
-                    className="block rounded-xl border border-white/[0.08] overflow-hidden hover:bg-white/[0.04] transition-colors"
+                    className="block rounded-xl border border-[#D9E3E8] overflow-hidden hover:bg-[#F7FAFB] transition-colors"
                     style={{ background: `${fund.color}08` }}
                   >
                     <div className="px-4 py-3 space-y-2">
@@ -503,9 +503,9 @@ export default async function GuidePage({ params }: Props) {
                         >
                           {fund.shortName}
                         </span>
-                        <span className="text-[10px] text-zinc-500">{row.label.split(" ").slice(0, 2).join(" ")}</span>
+                        <span className="text-[10px] text-slate-500">{row.label.split(" ").slice(0, 2).join(" ")}</span>
                       </div>
-                      <p className="text-xs text-zinc-400">{row.label}</p>
+                      <p className="text-xs text-slate-600">{row.label}</p>
                       <div className="flex items-baseline justify-between">
                         <div>
                           <span
@@ -522,14 +522,14 @@ export default async function GuidePage({ params }: Props) {
                           </span>
                         </div>
                         <div className="text-right">
-                          <p className="text-[10px] text-zinc-500">元本</p>
-                          <p className="text-xs font-bold text-zinc-300">{formatCurrency(result.totalPrincipal)}</p>
+                          <p className="text-[10px] text-slate-500">元本</p>
+                          <p className="text-xs font-bold text-slate-700">{formatCurrency(result.totalPrincipal)}</p>
                         </div>
                       </div>
                     </div>
-                    <div className="px-4 py-2 border-t border-white/[0.06] flex items-center justify-between">
-                      <span className="text-[10px] text-zinc-500">評価額 {formatCurrency(result.finalValue)}</span>
-                      <span className="text-[10px] font-bold text-indigo-400 flex items-center gap-1">
+                    <div className="px-4 py-2 border-t border-[#E1E8EC] flex items-center justify-between">
+                      <span className="text-[10px] text-slate-500">評価額 {formatCurrency(result.finalValue)}</span>
+                      <span className="text-[10px] font-bold text-[#236B8E] flex items-center gap-1">
                         詳細を見る <ArrowRight className="h-2.5 w-2.5" />
                       </span>
                     </div>
@@ -542,7 +542,7 @@ export default async function GuidePage({ params }: Props) {
           {/* ── 銘柄カード ──────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               商品ごとの確認項目を見る
@@ -568,7 +568,7 @@ export default async function GuidePage({ params }: Props) {
                 return (
                   <div
                     key={i}
-                    className="rounded-2xl border border-white/[0.08] overflow-hidden"
+                    className="rounded-2xl border border-[#D9E3E8] overflow-hidden"
                     style={{ background: `${fund.color}08` }}
                   >
                     <div className="p-4 space-y-3">
@@ -579,10 +579,10 @@ export default async function GuidePage({ params }: Props) {
                         >
                           {fund.shortName}
                         </span>
-                        <span className="text-[10px] text-zinc-500">{enc.managementFee}</span>
+                        <span className="text-[10px] text-slate-500">{enc.managementFee}</span>
                       </div>
-                      <p className="text-sm font-bold text-white">{enc.catchCopy}</p>
-                      <p className="text-[10px] text-zinc-500">2020年から{amtLabel}積立の場合</p>
+                      <p className="text-sm font-bold text-[#263A53]">{enc.catchCopy}</p>
+                      <p className="text-[10px] text-slate-500">2020年から{amtLabel}積立の場合</p>
                       <div className="flex items-baseline gap-2">
                         <span
                           className="text-xl font-black font-number"
@@ -598,27 +598,27 @@ export default async function GuidePage({ params }: Props) {
                         </span>
                       </div>
                     </div>
-                    <div className="border-t border-white/[0.06] grid grid-cols-2 divide-x divide-white/[0.06]">
+                    <div className="border-t border-[#E1E8EC] grid grid-cols-2 divide-x divide-white/[0.06]">
                       <Link
                         href={`/fund/${card.fundSlug}`}
-                        className="px-4 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-zinc-300 hover:bg-white/[0.06] transition-colors"
+                        className="px-4 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-slate-700 hover:bg-[#EFF5F7] transition-colors"
                       >
                         {enc.nickname}とは？
                         <ChevronRight className="h-3 w-3" />
                       </Link>
                       <Link
                         href={`/${card.fundSlug}/monthly/${card.monthlyAmount}`}
-                        className="px-4 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-indigo-400 hover:bg-white/[0.06] transition-colors"
+                        className="px-4 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
                       >
                         {amtLabel}積立を見る
                         <ArrowRight className="h-3 w-3" />
                       </Link>
                     </div>
                     {compareInfo && (
-                      <div className="border-t border-white/[0.06] px-4 py-2">
+                      <div className="border-t border-[#E1E8EC] px-4 py-2">
                         <Link
                           href={`/compare/${compareInfo.slug}`}
-                          className="flex items-center justify-end gap-1 text-[10px] font-bold text-zinc-500 hover:text-zinc-300 transition-colors"
+                          className="flex items-center justify-end gap-1 text-[10px] font-bold text-slate-500 hover:text-slate-700 transition-colors"
                         >
                           {compareInfo.relatedDescription}
                           <ArrowRight className="h-2.5 w-2.5" />
@@ -634,7 +634,7 @@ export default async function GuidePage({ params }: Props) {
           {/* ── よくある質問 ─────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-5"
+              className="text-base font-bold text-[#263A53] mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               よくある質問
@@ -643,10 +643,10 @@ export default async function GuidePage({ params }: Props) {
               {page.faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"
+                  className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
                 >
-                  <p className="text-sm font-bold text-white">Q. {faq.q}</p>
-                  <p className="text-sm text-zinc-400 leading-relaxed">A. {faq.a}</p>
+                  <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
                 </div>
               ))}
             </div>
@@ -656,7 +656,7 @@ export default async function GuidePage({ params }: Props) {
           {page.recommendFor && page.recommendFor.length > 0 && (
             <section className="space-y-3">
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {page.recommendHeading ?? "こんな人におすすめ"}
@@ -664,8 +664,8 @@ export default async function GuidePage({ params }: Props) {
               <div className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2.5">
                 {page.recommendFor.map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <span className="text-indigo-400 text-sm flex-shrink-0 mt-0.5">✓</span>
-                    <p className="text-sm text-zinc-300 leading-relaxed">{item}</p>
+                    <span className="text-[#236B8E] text-sm flex-shrink-0 mt-0.5">✓</span>
+                    <p className="text-sm text-slate-700 leading-relaxed">{item}</p>
                   </div>
                 ))}
               </div>
@@ -676,7 +676,7 @@ export default async function GuidePage({ params }: Props) {
           {page.commonMistakes && page.commonMistakes.length > 0 && (
             <section className="space-y-3">
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 よくある失敗パターン
@@ -687,8 +687,8 @@ export default async function GuidePage({ params }: Props) {
                     key={i}
                     className="rounded-xl bg-amber-500/[0.05] border border-amber-500/20 p-4 space-y-1.5"
                   >
-                    <p className="text-sm font-bold text-amber-300">⚠ {m.label}</p>
-                    <p className="text-sm text-zinc-400 leading-relaxed">{m.body}</p>
+                    <p className="text-sm font-bold text-amber-700">⚠ {m.label}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">{m.body}</p>
                   </div>
                 ))}
               </div>
@@ -698,7 +698,7 @@ export default async function GuidePage({ params }: Props) {
           {/* ── 関連ガイド ───────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               関連する投資ガイド
@@ -708,13 +708,13 @@ export default async function GuidePage({ params }: Props) {
                 <Link
                   key={gs}
                   href={`/guide/${gs}`}
-                  className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                  className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                 >
                   <div className="flex items-center gap-2">
-                    <BookOpen className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
-                    <span className="text-sm text-zinc-300">{label}</span>
+                    <BookOpen className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
+                    <span className="text-sm text-slate-700">{label}</span>
                   </div>
-                  <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                  <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                 </Link>
               ))}
             </div>
@@ -727,7 +727,7 @@ export default async function GuidePage({ params }: Props) {
             return (
               <section>
                 <h2
-                  className="text-base font-bold text-white mb-4"
+                  className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   関連コラム
@@ -737,13 +737,13 @@ export default async function GuidePage({ params }: Props) {
                     <Link
                       key={a.slug}
                       href={`/articles/${a.slug}`}
-                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
                       <div className="flex items-center gap-2 min-w-0">
-                        <FileText className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
-                        <span className="text-sm text-zinc-300 leading-snug line-clamp-2">{a.h1}</span>
+                        <FileText className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
+                        <span className="text-sm text-slate-700 leading-snug line-clamp-2">{a.h1}</span>
                       </div>
-                      <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0 ml-2" />
+                      <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0 ml-2" />
                     </Link>
                   ))}
                 </div>
@@ -754,20 +754,20 @@ export default async function GuidePage({ params }: Props) {
           {/* ── CTA ────────────────────────────────────────── */}
           <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-emerald-400" />
+              <TrendingUp className="h-5 w-5 text-emerald-700" />
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 自分の条件でシミュレーション
               </h2>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               積立開始年・月額を自由に変えて、あなただけの「たられば」を計算できます。
             </p>
             <Link
               href="/"
-              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white bg-emerald-600 hover:bg-emerald-500 transition-colors"
+              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] bg-emerald-600 hover:bg-emerald-500 transition-colors"
             >
               積立タイムマシンで試す
               <ArrowRight className="h-4 w-4" />
@@ -777,7 +777,7 @@ export default async function GuidePage({ params }: Props) {
           {/* ── 人気ページ ───────────────────────────────────── */}
           <section className="space-y-3">
             <h2
-              className="text-sm font-bold text-zinc-400"
+              className="text-sm font-bold text-slate-600"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               人気ページ
@@ -795,10 +795,10 @@ export default async function GuidePage({ params }: Props) {
                 <Link
                   key={href}
                   href={href}
-                  className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3 hover:bg-white/[0.06] transition-colors"
+                  className="flex items-center justify-between rounded-xl bg-white border border-[#E1E8EC] px-4 py-3 hover:bg-[#EFF5F7] transition-colors"
                 >
-                  <span className="text-sm text-zinc-300">{lbl}</span>
-                  <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                  <span className="text-sm text-slate-700">{lbl}</span>
+                  <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                 </Link>
               ))}
             </div>

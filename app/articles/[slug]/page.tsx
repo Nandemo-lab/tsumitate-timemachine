@@ -99,16 +99,16 @@ export default async function ArticlePage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-zinc-500 flex-wrap">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">ホーム</Link>
+          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
+            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-500">コラム</span>
+            <span className="text-slate-500">コラム</span>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-400 truncate max-w-[160px]">{meta.h1}</span>
+            <span className="text-slate-600 truncate max-w-[160px]">{meta.h1}</span>
           </nav>
 
           <PageRoleGuide

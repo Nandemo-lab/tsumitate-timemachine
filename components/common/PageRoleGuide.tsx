@@ -15,7 +15,7 @@ export default function PageRoleGuide({ label, description, counterpartHref, cou
         <Compass className="h-4 w-4 text-sky-300 flex-shrink-0" />
         <p className="text-xs font-bold text-sky-200">このページの役割：{label}</p>
       </div>
-      <p className="text-xs leading-relaxed text-zinc-400">{description}</p>
+      <p className="text-xs leading-relaxed text-slate-600">{description}</p>
       {counterpartHref && counterpartLabel && (
         <Link href={counterpartHref} className="inline-flex items-center gap-1 text-xs font-bold text-sky-300 hover:text-sky-200">
           {counterpartLabel}<ArrowRight className="h-3 w-3" />

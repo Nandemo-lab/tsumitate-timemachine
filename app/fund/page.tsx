@@ -48,38 +48,38 @@ export default function FundIndexPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <nav className="border-b border-white/[0.07] px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400">
-            <Link href="/" className="hover:text-zinc-200 transition-colors">積立タイムマシン</Link>
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <nav className="border-b border-[#DDE6EA] px-4 py-3">
+          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
+            <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-200">銘柄解説</span>
+            <span className="text-slate-700">銘柄解説</span>
           </div>
         </nav>
 
         <div className="max-w-2xl mx-auto px-4 py-10 pb-20 space-y-8">
           <header className="space-y-2">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1">
-              <BookOpen className="h-3 w-3 text-emerald-400" />
-              <span className="text-[11px] font-bold text-emerald-400">銘柄解説</span>
+              <BookOpen className="h-3 w-3 text-emerald-700" />
+              <span className="text-xs font-bold text-emerald-700">銘柄解説</span>
             </div>
             <h1
-              className="text-2xl font-black text-white leading-tight"
+              className="text-2xl font-black text-[#263A53] leading-tight"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               銘柄解説一覧
             </h1>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               人気銘柄の特徴・信託報酬・NISA対応・積立実績を1銘柄ずつ解説しています。
             </p>
           </header>
 
           <section className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 space-y-2">
             <h2 className="text-xs font-bold text-emerald-200">知りたい項目から銘柄を選ぶ</h2>
-            <p className="text-xs leading-relaxed text-zinc-400">
+            <p className="text-xs leading-relaxed text-slate-600">
               Fund詳細では、正式商品名、投資対象、費用、NISA区分、設定日、検証可能な実績期間、一次情報を確認できます。利益額の違いは商品landingや比較ページで条件をそろえて確認します。
             </p>
-            <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-300">
+            <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
               データ品質と更新履歴を見る<ArrowRight className="h-3 w-3" />
             </Link>
           </section>
@@ -91,16 +91,16 @@ export default function FundIndexPage() {
                 <Link
                   key={fp.slug}
                   href={`/fund/${fp.slug}`}
-                  className="flex items-center justify-between rounded-xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-colors group"
+                  className="flex items-center justify-between rounded-xl border border-[#D9E3E8] p-4 hover:bg-white transition-colors group"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 mb-1">
                       <span className="text-xs">{FUND_CATEGORIES[fund.category].emoji}</span>
                       <span className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</span>
                     </div>
-                    <p className="text-xs text-zinc-500 leading-relaxed line-clamp-2">{fp.h1 ?? fp.metaTitle}</p>
+                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{fp.h1 ?? fp.metaTitle}</p>
                   </div>
-                  <ArrowRight className="h-3.5 w-3.5 text-zinc-500 group-hover:text-zinc-300 transition-colors flex-shrink-0" />
+                  <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-slate-700 transition-colors flex-shrink-0" />
                 </Link>
               );
             })}

@@ -43,7 +43,7 @@ export default function GuideBodyText({ body, className }: Props) {
     if (part.type === "text") return <span key={i}>{part.content}</span>;
 
     const cls =
-      "text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors";
+      "text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors";
 
     if (part.external) {
       return (
@@ -67,7 +67,7 @@ export default function GuideBodyText({ body, className }: Props) {
   });
 
   return (
-    <p className={className ?? "text-sm text-zinc-400 leading-relaxed"}>
+    <p className={className ?? "text-base leading-8 text-slate-700"}>
       {nodes}
     </p>
   );

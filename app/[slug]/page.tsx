@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
     <h2
-      className="text-lg font-bold text-white mb-5"
+      className="text-lg font-bold text-[#263A53] mb-5"
       style={{ fontFamily: "var(--font-serif-jp), serif", letterSpacing: "0.01em" }}
     >
       {children}
@@ -128,7 +128,7 @@ export default async function FundLandingPage({ params }: Props) {
       />
 
       <div
-        className="min-h-dvh bg-zinc-950 text-zinc-50"
+        className="min-h-dvh bg-[#FAFAF7] text-[#263A53]"
         style={{ fontFamily: "var(--font-sans-jp), sans-serif" }}
       >
         {/* Background glow */}
@@ -140,13 +140,13 @@ export default async function FundLandingPage({ params }: Props) {
         </div>
 
         {/* Breadcrumb nav */}
-        <nav className="relative border-b border-white/8 px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400">
-            <Link href="/" className="hover:text-zinc-200 transition-colors">
+        <nav className="relative border-b border-[#D9E3E8] px-4 py-3">
+          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
+            <Link href="/" className="hover:text-slate-700 transition-colors">
               積立タイムマシン
             </Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-200">{fund.shortName}</span>
+            <span className="text-slate-700">{fund.shortName}</span>
           </div>
         </nav>
 
@@ -165,13 +165,13 @@ export default async function FundLandingPage({ params }: Props) {
               {fund.shortName} · {fund.encyclopedia.managementFee}
             </div>
             <h1
-              className="text-3xl font-bold text-white mb-2"
+              className="text-3xl font-bold text-[#263A53] mb-2"
               style={{ fontFamily: "var(--font-serif-jp), serif", letterSpacing: "0.01em" }}
             >
               {page.heroTitle}
             </h1>
-            <p className="text-base text-zinc-400 mb-4">{fund.encyclopedia.formalName}</p>
-            <p className="text-sm text-zinc-400 leading-relaxed max-w-lg mx-auto mb-8">
+            <p className="text-base text-slate-600 mb-4">{fund.encyclopedia.formalName}</p>
+            <p className="text-sm text-slate-600 leading-relaxed max-w-lg mx-auto mb-8">
               {fund.description}。このページでは商品設定後の収録データだけを使い、開始年と積立額を変えて期間末評価額を確認できます。
             </p>
             <Link
@@ -202,11 +202,11 @@ export default async function FundLandingPage({ params }: Props) {
               {objectiveFeatures.map((f) => (
                 <div
                   key={f.title}
-                  className="rounded-xl border border-white/8 p-4"
-                  style={{ background: "rgba(255,255,255,0.02)" }}
+                  className="rounded-xl border border-[#D9E3E8] p-4"
+                  style={{ background: "#FFFFFF" }}
                 >
-                  <p className="font-bold text-white text-sm mb-1">{f.title}</p>
-                  <p className="text-xs text-zinc-400 leading-relaxed">{f.description}</p>
+                  <p className="font-bold text-[#263A53] text-sm mb-1">{f.title}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed">{f.description}</p>
                 </div>
               ))}
             </div>
@@ -216,10 +216,10 @@ export default async function FundLandingPage({ params }: Props) {
           <section className="mb-12">
             <SectionHeading>商品選択時の確認ポイント</SectionHeading>
             <div
-              className="rounded-2xl border border-white/10 p-5 space-y-3"
-              style={{ background: "rgba(255,255,255,0.03)" }}
+              className="rounded-2xl border border-[#D2DEE4] p-5 space-y-3"
+              style={{ background: "#F8FBFC" }}
             >
-              <p className="text-sm text-zinc-200 leading-relaxed">投資対象、構成銘柄数、費用、商品設定日、NISA対象区分、資金を使う時期、許容できる値動きを確認してください。過去の一期間の結果だけでは、将来の成果や個人への適性は判断できません。</p>
+              <p className="text-sm text-slate-700 leading-relaxed">投資対象、構成銘柄数、費用、商品設定日、NISA対象区分、資金を使う時期、許容できる値動きを確認してください。過去の一期間の結果だけでは、将来の成果や個人への適性は判断できません。</p>
             </div>
           </section>
 
@@ -227,7 +227,7 @@ export default async function FundLandingPage({ params }: Props) {
           {returnDefinition.quality === "A" ? <section className="mb-12">
             <SectionHeading>{returnDefinition.quality === "A" ? "公式月次データによるシミュレーション" : "参考データによるシミュレーション"}</SectionHeading>
             <div className="mb-3"><ReturnQualityPill fundId={page.fundId} /></div>
-            <p className="text-xs text-zinc-400 mb-4">
+            <p className="text-xs text-slate-600 mb-4">
               {page.simYear}年{page.simMonth}月から毎月{formatCurrency(page.simAmount)}を積み立てた場合（{result.dataPoints.at(-1)?.date.replace("/", "年")}月時点）
             </p>
             <div
@@ -258,20 +258,20 @@ export default async function FundLandingPage({ params }: Props) {
                 >
                   +{formatCurrency(result.profit)}
                 </p>
-                <p className="text-lg font-bold text-emerald-400">
+                <p className="text-lg font-bold text-emerald-700">
                   （+{result.returnRate.toFixed(1)}%）
                 </p>
               </div>
 
               {/* Sub numbers */}
-              <div className="flex items-center gap-3 text-xs text-zinc-400 mt-3">
+              <div className="flex items-center gap-3 text-xs text-slate-600 mt-3">
                 <span>元本 {formatCurrency(result.totalPrincipal)}</span>
                 <span>→</span>
-                <span className="text-zinc-200 font-bold">{formatCurrency(result.finalValue)}</span>
+                <span className="text-slate-700 font-bold">{formatCurrency(result.finalValue)}</span>
               </div>
 
               {/* Trust line */}
-              <div className="mt-4 pt-3 border-t border-white/8 flex items-center gap-1.5 text-[10px] text-zinc-500">
+              <div className="mt-4 pt-3 border-t border-[#D9E3E8] flex items-center gap-1.5 text-[10px] text-slate-500">
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
                 <span>{returnDefinition.quality === "A" ? `${returnDefinition.seriesName}（${returnDefinition.startMonth}〜${returnDefinition.endMonth}）` : "参考データ・原典未検証。A品質の実績順位には使用していません"}</span>
               </div>
@@ -279,7 +279,7 @@ export default async function FundLandingPage({ params }: Props) {
 
             <Link
               href={`/simulate/${page.fundId}/${page.simYear}`}
-              className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-200 hover:bg-white/8 transition-colors"
+              className="flex items-center justify-center gap-2 rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] py-3.5 text-sm font-bold text-slate-700 hover:bg-[#EAF3F7] transition-colors"
             >
               自分の条件でシミュレーションしてみる
               <ArrowRight className="h-4 w-4" />
@@ -287,7 +287,7 @@ export default async function FundLandingPage({ params }: Props) {
           </section> : <section className="mb-12 rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] p-5 space-y-2">
             <ReturnQualityPill fundId={page.fundId} />
             <p className="text-sm font-bold text-amber-200">参考系列の評価額は表示しません</p>
-            <p className="text-xs leading-relaxed text-zinc-400">月次原典、通貨、配当、費用、為替の扱いが未検証のため、積立評価額・利益・推移を検証済み実績として表示しません。商品属性と一次情報を確認できます。</p>
+            <p className="text-xs leading-relaxed text-slate-600">月次原典、通貨、配当、費用、為替の扱いが未検証のため、積立評価額・利益・推移を検証済み実績として表示しません。商品属性と一次情報を確認できます。</p>
           </section>}
 
           {/* ── Related Funds ─────────────────────────────────────── */}
@@ -306,8 +306,8 @@ export default async function FundLandingPage({ params }: Props) {
                   <Link
                     key={rp.slug}
                     href={`/${rp.slug}`}
-                    className="rounded-xl border border-white/8 p-4 text-center hover:bg-white/5 transition-colors group"
-                    style={{ background: "rgba(255,255,255,0.02)" }}
+                    className="rounded-xl border border-[#D9E3E8] p-4 text-center hover:bg-[#F4F7F8] transition-colors group"
+                    style={{ background: "#FFFFFF" }}
                   >
                     <div
                       className="h-2 w-2 rounded-full mx-auto mb-2"
@@ -319,8 +319,8 @@ export default async function FundLandingPage({ params }: Props) {
                     >
                       {rf.shortName}
                     </p>
-                    <p className="text-[10px] text-zinc-400 leading-tight">{rp.heroSubtitle}</p>
-                    <p className="text-xs font-bold text-emerald-400 mt-1.5">
+                    <p className="text-[10px] text-slate-600 leading-tight">{rp.heroSubtitle}</p>
+                    <p className="text-xs font-bold text-emerald-700 mt-1.5">
                       +{rResult.returnRate.toFixed(0)}%
                     </p>
                   </Link>
@@ -331,7 +331,7 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── All Funds Footer Links ────────────────────────────── */}
           <section className="mb-12">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500 mb-3">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-slate-500 mb-3">
               その他の銘柄を見る
             </p>
             <div className="flex flex-wrap gap-2">
@@ -341,7 +341,7 @@ export default async function FundLandingPage({ params }: Props) {
                   <Link
                     key={p.slug}
                     href={`/${p.slug}`}
-                    className="flex items-center gap-1.5 rounded-full border border-white/8 bg-white/3 px-3 py-1.5 text-xs font-bold hover:bg-white/6 transition-colors"
+                    className="flex items-center gap-1.5 rounded-full border border-[#D9E3E8] bg-white/3 px-3 py-1.5 text-xs font-bold hover:bg-white/6 transition-colors"
                     style={{ color: f.color, borderColor: `${f.color}30` }}
                   >
                     {f.shortName}
@@ -358,13 +358,13 @@ export default async function FundLandingPage({ params }: Props) {
               {displayedFaqs.map((faq) => (
                 <div
                   key={faq.q}
-                  className="rounded-xl border border-white/8 p-5"
-                  style={{ background: "rgba(255,255,255,0.025)" }}
+                  className="rounded-xl border border-[#D9E3E8] p-5"
+                  style={{ background: "#FFFFFF" }}
                 >
-                  <p className="font-bold text-white text-sm mb-2 leading-snug">
+                  <p className="font-bold text-[#263A53] text-sm mb-2 leading-snug">
                     Q. {faq.q}
                   </p>
-                  <p className="text-sm text-zinc-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 leading-relaxed">
                     {faq.a}
                   </p>
                 </div>
@@ -374,30 +374,30 @@ export default async function FundLandingPage({ params }: Props) {
 
           {/* ── Bottom CTA ───────────────────────────────────────── */}
           <section
-            className="rounded-2xl border border-white/10 p-8 text-center"
-            style={{ background: "rgba(255,255,255,0.03)" }}
+            className="rounded-2xl border border-[#D2DEE4] p-8 text-center"
+            style={{ background: "#F8FBFC" }}
           >
             <p
-              className="text-lg font-bold text-white mb-2"
+              className="text-lg font-bold text-[#263A53] mb-2"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               もし積み立てていたら、いくらになった？
             </p>
-            <p className="text-sm text-zinc-400 mb-6">
+            <p className="text-sm text-slate-600 mb-6">
               開始年・積立額・銘柄を選んでシミュレーション
             </p>
             <Link
               href="/"
               className="inline-flex items-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-bold text-white transition-all hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
+                background: "#236B8E",
                 boxShadow: "0 8px 24px #6366f130",
               }}
             >
               積立タイムマシンで試してみる
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <p className="text-[10px] text-zinc-500 mt-4">
+            <p className="text-[10px] text-slate-500 mt-4">
               {returnDefinition.quality === "A" ? "※ 一次情報から検証した月次実績を使用しています。税金・売買コスト等は個別計算していません。" : "※ 参考データ・原典未検証の系列です。公式月次データとして扱わず、将来の運用成果を示すものではありません。"}
             </p>
           </section>

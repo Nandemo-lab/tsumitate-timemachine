@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
           style={{
             width: "1200px",
             height: "630px",
-            background: "#09090b",
+            background: "#FAFAF7",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -71,7 +71,7 @@ export async function GET(req: NextRequest) {
             }}
           >
             <span style={{ fontSize: "20px" }}>⏰</span>
-            <span style={{ color: "#a5b4fc", fontSize: "18px", fontWeight: 700, letterSpacing: "0.05em" }}>
+            <span style={{ color: "#236B8E", fontSize: "18px", fontWeight: 700, letterSpacing: "0.05em" }}>
               積立タイムマシン
             </span>
           </div>
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
           {/* Main headline */}
           <div
             style={{
-              color: "#f4f4f5",
+              color: "#263A53",
               fontSize: "62px",
               fontWeight: 900,
               letterSpacing: "-0.02em",
@@ -91,7 +91,7 @@ export async function GET(req: NextRequest) {
               alignItems: "center",
             }}
           >
-            <span style={{ color: "#a1a1aa", fontSize: "32px", fontWeight: 700, marginBottom: "12px", display: "flex" }}>
+            <span style={{ color: "#56697D", fontSize: "32px", fontWeight: 700, marginBottom: "12px", display: "flex" }}>
               もし2020年から積み立てていたら？
             </span>
             <span style={{ color: "#10b981", fontSize: "88px", fontWeight: 900, lineHeight: 1, display: "flex", letterSpacing: "-0.03em" }}>
@@ -137,11 +137,11 @@ export async function GET(req: NextRequest) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              borderTop: "1px solid rgba(255,255,255,0.07)",
+              borderTop: "1px solid #DDE6EA",
               paddingTop: "20px",
             }}
           >
-            <span style={{ color: "#3f3f46", fontSize: "13px", display: "flex" }}>
+            <span style={{ color: "#6A7C8E", fontSize: "13px", display: "flex" }}>
               ※A系列は検証済み月次実績。G系列は参考データとして品質を明示
             </span>
             <span style={{ color: "#6366f1", fontSize: "16px", fontWeight: 900, display: "flex" }}>
@@ -221,7 +221,7 @@ export async function GET(req: NextRequest) {
         style={{
           width: "1200px",
           height: "630px",
-          background: "#09090b",
+          background: "#FAFAF7",
           display: "flex",
           flexDirection: "column",
           padding: "56px 64px",
@@ -253,7 +253,7 @@ export async function GET(req: NextRequest) {
               borderRadius: "100px",
               padding: "6px 18px",
               fontSize: "14px",
-              color: "#a5b4fc",
+              color: "#236B8E",
               fontWeight: 700,
               display: "flex",
               alignItems: "center",
@@ -266,7 +266,7 @@ export async function GET(req: NextRequest) {
         </div>
 
         {/* Condition */}
-        <div style={{ color: "#71717a", fontSize: "22px", marginBottom: "20px", display: "flex" }}>
+        <div style={{ color: "#56697D", fontSize: "22px", marginBottom: "20px", display: "flex" }}>
           もし {startYear}年{startMonth}月から 毎月{formatCurrency(monthlyAmount)} 積み立てていたら
         </div>
 
@@ -299,7 +299,7 @@ export async function GET(req: NextRequest) {
               <span style={{ color: "#34d399", fontSize: "20px", fontWeight: 700, display: "flex" }}>
                 {formatSignedPercent(result.returnRate)}
               </span>
-              <span style={{ color: "#52525b", fontSize: "16px", display: "flex" }}>
+              <span style={{ color: "#56697D", fontSize: "16px", display: "flex" }}>
                 期間末評価額 {formatCurrency(result.finalValue)}
               </span>
             </div>
@@ -310,8 +310,8 @@ export async function GET(req: NextRequest) {
             <div
               style={{
                 flex: 1,
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.09)",
+                background: "#F8FBFC",
+                border: "1px solid #D5E0E5",
                 borderRadius: "24px",
                 padding: "36px",
                 display: "flex",
@@ -327,7 +327,7 @@ export async function GET(req: NextRequest) {
               <div style={{ color: resultB && resultB.profit < 0 ? "#ef4444" : "#10b981", fontSize: "56px", fontWeight: 900, lineHeight: 1, display: "flex", letterSpacing: "-0.02em" }}>
                 {resultB ? formatSignedCurrency(resultB.profit) : "—"}
               </div>
-              <div style={{ color: "#52525b", fontSize: "16px", marginTop: "14px", display: "flex" }}>
+              <div style={{ color: "#56697D", fontSize: "16px", marginTop: "14px", display: "flex" }}>
                 {resultB
                   ? `${formatSignedPercent(resultB.returnRate)}　期間末評価額 ${formatCurrency(resultB.finalValue)}`
                   : comparison?.note}
@@ -344,10 +344,10 @@ export async function GET(req: NextRequest) {
             alignItems: "center",
             marginTop: "28px",
             paddingTop: "20px",
-            borderTop: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "1px solid #DDE6EA",
           }}
         >
-          <div style={{ color: "#52525b", fontSize: "13px", display: "flex" }}>
+          <div style={{ color: "#56697D", fontSize: "13px", display: "flex" }}>
             {comparison?.note ?? "※A系列は検証済み月次実績。G系列は参考データとして品質を明示"}
           </div>
           <div style={{ color: "#6366f1", fontSize: "17px", fontWeight: 900, display: "flex" }}>

@@ -25,10 +25,10 @@ function InlineSimulator({
     return (
       <div className="space-y-3 rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4">
         <p className="text-xs font-bold text-amber-200">G品質・数値シミュレーション対象外</p>
-        <p className="text-xs leading-relaxed text-zinc-400">
+        <p className="text-xs leading-relaxed text-slate-600">
           月次原典、通貨、分配金、費用、為替処理が未検証のため、評価額・利益・リターンは表示しません。
         </p>
-        <Link href="/fund/schd" className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-white/10 px-3 text-xs font-bold text-zinc-200">
+        <Link href="/fund/schd" className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-[#D2DEE4] px-3 text-xs font-bold text-slate-700">
           商品属性を確認する
         </Link>
       </div>
@@ -43,7 +43,7 @@ function InlineSimulator({
       className="rounded-xl p-4 space-y-4"
       style={{ background: `${fund.color}10`, border: `1px solid ${fund.color}25` }}
     >
-      <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">
+      <p className="text-xs font-black tracking-widest uppercase text-slate-600">
         もしあの時から積立ていたら？
       </p>
 
@@ -53,25 +53,25 @@ function InlineSimulator({
           <select
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
-            className="w-full appearance-none rounded-lg border border-white/10 bg-zinc-900/80 px-3 py-2 text-xs font-bold text-white focus:outline-none cursor-pointer"
+            className="w-full appearance-none rounded-lg border border-[#D2DEE4] bg-[#EAF3F7]0 px-3 py-2 text-xs font-bold text-[#263A53] focus:outline-none cursor-pointer"
           >
             {START_YEAR_OPTIONS.map((y) => (
-              <option key={y} value={y} className="bg-zinc-900">{y}年から</option>
+              <option key={y} value={y} className="bg-white">{y}年から</option>
             ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
+          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-600" />
         </div>
         <div className="relative flex-1">
           <select
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            className="w-full appearance-none rounded-lg border border-white/10 bg-zinc-900/80 px-3 py-2 text-xs font-bold text-white focus:outline-none cursor-pointer"
+            className="w-full appearance-none rounded-lg border border-[#D2DEE4] bg-[#EAF3F7]0 px-3 py-2 text-xs font-bold text-[#263A53] focus:outline-none cursor-pointer"
           >
             {MONTHLY_AMOUNT_OPTIONS.map((a) => (
-              <option key={a} value={a} className="bg-zinc-900">月{(a / 10000).toFixed(0)}万円</option>
+              <option key={a} value={a} className="bg-white">月{(a / 10000).toFixed(0)}万円</option>
             ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
+          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-600" />
         </div>
       </div>
 
@@ -85,7 +85,7 @@ function InlineSimulator({
       >
         <div className="flex items-end justify-between">
           <div>
-            <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
+            <p className="text-xs text-slate-600 mb-0.5">利益</p>
             <div className="flex items-baseline gap-1.5">
               <p
                 className="font-heading font-number text-3xl font-bold"
@@ -100,17 +100,17 @@ function InlineSimulator({
           </div>
           <div className="text-right">
             <div className="flex items-center gap-1 justify-end mb-0.5">
-              <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
-              <span className="text-[10px] text-zinc-400">期間末評価額</span>
+              <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
+              <span className="text-xs text-slate-600">期間末評価額</span>
             </div>
-            <p className="text-xs font-bold text-zinc-300">
+            <p className="text-xs font-bold text-slate-700">
               {formatCurrency(result.finalValue)}
             </p>
           </div>
         </div>
 
         {/* Progress bar */}
-        <div className="h-1.5 rounded-full bg-white/8 overflow-hidden">
+        <div className="h-1.5 rounded-full bg-[#EAF3F7] overflow-hidden">
           <motion.div
             className="h-full rounded-full"
             style={{ background: fund.color }}
@@ -124,7 +124,7 @@ function InlineSimulator({
       {/* Compare CTA */}
       <button
         onClick={() => onCompare(fundId)}
-        className="w-full flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-bold text-zinc-400 border border-white/10 hover:text-zinc-200 hover:border-white/20 transition-all"
+        className="w-full flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-bold text-slate-600 border border-[#D2DEE4] hover:text-slate-700 hover:border-[#B9CBD4] transition-all"
       >
         比較モードで詳しく見る
         <ChevronRight className="h-3.5 w-3.5" />
@@ -150,13 +150,13 @@ function FundDetailCard({
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="rounded-2xl overflow-hidden"
       style={{
-        background: "rgba(255,255,255,0.02)",
+        background: "#FFFFFF",
         border: `1px solid ${fund.color}35`,
       }}
     >
       {/* Header */}
       <div className="px-5 pt-5 pb-3">
-        <p className="text-sm text-zinc-300 leading-relaxed font-medium mb-3">
+        <p className="text-sm text-slate-700 leading-relaxed font-medium mb-3">
           {enc.catchCopy}
         </p>
 
@@ -178,15 +178,15 @@ function FundDetailCard({
       {/* Stats */}
       <div className="grid grid-cols-1 gap-3 px-5 pb-3">
         <div>
-          <p className="text-[10px] text-zinc-400 mb-0.5">信託報酬</p>
-          <p className="text-xs font-bold text-zinc-300">{enc.managementFee}</p>
+          <p className="text-xs text-slate-600 mb-0.5">信託報酬</p>
+          <p className="text-xs font-bold text-slate-700">{enc.managementFee}</p>
         </div>
       </div>
 
       {/* For whom */}
       {enc.forWhom && <div className="px-5 pb-3">
-        <p className="text-[10px] text-zinc-400 mb-1 font-black tracking-widest uppercase">選ぶ前の確認事項</p>
-        <p className="text-xs text-zinc-400 leading-relaxed">{enc.forWhom}</p>
+        <p className="text-xs text-slate-600 mb-1 font-black tracking-widest uppercase">選ぶ前の確認事項</p>
+        <p className="text-xs text-slate-600 leading-relaxed">{enc.forWhom}</p>
       </div>}
 
       {/* Pros/Cons */}
@@ -194,13 +194,13 @@ function FundDetailCard({
         {enc.pros.slice(0, 2).map((p) => (
           <div key={p} className="flex items-start gap-2">
             <CheckCircle className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-zinc-400">{p}</p>
+            <p className="text-xs text-slate-600">{p}</p>
           </div>
         ))}
         {enc.cons.slice(0, fund.riskLevel === null ? enc.cons.length : 1).map((c) => (
           <div key={c} className="flex items-start gap-2">
             <AlertTriangle className="h-3.5 w-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-zinc-400">{c}</p>
+            <p className="text-xs text-slate-600">{c}</p>
           </div>
         ))}
       </div>
@@ -230,9 +230,9 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <BookOpen className="h-4 w-4 text-indigo-400" />
-        <p className="font-heading text-sm font-semibold text-white">銘柄図鑑</p>
-        <span className="text-xs text-zinc-400">タップして詳細・シミュレーション</span>
+        <BookOpen className="h-4 w-4 text-[#236B8E]" />
+        <p className="font-heading text-sm font-semibold text-[#263A53]">銘柄図鑑</p>
+        <span className="text-xs text-slate-600">タップして詳細・シミュレーション</span>
       </div>
 
       {/* Category tabs */}
@@ -246,8 +246,8 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
               onClick={() => { setActiveCategory(catId); setExpandedFund(null); }}
               className={`flex-shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition-all border ${
                 isActive
-                  ? "bg-white/15 text-white border-white/20"
-                  : "bg-white/[0.04] text-zinc-400 border-white/8 hover:text-zinc-300"
+                  ? "bg-[#DCEFFA] text-[#263A53] border-[#B9CBD4]"
+                  : "bg-[#F7FAFB] text-slate-600 border-[#D9E3E8] hover:text-slate-700"
               }`}
             >
               <span>{cat.label}</span>
@@ -257,7 +257,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
       </div>
 
       {/* Category description */}
-      <p className="text-xs text-zinc-400">{FUND_CATEGORIES[activeCategory].description}</p>
+      <p className="text-xs text-slate-600">{FUND_CATEGORIES[activeCategory].description}</p>
 
       {/* Fund list */}
       <div className="space-y-2">
@@ -271,17 +271,17 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                 onClick={() => setExpandedFund(isExpanded ? null : fund.id)}
                 className="w-full rounded-2xl p-4 text-left transition-all"
                 style={{
-                  background: isExpanded ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.02)",
-                  border: `1px solid ${isExpanded ? fund.color + "40" : "rgba(255,255,255,0.08)"}`,
+                  background: isExpanded ? "#F8FBFC" : "#FFFFFF",
+                  border: `1px solid ${isExpanded ? fund.color + "40" : "#D9E3E8"}`,
                 }}
                 whileTap={{ scale: 0.99 }}
               >
                 <div className="flex items-center gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="font-heading text-sm font-semibold text-white">{enc.nickname}</p>
+                      <p className="font-heading text-sm font-semibold text-[#263A53]">{enc.nickname}</p>
                       {enc.nisaSupport.tsumitate && (
-                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">
+                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-indigo-500/20 text-[#236B8E]">
                           つみたて枠
                         </span>
                       )}
@@ -292,7 +292,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                       )}
                       <ReturnQualityPill fundId={fund.id} />
                     </div>
-                    <p className="text-[10px] text-zinc-400 truncate mt-0.5">{enc.formalName}</p>
+                    <p className="text-xs text-slate-600 truncate mt-0.5">{enc.formalName}</p>
                   </div>
                 </div>
               </motion.button>

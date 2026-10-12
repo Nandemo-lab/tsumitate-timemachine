@@ -42,38 +42,38 @@ export default function ArticlesIndexPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <nav className="border-b border-white/[0.07] px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400">
-            <Link href="/" className="hover:text-zinc-200 transition-colors">積立タイムマシン</Link>
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <nav className="border-b border-[#DDE6EA] px-4 py-3">
+          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
+            <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-200">コラム</span>
+            <span className="text-slate-700">コラム</span>
           </div>
         </nav>
 
         <div className="max-w-2xl mx-auto px-4 py-10 pb-20 space-y-8">
           <header className="space-y-2">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1">
-              <BookOpen className="h-3 w-3 text-indigo-400" />
-              <span className="text-[11px] font-bold text-indigo-400">コラム</span>
+              <BookOpen className="h-3 w-3 text-[#236B8E]" />
+              <span className="text-xs font-bold text-[#236B8E]">コラム</span>
             </div>
             <h1
-              className="text-2xl font-black text-white leading-tight"
+              className="text-2xl font-black text-[#263A53] leading-tight"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               コラム一覧
             </h1>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               人気銘柄の違いを、過去データをもとに整理した比較コラムです。
             </p>
           </header>
 
-          <section className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.05] p-4 space-y-2">
-            <h2 className="text-xs font-bold text-indigo-200">コラムで確認すること</h2>
-            <p className="text-xs leading-relaxed text-zinc-400">
+          <section className="rounded-xl border border-[#B9DCEB] bg-indigo-400/[0.05] p-4 space-y-2">
+            <h2 className="text-xs font-bold text-[#236B8E]">コラムで確認すること</h2>
+            <p className="text-xs leading-relaxed text-slate-600">
               商品形態、投資対象、費用、分配方針、重複する投資先など、数値差が生じる背景を整理します。同条件の評価額・元本・グラフは対応する比較ページで再計算できます。
             </p>
-            <Link href="/compare" className="inline-flex items-center gap-1 text-xs font-bold text-indigo-300">
+            <Link href="/compare" className="inline-flex items-center gap-1 text-xs font-bold text-[#236B8E]">
               数値を同条件で比較する<ArrowRight className="h-3 w-3" />
             </Link>
           </section>
@@ -83,12 +83,12 @@ export default function ArticlesIndexPage() {
               <Link
                 key={article.slug}
                 href={`/articles/${article.slug}`}
-                className="block rounded-xl border border-white/[0.08] p-5 hover:bg-white/[0.03] transition-colors group"
+                className="block rounded-xl border border-[#D9E3E8] p-5 hover:bg-white transition-colors group"
               >
-                <p className="text-[10px] font-bold text-indigo-400 mb-1.5">{article.category}</p>
-                <p className="text-base font-bold text-white leading-snug mb-1.5">{article.h1}</p>
-                <p className="text-xs text-zinc-500">{article.lastUpdated}更新</p>
-                <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
+                <p className="text-xs font-bold text-[#236B8E] mb-1.5">{article.category}</p>
+                <p className="text-base font-bold text-[#263A53] leading-snug mb-1.5">{article.h1}</p>
+                <p className="text-xs text-slate-500">{article.lastUpdated}更新</p>
+                <div className="flex items-center gap-1 mt-2 text-xs text-slate-600 group-hover:text-slate-700 transition-colors">
                   続きを読む <ArrowRight className="h-3 w-3" />
                 </div>
               </Link>

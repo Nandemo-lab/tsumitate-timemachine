@@ -50,7 +50,7 @@ function EventRow({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20, height: 0 }}
       transition={{ duration: 0.25 }}
-      className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden"
+      className="rounded-xl border border-[#D2DEE4] bg-[#F7FAFB] overflow-hidden"
     >
       {/* Timeline dot */}
       <div className="flex">
@@ -59,7 +59,7 @@ function EventRow({
             className="h-6 w-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
             style={{ background: fund?.color ?? "#6366f1", color: "#000" }}
           />
-          {!isFirst && <div className="w-px flex-1 bg-white/10 mt-2" style={{ minHeight: 8 }} />}
+          {!isFirst && <div className="w-px flex-1 bg-[#E6F0F4] mt-2" style={{ minHeight: 8 }} />}
         </div>
 
         <div className="flex-1 py-3 pr-3 space-y-3">
@@ -69,16 +69,16 @@ function EventRow({
               aria-label="イベントの種類"
               value={event.type}
               onChange={(e) => onChange({ ...event, type: e.target.value as EventType })}
-              className="flex-1 min-w-0 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs font-bold text-white appearance-none"
+              className="flex-1 min-w-0 bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs font-bold text-[#263A53] appearance-none"
             >
               {Object.entries(EVENT_LABELS).map(([k, v]) => (
-                <option key={k} value={k} className="bg-zinc-900">{v}</option>
+                <option key={k} value={k} className="bg-white">{v}</option>
               ))}
             </select>
             <button
               onClick={onDelete}
               aria-label={`${EVENT_LABELS[event.type]}を削除`}
-              className="p-1.5 rounded-lg hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-lg hover:bg-red-500/20 text-slate-600 hover:text-red-400 transition-colors flex-shrink-0"
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>
@@ -90,20 +90,20 @@ function EventRow({
               aria-label="イベントの年"
               value={event.year}
               onChange={(e) => onChange({ ...event, year: Number(e.target.value) })}
-              className="flex-1 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
+              className="flex-1 bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs text-slate-700 appearance-none"
             >
               {START_YEAR_OPTIONS.map((y) => (
-                <option key={y} value={y} className="bg-zinc-900">{y}年</option>
+                <option key={y} value={y} className="bg-white">{y}年</option>
               ))}
             </select>
             <select
               aria-label="イベントの月"
               value={event.month}
               onChange={(e) => onChange({ ...event, month: Number(e.target.value) })}
-              className="w-20 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
+              className="w-20 bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs text-slate-700 appearance-none"
             >
               {MONTH_OPTIONS.map((m) => (
-                <option key={m} value={m} className="bg-zinc-900">{m}月</option>
+                <option key={m} value={m} className="bg-white">{m}月</option>
               ))}
             </select>
           </div>
@@ -114,10 +114,10 @@ function EventRow({
               aria-label="商品"
               value={event.fundId ?? "orcan"}
               onChange={(e) => onChange({ ...event, fundId: e.target.value as FundId })}
-              className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
+              className="w-full bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs text-slate-700 appearance-none"
             >
               {FUND_LIST.filter((f) => isVerifiedReturnSeries(f.id)).map((f) => (
-                <option key={f.id} value={f.id} className="bg-zinc-900">{f.encyclopedia.nickname}（{f.shortName}）</option>
+                <option key={f.id} value={f.id} className="bg-white">{f.encyclopedia.nickname}（{f.shortName}）</option>
               ))}
             </select>
           )}
@@ -128,10 +128,10 @@ function EventRow({
               aria-label="毎月の積立額"
               value={event.monthlyAmount ?? 30000}
               onChange={(e) => onChange({ ...event, monthlyAmount: Number(e.target.value) })}
-              className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
+              className="w-full bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs text-slate-700 appearance-none"
             >
               {MONTHLY_AMOUNT_OPTIONS.map((a) => (
-                <option key={a} value={a} className="bg-zinc-900">月{a.toLocaleString()}円</option>
+                <option key={a} value={a} className="bg-white">月{a.toLocaleString()}円</option>
               ))}
             </select>
           )}
@@ -142,10 +142,10 @@ function EventRow({
               aria-label="一括投資額"
               value={event.lumpAmount ?? 100000}
               onChange={(e) => onChange({ ...event, lumpAmount: Number(e.target.value) })}
-              className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
+              className="w-full bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs text-slate-700 appearance-none"
             >
               {[50000, 100000, 200000, 300000, 500000, 1000000].map((a) => (
-                <option key={a} value={a} className="bg-zinc-900">{a.toLocaleString()}円</option>
+                <option key={a} value={a} className="bg-white">{a.toLocaleString()}円</option>
               ))}
             </select>
           )}
@@ -157,10 +157,10 @@ function EventRow({
                 aria-label="ボーナス投資額"
                 value={event.bonusAmount ?? 50000}
                 onChange={(e) => onChange({ ...event, bonusAmount: Number(e.target.value) })}
-                className="flex-1 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
+                className="flex-1 bg-[#EFF5F7] border border-[#C7D6DE] rounded-lg px-2 py-1.5 text-xs text-slate-700 appearance-none"
               >
                 {[30000, 50000, 100000, 200000, 300000].map((a) => (
-                  <option key={a} value={a} className="bg-zinc-900">{a.toLocaleString()}円/回</option>
+                  <option key={a} value={a} className="bg-white">{a.toLocaleString()}円/回</option>
                 ))}
               </select>
               <div className="flex gap-1">
@@ -175,8 +175,8 @@ function EventRow({
                     }}
                     className={`px-2 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       (event.bonusMonths ?? []).includes(m)
-                        ? "bg-indigo-500 text-white"
-                        : "bg-white/[0.06] text-zinc-400"
+                        ? "bg-indigo-500 text-[#263A53]"
+                        : "bg-[#EFF5F7] text-slate-600"
                     }`}
                   >
                     {m}月
@@ -242,8 +242,8 @@ export default function AdvancedSimulation() {
     <div className="space-y-5">
       <div className="flex items-center gap-2">
         <BarChart3 className="h-4 w-4 text-violet-400" />
-        <p className="font-heading text-sm font-semibold text-white">詳細シミュレーション</p>
-        <span className="text-xs text-zinc-400">あなたの積立ストーリーを入力</span>
+        <p className="font-heading text-sm font-semibold text-[#263A53]">詳細シミュレーション</p>
+        <span className="text-xs text-slate-600">あなたの積立ストーリーを入力</span>
       </div>
 
       {/* Event list */}
@@ -264,7 +264,7 @@ export default function AdvancedSimulation() {
       {/* Add event */}
       <button
         onClick={addEvent}
-        className="w-full flex items-center justify-center gap-2 rounded-xl py-3 border border-dashed border-white/15 text-xs text-zinc-400 hover:text-zinc-300 hover:border-white/25 transition-all"
+        className="w-full flex items-center justify-center gap-2 rounded-xl py-3 border border-dashed border-[#C7D6DE] text-xs text-slate-600 hover:text-slate-700 hover:border-[#AFC4CE] transition-all"
       >
         <Plus className="h-3.5 w-3.5" />
         イベントを追加
@@ -274,7 +274,7 @@ export default function AdvancedSimulation() {
       <motion.button
         onClick={run}
         whileTap={{ scale: 0.98 }}
-        className="w-full flex items-center justify-center gap-2 rounded-xl py-4 text-sm font-black text-white transition-all bg-gradient-to-r from-violet-500 to-indigo-500 hover:opacity-90"
+        className="w-full flex items-center justify-center gap-2 rounded-xl py-4 text-sm font-black text-[#263A53] transition-all bg-gradient-to-r from-violet-500 to-indigo-500 hover:opacity-90"
       >
         <PlayCircle className="h-4 w-4" />
         シミュレーション実行
@@ -292,19 +292,19 @@ export default function AdvancedSimulation() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 space-y-4"
+            className="rounded-2xl border border-[#D2DEE4] bg-[#F7FAFB] p-5 space-y-4"
           >
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-[10px] text-zinc-400 mb-1">最終利益</p>
-                <p className="text-3xl font-black text-emerald-400">
+                <p className="text-xs text-slate-600 mb-1">最終利益</p>
+                <p className="text-3xl font-black text-emerald-700">
                   +{formatCurrency(result.profit)}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-[10px] text-zinc-400 mb-0.5">評価額</p>
-                <p className="text-base font-bold text-zinc-200">{formatCurrency(result.finalValue)}</p>
-                <p className="text-[10px] text-zinc-400">元本 {formatCurrency(result.totalPrincipal)}</p>
+                <p className="text-xs text-slate-600 mb-0.5">評価額</p>
+                <p className="text-base font-bold text-slate-700">{formatCurrency(result.finalValue)}</p>
+                <p className="text-xs text-slate-600">元本 {formatCurrency(result.totalPrincipal)}</p>
               </div>
             </div>
 
@@ -334,7 +334,7 @@ export default function AdvancedSimulation() {
                     />
                     <YAxis hide />
                     <Tooltip
-                      contentStyle={{ background: "#18181b", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 10 }}
+                      contentStyle={{ background: "#18181b", border: "1px solid #D2DEE4", borderRadius: 8, fontSize: 10 }}
                       formatter={(v) => [formatCurrency(Number(v)), ""]}
                     />
                     <Area type="monotone" dataKey="principal" stroke="#52525b" fill="url(#adv-pri)" strokeWidth={1} />
@@ -344,7 +344,7 @@ export default function AdvancedSimulation() {
               </div>
             )}
 
-            <p className="text-[10px] text-zinc-400 text-center">
+            <p className="text-xs text-slate-600 text-center">
               ※ A系列は一次情報から検証した月次実績を使用します。G系列は参考データとして品質を明示し、手数料・税金は個別計算していません。
             </p>
           </motion.div>

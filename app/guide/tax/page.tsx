@@ -91,46 +91,46 @@ export default function TaxGuideIndexPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <nav className="border-b border-white/[0.07] px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400 flex-wrap">
-            <Link href="/" className="hover:text-zinc-200 transition-colors">積立タイムマシン</Link>
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <nav className="border-b border-[#DDE6EA] px-4 py-3">
+          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600 flex-wrap">
+            <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-500">投資ガイド</span>
+            <span className="text-slate-500">投資ガイド</span>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-200">税金ガイド一覧</span>
+            <span className="text-slate-700">税金ガイド一覧</span>
           </div>
         </nav>
 
         <div className="max-w-2xl mx-auto px-4 py-10 pb-20 space-y-10">
           <header className="space-y-2">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1">
-              <Landmark className="h-3 w-3 text-emerald-400" />
-              <span className="text-[11px] font-bold text-emerald-400">税金ガイド</span>
+              <Landmark className="h-3 w-3 text-emerald-700" />
+              <span className="text-xs font-bold text-emerald-700">税金ガイド</span>
             </div>
             <h1
-              className="text-2xl font-black text-white leading-tight"
+              className="text-2xl font-black text-[#263A53] leading-tight"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               新NISAの税金ガイド一覧
             </h1>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               新NISAと課税口座の税率の違いから、分配金・損益通算・外国税額控除・確定申告まで、投資にまつわる税金の仕組みを8つの記事に整理しています。口座の違い、受取方法、申告の要否など、確認したい疑問から選べます。
             </p>
           </header>
 
           <section className="rounded-xl bg-emerald-500/[0.04] border border-emerald-500/15 p-4">
             <div className="flex items-center gap-1.5 mb-1.5">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-700 flex-shrink-0" />
               <p className="text-xs font-bold text-emerald-200">制度は将来変更される可能性があります</p>
             </div>
-            <p className="text-[11px] text-zinc-400 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               各記事の税率・制度上の数値は執筆時点の公式情報にもとづきます。最新情報は金融庁・国税庁・お取引の証券会社等の公式情報をご確認ください。
             </p>
           </section>
 
           <section className="space-y-3" aria-labelledby="tax-route-heading">
-            <h2 id="tax-route-heading" className="text-sm font-bold text-white">疑問から読む記事を選ぶ</h2>
+            <h2 id="tax-route-heading" className="text-sm font-bold text-[#263A53]">疑問から読む記事を選ぶ</h2>
             <div className="grid gap-2 sm:grid-cols-2">
               {[
                 ["NISAと課税口座の違い", "/guide/nisa-vs-tokutei-tax", "非課税と損益通算の扱いを確認"],
@@ -138,9 +138,9 @@ export default function TaxGuideIndexPage() {
                 ["損失と利益がある", "/guide/songai-tsuusan-kurikoshi-koujo", "損益通算と繰越控除の条件を確認"],
                 ["確定申告が必要か迷う", "/guide/toushi-kakuteishinkoku-necessary-cases", "口座・所得・取引別の確認順序を見る"],
               ].map(([label, href, detail]) => (
-                <Link key={href} href={href} className="rounded-xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-colors">
-                  <p className="text-sm font-bold text-white">{label}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-zinc-500">{detail}</p>
+                <Link key={href} href={href} className="rounded-xl border border-[#D9E3E8] p-4 hover:bg-white transition-colors">
+                  <p className="text-sm font-bold text-[#263A53]">{label}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500">{detail}</p>
                 </Link>
               ))}
             </div>
@@ -151,16 +151,16 @@ export default function TaxGuideIndexPage() {
               <Link
                 key={slug}
                 href={`/guide/${slug}`}
-                className="block rounded-xl border border-white/[0.08] p-5 hover:bg-white/[0.03] transition-colors group"
+                className="block rounded-xl border border-[#D9E3E8] p-5 hover:bg-white transition-colors group"
               >
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 h-6 w-6 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-[11px] font-bold text-emerald-400">
+                  <span className="flex-shrink-0 h-6 w-6 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-xs font-bold text-emerald-700">
                     {order}
                   </span>
                   <div className="space-y-1.5 min-w-0">
-                    <p className="text-base font-bold text-white leading-snug">{page.h1}</p>
-                    <p className="text-xs text-zinc-500 leading-relaxed">{page.metaDescription}</p>
-                    <div className="flex items-center gap-1 mt-1 text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
+                    <p className="text-base font-bold text-[#263A53] leading-snug">{page.h1}</p>
+                    <p className="text-xs text-slate-500 leading-relaxed">{page.metaDescription}</p>
+                    <div className="flex items-center gap-1 mt-1 text-xs text-slate-600 group-hover:text-slate-700 transition-colors">
                       続きを読む <ArrowRight className="h-3 w-3" />
                     </div>
                   </div>
@@ -170,16 +170,16 @@ export default function TaxGuideIndexPage() {
           </div>
 
           <section className="space-y-3">
-            <h2 className="text-sm font-bold text-white">あわせて読みたい制度ガイド</h2>
+            <h2 className="text-sm font-bold text-[#263A53]">あわせて読みたい制度ガイド</h2>
             <div className="space-y-2">
               {relatedGuides.map(({ slug, page }) => (
                 <Link
                   key={slug}
                   href={`/guide/${slug}`}
-                  className="flex items-center justify-between rounded-lg border border-white/[0.06] px-4 py-3 hover:bg-white/[0.03] transition-colors group"
+                  className="flex items-center justify-between rounded-lg border border-[#E1E8EC] px-4 py-3 hover:bg-white transition-colors group"
                 >
-                  <span className="text-sm text-zinc-300">{page.h1}</span>
-                  <ArrowRight className="h-3.5 w-3.5 text-zinc-500 group-hover:text-zinc-300 transition-colors flex-shrink-0" />
+                  <span className="text-sm text-slate-700">{page.h1}</span>
+                  <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-slate-700 transition-colors flex-shrink-0" />
                 </Link>
               ))}
             </div>

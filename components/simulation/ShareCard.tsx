@@ -102,14 +102,14 @@ ${url}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/8 to-white/3 overflow-hidden"
+      className="rounded-2xl border border-[#D2DEE4] bg-gradient-to-br from-white/8 to-white/3 overflow-hidden"
     >
       {/* Preview card (SNS image-like) */}
       <div
         className="p-5 relative overflow-hidden"
         style={{
           background: `linear-gradient(145deg, ${winner.fundColor}20 0%, #0a0a0f 70%)`,
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          borderBottom: "1px solid #D9E3E8",
         }}
       >
         <div
@@ -120,36 +120,36 @@ ${url}
           }}
         />
         <div className="relative">
-          <p className="text-xs font-black tracking-widest text-zinc-400 mb-3">
+          <p className="text-xs font-black tracking-widest text-slate-600 mb-3">
             ⏰ 積立タイムマシン
           </p>
-          <p className="text-xs text-zinc-400 mb-3">
+          <p className="text-xs text-slate-600 mb-3">
             {startYear}年{startMonth}月〜{endYear}年{endMonth}月・毎月{formatCurrency(monthlyAmount)}
           </p>
           <div className="space-y-2">
             {sorted.map((r, i) => (
               <div key={`${r.fundId}-${i}`} className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="min-w-10 text-[10px] font-bold text-indigo-200">
+                  <span className="min-w-10 text-xs font-bold text-[#236B8E]">
                     {planB && isTie ? "同額" : planB && i === 0 ? "評価額↑" : ""}
                   </span>
                   <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
                   <span className="text-sm font-bold" style={{ color: r.fundColor }}>{r.fundName}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-black text-white">{formatSignedCurrency(r.profit)}</span>
-                  <span className="text-xs text-emerald-400 ml-1.5">{r.returnRate >= 0 ? "+" : ""}{r.returnRate.toFixed(0)}%</span>
+                  <span className="text-sm font-black text-[#263A53]">{formatSignedCurrency(r.profit)}</span>
+                  <span className="text-xs text-emerald-700 ml-1.5">{r.returnRate >= 0 ? "+" : ""}{r.returnRate.toFixed(0)}%</span>
                 </div>
               </div>
             ))}
           </div>
           {diff !== null && (
-            <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-              <p className="text-xs text-zinc-400">差額</p>
-              <p className="text-sm font-black text-white">{formatCurrency(diff)}</p>
+            <div className="mt-3 pt-3 border-t border-[#D2DEE4] flex items-center justify-between">
+              <p className="text-xs text-slate-600">差額</p>
+              <p className="text-sm font-black text-[#263A53]">{formatCurrency(diff)}</p>
             </div>
           )}
-          <p className="mt-3 text-[10px] leading-relaxed text-zinc-400">
+          <p className="mt-3 text-xs leading-relaxed text-slate-600">
             過去の同条件結果です。税金・売買手数料・実取引の為替コストは個別計算していません。
           </p>
         </div>
@@ -166,7 +166,7 @@ ${url}
         </button>
         <button
           onClick={handleCopy}
-          className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all bg-white/10 text-zinc-300 hover:bg-white/15 active:scale-98"
+          className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all bg-[#E6F0F4] text-slate-700 hover:bg-[#DCEFFA] active:scale-98"
         >
           {copied ? (
             <Check className="h-4 w-4 text-green-400" />
@@ -188,7 +188,7 @@ ${url}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg"
+            className="fixed left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-[#263A53] shadow-lg"
             style={{
               bottom: "calc(env(safe-area-inset-bottom) + 80px)",
               background: "rgba(16,185,129,0.92)",

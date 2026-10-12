@@ -340,7 +340,7 @@ export default function SeoAdminPage() {
   if (process.env.NODE_ENV === "production") notFound();
   const pages = buildPages();
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-[#FAFAF7]">
       <SeoAdminClient pages={pages} baseUrl={BASE_URL} />
     </div>
   );

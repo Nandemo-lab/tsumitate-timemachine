@@ -32,17 +32,17 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div
-      className="min-h-dvh bg-zinc-950 text-zinc-50"
+      className="min-h-dvh bg-[#FAFAF7] text-[#263A53]"
       style={{ fontFamily: "var(--font-sans-jp), sans-serif" }}
     >
       {/* Breadcrumb */}
-      <nav className="border-b border-white/[0.07] px-4 py-3">
-        <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400">
-          <Link href="/" className="hover:text-zinc-200 transition-colors">
+      <nav className="border-b border-[#DDE6EA] px-4 py-3">
+        <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
+          <Link href="/" className="hover:text-slate-700 transition-colors">
             積立タイムマシン
           </Link>
           <ChevronRight className="h-3 w-3 flex-shrink-0" />
-          <span className="text-zinc-200">このサービスについて</span>
+          <span className="text-slate-700">このサービスについて</span>
         </div>
       </nav>
 
@@ -51,12 +51,12 @@ export default function AboutPage() {
         {/* ヘッダー */}
         <header className="space-y-3">
           <h1
-            className="text-2xl font-black text-white leading-tight"
+            className="text-2xl font-black text-[#263A53] leading-tight"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             積立タイムマシンについて
           </h1>
-          <p className="text-sm text-zinc-400 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             「もし2020年から毎月3万円だけ積み立てていたら、今いくらになっていたんだろう」——そんな問いへの答えを、実際の過去データで確かめられるツールです。
           </p>
         </header>
@@ -64,22 +64,22 @@ export default function AboutPage() {
         {/* なぜ作ったか */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             なぜこのサービスを作ったのか
           </h2>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-3">
-            <p className="text-sm text-zinc-400 leading-relaxed">
+          <div className="rounded-xl bg-white border border-[#E1E8EC] p-5 space-y-3">
+            <p className="text-sm text-slate-600 leading-relaxed">
               積立投資を始めてしばらく経ったころ、ふと思いました。「あのコロナショックの底値から積み立てていた人は、今ごろどのくらい増えているんだろう」と。
             </p>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               調べてみると、計算ツールはいくつかあったのですが、「任意の年月からスタートして実際の市場データで計算してくれる」サービスがなかなか見つかりませんでした。
             </p>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               それなら自分で作ろう、というのが出発点です。
             </p>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               インデックス投資の良さは頭では分かっていても、「本当に続けて大丈夫なのか」という不安はなかなか消えません。過去の実績を自分の目で確かめることで、その不安を少しでも和らげる助けになれば、という思いで開発しています。
             </p>
           </div>
@@ -88,7 +88,7 @@ export default function AboutPage() {
         {/* どんな人の役に立ちたいか */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             どんな人の役に立ちたいか
@@ -96,24 +96,24 @@ export default function AboutPage() {
           <div className="space-y-2">
             {[
               {
-                icon: <Users className="h-4 w-4 text-indigo-400 flex-shrink-0" />,
+                icon: <Users className="h-4 w-4 text-[#236B8E] flex-shrink-0" />,
                 text: "これから新NISAを始めようとしているが、本当に増えるのか実感が持てない人",
               },
               {
-                icon: <Clock className="h-4 w-4 text-indigo-400 flex-shrink-0" />,
+                icon: <Clock className="h-4 w-4 text-[#236B8E] flex-shrink-0" />,
                 text: "暴落が怖くて積立を止めようか悩んでいる人。「あのとき止めなかった人はどうなったか」を確かめたい人",
               },
               {
-                icon: <Database className="h-4 w-4 text-indigo-400 flex-shrink-0" />,
+                icon: <Database className="h-4 w-4 text-[#236B8E] flex-shrink-0" />,
                 text: "オルカン・S&P500・NASDAQ100などの違いを感覚ではなく数字で理解したい人",
               },
             ].map((item, i) => (
               <div
                 key={i}
-                className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] p-4"
+                className="flex items-start gap-3 rounded-xl bg-white border border-[#E1E8EC] p-4"
               >
                 {item.icon}
-                <p className="text-sm text-zinc-400 leading-relaxed">{item.text}</p>
+                <p className="text-sm text-slate-600 leading-relaxed">{item.text}</p>
               </div>
             ))}
           </div>
@@ -122,28 +122,28 @@ export default function AboutPage() {
         {/* 運営方針 */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             運営方針
           </h2>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-4">
+          <div className="rounded-xl bg-white border border-[#E1E8EC] p-5 space-y-4">
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">個人開発・運営</p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
-                本サービスは個人が開発・運営しています。サイト運営の継続のため、Google AdSense等の第三者配信広告や、証券会社等の紹介リンク（アフィリエイト）を設置する場合があります。広告掲載の有無によって、比較・評価の内容が変わることはありません。詳しくは<Link href="/ad-policy" className="mx-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">広告掲載ポリシー</Link>をご覧ください。
+              <p className="text-xs font-bold text-slate-700">個人開発・運営</p>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                本サービスは個人が開発・運営しています。サイト運営の継続のため、Google AdSense等の第三者配信広告や、証券会社等の紹介リンク（アフィリエイト）を設置する場合があります。広告掲載の有無によって、比較・評価の内容が変わることはありません。詳しくは<Link href="/ad-policy" className="mx-1 text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors">広告掲載ポリシー</Link>をご覧ください。
               </p>
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">投資助言ではありません</p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-xs font-bold text-slate-700">投資助言ではありません</p>
+              <p className="text-sm text-slate-500 leading-relaxed">
                 本サービスは教育・情報提供を目的としており、金融商品取引法に定める投資助言・代理業には該当しません。個別の投資判断はご自身の責任でお願いします。
               </p>
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">過去データの限界について</p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
-            A系列は一次情報から検証した月次実績を使用し、G系列は参考データとして品質を明示しています。将来の結果は保証しません。計算条件は<Link href="/about/data-sources" className="mx-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">データソース・計算方法</Link>で公開しています。
+              <p className="text-xs font-bold text-slate-700">過去データの限界について</p>
+              <p className="text-sm text-slate-500 leading-relaxed">
+            A系列は一次情報から検証した月次実績を使用し、G系列は参考データとして品質を明示しています。将来の結果は保証しません。計算条件は<Link href="/about/data-sources" className="mx-1 text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors">データソース・計算方法</Link>で公開しています。
               </p>
             </div>
           </div>
@@ -152,27 +152,27 @@ export default function AboutPage() {
         {/* 更新方針 */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             記事の更新方針
           </h2>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-4">
+          <div className="rounded-xl bg-white border border-[#E1E8EC] p-5 space-y-4">
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">新規記事の追加基準</p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-xs font-bold text-slate-700">新規記事の追加基準</p>
+              <p className="text-sm text-slate-500 leading-relaxed">
                 既存記事との重複状況やサイト全体のテーマバランスを踏まえて追加しています。銘柄比較・NISA制度・税金・暴落対応など、テーマごとに関連記事をまとめて整理することを重視しています。
               </p>
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">既存記事の見直し（リライト）</p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-xs font-bold text-slate-700">既存記事の見直し（リライト）</p>
+              <p className="text-sm text-slate-500 leading-relaxed">
                 公開後、一定期間が経過した記事は内容と実データの整合性を確認しています。特にNISA制度・税金に関する記事は、記事内に公式情報源との最終確認日を明記し、確認から一定期間が経過したものを優先的に再確認する運用にしています。
               </p>
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-zinc-300">数値データの取り扱い</p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-xs font-bold text-slate-700">数値データの取り扱い</p>
+              <p className="text-sm text-slate-500 leading-relaxed">
                 年間リターン・信託報酬などの数値は記事ごとに個別管理せず、サイト内の共通データを全ページで参照する仕組みにしています。これにより、データ更新時に記事間で数値がずれることを防いでいます。
               </p>
             </div>
@@ -182,16 +182,16 @@ export default function AboutPage() {
         {/* データの考え方 */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             データの考え方
           </h2>
-          <p className="text-sm text-zinc-400 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             各ファンドの年間リターンは、公開された指数データおよび運用会社の開示資料をもとに構成しています。計算方法・出典の詳細は
             <Link
               href="/about/data-sources"
-              className="mx-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors"
+              className="mx-1 text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors"
             >
               データソースページ
             </Link>
@@ -202,23 +202,23 @@ export default function AboutPage() {
         {/* 運営者情報 */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             運営者情報
           </h2>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-2">
+          <div className="rounded-xl bg-white border border-[#E1E8EC] p-5 space-y-2">
             <div className="flex items-start gap-2 text-sm">
-              <span className="text-zinc-500 w-20 flex-shrink-0">運営形態</span>
-              <span className="text-zinc-300">個人開発・運営</span>
+              <span className="text-slate-500 w-20 flex-shrink-0">運営形態</span>
+              <span className="text-slate-700">個人開発・運営</span>
             </div>
             <div className="flex items-start gap-2 text-sm">
-              <span className="text-zinc-500 w-20 flex-shrink-0">運営開始</span>
-              <span className="text-zinc-300">2025年</span>
+              <span className="text-slate-500 w-20 flex-shrink-0">運営開始</span>
+              <span className="text-slate-700">2025年</span>
             </div>
             <div className="flex items-start gap-2 text-sm">
-              <span className="text-zinc-500 w-20 flex-shrink-0">お問い合わせ</span>
-              <Link href="/contact" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors">
+              <span className="text-slate-500 w-20 flex-shrink-0">お問い合わせ</span>
+              <Link href="/contact" className="text-[#236B8E] hover:text-[#236B8E] underline underline-offset-2 transition-colors">
                 お問い合わせフォーム
               </Link>
             </div>
@@ -228,12 +228,12 @@ export default function AboutPage() {
         {/* 更新履歴 */}
         <section className="space-y-3">
           <h2
-            className="text-base font-bold text-white"
+            className="text-base font-bold text-[#263A53]"
             style={{ fontFamily: "var(--font-serif-jp), serif" }}
           >
             更新履歴
           </h2>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5">
+          <div className="rounded-xl bg-white border border-[#E1E8EC] p-5">
             <ul className="space-y-3">
               {[
                 { date: "2026年8月", text: "比較記事「VTIとオルカン」を公開。投資ガイド一覧・比較一覧・銘柄解説一覧のページを新設し、サイト内の回遊導線を整理" },
@@ -242,8 +242,8 @@ export default function AboutPage() {
                 { date: "2025年", text: "積立タイムマシンを個人開発でリリース" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm">
-                  <span className="text-zinc-500 w-16 flex-shrink-0">{item.date}</span>
-                  <span className="text-zinc-400 leading-relaxed">{item.text}</span>
+                  <span className="text-slate-500 w-16 flex-shrink-0">{item.date}</span>
+                  <span className="text-slate-600 leading-relaxed">{item.text}</span>
                 </li>
               ))}
             </ul>
@@ -253,12 +253,12 @@ export default function AboutPage() {
         {/* お問い合わせ */}
         <section className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-5 flex items-center justify-between gap-4">
           <div className="space-y-0.5">
-            <p className="text-sm font-bold text-zinc-200">ご意見・ご要望はこちら</p>
-            <p className="text-xs text-zinc-500">不具合・機能リクエスト・データの誤りなど</p>
+            <p className="text-sm font-bold text-slate-700">ご意見・ご要望はこちら</p>
+            <p className="text-xs text-slate-500">不具合・機能リクエスト・データの誤りなど</p>
           </div>
           <Link
             href="/contact"
-            className="flex-shrink-0 flex items-center gap-1.5 text-xs font-bold text-indigo-400 border border-indigo-500/30 rounded-lg px-3 py-2 hover:bg-indigo-500/10 transition-colors"
+            className="flex-shrink-0 flex items-center gap-1.5 text-xs font-bold text-[#236B8E] border border-indigo-500/30 rounded-lg px-3 py-2 hover:bg-indigo-500/10 transition-colors"
           >
             <Mail className="h-3.5 w-3.5" />
             お問い合わせ
@@ -266,7 +266,7 @@ export default function AboutPage() {
         </section>
 
         <div className="text-center">
-          <Link href="/" className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
+          <Link href="/" className="text-xs text-slate-500 hover:text-slate-700 transition-colors">
             ← トップページへ戻る
           </Link>
         </div>

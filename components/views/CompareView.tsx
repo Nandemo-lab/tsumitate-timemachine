@@ -86,7 +86,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   const difference   = resultA && resultB ? Math.abs(resultA.finalValue - resultB.finalValue) : 0;
 
   return (
-    <div className="pt-6 pb-28 px-4 space-y-4">
+    <div className="mx-auto max-w-3xl space-y-4 px-4 pb-28 pt-6 md:pt-10">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -94,18 +94,18 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className="text-center"
       >
-        <h2 className="font-heading text-xl font-semibold text-white mb-1 flex items-center justify-center gap-2">
-          <GitCompareArrows className="h-5 w-5 text-indigo-300" />
+        <h2 className="font-heading text-xl font-semibold text-[#263A53] mb-1 flex items-center justify-center gap-2">
+          <GitCompareArrows className="h-5 w-5 text-[#236B8E]" />
           比較モード
         </h2>
-        <p className="text-sm text-zinc-400">2つの銘柄を同じ条件で比べる</p>
+        <p className="text-sm text-slate-600">2つの銘柄を同じ条件で比べる</p>
       </motion.div>
 
       {/* Conditions（開始年・積立額を1カードに統合） */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-3">
+      <div className="rounded-2xl border border-[#D2DEE4] bg-[#F7FAFB] p-4 space-y-3">
         {/* Year chips */}
         <div>
-          <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">積立開始年</p>
+          <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-2">積立開始年</p>
           <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
             {startYearOptions.map((y) => (
               <button
@@ -114,8 +114,8 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
                 aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
-                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
-                    : "bg-white/5 text-zinc-400 border-white/8 hover:text-zinc-300"
+                    ? "bg-[#EAF3F7] text-[#236B8E] border-[#78B6D0]"
+                    : "bg-[#F4F7F8] text-slate-600 border-[#D9E3E8] hover:text-slate-700"
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
               >
@@ -128,10 +128,10 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
         {/* Amount */}
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">毎月の積立額</p>
+            <p className="text-xs font-black tracking-widest uppercase text-slate-600">毎月の積立額</p>
             <span className="text-xl font-black text-white">{formatCurrency(monthlyAmount)}</span>
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {MONTHLY_AMOUNTS.slice(0, 6).map((a) => (
               <button
                 key={a}
@@ -139,8 +139,8 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
                 aria-pressed={monthlyAmount === a}
                 className={`rounded-xl text-xs font-black transition-all border ${
                   monthlyAmount === a
-                    ? "bg-white/8 text-indigo-300 border-indigo-400/40"
-                    : "bg-white/5 text-zinc-400 border-white/8 hover:bg-white/10"
+                    ? "bg-[#EAF3F7] text-[#236B8E] border-[#78B6D0]"
+                    : "bg-[#F4F7F8] text-slate-600 border-[#D9E3E8] hover:bg-[#E6F0F4]"
                 }`}
                 style={{ minHeight: 44 }}
               >
@@ -152,7 +152,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
       </div>
 
       {/* Fund A */}
-      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
+      <div className="rounded-2xl border border-[#D9E3E8] bg-white p-4">
         <FundSelector
           value={fundA}
           onChange={(id) => { setFundA(id); normalizeStartForFunds(id, fundB); }}
@@ -162,13 +162,13 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
       </div>
 
       <div className="flex items-center gap-2 -my-1">
-        <div className="flex-1 h-px bg-white/8" />
-        <span className="text-[10px] text-zinc-400 font-black tracking-widest">VS</span>
-        <div className="flex-1 h-px bg-white/8" />
+        <div className="flex-1 h-px bg-[#EAF3F7]" />
+        <span className="text-xs text-slate-600 font-black tracking-widest">VS</span>
+        <div className="flex-1 h-px bg-[#EAF3F7]" />
       </div>
 
       {/* Fund B */}
-      <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
+      <div className="rounded-2xl border border-[#D9E3E8] bg-white p-4">
         <FundSelector
           value={fundB}
           onChange={(id) => { setFundB(id); normalizeStartForFunds(fundA, id); }}
@@ -183,7 +183,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
         onClick={run}
         className="w-full relative overflow-hidden rounded-2xl py-5 text-base font-black text-white"
         style={{
-          background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f59e0b 100%)",
+          background: "#236B8E",
           boxShadow: "0 8px 24px #6366f130",
         }}
       >
@@ -198,6 +198,9 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
         {showResult && resultA && resultB && winnerResult && loserResult && (
           <motion.div
             id="compare-result"
+            role="region"
+            aria-live="polite"
+            aria-label="比較結果"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -205,72 +208,75 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
           >
             {/* 銘柄名を主役にした見出し：どの2つを比較しているか瞬時に分かる */}
             <div className="text-center">
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">比較結果</p>
+              <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-2">比較結果</p>
               <div className="flex items-center justify-center gap-3 mb-1">
                 <p className="font-heading text-xl font-bold" style={{ color: resultA.fundColor }}>
                   {resultA.fundName}
                 </p>
-                <span className="text-xs font-bold text-zinc-400">VS</span>
+                <span className="text-xs font-bold text-slate-600">VS</span>
                 <p className="font-heading text-xl font-bold" style={{ color: resultB.fundColor }}>
                   {resultB.fundName}
                 </p>
               </div>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-slate-600">
                 {startYear}年{startMonth}月〜{commonEndYear}年{commonEndMonth}月 · 毎月{formatCurrency(monthlyAmount)}
               </p>
             </div>
 
             {isTie ? (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-center">
-                <p className="text-sm font-bold text-white">この条件では期間末評価額が同額です</p>
-                <p className="mt-1 text-xs leading-relaxed text-zinc-400">同じ開始月・終了月・積立額で比較した過去結果です。</p>
+              <div className="rounded-2xl border border-[#D2DEE4] bg-white p-5 text-center">
+                <p className="text-sm font-bold text-[#263A53]">この条件では期間末評価額が同額です</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">同じ開始月・終了月・積立額で比較した過去結果です。</p>
               </div>
             ) : (
               <WinnerBanner winner={winnerResult} loser={loserResult} difference={difference} />
             )}
 
             {/* 信頼性の根拠（常時表示） */}
-            <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 -mt-2">
+            <div className="flex items-center justify-center gap-1.5 text-xs text-slate-600 -mt-2">
               <ShieldCheck className="h-3 w-3 flex-shrink-0" />
               <span>{getReturnSeriesDefinition(fundA).quality === "A" && getReturnSeriesDefinition(fundB).quality === "A" ? "両系列とも公式月次データ・共通期間で比較" : "参考データを含む比較（原典未検証）"}</span>
             </div>
 
             {/* 比較結果と混同しない客観的な商品属性 */}
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
-              <p className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">比較する商品の確認事項</p>
+            <details className="rounded-2xl border border-[#D2DEE4] bg-white p-5">
+              <summary className="cursor-pointer list-none text-sm font-bold text-[#263A53]">商品の違いと費用を見る</summary>
+              <div className="mt-4 space-y-4">
+              <p className="text-xs font-bold tracking-widest uppercase text-slate-600">比較する商品の確認事項</p>
               {[resultA, resultB].map((r, index) => {
                 const enc = FUNDS[r.fundId].encyclopedia;
                 return (
                   <div key={`${r.fundId}-${index}`} className="flex gap-3">
                     <div className="h-2 w-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: r.fundColor }} />
                     <div>
-                      <p className="text-sm font-bold text-white mb-1">
+                      <p className="text-sm font-bold text-[#263A53] mb-1">
                         {enc.nickname}の商品属性
                       </p>
                       <ul className="space-y-0.5">
-                        <li className="text-sm text-zinc-300 leading-relaxed">・投資対象：{FUNDS[r.fundId].description}</li>
-                        <li className="text-sm text-zinc-300 leading-relaxed">・構成銘柄数：{FUNDS[r.fundId].shareCount}</li>
-                        <li className="text-sm text-zinc-300 leading-relaxed">・表示コスト：{formatExpenseRatio(r.fundId)}</li>
+                        <li className="text-sm text-slate-700 leading-relaxed">・投資対象：{FUNDS[r.fundId].description}</li>
+                        <li className="text-sm text-slate-700 leading-relaxed">・構成銘柄数：{FUNDS[r.fundId].shareCount}</li>
+                        <li className="text-sm text-slate-700 leading-relaxed">・表示コスト：{formatExpenseRatio(r.fundId)}</li>
                       </ul>
                     </div>
                   </div>
                 );
               })}
-            </div>
+              </div>
+            </details>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <ResultCard result={resultA} label="" isWinner={!isTie && resultA.finalValue > resultB.finalValue} delay={0} />
               <ResultCard result={resultB} label="" isWinner={!isTie && resultB.finalValue > resultA.finalValue} delay={0.08} />
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-3">資産推移グラフ</p>
+            <div className="rounded-2xl border border-[#D2DEE4] bg-[#F7FAFB] p-5">
+              <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-3">資産推移グラフ</p>
               <ComparisonChart planA={resultA} planB={resultB} />
             </div>
 
             <button
               onClick={() => setShowShare((v) => !v)}
-              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-3.5 text-sm font-bold text-zinc-300 hover:bg-white/8 transition-colors"
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] py-3.5 text-sm font-bold text-slate-700 hover:bg-[#EAF3F7] transition-colors"
             >
               <Share2 className="h-4 w-4" />
               {showShare ? "閉じる" : "この結果をシェアする"}
@@ -296,7 +302,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
             {/* 計算条件（折りたたみ・デフォルト非表示でスクロールを圧縮） */}
             <button
               onClick={() => setShowCalcDetails((v) => !v)}
-              className="w-full flex items-center justify-center gap-1.5 text-[11px] text-zinc-400 hover:text-zinc-200 transition-colors"
+              className="w-full flex items-center justify-center gap-1.5 text-xs text-slate-600 hover:text-slate-700 transition-colors"
             >
               <ChevronDown
                 className="h-3 w-3 transition-transform duration-200"
@@ -317,7 +323,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
               )}
             </AnimatePresence>
 
-            <p className="text-center text-xs text-zinc-400 px-4 leading-relaxed">
+            <p className="text-center text-xs text-slate-600 px-4 leading-relaxed">
               ※ A系列は一次情報から検証した月次実績を使用します。G系列は参考データとして品質を明示し、将来の運用成果を示すものではありません。
             </p>
           </motion.div>

@@ -172,18 +172,18 @@ export default async function YearPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
         <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-zinc-500 flex-wrap">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">ホーム</Link>
+          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
+            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <Link href={`/${slug}`} className="hover:text-zinc-300 transition-colors">
+            <Link href={`/${slug}`} className="hover:text-slate-700 transition-colors">
               {enc.nickname}
             </Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-400">{page.year}年から積み立てていたら</span>
+            <span className="text-slate-600">{page.year}年から積み立てていたら</span>
           </nav>
 
           {/* ── H1 ───────────────────────────────────────────────── */}
@@ -191,13 +191,13 @@ export default async function YearPage({ params }: Props) {
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5 flex-shrink-0" style={{ color: fund.color }} />
               <h1
-                className="text-2xl font-black text-white leading-tight"
+                className="text-2xl font-black text-[#263A53] leading-tight"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {page.year}年から{enc.nickname}を<br />積み立てていたら？
               </h1>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               月{(page.simAmount / 10000).toFixed(0)}万円 / {page.year}年{page.simMonth}月スタートの場合
             </p>
           </section>
@@ -212,7 +212,7 @@ export default async function YearPage({ params }: Props) {
           >
             {/* 利益（主役） */}
             <div>
-              <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-1">
+              <p className="text-[10px] font-black tracking-widest uppercase text-slate-600 mb-1">
                 利益
               </p>
               <div className="flex items-baseline gap-2">
@@ -233,11 +233,11 @@ export default async function YearPage({ params }: Props) {
 
             {/* プログレスバー */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-[10px] text-zinc-500">
+              <div className="flex justify-between text-[10px] text-slate-500">
                 <span>元本</span>
                 <span>元本×2</span>
               </div>
-              <div className="h-3 rounded-full bg-white/8 overflow-hidden">
+              <div className="h-3 rounded-full bg-[#EAF3F7] overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all"
                   style={{
@@ -252,21 +252,21 @@ export default async function YearPage({ params }: Props) {
 
             {/* 3カラム詳細 */}
             <div className="grid grid-cols-3 gap-2 pt-1">
-              <div className="text-center rounded-xl bg-white/[0.04] py-3">
-                <p className="text-[9px] text-zinc-500 mb-1">評価額</p>
-                <p className="text-sm font-bold text-zinc-200">
+              <div className="text-center rounded-xl bg-[#F7FAFB] py-3">
+                <p className="text-[9px] text-slate-500 mb-1">評価額</p>
+                <p className="text-sm font-bold text-slate-700">
                   {formatCurrency(result.finalValue)}
                 </p>
               </div>
-              <div className="text-center rounded-xl bg-white/[0.04] py-3">
-                <p className="text-[9px] text-zinc-500 mb-1">投資元本</p>
-                <p className="text-sm font-bold text-zinc-200">
+              <div className="text-center rounded-xl bg-[#F7FAFB] py-3">
+                <p className="text-[9px] text-slate-500 mb-1">投資元本</p>
+                <p className="text-sm font-bold text-slate-700">
                   {formatCurrency(result.totalPrincipal)}
                 </p>
               </div>
-              <div className="text-center rounded-xl bg-white/[0.04] py-3">
-                <p className="text-[9px] text-zinc-500 mb-1">積立期間</p>
-                <p className="text-sm font-bold text-zinc-200">
+              <div className="text-center rounded-xl bg-[#F7FAFB] py-3">
+                <p className="text-[9px] text-slate-500 mb-1">積立期間</p>
+                <p className="text-sm font-bold text-slate-700">
                   {years}年{months > 0 ? `${months}ヶ月` : ""}
                 </p>
               </div>
@@ -275,7 +275,7 @@ export default async function YearPage({ params }: Props) {
 
           {/* ── 年の解説 ─────────────────────────────────────────── */}
           <section
-            className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-5 space-y-3"
+            className="rounded-xl bg-white border border-[#DDE6EA] p-5 space-y-3"
           >
             <div className="flex items-center gap-2">
               <span
@@ -285,8 +285,8 @@ export default async function YearPage({ params }: Props) {
                 {page.year}年の市場
               </span>
             </div>
-            <p className="text-sm text-zinc-400 leading-relaxed">{page.yearContext}</p>
-            <p className="text-sm text-zinc-300 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">{page.yearContext}</p>
+            <p className="text-sm text-slate-700 leading-relaxed">
               この年の{page.simMonth}月から毎月{(page.simAmount / 10000).toFixed(0)}万円を
               {enc.nickname}に積み立てていた場合、
               {CURRENT_YEAR}年{CURRENT_MONTH}月時点の評価額は
@@ -304,7 +304,7 @@ export default async function YearPage({ params }: Props) {
           {/* ── 同銘柄・他の年度 ─────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {enc.nickname}の他の年から積み立てていたら？
@@ -322,7 +322,7 @@ export default async function YearPage({ params }: Props) {
                   <Link
                     key={y}
                     href={`/${slug}/${y}`}
-                    className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <span
@@ -331,7 +331,7 @@ export default async function YearPage({ params }: Props) {
                       >
                         {y}年〜
                       </span>
-                      <span className="text-sm text-zinc-300">
+                      <span className="text-sm text-slate-700">
                         {enc.nickname}を積み立てていたら
                       </span>
                     </div>
@@ -351,7 +351,7 @@ export default async function YearPage({ params }: Props) {
           {relatedCompares.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {enc.nickname}の比較記事
@@ -364,14 +364,14 @@ export default async function YearPage({ params }: Props) {
                     <Link
                       key={cp.slug}
                       href={`/compare/${cp.slug}`}
-                      className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex flex-col gap-1 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
-                      <span className="flex items-center gap-2 text-sm font-bold text-white">
+                      <span className="flex items-center gap-2 text-sm font-bold text-[#263A53]">
                         <span style={{ color: fA.color }}>{fA.shortName}</span>
-                        <span className="text-zinc-500 text-xs">vs</span>
+                        <span className="text-slate-500 text-xs">vs</span>
                         <span style={{ color: fB.color }}>{fB.shortName}</span>
                       </span>
-                      <span className="text-xs text-zinc-500">{cp.relatedDescription}</span>
+                      <span className="text-xs text-slate-500">{cp.relatedDescription}</span>
                     </Link>
                   );
                 })}
@@ -383,7 +383,7 @@ export default async function YearPage({ params }: Props) {
           {relatedFunds.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 関連する銘柄解説
@@ -393,17 +393,17 @@ export default async function YearPage({ params }: Props) {
                   <Link
                     key={fSlug}
                     href={`/fund/${fSlug}`}
-                    className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                    className="flex items-center gap-3 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                   >
                     <span
                       className="h-2 w-2 rounded-full flex-shrink-0"
                       style={{ background: relFund.color }}
                     />
                     <div>
-                      <p className="text-sm font-bold text-white">{relFund.shortName}とは？</p>
-                      <p className="text-[10px] text-zinc-500">{relFund.encyclopedia.catchCopy}</p>
+                      <p className="text-sm font-bold text-[#263A53]">{relFund.shortName}とは？</p>
+                      <p className="text-[10px] text-slate-500">{relFund.encyclopedia.catchCopy}</p>
                     </div>
-                    <ChevronRight className="h-3.5 w-3.5 text-zinc-500 ml-auto" />
+                    <ChevronRight className="h-3.5 w-3.5 text-slate-500 ml-auto" />
                   </Link>
                 ))}
               </div>
@@ -413,21 +413,21 @@ export default async function YearPage({ params }: Props) {
           {/* ── CTA ─────────────────────────────────────────────── */}
           <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-emerald-400" />
+              <TrendingUp className="h-5 w-5 text-emerald-700" />
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 自分の条件でシミュレーション
               </h2>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               積立開始年・月額を自由に変えて、あなただけの「たられば」を計算できます。
             </p>
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
-                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white bg-emerald-600 hover:bg-emerald-500 transition-colors"
+                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] bg-emerald-600 hover:bg-emerald-500 transition-colors"
               >
                 <span className="flex items-center gap-2">
                   <Home className="h-4 w-4" />
@@ -437,7 +437,7 @@ export default async function YearPage({ params }: Props) {
               </Link>
               <Link
                 href={`/simulate/${page.fundId}/${page.year}`}
-                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white transition-opacity hover:opacity-90"
+                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] transition-opacity hover:opacity-90"
                 style={{ background: fund.color }}
               >
                 {enc.nickname}×{page.year}年でシミュレーション
@@ -449,7 +449,7 @@ export default async function YearPage({ params }: Props) {
           {/* ── よくある質問 ─────────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-5"
+              className="text-base font-bold text-[#263A53] mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {page.year}年積立に関するよくある質問
@@ -458,10 +458,10 @@ export default async function YearPage({ params }: Props) {
               {allFaqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"
+                  className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
                 >
-                  <p className="text-sm font-bold text-white">Q. {faq.q}</p>
-                  <p className="text-sm text-zinc-400 leading-relaxed">A. {faq.a}</p>
+                  <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
                 </div>
               ))}
             </div>
@@ -471,7 +471,7 @@ export default async function YearPage({ params }: Props) {
           {crossFundPages.length > 0 && (
             <section>
               <h2
-                className="text-base font-bold text-white mb-4"
+                className="text-base font-bold text-[#263A53] mb-4"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {page.year}年から他の銘柄を積み立てていたら？
@@ -484,22 +484,22 @@ export default async function YearPage({ params }: Props) {
                   return (
                     <div
                       key={yp.fundSlug}
-                      className="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+                      className="rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] overflow-hidden"
                     >
                       <Link
                         href={`/${yp.fundSlug}/${yp.year}`}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.04] transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#F7FAFB] transition-colors"
                       >
                         {medal ? (
                           <span className="text-sm w-5 text-center flex-shrink-0">{medal}</span>
                         ) : (
-                          <span className="text-xs text-zinc-500 w-5 text-center flex-shrink-0">{i + 1}</span>
+                          <span className="text-xs text-slate-500 w-5 text-center flex-shrink-0">{i + 1}</span>
                         )}
                         <span
                           className="h-2 w-2 rounded-full flex-shrink-0"
                           style={{ background: f.color }}
                         />
-                        <span className="text-sm text-zinc-300 flex-1 min-w-0">
+                        <span className="text-sm text-slate-700 flex-1 min-w-0">
                           {f.encyclopedia.nickname}
                         </span>
                         <span
@@ -510,10 +510,10 @@ export default async function YearPage({ params }: Props) {
                         </span>
                       </Link>
                       {compareSlug && (
-                        <div className="border-t border-white/[0.06] px-4 py-2">
+                        <div className="border-t border-[#E1E8EC] px-4 py-2">
                           <Link
                             href={`/compare/${compareSlug}`}
-                            className="flex items-center justify-end gap-1 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors"
+                            className="flex items-center justify-end gap-1 text-xs font-bold text-[#236B8E] hover:text-[#236B8E] transition-colors"
                           >
                             {enc.nickname} vs {f.encyclopedia.nickname}を比較する
                             <ArrowRight className="h-3 w-3" />
@@ -533,7 +533,7 @@ export default async function YearPage({ params }: Props) {
               <div className="flex items-center gap-2 mb-4">
                 <Wallet className="h-4 w-4 text-violet-400" />
                 <h2
-                  className="text-base font-bold text-white"
+                  className="text-base font-bold text-[#263A53]"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   {enc.nickname}の月額別シミュレーション
@@ -546,10 +546,10 @@ export default async function YearPage({ params }: Props) {
                     <Link
                       key={amt}
                       href={`/${slug}/monthly/${amt}`}
-                      className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-3 py-2.5 hover:bg-white/[0.06] transition-colors"
+                      className="flex items-center justify-between rounded-xl bg-white border border-[#DDE6EA] px-3 py-2.5 hover:bg-[#EFF5F7] transition-colors"
                     >
-                      <span className="text-sm text-zinc-300">{label}</span>
-                      <ChevronRight className="h-3 w-3 text-zinc-500" />
+                      <span className="text-sm text-slate-700">{label}</span>
+                      <ChevronRight className="h-3 w-3 text-slate-500" />
                     </Link>
                   );
                 })}
@@ -560,9 +560,9 @@ export default async function YearPage({ params }: Props) {
           {/* ── 関連ガイド ────────────────────────────────────────── */}
           <section>
             <div className="flex items-center gap-2 mb-4">
-              <BookOpen className="h-4 w-4 text-indigo-400" />
+              <BookOpen className="h-4 w-4 text-[#236B8E]" />
               <h2
-                className="text-base font-bold text-white"
+                className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 投資ガイド・おすすめ記事
@@ -577,10 +577,10 @@ export default async function YearPage({ params }: Props) {
                 <Link
                   key={href}
                   href={href}
-                  className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-2.5 hover:bg-white/[0.06] transition-colors"
+                  className="flex items-center justify-between rounded-xl bg-white border border-[#DDE6EA] px-4 py-2.5 hover:bg-[#EFF5F7] transition-colors"
                 >
-                  <span className="text-sm text-zinc-400">{label}</span>
-                  <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
+                  <span className="text-sm text-slate-600">{label}</span>
+                  <ChevronRight className="h-3.5 w-3.5 text-slate-500" />
                 </Link>
               ))}
             </div>
@@ -589,7 +589,7 @@ export default async function YearPage({ params }: Props) {
           {/* ── 人気ページ ──────────────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               人気の積立シミュレーション
@@ -607,7 +607,7 @@ export default async function YearPage({ params }: Props) {
                 <Link
                   key={href}
                   href={href}
-                  className="flex items-center justify-between rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-2.5 text-sm text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.06] transition-colors"
+                  className="flex items-center justify-between rounded-xl bg-white border border-[#E1E8EC] px-4 py-2.5 text-sm text-slate-600 hover:text-slate-700 hover:bg-[#EFF5F7] transition-colors"
                 >
                   {label}
                   <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />

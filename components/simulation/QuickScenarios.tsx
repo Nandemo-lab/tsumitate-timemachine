@@ -26,9 +26,9 @@ export default function QuickScenarios({ onSelect }: Props) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-3">
-        <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-        <p className="text-[10px] font-black tracking-widest uppercase text-zinc-400">条件別の検証例</p>
-        <span className="text-[10px] text-zinc-400">タップで即試せる</span>
+        <Sparkles className="h-3.5 w-3.5 text-[#236B8E]" />
+        <p className="text-xs font-black tracking-widest uppercase text-slate-600">条件別の検証例</p>
+        <span className="text-xs text-slate-600">タップで即試せる</span>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory"
         style={{ scrollbarWidth: "none" }}>
@@ -44,7 +44,7 @@ export default function QuickScenarios({ onSelect }: Props) {
               onClick={() => onSelect(scenario)}
               className="flex-shrink-0 w-[186px] snap-start rounded-2xl p-4 text-left"
               style={{
-                background: "rgba(255,255,255,0.02)",
+                background: "#FFFFFF",
                 border: `1px solid ${fund.color}28`,
               }}
             >
@@ -58,16 +58,16 @@ export default function QuickScenarios({ onSelect }: Props) {
                 </span>
               )}
               <div className="text-xl mb-2">{scenario.emoji}</div>
-              <p className="text-xs font-bold text-zinc-300 mb-1 leading-snug">{scenario.label}</p>
-              <p className="text-[10px] text-zinc-400 mb-3">{scenario.description}</p>
-              <div className="border-t border-white/8 pt-2">
-                <p className="text-[10px] text-zinc-400 mb-0.5">利益</p>
+              <p className="text-xs font-bold text-slate-700 mb-1 leading-snug">{scenario.label}</p>
+              <p className="text-xs text-slate-600 mb-3">{scenario.description}</p>
+              <div className="border-t border-[#D9E3E8] pt-2">
+                <p className="text-xs text-slate-600 mb-0.5">利益</p>
                 <p className="font-heading font-number text-base font-bold" style={{ color: "#10b981" }}>
                   +{formatCurrency(result.profit)}
                 </p>
                 <div className="flex items-center gap-0.5 mt-0.5">
-                  <span className="text-[10px] text-zinc-400">試してみる</span>
-                  <ChevronRight className="h-3 w-3 text-zinc-400" />
+                  <span className="text-xs text-slate-600">試してみる</span>
+                  <ChevronRight className="h-3 w-3 text-slate-600" />
                 </div>
               </div>
             </motion.button>

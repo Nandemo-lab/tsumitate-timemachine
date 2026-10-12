@@ -133,36 +133,36 @@ export default async function ComparePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="min-h-dvh overflow-x-hidden bg-zinc-950 text-zinc-50">
-        <div className="mx-auto w-full min-w-0 max-w-lg space-y-10 px-4 pb-16 pt-8">
+      <div className="min-h-dvh overflow-x-hidden bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto w-full min-w-0 max-w-3xl space-y-10 px-4 pb-16 pt-8">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-zinc-500">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">ホーム</Link>
+          <nav className="flex items-center gap-1 text-xs text-slate-500">
+            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3" />
             <span>比較</span>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-zinc-400">{fundA.shortName} vs {fundB.shortName}</span>
+            <span className="text-slate-600">{fundA.shortName} vs {fundB.shortName}</span>
           </nav>
 
           {/* ── ファーストビュー ────────────────────────────────── */}
           <section className="space-y-4">
             <h1
-              className="text-2xl font-black leading-tight text-white"
+              className="text-2xl font-black leading-tight text-[#263A53]"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {page.h1}
             </h1>
-            <p className="text-sm text-zinc-400 leading-relaxed">{page.intro}</p>
+            <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
             {page.searchIntentAnswer && (
-              <div className="rounded-xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4">
-                <p className="mb-1 text-[11px] font-bold tracking-wide text-indigo-300">検索者への短い回答</p>
-                <p className="text-sm leading-relaxed text-zinc-200">{page.searchIntentAnswer}</p>
+              <div className="rounded-xl border border-[#B9DCEB] bg-[#EEF8FC] p-4">
+                <p className="mb-1 text-[11px] font-bold tracking-wide text-[#236B8E]">検索者への短い回答</p>
+                <p className="text-sm leading-relaxed text-slate-700">{page.searchIntentAnswer}</p>
               </div>
             )}
             <div className="grid min-w-0 grid-cols-1 gap-2 sm:flex sm:flex-wrap">
-              <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-zinc-400">{fundA.shortName}<ReturnQualityPill fundId={page.fundAId} /></span>
-              <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-zinc-400">{fundB.shortName}<ReturnQualityPill fundId={page.fundBId} /></span>
+              <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-slate-600">{fundA.shortName}<ReturnQualityPill fundId={page.fundAId} /></span>
+              <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-slate-600">{fundB.shortName}<ReturnQualityPill fundId={page.fundBId} /></span>
             </div>
             {hasReferenceSeries && (
               <p className="rounded-xl border border-amber-400/20 bg-amber-400/5 px-3 py-2 text-[11px] leading-relaxed text-amber-200/90">
@@ -171,15 +171,15 @@ export default async function ComparePage({ params }: Props) {
             )}
 
             {/* 結論カード */}
-            <div className="rounded-2xl bg-white/[0.04] border border-white/[0.08] p-5 space-y-3">
-              <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">結論</p>
+            <div className="rounded-2xl bg-[#F7FAFB] border border-[#D9E3E8] p-5 space-y-3">
+              <p className="text-xs font-bold text-slate-600 uppercase tracking-wider">結論</p>
               {[
                 { text: page.conclusionA, color: fundA.color },
                 { text: page.conclusionB, color: fundB.color },
               ].map(({ text, color }) => (
                 <div key={text} className="flex items-center gap-3">
                   <CheckCircle2 className="h-4 w-4 flex-shrink-0" style={{ color }} />
-                  <span className="text-sm font-bold text-white">{text}</span>
+                  <span className="text-sm font-bold text-[#263A53]">{text}</span>
                 </div>
               ))}
             </div>
@@ -189,7 +189,7 @@ export default async function ComparePage({ params }: Props) {
           {hasReferenceSeries ? (
             <section className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] p-5 space-y-2">
               <h2 className="text-sm font-bold text-amber-200">この組み合わせは商品属性だけを比較します</h2>
-              <p className="text-xs leading-relaxed text-zinc-400">
+              <p className="text-xs leading-relaxed text-slate-600">
                 G品質系列を含むため、評価額・利益・推移グラフは表示しません。投資対象、銘柄選定、分散範囲、費用、分配方法を確認できます。月次原典、通貨、配当、費用、為替の扱いを検証できるまでは、A品質商品との実績優劣を数値で示しません。
               </p>
             </section>
@@ -198,28 +198,28 @@ export default async function ComparePage({ params }: Props) {
           {/* ── 比較表 ─────────────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-4"
+              className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {fundA.shortName} vs {fundB.shortName} スペック比較表
             </h2>
-            <div className="rounded-xl border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl border border-[#D9E3E8] overflow-hidden">
               {/* ヘッダー */}
-              <div className="grid grid-cols-[minmax(4.5rem,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] bg-white/[0.06] px-3 py-2.5 min-[390px]:px-4">
-                <span className="text-xs text-zinc-500">項目</span>
+              <div className="grid grid-cols-[minmax(4.5rem,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] bg-[#EFF5F7] px-3 py-2.5 min-[390px]:px-4">
+                <span className="text-xs text-slate-500">項目</span>
                 <span className="text-xs font-bold" style={{ color: fundA.color }}>{fundA.shortName}</span>
                 <span className="text-xs font-bold" style={{ color: fundB.color }}>{fundB.shortName}</span>
               </div>
               {page.specs.map((spec, i) => (
                 <div
                   key={spec.label}
-                  className={`grid grid-cols-[minmax(4.5rem,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-3 py-3 min-[390px]:px-4 ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}
+                  className={`grid grid-cols-[minmax(4.5rem,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-3 py-3 min-[390px]:px-4 ${i % 2 === 0 ? "bg-white" : ""}`}
                 >
-                  <span className="text-xs text-zinc-500 self-center">{spec.label}</span>
-                  <span className="min-w-0 break-words text-xs text-zinc-300 self-center">{spec.a}</span>
-                  <span className="min-w-0 break-words text-xs text-zinc-300 self-center">{spec.b}</span>
+                  <span className="text-xs text-slate-500 self-center">{spec.label}</span>
+                  <span className="min-w-0 break-words text-xs text-slate-700 self-center">{spec.a}</span>
+                  <span className="min-w-0 break-words text-xs text-slate-700 self-center">{spec.b}</span>
                   {spec.note && (
-                    <p className="col-span-3 text-xs text-zinc-400 leading-relaxed">{spec.note}</p>
+                    <p className="col-span-3 text-xs text-slate-600 leading-relaxed">{spec.note}</p>
                   )}
                 </div>
               ))}
@@ -237,12 +237,12 @@ export default async function ComparePage({ params }: Props) {
             <section className="space-y-4">
               <div className="space-y-2">
                 <h2
-                  className="text-base font-bold text-white"
+                  className="text-base font-bold text-[#263A53]"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   {fundA.shortName}と{fundB.shortName}を両方持つ場合の割合
                 </h2>
-                <p className="text-sm text-zinc-400 leading-relaxed">
+                <p className="text-sm text-slate-600 leading-relaxed">
                   2本を組み合わせても投資先が完全に分かれるわけではありません。
                   重複する銘柄への集中度と値動きがどう変わるかを確認して割合を考えます。
                 </p>
@@ -256,25 +256,25 @@ export default async function ComparePage({ params }: Props) {
                   return (
                     <div
                       key={example.label}
-                      className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-3"
+                      className="rounded-xl bg-white border border-[#D9E3E8] p-4 space-y-3"
                     >
-                      <h3 className="text-sm font-bold text-white">{example.label}</h3>
-                      <p className="text-xs text-zinc-400 leading-relaxed">{example.description}</p>
-                      <div className="rounded-lg bg-white/[0.03] px-3 py-2.5 space-y-1">
-                        <p className="text-[10px] text-zinc-500">
+                      <h3 className="text-sm font-bold text-[#263A53]">{example.label}</h3>
+                      <p className="text-xs text-slate-600 leading-relaxed">{example.description}</p>
+                      <div className="rounded-lg bg-white px-3 py-2.5 space-y-1">
+                        <p className="text-[10px] text-slate-500">
                           2020年から月{page.simAmount / 10000}万円を同じ割合で積み立てた過去実績
                         </p>
                         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
-                          <span className="text-zinc-400">
-                            評価額 <strong className="text-zinc-200">{formatCurrency(mixedValue)}</strong>
+                          <span className="text-slate-600">
+                            評価額 <strong className="text-slate-700">{formatCurrency(mixedValue)}</strong>
                           </span>
-                          <span className="text-zinc-400">
-                            利益 <strong className={mixedProfit >= 0 ? "text-emerald-400" : "text-red-400"}>
+                          <span className="text-slate-600">
+                            利益 <strong className={mixedProfit >= 0 ? "text-emerald-700" : "text-red-400"}>
                               {mixedProfit >= 0 ? "+" : ""}{formatCurrency(mixedProfit)}
                             </strong>
                           </span>
-                          <span className="text-zinc-400">
-                            リターン <strong className={mixedReturn >= 0 ? "text-emerald-400" : "text-red-400"}>
+                          <span className="text-slate-600">
+                            リターン <strong className={mixedReturn >= 0 ? "text-emerald-700" : "text-red-400"}>
                               {mixedReturn >= 0 ? "+" : ""}{mixedReturn.toFixed(1)}%
                             </strong>
                           </span>
@@ -284,7 +284,7 @@ export default async function ComparePage({ params }: Props) {
                   );
                 })}
               </div>
-              <p className="text-[11px] text-zinc-500 leading-relaxed">
+              <p className="text-[11px] text-slate-500 leading-relaxed">
                 表示値は過去データによる試算で、将来の成果を示すものではありません。配分は投資期間・目的・許容できる値動きによって異なります。
               </p>
             </section>
@@ -293,18 +293,18 @@ export default async function ComparePage({ params }: Props) {
           {/* ── CTA ────────────────────────────────────────────── */}
           <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-emerald-400" />
-              <h2 className="text-base font-bold text-white" style={{ fontFamily: "var(--font-serif-jp), serif" }}>
+              <TrendingUp className="h-5 w-5 text-emerald-700" />
+              <h2 className="text-base font-bold text-[#263A53]" style={{ fontFamily: "var(--font-serif-jp), serif" }}>
                 自分の条件でシミュレーション
               </h2>
             </div>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-600">
               積立開始年・月額を変えて、あなたの「たられば」を計算できます。
             </p>
             <div className="flex flex-col gap-2">
               <Link
                 href={isVerifiedReturnSeries(page.fundAId) ? `/simulate/${page.fundAId}/2020` : `/fund/${getFundPageSlug(page.fundAId) ?? "schd"}`}
-                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white transition-opacity hover:opacity-90"
+                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] transition-opacity hover:opacity-90"
                 style={{ background: fundA.color }}
               >
                 {isVerifiedReturnSeries(page.fundAId) ? `${fundA.shortName}でシミュレーション` : `${fundA.shortName}の商品属性を見る`}
@@ -312,7 +312,7 @@ export default async function ComparePage({ params }: Props) {
               </Link>
               <Link
                 href={isVerifiedReturnSeries(page.fundBId) ? `/simulate/${page.fundBId}/2020` : `/fund/${getFundPageSlug(page.fundBId) ?? "schd"}`}
-                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-white transition-opacity hover:opacity-90"
+                className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] transition-opacity hover:opacity-90"
                 style={{ background: fundB.color }}
               >
                 {isVerifiedReturnSeries(page.fundBId) ? `${fundB.shortName}でシミュレーション` : `${fundB.shortName}の商品属性を見る`}
@@ -324,7 +324,7 @@ export default async function ComparePage({ params }: Props) {
           {/* ── FAQ ────────────────────────────────────────────── */}
           <section>
             <h2
-              className="text-base font-bold text-white mb-5"
+              className="text-base font-bold text-[#263A53] mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               {fundA.shortName}と{fundB.shortName}のよくある質問
@@ -333,10 +333,10 @@ export default async function ComparePage({ params }: Props) {
               {page.faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2"
+                  className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
                 >
-                  <p className="text-sm font-bold text-white">Q. {faq.q}</p>
-                  <p className="text-sm text-zinc-400 leading-relaxed">A. {faq.a}</p>
+                  <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
                 </div>
               ))}
             </div>
@@ -349,7 +349,7 @@ export default async function ComparePage({ params }: Props) {
             return (
               <section>
                 <h2
-                  className="text-base font-bold text-white mb-4"
+                  className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   関連コラム
@@ -359,13 +359,13 @@ export default async function ComparePage({ params }: Props) {
                     <Link
                       key={a.slug}
                       href={`/articles/${a.slug}`}
-                      className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
                       <div className="flex items-center gap-2 min-w-0">
-                        <BookOpen className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0" />
-                        <span className="text-sm text-zinc-300 leading-snug line-clamp-2">{a.h1}</span>
+                        <BookOpen className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
+                        <span className="text-sm text-slate-700 leading-snug line-clamp-2">{a.h1}</span>
                       </div>
-                      <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0 ml-2" />
+                      <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0 ml-2" />
                     </Link>
                   ))}
                 </div>
@@ -388,7 +388,7 @@ export default async function ComparePage({ params }: Props) {
             return (
               <section>
                 <h2
-                  className="text-base font-bold text-white mb-4"
+                  className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   次に読まれることが多い比較
@@ -401,14 +401,14 @@ export default async function ComparePage({ params }: Props) {
                       <Link
                         key={p.slug}
                         href={`/compare/${p.slug}`}
-                        className="flex flex-col gap-1 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                        className="flex flex-col gap-1 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                       >
-                        <span className="flex items-center gap-2 text-sm font-bold text-white">
+                        <span className="flex items-center gap-2 text-sm font-bold text-[#263A53]">
                           <span style={{ color: fA.color }}>{fA.shortName}</span>
-                          <span className="text-zinc-500 text-xs">vs</span>
+                          <span className="text-slate-500 text-xs">vs</span>
                           <span style={{ color: fB.color }}>{fB.shortName}</span>
                         </span>
-                        <span className="text-xs text-zinc-500">{p.relatedDescription}</span>
+                        <span className="text-xs text-slate-500">{p.relatedDescription}</span>
                       </Link>
                     );
                   })}
@@ -425,7 +425,7 @@ export default async function ComparePage({ params }: Props) {
             return (
               <section>
                 <h2
-                  className="text-base font-bold text-white mb-4"
+                  className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   他の人気シミュレーション
@@ -443,14 +443,14 @@ export default async function ComparePage({ params }: Props) {
                       <Link
                         key={`${yp.fundSlug}-${yp.year}`}
                         href={`/${yp.fundSlug}/${yp.year}`}
-                        className="flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                        className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <span
                             className="h-2 w-2 rounded-full flex-shrink-0"
                             style={{ background: f.color }}
                           />
-                          <span className="text-sm text-zinc-300">
+                          <span className="text-sm text-slate-700">
                             {yp.year}年から{f.encyclopedia.nickname}を積み立てていたら
                           </span>
                         </div>
@@ -481,7 +481,7 @@ export default async function ComparePage({ params }: Props) {
             return (
               <section>
                 <h2
-                  className="text-base font-bold text-white mb-4"
+                  className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   関連する銘柄解説
@@ -491,17 +491,17 @@ export default async function ComparePage({ params }: Props) {
                     <Link
                       key={fSlug}
                       href={`/fund/${fSlug}`}
-                      className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3 hover:bg-white/[0.07] transition-colors"
+                      className="flex items-center gap-3 rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
                     >
                       <span
                         className="h-2 w-2 rounded-full flex-shrink-0"
                         style={{ background: f.color }}
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-bold text-white">{f.shortName}とは？</p>
-                        <p className="text-[10px] text-zinc-500 truncate">{f.encyclopedia.catchCopy}</p>
+                        <p className="text-sm font-bold text-[#263A53]">{f.shortName}とは？</p>
+                        <p className="text-[10px] text-slate-500 truncate">{f.encyclopedia.catchCopy}</p>
                       </div>
-                      <ChevronRight className="h-3.5 w-3.5 text-zinc-500 flex-shrink-0" />
+                      <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                     </Link>
                   ))}
                 </div>

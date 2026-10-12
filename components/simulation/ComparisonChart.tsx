@@ -68,10 +68,10 @@ const CustomTooltip = ({
   const principal = payload.find((p) => p.name === "principalA")?.value ?? 0;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-zinc-900/98 p-3 shadow-xl backdrop-blur-sm text-xs">
-      <p className="mb-2 font-bold text-zinc-200">{label}</p>
+    <div className="rounded-xl border border-[#D2DEE4] bg-white/98 p-3 shadow-xl backdrop-blur-sm text-xs">
+      <p className="mb-2 font-bold text-slate-700">{label}</p>
       {mode === "value" && (
-        <p className="text-zinc-400 mb-2 text-[10px]">元本: {formatCurrency(principal)}</p>
+        <p className="text-slate-600 mb-2 text-xs">元本: {formatCurrency(principal)}</p>
       )}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between gap-6">
@@ -79,7 +79,7 @@ const CustomTooltip = ({
             <div className="h-2 w-2 rounded-full" style={{ background: planA.fundColor }} />
             <span style={{ color: planA.fundColor }} className="font-bold">{planA.fundName}</span>
           </div>
-          <span className="font-black text-white">
+          <span className="font-black text-[#263A53]">
             {mode === "profit" && vA >= 0 ? "+" : ""}{formatCurrency(vA)}
           </span>
         </div>
@@ -88,14 +88,14 @@ const CustomTooltip = ({
             <div className="h-2 w-2 rounded-full" style={{ background: planB.fundColor }} />
             <span style={{ color: planB.fundColor }} className="font-bold">{planB.fundName}</span>
           </div>
-          <span className="font-black text-white">
+          <span className="font-black text-[#263A53]">
             {mode === "profit" && vB >= 0 ? "+" : ""}{formatCurrency(vB)}
           </span>
         </div>
         {vA !== vB && (
-          <div className="pt-1 border-t border-white/10">
-            <span className="text-zinc-400 text-[10px]">差: </span>
-            <span className="font-bold text-white text-[10px]">{formatCurrency(Math.abs(vA - vB))}</span>
+          <div className="pt-1 border-t border-[#D2DEE4]">
+            <span className="text-slate-600 text-xs">差: </span>
+            <span className="font-bold text-[#263A53] text-xs">{formatCurrency(Math.abs(vA - vB))}</span>
           </div>
         )}
       </div>
@@ -123,14 +123,14 @@ export default function ComparisonChart({ planA, planB }: Props) {
   return (
     <div>
       {/* Mode toggle */}
-      <div className="flex rounded-lg border border-white/10 bg-white/5 p-0.5 gap-0.5 w-fit mb-3">
+      <div className="flex rounded-lg border border-[#D2DEE4] bg-[#F4F7F8] p-0.5 gap-0.5 w-fit mb-3">
         {(["value", "profit"] as const).map((m) => (
           <button
             key={m}
             onClick={() => setMode(m)}
             aria-pressed={mode === m}
             className={`min-h-11 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-200 ${
-              mode === m ? "bg-white/15 text-white" : "text-zinc-400 hover:text-zinc-300"
+              mode === m ? "bg-[#DCEFFA] text-[#263A53]" : "text-slate-600 hover:text-slate-700"
             }`}
           >
             {m === "value" ? "評価額" : "利益額"}
@@ -139,9 +139,9 @@ export default function ComparisonChart({ planA, planB }: Props) {
       </div>
 
       {/* 凡例：元本・資産・利益が一目で分かる */}
-      <div className="flex items-center gap-x-4 gap-y-1 flex-wrap mb-3 text-[11px]">
+      <div className="flex items-center gap-x-4 gap-y-1 flex-wrap mb-3 text-xs">
         {mode === "value" && (
-          <div className="flex items-center gap-1.5 text-zinc-400">
+          <div className="flex items-center gap-1.5 text-slate-600">
             <span className="inline-block h-0 w-3 border-t border-dashed" style={{ borderColor: "#a1a1aa" }} />
             投資元本
           </div>
@@ -149,16 +149,16 @@ export default function ComparisonChart({ planA, planB }: Props) {
         <div className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: planA.fundColor }} />
           <span style={{ color: planA.fundColor }} className="font-semibold">{planA.fundName}</span>
-          <span className="text-zinc-400">{mode === "value" ? "の資産" : "の利益"}</span>
+          <span className="text-slate-600">{mode === "value" ? "の資産" : "の利益"}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: planB.fundColor }} />
           <span style={{ color: planB.fundColor }} className="font-semibold">{planB.fundName}</span>
-          <span className="text-zinc-400">{mode === "value" ? "の資産" : "の利益"}</span>
+          <span className="text-slate-600">{mode === "value" ? "の資産" : "の利益"}</span>
         </div>
       </div>
 
-      <div className="h-60 sm:h-72 w-full">
+      <div className="h-60 w-full min-w-0 overflow-hidden sm:h-72" role="img" aria-label={`${planA.fundName}と${planB.fundName}の月末評価額推移`}>
         <ResponsiveContainer
           width="100%"
           height="100%"
@@ -175,11 +175,11 @@ export default function ComparisonChart({ planA, planB }: Props) {
                 <stop offset="95%" stopColor={planB.fundColor} stopOpacity={0.02} />
               </linearGradient>
               <linearGradient id="gradPrincipal" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#ffffff" stopOpacity={0.08} />
-                <stop offset="95%" stopColor="#ffffff" stopOpacity={0.01} />
+                <stop offset="5%" stopColor="#A7B7C2" stopOpacity={0.18} />
+                <stop offset="95%" stopColor="#A7B7C2" stopOpacity={0.02} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff07" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E4EAED" />
             <XAxis
               dataKey="date"
               tick={{ fill: "#52525b", fontSize: 10 }}
@@ -239,6 +239,7 @@ export default function ComparisonChart({ planA, planB }: Props) {
           </AreaChart>
         </ResponsiveContainer>
       </div>
+      <p className="mt-3 text-xs leading-5 text-slate-600">同じ積立条件での月末推移です。最終評価額は{planA.fundName}が{formatCurrency(planA.finalValue)}、{planB.fundName}が{formatCurrency(planB.finalValue)}です。</p>
     </div>
   );
 }

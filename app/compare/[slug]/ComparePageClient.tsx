@@ -24,12 +24,12 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
       {/* シミュレーション結果カード */}
       <section>
         <h2
-          className="text-base font-bold text-white mb-4"
+          className="text-base font-bold text-[#263A53] mb-4"
           style={{ fontFamily: "var(--font-serif-jp), serif" }}
         >
           積立シミュレーション比較
         </h2>
-        <p className="text-xs text-zinc-500 mb-4">
+        <p className="text-xs text-slate-500 mb-4">
           {resultA.startYear}年{resultA.startMonth}月〜 / 毎月
           {(resultA.monthlyAmount / 10000).toFixed(0)}万円積立
         </p>
@@ -43,31 +43,31 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
             >
               <div className="flex items-center gap-2 leading-tight">
                 <div className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
-                <span className="min-w-0 break-words text-sm font-bold text-white">{r.fundName}</span>
+                <span className="min-w-0 break-words text-sm font-bold text-[#263A53]">{r.fundName}</span>
               </div>
               <div>
-                <p className="text-[10px] text-zinc-500">評価額</p>
-                <p className="text-lg font-bold text-white tabular-nums">
+                <p className="text-[10px] text-slate-500">評価額</p>
+                <p className="text-lg font-bold text-[#263A53] tabular-nums">
                   {formatCurrency(r.finalValue)}
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-2 min-[390px]:grid-cols-2">
                 <div>
-                  <p className="text-[10px] text-zinc-500">利益</p>
+                  <p className="text-[10px] text-slate-500">利益</p>
                   <p className="whitespace-nowrap text-xs font-bold tabular-nums min-[390px]:text-sm" style={{ color: r.fundColor }}>
                     {signed(r.profit)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500">リターン</p>
+                  <p className="text-[10px] text-slate-500">リターン</p>
                   <p className="whitespace-nowrap text-xs font-bold tabular-nums min-[390px]:text-sm" style={{ color: r.fundColor }}>
                     {r.returnRate > 0 ? "+" : ""}{r.returnRate}%
                   </p>
                 </div>
               </div>
               <div>
-                <p className="text-[10px] text-zinc-500">元本</p>
-                <p className="text-xs text-zinc-400 tabular-nums">
+                <p className="text-[10px] text-slate-500">元本</p>
+                <p className="text-xs text-slate-600 tabular-nums">
                   {formatCurrency(r.totalPrincipal)}
                 </p>
               </div>
@@ -76,9 +76,9 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
         </div>
 
         {/* 差額バナー */}
-        <div className="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4 text-center">
-          <p className="text-xs text-zinc-500 mb-1">
-            {winner ? <><span className="font-bold text-white">{winner.fundName}</span> の期間末評価額が高い</> : "この条件では期間末評価額が同額"}
+        <div className="rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] p-4 text-center">
+          <p className="text-xs text-slate-500 mb-1">
+            {winner ? <><span className="font-bold text-[#263A53]">{winner.fundName}</span> の期間末評価額が高い</> : "この条件では期間末評価額が同額"}
           </p>
           <p className="text-2xl font-black tabular-nums" style={{ color: winner?.fundColor ?? "#d4d4d8" }}>
             {winner ? `差 ${formatCurrency(diff)}` : "同額"}
@@ -92,10 +92,10 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Link href={compareHref} onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
+        <Link href={compareHref} onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-[#263A53]">
           同じ2商品で条件を変える
         </Link>
-        <Link href="/about/data-sources" onClick={() => trackSourceView("compare_result")} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-300">
+        <Link href="/about/data-sources" onClick={() => trackSourceView("compare_result")} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#D2DEE4] px-4 py-3 text-sm font-bold text-slate-700">
           データ期間・出典を確認
         </Link>
       </div>
@@ -103,7 +103,7 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
       {/* グラフ比較 */}
       <section>
         <h2
-          className="text-base font-bold text-white mb-4"
+          className="text-base font-bold text-[#263A53] mb-4"
           style={{ fontFamily: "var(--font-serif-jp), serif" }}
         >
           資産推移グラフ

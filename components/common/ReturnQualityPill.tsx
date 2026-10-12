@@ -9,8 +9,8 @@ export default function ReturnQualityPill({ fundId }: { fundId: FundId }) {
     <span
       className={`inline-flex min-h-8 items-center rounded-full border px-2.5 py-1 text-xs font-bold ${
         verified
-          ? "border-emerald-400/25 bg-emerald-400/10 text-emerald-300"
-          : "border-amber-400/25 bg-amber-400/10 text-amber-300"
+          ? "border-emerald-400/25 bg-emerald-400/10 text-emerald-700"
+          : "border-amber-400/25 bg-amber-400/10 text-amber-700"
       }`}
     >
       {verified ? "A：公式月次データ" : "G：参考データ・原典未検証"}

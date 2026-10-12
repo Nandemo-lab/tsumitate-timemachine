@@ -72,16 +72,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* カテゴリバッジ + H1 + 導入 */}
       <section className="space-y-3">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1">
-          <BookOpen className="h-3 w-3 text-indigo-400" />
-          <span className="text-[11px] font-bold text-indigo-400">{meta.category}</span>
+          <BookOpen className="h-3 w-3 text-[#236B8E]" />
+          <span className="text-xs font-bold text-[#236B8E]">{meta.category}</span>
         </div>
         <h1
-          className="text-2xl font-black text-white leading-tight"
+          className="text-2xl font-black text-[#263A53] leading-tight"
           style={{ fontFamily: "var(--font-serif-jp), serif" }}
         >
           {meta.h1}
         </h1>
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           米国ETF SCHDと、円建て国内投信のeMAXIS Slim 米国株式（S&amp;P500）は、商品形態・銘柄選定・分配方針が異なります。この記事では確認できる商品属性を整理し、G品質のSCHD参考系列とA品質のS&amp;P500実績を同じ確度で扱わない前提で比較します。
         </p>
       </section>
@@ -90,15 +90,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <GuideEeat lastUpdated={meta.lastUpdated} />
 
       {/* 目次 */}
-      <nav className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">目次</p>
+      <nav className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+        <p className="text-xs font-bold text-slate-700">目次</p>
         <ol className="space-y-1.5">
           {TOC.map((title, i) => (
             <li key={i} className="flex items-start gap-2">
-              <span className="text-[10px] font-bold text-indigo-400 mt-0.5 flex-shrink-0">{i + 1}.</span>
+              <span className="text-xs font-bold text-[#236B8E] mt-0.5 flex-shrink-0">{i + 1}.</span>
               <a
                 href={`#section-${i}`}
-                className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors leading-snug"
+                className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
               >
                 {title}
               </a>
@@ -111,20 +111,20 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-0" className="space-y-4">
         <SectionHeading index={0} title="結論：比較時の確認点" />
         <div className="rounded-xl bg-indigo-500/8 border border-indigo-500/20 p-5 space-y-3">
-          <p className="text-sm font-bold text-indigo-200">先に結論をお伝えします。</p>
+          <p className="text-sm font-bold text-[#236B8E]">先に結論をお伝えします。</p>
           <ul className="space-y-2">
             {[
               "四半期分配を行うUSD建て米国ETFを検討する場合はSCHDの商品性を確認",
               "分配金をファンド内で再投資する円建て国内投信を利用したい場合はS&P500の商品性を確認",
               "商品形態・通貨・分配方針が異なり、未検証の実績値から優劣や配分を決めない",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <CheckCircle2 className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <CheckCircle2 className="h-4 w-4 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
           </ul>
-          <p className="text-xs text-zinc-500 leading-relaxed pt-1">
+          <p className="text-xs text-slate-500 leading-relaxed pt-1">
             ※ どちらも米国株へ投資しますが、商品形態・通貨・分配方針が異なります。SCHDの参考系列から将来成果の優劣は判定しません。
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 1. SCHDとは */}
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="SCHDとは？特徴と仕組み" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。Dow Jones U.S. Dividend 100 Indexへの連動を目指し、財務健全性や増配実績などを基準に銘柄を選定します。SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
         </p>
         <SpecCard rows={[
@@ -144,7 +144,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["商品形態", "USD建て米国ETF"],
           ["データ品質", "G：参考データ・原典未検証"],
         ]} />
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           財務比率や配当実績等を用いて構成銘柄を選定する指数への連動が特徴です。この商品設計だけから、S&amp;P500に対する値上がり幅や下落耐性の優劣は断定できません。
         </p>
       </section>
@@ -152,7 +152,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 2. S&P500とは */}
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="S&P500とは？特徴と仕組み" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           S&P500は、米国の代表的企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾンといった大型企業に加え、金融・ヘルスケア・生活必需品など全業種をカバーします。日本では「eMAXIS Slim米国株式（S&P500）」が最も人気のある商品です。
         </p>
         <SpecCard rows={[
@@ -162,7 +162,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["信託報酬", formatExpenseRatio("sp500")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           このページで扱うeMAXIS Slim 米国株式（S&amp;P500）は、分配金再投資基準価額を用いて商品設定後の実績を検証しています。米国ETF SCHDとは商品形態・通貨・分配方針が異なります。
         </p>
       </section>
@@ -170,15 +170,15 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 3. 比較表 */}
       <section id="section-3" className="space-y-4">
         <SectionHeading index={3} title="SCHDとS&P500の違いを比較" />
-        <div className="rounded-xl overflow-hidden border border-white/[0.08]">
+        <div className="rounded-xl overflow-hidden border border-[#D9E3E8]">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-white/[0.05]">
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-zinc-400 w-1/3">項目</th>
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-emerald-400">
+              <tr className="bg-[#F4F7F8]">
+                <th className="text-left px-4 py-3 text-xs font-bold text-slate-600 w-1/3">項目</th>
+                <th className="text-left px-4 py-3 text-xs font-bold text-emerald-700">
                   <Coins className="h-3 w-3 inline mr-1" />SCHD
                 </th>
-                <th className="text-left px-4 py-3 text-[11px] font-bold text-amber-400">
+                <th className="text-left px-4 py-3 text-xs font-bold text-orange-600">
                   <Flag className="h-3 w-3 inline mr-1" />S&P500
                 </th>
               </tr>
@@ -192,16 +192,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               ["信託報酬・経費率", formatExpenseRatio("schd"), formatExpenseRatio("sp500")],
                 ["NISA対応",     "○ 成長投資枠（投信もあり）",       "○ つみたて・成長両対応"],
               ].map(([k, a, b]) => (
-                <tr key={k} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="px-4 py-3 text-xs text-zinc-400 font-medium">{k}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-200">{a}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-200">{b}</td>
+                <tr key={k} className="hover:bg-white transition-colors">
+                  <td className="px-4 py-3 text-xs text-slate-600 font-medium">{k}</td>
+                  <td className="px-4 py-3 text-xs text-slate-700">{a}</td>
+                  <td className="px-4 py-3 text-xs text-slate-700">{b}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-zinc-500 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed">
             ※SCHDは米国ETFの経費率、S&amp;P500はeMAXIS Slim米国株式（S&amp;P500）の信託報酬です。楽天SCHDは別商品です。
         </p>
       </section>
@@ -209,11 +209,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 4. 過去シミュレーション */}
       <section id="section-4" className="space-y-4">
         <SectionHeading index={4} title="過去の積立シミュレーションで比較" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           数値はA品質のS&amp;P500だけを表示します。SCHDは原典未検証のG品質系列であるため、この記事では評価額・利益の数値比較に使用しません。
         </p>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-zinc-400">
+          <p className="text-xs font-bold text-slate-600">
             【2020年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立
           </p>
           <div className="grid grid-cols-1 gap-3">
@@ -221,16 +221,16 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-xs font-bold text-zinc-400">
+          <p className="text-xs font-bold text-slate-600">
               【2018年8月〜{CURRENT_YEAR}年{CURRENT_MONTH}月】毎月{formatCurrency(30000)}積立（S&amp;P500投信の検証済み実績期間）
           </p>
           <div className="grid grid-cols-1 gap-3">
             <SimCard name="S&P500" color="#f59e0b" sim={simSp500Long} />
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 space-y-1.5">
-          <p className="text-xs font-bold text-zinc-300 flex items-center gap-1.5">
-            <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-1.5">
+          <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+            <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
             読み取れること
           </p>
           <ul className="space-y-1.5 pl-5">
@@ -239,11 +239,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "SCHDの参考値は、検証済み実績ランキングや優劣判断には使用しない",
               "開始年・期間によって差は変動する（特定の期間が未来を保証しない）",
             ].map((t, i) => (
-              <li key={i} className="text-xs text-zinc-400 list-disc">{t}</li>
+              <li key={i} className="text-xs text-slate-600 list-disc">{t}</li>
             ))}
           </ul>
         </div>
-        <p className="text-xs text-zinc-500 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed">
           ※SCHDは「G：参考データ・原典未検証」です。S&amp;P500の「A：公式月次データ」と同じ精度の実績としては扱えません。詳しくはデータ出典ページをご確認ください。
         </p>
       </section>
@@ -251,7 +251,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 5. 暴落時 */}
       <section id="section-5" className="space-y-4">
         <SectionHeading index={5} title="下落局面の数値を読む際の注意" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           S&amp;P500の円ベース暦年リターンは確認できますが、SCHDはG品質の参考系列です。月次値から日中の最大下落率や正確な回復期間を算出せず、下落耐性の優劣は判定しません。
         </p>
         <div className="space-y-3">
@@ -260,25 +260,25 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               event: "インフレ・利上げショック（2022年）",
               body: `eMAXIS Slim 米国株式（S&P500）の2022年の円ベース・分配金再投資込みの暦年リターンは${formatAnnualReturn("sp500", 2022)}でした。一方、当サイトのSCHD系列はG品質（参考データ・原典未検証）のため、同じ条件・確度の数値として直接比較できません。暦年リターンは年中の最大下落率でもありません。`,
               diff: "SCHDは検証済み数値との直接比較対象外",
-              diffColor: "text-emerald-400",
+              diffColor: "text-emerald-700",
             },
             {
               event: "コロナショック（2020年2〜3月）",
               body: "コロナショック時の最大下落率や回復期間を、現在の検証済み月次台帳では同一条件で比較していません。SCHDはG品質のため、回復速度の優劣を実績として断定しません。",
               diff: "回復期間は同一条件で未検証",
-              diffColor: "text-amber-400",
+              diffColor: "text-orange-600",
             },
           ].map((item, i) => (
-            <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-              <p className="text-xs font-bold text-white">{item.event}</p>
-              <p className="text-xs text-zinc-400 leading-relaxed">{item.body}</p>
-              <p className={`text-[11px] font-bold ${item.diffColor}`}>▶ {item.diff}</p>
+            <div key={i} className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+              <p className="text-xs font-bold text-[#263A53]">{item.event}</p>
+              <p className="text-xs text-slate-600 leading-relaxed">{item.body}</p>
+              <p className={`text-xs font-bold ${item.diffColor}`}>▶ {item.diff}</p>
             </div>
           ))}
         </div>
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
-          <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-zinc-300 leading-relaxed">
+          <AlertTriangle className="h-4 w-4 text-orange-600 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-slate-700 leading-relaxed">
             高配当株中心という商品特性だけで、将来の下落耐性や回復速度が保証されるわけではありません。SCHDの検証済み月次実績が揃うまでは、S&amp;P500との数値比較を参考情報としても優劣判断に使用しません。
           </p>
         </div>
@@ -287,10 +287,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 6. 配当金の違い */}
       <section id="section-6" className="space-y-4">
         <SectionHeading index={6} title="配当金の違い" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           SCHDは四半期分配を行う米国ETF、eMAXIS Slim 米国株式（S&amp;P500）はファンド内で分配金を再投資する円建て国内投信です。
         </p>
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
+        <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-3">
           <ul className="space-y-2">
             {[
               "SCHDは四半期ごとに分配金を受け取る商品設計で、分配利回りは市場価格と分配実績により変動する",
@@ -298,14 +298,14 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "配当は受け取った時点で課税対象となり、再投資しない場合は複利効果が限定的になる",
               "NISA口座では国内課税は非課税になるが、米国側の外国源泉税（10%）は控除される",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
           </ul>
         </div>
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed">
           分配金を受け取るかファンド内で再投資するかにより、資金の受取方法と税務が異なります。将来の資産額は市場環境・税務・再投資の有無で変わるため、商品形態だけから優劣は断定できません。
         </p>
       </section>
@@ -313,11 +313,11 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 7. 新NISA */}
       <section id="section-7" className="space-y-4">
         <SectionHeading index={7} title="新NISAで確認する点" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           eMAXIS Slim 米国株式（S&amp;P500）は、つみたて投資枠と成長投資枠の対象です。米国ETF SCHDの取扱い・NISA区分は証券会社で確認が必要です。SCHDを主要投資対象とする国内投信は別商品で、商品ごとに取扱いと対象枠が異なります。
         </p>
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-3">
-          <p className="text-xs font-bold text-zinc-300">新NISAで選ぶ際のポイント</p>
+        <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-3">
+          <p className="text-xs font-bold text-slate-700">新NISAで選ぶ際のポイント</p>
           <ul className="space-y-2">
             {[
               "S&P500はつみたて投資枠・成長投資枠の両方で積立設定が可能",
@@ -325,8 +325,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "SCHDは分配金を受け取る米国ETF、S&P500投信はファンド内再投資という商品形態の違いがある",
               "保有目的・税務・外貨での売買を確認し、一律の配分を前提にしない",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <CheckCircle2 className="h-3.5 w-3.5 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0 mt-0.5" />
                 {t}
               </li>
             ))}
@@ -339,7 +339,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={8} title="SCHDの商品属性" />
         <div className="rounded-xl bg-emerald-500/6 border border-emerald-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
-            <Coins className="h-4 w-4 text-emerald-400" />
+            <Coins className="h-4 w-4 text-emerald-700" />
             <p className="text-sm font-bold text-emerald-200">SCHDを確認する観点</p>
           </div>
           <ul className="space-y-2.5">
@@ -349,8 +349,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "Dow Jones U.S. Dividend 100 Indexの銘柄選定方法を確認した人",
               "財務優良企業に絞った銘柄選定を重視する人",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <span className="text-emerald-400 font-bold flex-shrink-0">→</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <span className="text-emerald-700 font-bold flex-shrink-0">→</span>
                 {t}
               </li>
             ))}
@@ -363,7 +363,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <SectionHeading index={9} title="S&P500の商品属性" />
         <div className="rounded-xl bg-amber-500/6 border border-amber-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
-            <Flag className="h-4 w-4 text-amber-400" />
+            <Flag className="h-4 w-4 text-orange-600" />
             <p className="text-sm font-bold text-amber-200">S&amp;P500を確認する観点</p>
           </div>
           <ul className="space-y-2.5">
@@ -373,8 +373,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               "分配金再投資基準価額で検証された商品実績を確認した人",
               "円建て国内投信として積立設定する商品性を確認した人",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <span className="text-amber-400 font-bold flex-shrink-0">→</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <span className="text-orange-600 font-bold flex-shrink-0">→</span>
                 {t}
               </li>
             ))}
@@ -406,21 +406,21 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ].map((faq) => (
             <div
               key={faq.q}
-              className="rounded-xl border border-white/8 p-5"
-              style={{ background: "rgba(255,255,255,0.025)" }}
+              className="rounded-xl border border-[#D9E3E8] p-5"
+              style={{ background: "#FFFFFF" }}
             >
-              <p className="font-bold text-white text-sm mb-2 leading-snug">Q. {faq.q}</p>
-              <p className="text-sm text-zinc-400 leading-relaxed">{faq.a}</p>
+              <p className="font-bold text-[#263A53] text-sm mb-2 leading-snug">Q. {faq.q}</p>
+              <p className="text-sm text-slate-600 leading-relaxed">{faq.a}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* まとめ */}
-      <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 space-y-2">
-        <p className="text-xs font-bold text-zinc-300">まとめ：商品形態と分配方針の違い</p>
-        <p className="text-xs text-zinc-400 leading-relaxed">
-          SCHDは四半期分配を行うUSD建て米国ETF、eMAXIS Slim 米国株式（S&amp;P500）はファンド内で分配金を再投資する円建て国内投信です。SCHDの系列はG品質のため、<strong className="text-zinc-200">両者のトータルリターンや将来の資産額の優劣は判定していません</strong>。
+      <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+        <p className="text-xs font-bold text-slate-700">まとめ：商品形態と分配方針の違い</p>
+        <p className="text-xs text-slate-600 leading-relaxed">
+          SCHDは四半期分配を行うUSD建て米国ETF、eMAXIS Slim 米国株式（S&amp;P500）はファンド内で分配金を再投資する円建て国内投信です。SCHDの系列はG品質のため、<strong className="text-slate-700">両者のトータルリターンや将来の資産額の優劣は判定していません</strong>。
         </p>
       </div>
 
@@ -429,7 +429,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* 11. CTA */}
       <section id="section-11" className="space-y-4">
         <SectionHeading index={11} title="積立タイムマシンで実際に確かめよう" />
-        <p className="text-sm text-zinc-300 leading-relaxed">
+        <p className="text-sm text-slate-700 leading-relaxed">
           実際にSCHDとS&P500を同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
           開始年・毎月の積立額を変え、参考値と検証済み実績の品質差を確認できます。
         </p>
@@ -438,36 +438,36 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           className="block rounded-2xl p-5 space-y-2 transition-all hover:opacity-90 active:scale-[0.99]"
           style={{ background: "linear-gradient(135deg, #10b981 0%, #f59e0b 50%, #4f46e5 100%)" }}
         >
-          <p className="text-xs font-bold text-white/80">積立タイムマシン 比較モード</p>
-          <p className="text-lg font-black text-white leading-tight">
+          <p className="text-xs font-bold text-[#263A53]/80">積立タイムマシン 比較モード</p>
+          <p className="text-lg font-black text-[#263A53] leading-tight">
             SCHDとS&P500を<br />実際に比較してみませんか？
           </p>
-          <p className="text-xs text-white/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
+          <p className="text-xs text-[#263A53]/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
           <div className="flex items-center gap-1.5 mt-3">
             <span className="text-sm font-black text-white">比較シミュレーションを開く</span>
-            <ArrowRight className="h-4 w-4 text-white" />
+            <ArrowRight className="h-4 w-4 text-[#263A53]" />
           </div>
         </Link>
         <Link
           href="/"
-          className="block rounded-2xl border border-white/10 bg-white/[0.05] p-5 space-y-2 transition-all hover:bg-white/[0.08] active:scale-[0.99]"
+          className="block rounded-2xl border border-[#D2DEE4] bg-[#F4F7F8] p-5 space-y-2 transition-all hover:bg-white/[0.08] active:scale-[0.99]"
         >
-          <p className="text-xs font-bold text-zinc-400">積立タイムマシン</p>
-          <p className="text-base font-black text-white leading-tight">
+          <p className="text-xs font-bold text-slate-600">積立タイムマシン</p>
+          <p className="text-base font-black text-[#263A53] leading-tight">
             あの時から積み立てていたら<br />いくらになっていた？
           </p>
           <div className="flex items-center gap-1.5 mt-2">
             <span
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-black text-white"
-              style={{ background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }}
+              style={{ background: "#236B8E" }}
             >
               無料でシミュレーションする
               <ArrowRight className="h-4 w-4" />
             </span>
           </div>
         </Link>
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 space-y-2">
-          <p className="text-[11px] font-bold text-zinc-400">関連ページ</p>
+        <div className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
+          <p className="text-xs font-bold text-slate-600">関連ページ</p>
           <ul className="space-y-2">
             {[
               { href: "/fund/schd",                     label: "米国ETF SCHDの商品情報・データ品質" },
@@ -478,9 +478,9 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
               <li key={href}>
                 <Link
                   href={href}
-                  className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+                  className="flex items-center gap-2 text-xs text-slate-600 hover:text-slate-700 transition-colors"
                 >
-                  <ArrowRight className="h-3 w-3 text-indigo-400 flex-shrink-0" />
+                  <ArrowRight className="h-3 w-3 text-[#236B8E] flex-shrink-0" />
                   {label}
                 </Link>
               </li>

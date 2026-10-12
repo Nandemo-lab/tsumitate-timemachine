@@ -48,12 +48,12 @@ export default function CompareIndexPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="min-h-dvh bg-zinc-950 text-zinc-50">
-        <nav className="border-b border-white/[0.07] px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-zinc-400">
-            <Link href="/" className="hover:text-zinc-200 transition-colors">積立タイムマシン</Link>
+      <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <nav className="border-b border-[#DDE6EA] px-4 py-3">
+          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
+            <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-zinc-200">比較</span>
+            <span className="text-slate-700">比較</span>
           </div>
         </nav>
 
@@ -61,15 +61,15 @@ export default function CompareIndexPage() {
           <header className="space-y-2">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 px-3 py-1">
               <GitCompareArrows className="h-3 w-3 text-violet-400" />
-              <span className="text-[11px] font-bold text-violet-400">比較</span>
+              <span className="text-xs font-bold text-violet-400">比較</span>
             </div>
             <h1
-              className="text-2xl font-black text-white leading-tight"
+              className="text-2xl font-black text-[#263A53] leading-tight"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               銘柄比較一覧
             </h1>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               人気銘柄同士の過去実績・コスト・NISA対応を比較したページ一覧です。気になる2銘柄を選んで、過去データで違いを確認できます。
             </p>
           </header>
@@ -80,13 +80,13 @@ export default function CompareIndexPage() {
               ["米国とハイテク", "S&P500・VTIとNASDAQ100・FANG+で、構成範囲と値動きの違いを確認"],
               ["配当方針", "VYM・SCHDで商品設計を確認。SCHD実績はG品質の参考系列として分離"],
             ].map(([title, body]) => (
-              <div key={title} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+              <div key={title} className="rounded-xl border border-[#D9E3E8] bg-white p-3">
                 <p className="text-xs font-bold text-violet-300">{title}</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{body}</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">{body}</p>
               </div>
             ))}
           </section>
-          <p className="text-xs leading-relaxed text-zinc-500">
+          <p className="text-xs leading-relaxed text-slate-500">
             各ページは同じ開始月・月額・共通終端で元本をそろえます。商品の仕組みを読みたい場合はコラム、数値を変えて確かめたい場合は比較ページを選んでください。
           </p>
 
@@ -98,15 +98,15 @@ export default function CompareIndexPage() {
                 <Link
                   key={cp.slug}
                   href={`/compare/${cp.slug}`}
-                  className="block rounded-xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-colors group"
+                  className="block rounded-xl border border-[#D9E3E8] p-4 hover:bg-white transition-colors group"
                 >
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="text-sm font-bold" style={{ color: fA.color }}>{fA.shortName}</span>
-                    <span className="text-xs text-zinc-500">vs</span>
+                    <span className="text-xs text-slate-500">vs</span>
                     <span className="text-sm font-bold" style={{ color: fB.color }}>{fB.shortName}</span>
-                    <ArrowRight className="h-3.5 w-3.5 text-zinc-500 group-hover:text-zinc-300 transition-colors ml-auto flex-shrink-0" />
+                    <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-slate-700 transition-colors ml-auto flex-shrink-0" />
                   </div>
-                  <p className="text-xs text-zinc-500 leading-relaxed line-clamp-2">{cp.relatedDescription}</p>
+                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{cp.relatedDescription}</p>
                 </Link>
               );
             })}

@@ -110,19 +110,19 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-dvh bg-zinc-950 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <main className="relative min-h-dvh bg-[#FAFAF7] overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(ellipse, #6366f115 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse, #DCEFFA 0%, transparent 70%)" }}
         />
         <div
           className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(ellipse, #f59e0b0a 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse, #FFDFCB80 0%, transparent 70%)" }}
         />
       </div>
 
-      <div className="relative max-w-lg mx-auto">
+      <div className="relative mx-auto max-w-4xl">
         <AnimatePresence mode="wait">
           {displayedTab === "home" && (
             <motion.div

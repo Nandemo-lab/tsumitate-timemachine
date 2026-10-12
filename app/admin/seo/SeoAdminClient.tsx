@@ -112,7 +112,7 @@ function truncate(s: string, n: number) {
 // ⑤ New thresholds per spec
 function titleLenColor(n: number) {
   if (n < 30 || n > 50) return "text-red-400";
-  if (n <= 40) return "text-emerald-400";
+  if (n <= 40) return "text-emerald-700";
   return "text-yellow-400";
 }
 function titleLenLabel(n: number) {
@@ -123,13 +123,13 @@ function titleLenLabel(n: number) {
 }
 function titleBadgeColor(n: number) {
   if (n < 30 || n > 50) return "bg-red-500/15 text-red-300 border-red-500/30";
-  if (n <= 40) return "bg-emerald-500/15 text-emerald-300 border-emerald-500/30";
+  if (n <= 40) return "bg-emerald-500/15 text-emerald-700 border-emerald-500/30";
   return "bg-yellow-500/15 text-yellow-300 border-yellow-500/30";
 }
 
 function descLenColor(n: number) {
   if (n < 80 || n > 170) return "text-red-400";
-  if (n <= 140) return "text-emerald-400";
+  if (n <= 140) return "text-emerald-700";
   return "text-yellow-400";
 }
 function descLenLabel(n: number) {
@@ -140,7 +140,7 @@ function descLenLabel(n: number) {
 }
 function descBadgeColor(n: number) {
   if (n < 80 || n > 170) return "bg-red-500/15 text-red-300 border-red-500/30";
-  if (n <= 140) return "bg-emerald-500/15 text-emerald-300 border-emerald-500/30";
+  if (n <= 140) return "bg-emerald-500/15 text-emerald-700 border-emerald-500/30";
   return "bg-yellow-500/15 text-yellow-300 border-yellow-500/30";
 }
 
@@ -374,25 +374,25 @@ function generateTop5(enriched: EnrichedPage[]): Top5Item[] {
 const PAGE_TYPE_COLORS: Record<string, string> = {
   ホーム:     "bg-violet-500/20 text-violet-300",
   銘柄:       "bg-blue-500/20 text-blue-300",
-  年別:       "bg-emerald-500/20 text-emerald-300",
+  年別:       "bg-emerald-500/20 text-emerald-700",
   月額:       "bg-teal-500/20 text-teal-300",
   比較:       "bg-orange-500/20 text-orange-300",
   ランキング: "bg-yellow-500/20 text-yellow-300",
   ガイド:     "bg-pink-500/20 text-pink-300",
-  年別比較:   "bg-indigo-500/20 text-indigo-300",
+  年別比較:   "bg-indigo-500/20 text-[#236B8E]",
 };
 
 const ctrFmt = (ctr: number) => `${(ctr * 100).toFixed(1)}%`;
-const ctrColor = (ctr: number) => ctr >= 0.05 ? "text-emerald-400" : ctr >= 0.02 ? "text-yellow-400" : "text-red-400";
-const posColor = (pos: number) => pos <= 3 ? "text-emerald-400" : pos <= 10 ? "text-yellow-400" : pos <= 20 ? "text-orange-400" : "text-red-400";
+const ctrColor = (ctr: number) => ctr >= 0.05 ? "text-emerald-700" : ctr >= 0.02 ? "text-yellow-400" : "text-red-400";
+const posColor = (pos: number) => pos <= 3 ? "text-emerald-700" : pos <= 10 ? "text-yellow-400" : pos <= 20 ? "text-orange-400" : "text-red-400";
 
 // ① 星表示
 function Stars({ count, size = "normal" }: { count: number; size?: "normal" | "small" }) {
-  const cls = size === "small" ? "text-[11px]" : "text-[13px]";
+  const cls = size === "small" ? "text-xs" : "text-[13px]";
   return (
     <span className={`whitespace-nowrap tracking-tight ${cls}`}>
       {Array.from({ length: 5 }, (_, i) => (
-        <span key={i} className={i < count ? "text-amber-400" : "text-zinc-700"}>★</span>
+        <span key={i} className={i < count ? "text-orange-600" : "text-slate-400"}>★</span>
       ))}
     </span>
   );
@@ -544,31 +544,31 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
   // component type on every render.
   const renderTh = (children: React.ReactNode, k?: SortKey, align: "left" | "right" | "center" = "left") => (
     <th
-      className={`px-3 py-2.5 text-zinc-400 font-semibold text-[10px] uppercase tracking-wider whitespace-nowrap ${k ? "cursor-pointer hover:text-zinc-200 select-none" : ""} text-${align}`}
+      className={`px-3 py-2.5 text-slate-600 font-semibold text-xs uppercase tracking-wider whitespace-nowrap ${k ? "cursor-pointer hover:text-slate-700 select-none" : ""} text-${align}`}
       onClick={k ? () => toggleSort(k) : undefined}
     >
       {children}
       {k && sortKey === k && <span className="ml-1 text-violet-400">{sortDir === "asc" ? "↑" : "↓"}</span>}
-      {k && sortKey !== k && <span className="ml-1 text-zinc-700">↕</span>}
+      {k && sortKey !== k && <span className="ml-1 text-slate-400">↕</span>}
     </th>
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 text-xs font-sans">
+    <div className="min-h-screen bg-[#FAFAF7] text-zinc-100 text-xs font-sans">
 
       {/* ── Sticky Header ────────────────────────────────────────────── */}
-      <div className="sticky top-0 z-30 border-b border-white/[0.08] bg-zinc-950/95 backdrop-blur px-4 py-2.5">
+      <div className="sticky top-0 z-30 border-b border-[#D9E3E8] bg-[#FAFAF7]/95 backdrop-blur px-4 py-2.5">
         {/* Row 1: タイトル + ボタン群 */}
         <div className="max-w-screen-2xl mx-auto flex items-center gap-2 flex-wrap">
           <div className="flex-1 min-w-0">
-            <h1 className="text-[13px] font-bold text-white tracking-tight whitespace-nowrap">SEO管理ダッシュボード</h1>
-            <p className="text-[10px] text-zinc-500">積立タイムマシン · {stats.totalPages} ページ</p>
+            <h1 className="text-[13px] font-bold text-[#263A53] tracking-tight whitespace-nowrap">SEO管理ダッシュボード</h1>
+            <p className="text-xs text-slate-500">積立タイムマシン · {stats.totalPages} ページ</p>
           </div>
 
           {hasSc && (
             <button
               onClick={() => setShowTop5(v => !v)}
-              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-colors flex items-center gap-1 shrink-0 ${showTop5 ? "bg-amber-600/30 border border-amber-500/40 text-amber-200" : "bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 text-white"}`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1 shrink-0 ${showTop5 ? "bg-amber-600/30 border border-amber-500/40 text-amber-200" : "bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 text-[#263A53]"}`}
             >
               <span>✦</span>
               <span className="hidden sm:inline">{showTop5 ? "TOP5を閉じる" : "今週のTOP5を生成"}</span>
@@ -577,7 +577,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
           )}
           <button
             onClick={() => setShowCsv(v => !v)}
-            className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-colors shrink-0 ${showCsv ? "bg-zinc-700 text-zinc-300" : "bg-violet-600 hover:bg-violet-500 text-white"}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${showCsv ? "bg-zinc-700 text-slate-700" : "bg-violet-600 hover:bg-violet-500 text-[#263A53]"}`}
           >
             {showCsv ? "閉じる" : hasSc ? `SC済(${scData.size})` : "SC CSV"}
           </button>
@@ -585,7 +585,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
         {/* Row 2: タブ */}
         <div className="max-w-screen-2xl mx-auto mt-2">
-          <div className="flex gap-1 bg-zinc-900 border border-white/[0.08] rounded-lg p-1 w-fit">
+          <div className="flex gap-1 bg-white border border-[#D9E3E8] rounded-lg p-1 w-fit">
             {([
               { id: "list" as Tab, label: "ページ一覧" },
               { id: "duplicate" as Tab, label: `重複監査${duplicates.dupTitles.length + duplicates.dupDescs.length > 0 ? `(${duplicates.dupTitles.length + duplicates.dupDescs.length})` : ""}` },
@@ -594,7 +594,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`px-3 py-1.5 rounded-md text-[11px] font-semibold transition-colors ${tab === t.id ? "bg-violet-600 text-white" : "text-zinc-400 hover:text-zinc-200"}`}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${tab === t.id ? "bg-violet-600 text-[#263A53]" : "text-slate-600 hover:text-slate-700"}`}
               >
                 {t.label}
               </button>
@@ -608,16 +608,16 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
         {/* ── CSV パネル ─────────────────────────────────────────────── */}
         {showCsv && (
-          <div className="rounded-xl bg-zinc-900 border border-violet-500/30 p-5 space-y-3">
+          <div className="rounded-xl bg-white border border-violet-500/30 p-5 space-y-3">
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
-                <h2 className="text-sm font-bold text-white">Search Console CSVを貼り付け</h2>
-                <p className="text-[10px] text-zinc-500 mt-1">
+                <h2 className="text-sm font-bold text-[#263A53]">Search Console CSVを貼り付け</h2>
+                <p className="text-xs text-slate-500 mt-1">
                   SC → 検索パフォーマンス → ページ（上タブ）→ エクスポート → CSVをここに全貼り付け。英語・日本語ヘッダー両対応。
                 </p>
               </div>
               {scData.size > 0 && (
-                <button onClick={() => setScData(new Map())} className="text-[10px] text-red-400 hover:text-red-300 whitespace-nowrap">
+                <button onClick={() => setScData(new Map())} className="text-xs text-red-400 hover:text-red-300 whitespace-nowrap">
                   データをクリア
                 </button>
               )}
@@ -626,7 +626,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
               value={csvText}
               onChange={e => { setCsvText(e.target.value); setCsvError(""); }}
               placeholder={"Page,Clicks,Impressions,CTR,Position\nhttps://tsumitate-timemachine.com/orukan/2020,45,890,5.06%,3.2"}
-              className="w-full h-32 bg-zinc-800 border border-white/[0.1] rounded-lg px-3 py-2 text-xs text-zinc-300 font-mono resize-y focus:outline-none focus:border-violet-500/50"
+              className="w-full h-32 bg-white border border-[#D2DEE4] rounded-lg px-3 py-2 text-xs text-slate-700 font-mono resize-y focus:outline-none focus:border-violet-500/50"
               spellCheck={false}
             />
             {csvError && (
@@ -638,11 +638,11 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
               <button
                 onClick={applyCsv}
                 disabled={!csvText.trim()}
-                className="px-5 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-30 text-white text-xs font-bold rounded-lg transition-colors"
+                className="px-5 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-30 text-[#263A53] text-xs font-bold rounded-lg transition-colors"
               >
                 読み込む
               </button>
-              <span className="text-[10px] text-zinc-600">データはブラウザのみに保存。サーバーには送信しません。</span>
+              <span className="text-xs text-slate-500">データはブラウザのみに保存。サーバーには送信しません。</span>
             </div>
           </div>
         )}
@@ -651,31 +651,31 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
             TOP5 パネル
         ════════════════════════════════════════════════════════ */}
         {showTop5 && (
-          <div className="rounded-2xl bg-zinc-900 border border-violet-500/25 overflow-hidden">
+          <div className="rounded-2xl bg-white border border-violet-500/25 overflow-hidden">
             {/* ヘッダー */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.06] bg-gradient-to-r from-violet-950/60 to-fuchsia-950/60">
-              <div className="h-7 w-7 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-[11px] font-black text-white flex-shrink-0">
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-[#E1E8EC] bg-gradient-to-r from-violet-950/60 to-fuchsia-950/60">
+              <div className="h-7 w-7 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-xs font-black text-[#263A53] flex-shrink-0">
                 AI
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-white">今週やるべきSEO改善 TOP5</p>
-                <p className="text-[10px] text-zinc-500 mt-0.5">
+                <p className="text-sm font-bold text-[#263A53]">今週やるべきSEO改善 TOP5</p>
+                <p className="text-xs text-slate-500 mt-0.5">
                   {new Date().toLocaleDateString("ja-JP")} · CTR・順位・表示回数・文字数・内部リンクを総合評価
                 </p>
               </div>
-              <button onClick={() => setShowTop5(false)} className="text-zinc-600 hover:text-zinc-400 text-lg leading-none px-1">×</button>
+              <button onClick={() => setShowTop5(false)} className="text-slate-500 hover:text-slate-600 text-lg leading-none px-1">×</button>
             </div>
 
             {/* 本文 */}
             <div className="px-5 py-4 space-y-0">
               {top5Items.length === 0 && (
-                <p className="text-zinc-500 text-xs py-4">改善対象のページが見つかりませんでした。全ページが良好な状態です。</p>
+                <p className="text-slate-500 text-xs py-4">改善対象のページが見つかりませんでした。全ページが良好な状態です。</p>
               )}
               {top5Items.map((item, idx) => (
-                <div key={item.path} className={`py-4 ${idx < top5Items.length - 1 ? "border-b border-white/[0.05]" : ""}`}>
+                <div key={item.path} className={`py-4 ${idx < top5Items.length - 1 ? "border-b border-[#E4EAED]" : ""}`}>
                   {/* ランク行 */}
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <span className={`text-sm font-black ${item.rank === 1 ? "text-amber-400" : item.rank === 2 ? "text-zinc-300" : item.rank === 3 ? "text-orange-400" : "text-zinc-500"}`}>
+                    <span className={`text-sm font-black ${item.rank === 1 ? "text-orange-600" : item.rank === 2 ? "text-slate-700" : item.rank === 3 ? "text-orange-400" : "text-slate-500"}`}>
                       #{item.rank}
                     </span>
                     <Stars count={item.stars} size="small" />
@@ -683,22 +683,22 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                       href={`${baseUrl}${item.path}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[10px] text-violet-400 hover:text-violet-300 hover:underline"
+                      className="font-mono text-xs text-violet-400 hover:text-violet-300 hover:underline"
                     >
                       {item.path}
                     </a>
-                    <span className={`px-1.5 py-px rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[item.pageType] ?? "bg-white/[0.06] text-zinc-400"}`}>
+                    <span className={`px-1.5 py-px rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[item.pageType] ?? "bg-[#EFF5F7] text-slate-600"}`}>
                       {item.pageType}
                     </span>
                     {item.sc && (
-                      <span className="text-[10px] text-zinc-600 ml-auto whitespace-nowrap">
+                      <span className="text-xs text-slate-500 ml-auto whitespace-nowrap">
                         表示 {item.sc.impressions.toLocaleString()} · CTR <span className={ctrColor(item.sc.ctr)}>{ctrFmt(item.sc.ctr)}</span> · <span className={posColor(item.sc.position)}>{item.sc.position.toFixed(1)}位</span>
                       </span>
                     )}
                   </div>
 
                   {/* 理由 */}
-                  <p className="text-[11px] text-zinc-500 mb-2 flex items-center gap-1.5">
+                  <p className="text-xs text-slate-500 mb-2 flex items-center gap-1.5">
                     <span className="text-amber-500">⚠</span>
                     {item.primaryReason}
                   </p>
@@ -707,15 +707,15 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div className="rounded-lg bg-violet-500/10 border border-violet-500/15 px-3 py-2">
                       <p className="text-[9px] text-violet-400 font-bold uppercase tracking-wider mb-1">やること</p>
-                      <p className="text-[11px] text-violet-100 leading-relaxed">{item.action}</p>
+                      <p className="text-xs text-violet-100 leading-relaxed">{item.action}</p>
                     </div>
                     <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/15 px-3 py-2">
-                      <p className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider mb-1">期待効果</p>
-                      <p className="text-[11px] text-emerald-100 leading-relaxed">{item.effect}</p>
+                      <p className="text-[9px] text-emerald-700 font-bold uppercase tracking-wider mb-1">期待効果</p>
+                      <p className="text-xs text-emerald-100 leading-relaxed">{item.effect}</p>
                     </div>
-                    <div className="rounded-lg bg-zinc-800 border border-white/[0.08] px-3 py-2">
-                      <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider mb-1">具体的な変更案</p>
-                      <p className="text-[11px] text-zinc-300 font-mono leading-relaxed">{item.specific}</p>
+                    <div className="rounded-lg bg-white border border-[#D9E3E8] px-3 py-2">
+                      <p className="text-[9px] text-slate-600 font-bold uppercase tracking-wider mb-1">具体的な変更案</p>
+                      <p className="text-xs text-slate-700 font-mono leading-relaxed">{item.specific}</p>
                     </div>
                   </div>
                 </div>
@@ -723,8 +723,8 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
             </div>
 
             {/* フッター */}
-            <div className="px-5 py-3 border-t border-white/[0.06] bg-zinc-900/80 flex items-center justify-between gap-3">
-              <p className="text-[10px] text-zinc-600">推定値はSCデータに基づきます。実際の効果は検索アルゴリズムにより異なります。</p>
+            <div className="px-5 py-3 border-t border-[#E1E8EC] bg-[#EAF3F7]0 flex items-center justify-between gap-3">
+              <p className="text-xs text-slate-500">推定値はSCデータに基づきます。実際の効果は検索アルゴリズムにより異なります。</p>
               <button
                 onClick={() => {
                   const text = top5Items.map(item =>
@@ -732,7 +732,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                   ).join("\n\n");
                   navigator.clipboard.writeText(`今週やるべきSEO改善 TOP5\n${new Date().toLocaleDateString("ja-JP")}\n\n${text}`).catch(() => {});
                 }}
-                className="text-[10px] text-zinc-500 hover:text-zinc-300 whitespace-nowrap transition-colors"
+                className="text-xs text-slate-500 hover:text-slate-700 whitespace-nowrap transition-colors"
               >
                 テキストコピー
               </button>
@@ -746,20 +746,20 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
         {tab === "list" && (
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
             {[
-              { label: "総ページ数", value: stats.totalPages, color: "text-white" },
+              { label: "総ページ数", value: stats.totalPages, color: "text-[#263A53]" },
               { label: "改善対象", value: stats.urgent, sub: "★★★★以上", color: "text-red-400" },
               ...(hasSc ? [
                 { label: "平均CTR", value: ctrFmt(stats.avgCtr), color: ctrColor(stats.avgCtr) },
                 { label: "平均順位", value: stats.avgPos.toFixed(1) + "位", color: posColor(stats.avgPos) },
               ] : []),
-              { label: "OGP対応率", value: `${stats.ogpRate}%`, color: stats.ogpRate === 100 ? "text-emerald-400" : "text-yellow-400" },
-              { label: "title適正率", value: `${stats.titleOkRate}%`, color: stats.titleOkRate >= 80 ? "text-emerald-400" : "text-yellow-400" },
-              { label: "desc適正率", value: `${stats.descOkRate}%`, color: stats.descOkRate >= 80 ? "text-emerald-400" : "text-yellow-400" },
+              { label: "OGP対応率", value: `${stats.ogpRate}%`, color: stats.ogpRate === 100 ? "text-emerald-700" : "text-yellow-400" },
+              { label: "title適正率", value: `${stats.titleOkRate}%`, color: stats.titleOkRate >= 80 ? "text-emerald-700" : "text-yellow-400" },
+              { label: "desc適正率", value: `${stats.descOkRate}%`, color: stats.descOkRate >= 80 ? "text-emerald-700" : "text-yellow-400" },
             ].map(c => (
-              <div key={c.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-3 py-3 text-center">
+              <div key={c.label} className="rounded-xl bg-white border border-[#DDE6EA] px-3 py-3 text-center">
                 <p className={`text-lg font-bold leading-none ${c.color}`}>{c.value}</p>
-                {("sub" in c && c.sub) && <p className="text-[9px] text-zinc-600 mt-0.5">{c.sub}</p>}
-                <p className="text-[10px] text-zinc-500 mt-1">{c.label}</p>
+                {("sub" in c && c.sub) && <p className="text-[9px] text-slate-500 mt-0.5">{c.sub}</p>}
+                <p className="text-xs text-slate-500 mt-1">{c.label}</p>
               </div>
             ))}
           </div>
@@ -771,15 +771,15 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
         {tab === "list" && (
           <div className="flex flex-wrap gap-2">
             {([
-              { mode: "all" as FilterMode, label: "すべて", count: pages.length, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-violet-600/30 border-violet-500 text-violet-200" },
-              { mode: "urgent" as FilterMode, label: "今すぐ改善", count: stats.urgent, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-red-500/20 border-red-400 text-red-200" },
-              { mode: "low-ctr" as FilterMode, label: "CTR低い", count: stats.lowCtr, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-red-500/20 border-red-400 text-red-200" },
-              { mode: "rank11-20" as FilterMode, label: "順位11〜20位", count: stats.rank1120, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-orange-500/20 border-orange-400 text-orange-200" },
-              { mode: "high-imp" as FilterMode, label: "高表示・低クリック", count: stats.highImp, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-yellow-500/20 border-yellow-400 text-yellow-200" },
-              { mode: "imp1000" as FilterMode, label: "表示1000以上", count: enriched.filter(p => p.sc && p.sc.impressions > 1000).length, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-blue-500/20 border-blue-400 text-blue-200" },
-              { mode: "no-ogp" as FilterMode, label: "OGPなし", count: enriched.filter(p => !p.hasOgpImage).length, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-zinc-600/50 border-zinc-500 text-zinc-200" },
-              { mode: "title-issue" as FilterMode, label: "title問題あり", count: enriched.filter(p => p.hasTitleIssue).length, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-amber-500/20 border-amber-400 text-amber-200" },
-              { mode: "desc-issue" as FilterMode, label: "desc問題あり", count: enriched.filter(p => p.hasDescIssue).length, color: "bg-zinc-800 border-zinc-700 text-zinc-300", active: "bg-amber-500/20 border-amber-400 text-amber-200" },
+              { mode: "all" as FilterMode, label: "すべて", count: pages.length, color: "bg-white border-zinc-700 text-slate-700", active: "bg-violet-600/30 border-violet-500 text-violet-200" },
+              { mode: "urgent" as FilterMode, label: "今すぐ改善", count: stats.urgent, color: "bg-white border-zinc-700 text-slate-700", active: "bg-red-500/20 border-red-400 text-red-200" },
+              { mode: "low-ctr" as FilterMode, label: "CTR低い", count: stats.lowCtr, color: "bg-white border-zinc-700 text-slate-700", active: "bg-red-500/20 border-red-400 text-red-200" },
+              { mode: "rank11-20" as FilterMode, label: "順位11〜20位", count: stats.rank1120, color: "bg-white border-zinc-700 text-slate-700", active: "bg-orange-500/20 border-orange-400 text-orange-200" },
+              { mode: "high-imp" as FilterMode, label: "高表示・低クリック", count: stats.highImp, color: "bg-white border-zinc-700 text-slate-700", active: "bg-yellow-500/20 border-yellow-400 text-yellow-200" },
+              { mode: "imp1000" as FilterMode, label: "表示1000以上", count: enriched.filter(p => p.sc && p.sc.impressions > 1000).length, color: "bg-white border-zinc-700 text-slate-700", active: "bg-blue-500/20 border-blue-400 text-blue-200" },
+              { mode: "no-ogp" as FilterMode, label: "OGPなし", count: enriched.filter(p => !p.hasOgpImage).length, color: "bg-white border-zinc-700 text-slate-700", active: "bg-zinc-600/50 border-zinc-500 text-slate-700" },
+              { mode: "title-issue" as FilterMode, label: "title問題あり", count: enriched.filter(p => p.hasTitleIssue).length, color: "bg-white border-zinc-700 text-slate-700", active: "bg-amber-500/20 border-amber-400 text-amber-200" },
+              { mode: "desc-issue" as FilterMode, label: "desc問題あり", count: enriched.filter(p => p.hasDescIssue).length, color: "bg-white border-zinc-700 text-slate-700", active: "bg-amber-500/20 border-amber-400 text-amber-200" },
             ] satisfies { mode: FilterMode; label: string; count: number; color: string; active: string }[]).map(({ mode, label, count, color, active }) => {
               const isActive = filter === mode;
               const needsSc = ["low-ctr", "rank11-20", "high-imp", "imp1000"].includes(mode);
@@ -788,10 +788,10 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                 <button
                   key={mode}
                   onClick={() => setFilter(f => f === mode ? "all" : mode)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[11px] font-semibold transition-colors ${isActive ? active : color}`}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-colors ${isActive ? active : color}`}
                 >
                   <span>{label}</span>
-                  <span className={`text-[10px] font-mono ${isActive ? "opacity-90" : "opacity-60"}`}>{count}</span>
+                  <span className={`text-xs font-mono ${isActive ? "opacity-90" : "opacity-60"}`}>{count}</span>
                 </button>
               );
             })}
@@ -810,25 +810,25 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                 placeholder="URLやタイトルで検索…"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="px-3 py-1.5 bg-zinc-800 border border-white/[0.1] rounded-lg text-xs text-zinc-200 w-48 focus:outline-none focus:border-violet-500/50"
+                className="px-3 py-1.5 bg-white border border-[#D2DEE4] rounded-lg text-xs text-slate-700 w-48 focus:outline-none focus:border-violet-500/50"
               />
               <select
                 value={typeFilter}
                 onChange={e => setTypeFilter(e.target.value)}
-                className="px-3 py-1.5 bg-zinc-800 border border-white/[0.1] rounded-lg text-xs text-zinc-200"
+                className="px-3 py-1.5 bg-white border border-[#D2DEE4] rounded-lg text-xs text-slate-700"
               >
                 {pageTypes.map(t => (
                   <option key={t} value={t}>{t === "all" ? "全タイプ" : t}</option>
                 ))}
               </select>
-              <span className="text-[10px] text-zinc-600 ml-auto">{filtered.length} / {pages.length} 件表示中</span>
+              <span className="text-xs text-slate-500 ml-auto">{filtered.length} / {pages.length} 件表示中</span>
             </div>
 
             {/* メインテーブル */}
-            <div className="rounded-xl border border-white/[0.08] overflow-x-auto">
+            <div className="rounded-xl border border-[#D9E3E8] overflow-x-auto">
               <table className="w-full border-collapse min-w-[960px]">
                 <thead>
-                  <tr className="border-b border-white/[0.08] bg-zinc-900/60">
+                  <tr className="border-b border-[#D9E3E8] bg-white/60">
                     {renderTh("優先度", "score")}
                     {renderTh("パス", "path")}
                     {renderTh("種別")}
@@ -854,7 +854,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                     return (
                       <Fragment key={p.path}>
                         <tr
-                          className={`border-b border-white/[0.04] hover:bg-white/[0.025] cursor-pointer transition-colors ${p.score.stars >= 4 ? "bg-red-500/[0.02]" : ""}`}
+                          className={`border-b border-[#E8EDEF] hover:bg-white cursor-pointer transition-colors ${p.score.stars >= 4 ? "bg-red-500/[0.02]" : ""}`}
                           onClick={() => setExpandedRow(isExpanded ? null : p.path)}
                         >
                           {/* ① 優先度 */}
@@ -869,26 +869,26 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={e => e.stopPropagation()}
-                              className="text-violet-400 hover:text-violet-300 font-mono truncate block text-[10px]"
+                              className="text-violet-400 hover:text-violet-300 font-mono truncate block text-xs"
                               title={p.path}
                             >
                               {p.path}
                             </a>
                             {notes[p.path] && (
-                              <span className="text-[9px] text-amber-400/70 block truncate">{truncate(notes[p.path], 20)}</span>
+                              <span className="text-[9px] text-orange-600/70 block truncate">{truncate(notes[p.path], 20)}</span>
                             )}
                           </td>
 
                           {/* 種別 */}
                           <td className="px-3 py-2 whitespace-nowrap">
-                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[p.pageType] ?? "bg-white/[0.06] text-zinc-400"}`}>
+                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[p.pageType] ?? "bg-[#EFF5F7] text-slate-600"}`}>
                               {p.pageType}
                             </span>
                           </td>
 
                           {/* ⑤ Title */}
                           <td className="px-3 py-2 max-w-[200px]">
-                            <p className="text-zinc-300 truncate text-[11px]" title={stripSuffix(p.title)}>
+                            <p className="text-slate-700 truncate text-xs" title={stripSuffix(p.title)}>
                               {truncate(stripSuffix(p.title), 36)}
                             </p>
                             <span className={`inline-flex items-center px-1 py-px rounded border text-[9px] font-bold mt-0.5 ${titleBadgeColor(p.tLen)}`}>
@@ -898,7 +898,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
                           {/* ⑤ Desc */}
                           <td className="px-3 py-2 max-w-[220px]">
-                            <p className="text-zinc-400 truncate text-[11px]" title={p.description}>
+                            <p className="text-slate-600 truncate text-xs" title={p.description}>
                               {truncate(p.description, 36)}
                             </p>
                             <span className={`inline-flex items-center px-1 py-px rounded border text-[9px] font-bold mt-0.5 ${descBadgeColor(p.dLen)}`}>
@@ -908,14 +908,14 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
                           {/* OGP */}
                           <td className="px-3 py-2 text-center">
-                            <span className={p.hasOgpImage ? "text-emerald-400" : "text-zinc-600"}>
+                            <span className={p.hasOgpImage ? "text-emerald-700" : "text-slate-500"}>
                               {p.hasOgpImage ? "✓" : "✗"}
                             </span>
                           </td>
 
                           {/* ⑥ 内部リンク */}
                           <td className="px-3 py-2 text-center">
-                            <span className={p.estimatedInternalLinks < 4 ? "text-orange-400" : "text-zinc-400"}>
+                            <span className={p.estimatedInternalLinks < 4 ? "text-orange-400" : "text-slate-600"}>
                               {p.estimatedInternalLinks}
                             </span>
                           </td>
@@ -924,25 +924,25 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                           {hasSc && (
                             p.sc ? (
                               <>
-                                <td className="px-3 py-2 text-right font-mono text-zinc-200">{p.sc.clicks.toLocaleString()}</td>
-                                <td className="px-3 py-2 text-right font-mono text-zinc-400">{p.sc.impressions.toLocaleString()}</td>
+                                <td className="px-3 py-2 text-right font-mono text-slate-700">{p.sc.clicks.toLocaleString()}</td>
+                                <td className="px-3 py-2 text-right font-mono text-slate-600">{p.sc.impressions.toLocaleString()}</td>
                                 <td className={`px-3 py-2 text-right font-bold font-mono ${ctrColor(p.sc.ctr)}`}>{ctrFmt(p.sc.ctr)}</td>
                                 <td className={`px-3 py-2 text-right font-bold font-mono ${posColor(p.sc.position)}`}>{p.sc.position.toFixed(1)}</td>
                               </>
                             ) : (
-                              <td colSpan={4} className="px-3 py-2 text-center text-zinc-700 text-[10px]">— SC未取得 —</td>
+                              <td colSpan={4} className="px-3 py-2 text-center text-slate-400 text-xs">— SC未取得 —</td>
                             )
                           )}
 
                           {/* ⑦ 更新日 */}
-                          <td className="px-3 py-2 text-zinc-600 whitespace-nowrap text-[10px]">
+                          <td className="px-3 py-2 text-slate-500 whitespace-nowrap text-xs">
                             {p.lastModified ?? "—"}
                           </td>
                         </tr>
 
                         {/* 展開行 */}
                         {isExpanded && (
-                          <tr className="border-b border-white/[0.04] bg-zinc-900/50">
+                          <tr className="border-b border-[#E8EDEF] bg-[#F4F7F8]0">
                             <td colSpan={colSpan} className="px-4 py-5">
                               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
@@ -951,17 +951,17 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
                                   {/* ① スコア理由 */}
                                   <div>
-                                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">改善優先度</p>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">改善優先度</p>
                                     <div className="flex items-center gap-2 mb-2">
                                       <Stars count={p.score.stars} />
-                                      <span className="text-xs text-zinc-400">
+                                      <span className="text-xs text-slate-600">
                                         {p.score.stars === 5 ? "最優先" : p.score.stars === 4 ? "優先" : p.score.stars === 3 ? "要改善" : p.score.stars === 2 ? "軽微" : "良好"}
                                       </span>
                                     </div>
                                     <ul className="space-y-1">
                                       {p.score.reasons.map((r, i) => (
-                                        <li key={i} className="flex items-start gap-1.5 text-[11px] text-zinc-400">
-                                          <span className={p.score.stars >= 3 ? "text-amber-400 mt-px" : "text-emerald-400 mt-px"}>
+                                        <li key={i} className="flex items-start gap-1.5 text-xs text-slate-600">
+                                          <span className={p.score.stars >= 3 ? "text-orange-600 mt-px" : "text-emerald-700 mt-px"}>
                                             {p.score.stars >= 3 ? "•" : "✓"}
                                           </span>
                                           {r}
@@ -972,16 +972,16 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
                                   {/* 現在の値 */}
                                   <div>
-                                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">現在のTitle（{p.tLen}字）</p>
-                                    <p className={`text-[11px] font-mono leading-relaxed ${titleLenColor(p.tLen)}`}>{stripSuffix(p.title)}</p>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">現在のTitle（{p.tLen}字）</p>
+                                    <p className={`text-xs font-mono leading-relaxed ${titleLenColor(p.tLen)}`}>{stripSuffix(p.title)}</p>
                                   </div>
                                   <div>
-                                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">現在のDescription（{p.dLen}字）</p>
-                                    <p className={`text-[11px] font-mono leading-relaxed ${descLenColor(p.dLen)}`}>{p.description}</p>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">現在のDescription（{p.dLen}字）</p>
+                                    <p className={`text-xs font-mono leading-relaxed ${descLenColor(p.dLen)}`}>{p.description}</p>
                                   </div>
                                   <div>
-                                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">Canonical</p>
-                                    <p className="text-[11px] text-zinc-500 font-mono">{p.canonical}</p>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Canonical</p>
+                                    <p className="text-xs text-slate-500 font-mono">{p.canonical}</p>
                                   </div>
                                 </div>
 
@@ -991,14 +991,14 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                                   {/* ② タイトル改善提案 */}
                                   {p.suggestedTitle && (
                                     <div>
-                                      <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">② 改善候補Title</p>
+                                      <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">② 改善候補Title</p>
                                       <div className="rounded-lg bg-violet-500/10 border border-violet-500/20 px-3 py-2.5">
-                                        <p className="text-[11px] text-violet-200 font-mono leading-relaxed">{p.suggestedTitle}</p>
-                                        <p className={`text-[10px] mt-1 font-bold ${titleLenColor(p.suggestedTitle.length)}`}>
+                                        <p className="text-xs text-violet-200 font-mono leading-relaxed">{p.suggestedTitle}</p>
+                                        <p className={`text-xs mt-1 font-bold ${titleLenColor(p.suggestedTitle.length)}`}>
                                           {p.suggestedTitle.length}字 / {titleLenLabel(p.suggestedTitle.length)}
                                         </p>
                                       </div>
-                                      <p className="text-[10px] text-zinc-600 mt-1">
+                                      <p className="text-xs text-slate-500 mt-1">
                                         改善理由: 検索意図を優先し{p.suggestedTitle.length}字の適正長に調整
                                       </p>
                                     </div>
@@ -1007,14 +1007,14 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                                   {/* ③ description改善提案 */}
                                   {p.suggestedDescription && (
                                     <div>
-                                      <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">③ 改善候補Description</p>
+                                      <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">③ 改善候補Description</p>
                                       <div className="rounded-lg bg-teal-500/10 border border-teal-500/20 px-3 py-2.5">
-                                        <p className="text-[11px] text-teal-200 font-mono leading-relaxed">{p.suggestedDescription}</p>
-                                        <p className={`text-[10px] mt-1 font-bold ${descLenColor(p.suggestedDescription.length)}`}>
+                                        <p className="text-xs text-teal-200 font-mono leading-relaxed">{p.suggestedDescription}</p>
+                                        <p className={`text-xs mt-1 font-bold ${descLenColor(p.suggestedDescription.length)}`}>
                                           {p.suggestedDescription.length}字 / {descLenLabel(p.suggestedDescription.length)}
                                         </p>
                                       </div>
-                                      <p className="text-[10px] text-zinc-600 mt-1">
+                                      <p className="text-xs text-slate-500 mt-1">
                                         改善理由: {p.dLen < 80 ? "文字数不足のため情報を追加し" : "文字数超過のため圧縮し"}行動喚起で締める
                                       </p>
                                     </div>
@@ -1022,14 +1022,14 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
                                   {/* ⑥ 内部リンク監査 */}
                                   <div>
-                                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">⑥ 内部リンク監査</p>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">⑥ 内部リンク監査</p>
                                     <div className="flex flex-wrap gap-1.5 mb-2">
                                       {ALL_LINK_CATEGORIES.map(cat => {
                                         const has = p.internalLinkCategories.includes(cat);
                                         return (
                                           <span
                                             key={cat}
-                                            className={`px-2 py-0.5 rounded text-[10px] font-bold border ${has ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30" : "bg-zinc-800 text-zinc-600 border-zinc-700"}`}
+                                            className={`px-2 py-0.5 rounded text-xs font-bold border ${has ? "bg-emerald-500/15 text-emerald-700 border-emerald-500/30" : "bg-white text-slate-500 border-zinc-700"}`}
                                           >
                                             {cat}
                                           </span>
@@ -1039,27 +1039,27 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                                     {missingCats.length > 0 && (
                                       <div className="space-y-0.5">
                                         {missingCats.map(cat => (
-                                          <p key={cat} className="text-[10px] text-orange-400">
+                                          <p key={cat} className="text-xs text-orange-400">
                                             ⚠ {cat}ページへのリンクがありません
                                           </p>
                                         ))}
                                       </div>
                                     )}
                                     {missingCats.length === 0 && (
-                                      <p className="text-[10px] text-emerald-500">✓ 全カテゴリへのリンクあり</p>
+                                      <p className="text-xs text-emerald-500">✓ 全カテゴリへのリンクあり</p>
                                     )}
                                   </div>
 
                                   {/* ⑩ 修正メモ */}
                                   <div>
-                                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2">⑩ 修正メモ（LocalStorage保存）</p>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">⑩ 修正メモ（LocalStorage保存）</p>
                                     <textarea
                                       value={notes[p.path] ?? ""}
                                       onChange={e => saveNote(p.path, e.target.value)}
                                       onClick={e => e.stopPropagation()}
                                       placeholder={`例）2026-06-25 title修正済み`}
                                       rows={3}
-                                      className="w-full bg-zinc-800 border border-white/[0.1] rounded-lg px-3 py-2 text-[11px] text-zinc-300 font-mono resize-none focus:outline-none focus:border-violet-500/50"
+                                      className="w-full bg-white border border-[#D2DEE4] rounded-lg px-3 py-2 text-xs text-slate-700 font-mono resize-none focus:outline-none focus:border-violet-500/50"
                                     />
                                   </div>
                                 </div>
@@ -1074,18 +1074,18 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
               </table>
 
               {filtered.length === 0 && (
-                <div className="py-16 text-center text-zinc-600">
+                <div className="py-16 text-center text-slate-500">
                   <p>該当するページがありません</p>
                 </div>
               )}
             </div>
 
             {/* 凡例 */}
-            <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[10px] text-zinc-600 pb-2">
-              <span>CTR: <span className="text-emerald-400">5%以上</span> / <span className="text-yellow-400">2-5%</span> / <span className="text-red-400">2%未満</span></span>
-              <span>順位: <span className="text-emerald-400">1-3位</span> / <span className="text-yellow-400">4-10位</span> / <span className="text-orange-400">11-20位</span> / <span className="text-red-400">21位以下</span></span>
-              <span>Title: <span className="text-red-400">〜29字 / 51字〜</span> <span className="text-emerald-400">30〜40字</span> <span className="text-yellow-400">41〜50字</span></span>
-              <span>Desc: <span className="text-red-400">〜79字 / 171字〜</span> <span className="text-emerald-400">80〜140字</span> <span className="text-yellow-400">141〜170字</span></span>
+            <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-slate-500 pb-2">
+              <span>CTR: <span className="text-emerald-700">5%以上</span> / <span className="text-yellow-400">2-5%</span> / <span className="text-red-400">2%未満</span></span>
+              <span>順位: <span className="text-emerald-700">1-3位</span> / <span className="text-yellow-400">4-10位</span> / <span className="text-orange-400">11-20位</span> / <span className="text-red-400">21位以下</span></span>
+              <span>Title: <span className="text-red-400">〜29字 / 51字〜</span> <span className="text-emerald-700">30〜40字</span> <span className="text-yellow-400">41〜50字</span></span>
+              <span>Desc: <span className="text-red-400">〜79字 / 171字〜</span> <span className="text-emerald-700">80〜140字</span> <span className="text-yellow-400">141〜170字</span></span>
             </div>
           </>
         )}
@@ -1097,20 +1097,20 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
           <div className="space-y-6">
             {/* Title重複 */}
             <div>
-              <h2 className="text-sm font-bold text-white mb-3">
+              <h2 className="text-sm font-bold text-[#263A53] mb-3">
                 重複Title
-                <span className={`ml-2 text-xs font-mono px-2 py-0.5 rounded ${duplicates.dupTitles.length > 0 ? "bg-red-500/20 text-red-300" : "bg-emerald-500/20 text-emerald-300"}`}>
+                <span className={`ml-2 text-xs font-mono px-2 py-0.5 rounded ${duplicates.dupTitles.length > 0 ? "bg-red-500/20 text-red-300" : "bg-emerald-500/20 text-emerald-700"}`}>
                   {duplicates.dupTitles.length}件
                 </span>
               </h2>
               {duplicates.dupTitles.length === 0 ? (
-                <p className="text-zinc-600 text-xs py-4">重複するTitleはありません ✓</p>
+                <p className="text-slate-500 text-xs py-4">重複するTitleはありません ✓</p>
               ) : (
                 <div className="space-y-3">
                   {duplicates.dupTitles.map(([title, paths]) => (
                     <div key={title} className="rounded-xl bg-red-500/[0.04] border border-red-500/20 p-4">
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <p className="text-[11px] text-red-200 font-mono leading-relaxed flex-1">{title}</p>
+                        <p className="text-xs text-red-200 font-mono leading-relaxed flex-1">{title}</p>
                         <span className="text-xs font-bold text-red-400 whitespace-nowrap">{paths.length}件重複</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
@@ -1120,7 +1120,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                             href={`${baseUrl}${path}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[10px] font-mono text-violet-400 hover:text-violet-300 bg-white/[0.04] px-2 py-0.5 rounded border border-white/[0.08]"
+                            className="text-xs font-mono text-violet-400 hover:text-violet-300 bg-[#F7FAFB] px-2 py-0.5 rounded border border-[#D9E3E8]"
                           >
                             {path}
                           </a>
@@ -1134,20 +1134,20 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
 
             {/* Description重複 */}
             <div>
-              <h2 className="text-sm font-bold text-white mb-3">
+              <h2 className="text-sm font-bold text-[#263A53] mb-3">
                 重複Description
-                <span className={`ml-2 text-xs font-mono px-2 py-0.5 rounded ${duplicates.dupDescs.length > 0 ? "bg-red-500/20 text-red-300" : "bg-emerald-500/20 text-emerald-300"}`}>
+                <span className={`ml-2 text-xs font-mono px-2 py-0.5 rounded ${duplicates.dupDescs.length > 0 ? "bg-red-500/20 text-red-300" : "bg-emerald-500/20 text-emerald-700"}`}>
                   {duplicates.dupDescs.length}件
                 </span>
               </h2>
               {duplicates.dupDescs.length === 0 ? (
-                <p className="text-zinc-600 text-xs py-4">重複するDescriptionはありません ✓</p>
+                <p className="text-slate-500 text-xs py-4">重複するDescriptionはありません ✓</p>
               ) : (
                 <div className="space-y-3">
                   {duplicates.dupDescs.map(([desc, paths]) => (
                     <div key={desc} className="rounded-xl bg-orange-500/[0.04] border border-orange-500/20 p-4">
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <p className="text-[11px] text-orange-200 font-mono leading-relaxed flex-1">{truncate(desc, 120)}</p>
+                        <p className="text-xs text-orange-200 font-mono leading-relaxed flex-1">{truncate(desc, 120)}</p>
                         <span className="text-xs font-bold text-orange-400 whitespace-nowrap">{paths.length}件重複</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
@@ -1157,7 +1157,7 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                             href={`${baseUrl}${path}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[10px] font-mono text-violet-400 hover:text-violet-300 bg-white/[0.04] px-2 py-0.5 rounded border border-white/[0.08]"
+                            className="text-xs font-mono text-violet-400 hover:text-violet-300 bg-[#F7FAFB] px-2 py-0.5 rounded border border-[#D9E3E8]"
                           >
                             {path}
                           </a>
@@ -1177,16 +1177,16 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
         {tab === "notes" && (
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-white">
+              <h2 className="text-sm font-bold text-[#263A53]">
                 修正メモ一覧
-                <span className="ml-2 text-xs text-zinc-500 font-normal">LocalStorageに保存中</span>
+                <span className="ml-2 text-xs text-slate-500 font-normal">LocalStorageに保存中</span>
               </h2>
               {Object.keys(notes).length > 0 && (
                 <button
                   onClick={() => {
                     writeNotes(EMPTY_NOTES);
                   }}
-                  className="text-[10px] text-red-400 hover:text-red-300"
+                  className="text-xs text-red-400 hover:text-red-300"
                 >
                   全メモをクリア
                 </button>
@@ -1194,9 +1194,9 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
             </div>
 
             {Object.keys(notes).length === 0 ? (
-              <div className="py-16 text-center text-zinc-600">
+              <div className="py-16 text-center text-slate-500">
                 <p className="text-sm mb-2">メモがありません</p>
-                <p className="text-[11px]">ページ一覧で行をクリックし、「修正メモ」欄に記入してください</p>
+                <p className="text-xs">ページ一覧で行をクリックし、「修正メモ」欄に記入してください</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -1210,31 +1210,31 @@ export default function SeoAdminClient({ pages, baseUrl }: { pages: PageSeoData[
                             href={`${baseUrl}${path}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-violet-400 hover:text-violet-300 font-mono text-[11px]"
+                            className="text-violet-400 hover:text-violet-300 font-mono text-xs"
                           >
                             {path}
                           </a>
                           {page && (
-                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[page.pageType] ?? "bg-white/[0.06] text-zinc-400"}`}>
+                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${PAGE_TYPE_COLORS[page.pageType] ?? "bg-[#EFF5F7] text-slate-600"}`}>
                               {page.pageType}
                             </span>
                           )}
                         </div>
                         <button
                           onClick={() => saveNote(path, "")}
-                          className="text-[10px] text-zinc-600 hover:text-red-400"
+                          className="text-xs text-slate-500 hover:text-red-400"
                         >
                           削除
                         </button>
                       </div>
                       {page && (
-                        <p className="text-[10px] text-zinc-500 truncate mb-2">{stripSuffix(page.title)}</p>
+                        <p className="text-xs text-slate-500 truncate mb-2">{stripSuffix(page.title)}</p>
                       )}
                       <textarea
                         value={note}
                         onChange={e => saveNote(path, e.target.value)}
                         rows={2}
-                        className="w-full bg-zinc-800 border border-white/[0.1] rounded-lg px-3 py-2 text-[11px] text-zinc-300 font-mono resize-none focus:outline-none focus:border-amber-500/50"
+                        className="w-full bg-white border border-[#D2DEE4] rounded-lg px-3 py-2 text-xs text-slate-700 font-mono resize-none focus:outline-none focus:border-amber-500/50"
                       />
                     </div>
                   );
