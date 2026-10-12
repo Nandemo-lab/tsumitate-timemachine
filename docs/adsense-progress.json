@@ -1,22 +1,25 @@
 {
-  "project": "AdSense再申請前・独立レッドチーム完全監査＆一括修復",
-  "phase": 12,
-  "status": "production_verified",
+  "project": "積立タイムマシン2.0 プロダクト再構築",
+  "phase": 15,
+  "status": "local_release_candidate_verified",
   "progressPercent": 100,
   "completedTasks": [
-    "本番起点の反証監査と8領域の視点別レビュー",
-    "A品質9系列のraw snapshot SHA-256・全月・独立積立計算の照合",
-    "G品質を共通計算層・直接URL・比較・共有・OGP・ランキングで拒否",
-    "直接URL・共有・OGPの整数・月額上限・期間入力の厳格化",
-    "Next.jsとsharpの本番到達可能な脆弱性を修正版へ更新",
-    "プライバシー説明・管理画面公開・セキュリティヘッダー・拡大禁止を修正",
-    "古い2025年6月表示、助言的表現、根拠のない人気表示を中立化",
-    "全96 index URLのローカルproduction HTML台帳を再生成",
-    "lint・TypeScript・build・QA・live QA・全関連audit・375/390/PC実測を完了"
+    "GSC最新28日・直前28日・3か月のページ別実測を再集計",
+    "国内外10サービスの競合比較と収益感度を作成",
+    "B:シミュレーター入口 + C:公式データ検証基盤のコンセプトを採用",
+    "月末元本割れ月数・最長連続月数・最大月末評価損を純粋関数で実装",
+    "9つのA品質系列について独立期待値を持つ回帰auditを追加",
+    "ShareCardの同額・優位表示と重複keyを修正",
+    "損失表示、Ranking品質注記、選択UIのアクセシビリティを修正",
+    "8領域の反証レビューと90日・180日ロードマップを作成",
+    "lint・TypeScript・build・127ページQA・全関連auditを完了",
+    "隔離production serverでlive QA 100/100を完了",
+    "375/390/768/1280pxの実ブラウザE2Eとコンソール確認を完了",
+    "機能変更をe1b1fd8へローカルcommit"
   ],
-  "pendingTasks": [],
-  "blockers": [],
-  "commitSHA": "8f6f7149a0b3e5b0cba9c51e806a9352d3db7c6b",
-  "verifiedAt": "2026-10-11T23:25:00+09:00",
-  "evidencePaths": ["docs/audits/red-team-96-url-ledger-2026-10-11.csv", "docs/audits/red-team-96-url-production-2026-10-11.csv", "docs/adsense-blockers.md", "docs/adsense-final-release-report.md", "scripts/g-quality-boundary-audit.mjs", "scripts/content-trust-audit.mjs"]
+  "pendingTasks": ["ユーザー承認後の本番公開と公開後実測"],
+  "blockers": ["本番公開はユーザー承認待ち"],
+  "commitSHA": "e1b1fd8",
+  "verifiedAt": "2026-10-12T23:30:00+09:00",
+  "evidencePaths": ["docs/audits/timemachine-2-product-rebuild-2026-10-12.md", "scripts/simulation-insights-audit.mjs", "lib/simulation-insights.ts", "components/simulation/PathInsights.tsx"]
 }

@@ -22,3 +22,9 @@
 - Search Console Query×Page完全原票と第三者被リンクの更新確認。
 - URL削除・ページ統合、redirect、canonical、index/noindex変更。
 - AdSense再申請
+
+## 積立タイムマシン2.0（2026-10-12）
+
+- ローカルrelease candidate `e1b1fd8` は全QAと4幅の実画面確認を完了。大規模な見せ方変更のため、本番公開はユーザー承認待ち。
+- GA4の離脱率・再訪率・計算完了率は権限内で取得できていない。現時点のロードマップでは推測値を実測値として扱わない。
+- Search ConsoleエクスポートはQuery表とPage表が別であり、完全なQuery×Page結合原票ではない。勝ちCompare URLを保護し、構造変更は行わない。
