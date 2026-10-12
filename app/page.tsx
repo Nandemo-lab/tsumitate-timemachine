@@ -8,6 +8,7 @@ import HomeView from "@/components/views/HomeView";
 import EncyclopediaView from "@/components/views/EncyclopediaView";
 import TimeMachineView from "@/components/views/TimeMachineView";
 import CompareView from "@/components/views/CompareView";
+import { RecentSimulation } from "@/lib/recent-simulations";
 
 interface TmPreset {
   fund: FundId;
@@ -19,6 +20,7 @@ interface TmPreset {
 
 interface ComparePreset {
   fund: FundId;
+  fundB?: FundId;
   year: number;
   month: number;
   amount: number;
@@ -41,6 +43,7 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [activeTab]);
 
+
   // From home taraeba cards: preload TM with result shown
   const goToTaraeba = (fundId: FundId, year: number, month: number, amount: number) => {
     setTmPreset({ fund: fundId, year, month, amount, autoRun: true });
@@ -60,6 +63,16 @@ export default function Home() {
       amount: conditions?.amount ?? 30000,
     });
     setActiveTab("compare");
+  };
+
+  const restoreRecent = (item: RecentSimulation) => {
+    if (item.mode === "compare" && item.fundB) {
+      setComparePreset({ fund: item.fundA, fundB: item.fundB, year: item.startYear, month: item.startMonth, amount: item.monthlyAmount });
+      setActiveTab("compare");
+      return;
+    }
+    setTmPreset({ fund: item.fundA, year: item.startYear, month: item.startMonth, amount: item.monthlyAmount, autoRun: true });
+    setActiveTab("timemachine");
   };
 
   const handleTabChange = (tab: MainTab) => {
@@ -96,6 +109,7 @@ export default function Home() {
                 onNavigate={handleTabChange}
                 onFundSelect={goToEncyclopedia}
                 onTaraeba={goToTaraeba}
+                onRestoreRecent={restoreRecent}
               />
             </motion.div>
           )}
@@ -144,6 +158,7 @@ export default function Home() {
             >
               <CompareView
                 initialFundA={comparePreset.fund}
+                initialFundB={comparePreset.fundB}
                 initialYear={comparePreset.year}
                 initialMonth={comparePreset.month}
                 initialAmount={comparePreset.amount}

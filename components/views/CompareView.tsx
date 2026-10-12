@@ -14,22 +14,24 @@ import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
 import { ChevronDown, Zap, Share2, ShieldCheck, GitCompareArrows } from "lucide-react";
 import { trackCalculate } from "@/lib/analytics";
+import { saveRecentSimulation } from "@/lib/recent-simulations";
 
 const MONTHLY_AMOUNTS = [10000, 20000, 30000, 50000, 100000];
 
 interface Props {
   initialFundA?: FundId;
+  initialFundB?: FundId;
   initialYear?: number;
   initialMonth?: number;
   initialAmount?: number;
 }
 
-export default function CompareView({ initialFundA = "sp500", initialYear = 2020, initialMonth = 1, initialAmount = 30000 }: Props) {
-  const initialCommonStart = getCommonStartMonth([initialFundA, "orcan"]);
+export default function CompareView({ initialFundA = "sp500", initialFundB = "orcan", initialYear = 2020, initialMonth = 1, initialAmount = 30000 }: Props) {
+  const initialCommonStart = getCommonStartMonth([initialFundA, initialFundB]);
   const requestedStart = `${initialYear}-${String(initialMonth).padStart(2, "0")}`;
   const safeInitialStart = requestedStart < initialCommonStart ? initialCommonStart : requestedStart;
   const [fundA, setFundA] = useState<FundId>(initialFundA);
-  const [fundB, setFundB] = useState<FundId>("orcan");
+  const [fundB, setFundB] = useState<FundId>(initialFundB);
   const [startYear, setStartYear] = useState(Number(safeInitialStart.slice(0, 4)));
   const [startMonth, setStartMonth] = useState(Number(safeInitialStart.slice(5, 7)));
   const [monthlyAmount, setMonthlyAmount] = useState(initialAmount);
@@ -50,13 +52,16 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
   };
 
   const run = useCallback(() => {
+    simulate({ fundId: fundA, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth });
+    simulate({ fundId: fundB, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth });
+    saveRecentSimulation({ mode: "compare", fundA, fundB, startYear, startMonth, endYear: commonEndYear, endMonth: commonEndMonth, monthlyAmount });
     trackCalculate({ mode: "compare", fund_id: `${fundA}_vs_${fundB}`, start_year: startYear, monthly_amount: monthlyAmount });
     setShowResult(true);
     setShowShare(false);
     setTimeout(() => {
       document.getElementById("compare-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 150);
-  }, [fundA, fundB, startYear, monthlyAmount]);
+  }, [fundA, fundB, startYear, startMonth, monthlyAmount, commonEndYear, commonEndMonth]);
 
   const resultA = useMemo(
     () => (showResult ? simulate({ fundId: fundA, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth }) : null),

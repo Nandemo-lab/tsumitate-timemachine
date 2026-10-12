@@ -17,6 +17,7 @@ import { QuickScenario } from "@/lib/scenarios";
 import { trackCalculate, trackCompareClick } from "@/lib/analytics";
 import { getReturnDataSource } from "@/lib/return-data-sources";
 import { ChevronDown, Zap, Trophy, Settings2, GitCompareArrows, Share2, ShieldCheck, Clock3, Target } from "lucide-react";
+import { saveRecentSimulation } from "@/lib/recent-simulations";
 
 type SubMode = "single" | "ranking";
 
@@ -75,6 +76,9 @@ export default function TimeMachineView({
   };
 
   const handleScenario = useCallback((s: QuickScenario) => {
+    const end = getAvailableEndMonth(s.fundId).split("-").map(Number);
+    simulate({ fundId: s.fundId, startYear: s.startYear, startMonth: s.startMonth, monthlyAmount: s.monthlyAmount });
+    saveRecentSimulation({ mode: "single", fundA: s.fundId, startYear: s.startYear, startMonth: s.startMonth, endYear: end[0], endMonth: end[1], monthlyAmount: s.monthlyAmount });
     trackCalculate({ mode: "quick_scenario", fund_id: s.fundId, start_year: s.startYear, monthly_amount: s.monthlyAmount });
     setFund(s.fundId);
     setStartYear(s.startYear);
@@ -108,6 +112,11 @@ export default function TimeMachineView({
   }, [fund, startYear, startMonth, subMode]);
 
   const run = () => {
+    if (subMode === "single") {
+      const [endYear, endMonth] = getAvailableEndMonth(fund).split("-").map(Number);
+      simulate({ fundId: fund, startYear, startMonth, monthlyAmount, endYear, endMonth });
+      saveRecentSimulation({ mode: "single", fundA: fund, startYear, startMonth, endYear, endMonth, monthlyAmount });
+    }
     trackCalculate({ mode: subMode, fund_id: subMode === "single" ? fund : undefined, start_year: startYear, monthly_amount: monthlyAmount });
     setShowResult(true);
     setShowShare(false);

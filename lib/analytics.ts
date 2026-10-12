@@ -26,14 +26,22 @@ function track(name: string, params: object) {
 /** シミュレーション実行（単体/ランキング/比較/クイックシナリオ） */
 export function trackCalculate(params: CalculateParams) {
   track("calculate", params);
+  track(params.mode === "compare" ? "compare_complete" : "simulation_complete", params);
 }
 
 /** シェアボタン押下（X共有・ネイティブ共有・URLコピー） */
 export function trackShareClick(params: ShareClickParams) {
   track("share_click", params);
+  track("share", params);
 }
 
 /** 「他の銘柄と比較する」導線タップ */
 export function trackCompareClick(params: CompareClickParams) {
   track("compare_click", params);
+  track("compare_start", params);
+}
+
+/** データ出典を実際に開いた時だけ送信する。自由入力やURLは送らない。 */
+export function trackSourceView(surface: string) {
+  track("source_view", { surface });
 }

@@ -3,18 +3,18 @@ import { formatCurrency } from "@/lib/simulation";
 import { analyzeSimulationPath } from "@/lib/simulation-insights";
 import { Activity, TriangleAlert } from "lucide-react";
 
-export default function PathInsights({ result }: { result: SimulationResult }) {
+export default function PathInsights({ result, title = "途中経過も確認する" }: { result: SimulationResult; title?: string }) {
   const insights = analyzeSimulationPath(result.dataPoints);
   const hasShortfall = insights.belowPrincipalMonths > 0;
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-5" aria-labelledby="path-insights-title">
+    <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-5" aria-label={title}>
       <div className="mb-4 flex items-start gap-3">
         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-400/10 text-indigo-300">
           <Activity className="h-4 w-4" />
         </div>
         <div>
-          <h3 id="path-insights-title" className="text-sm font-bold text-white">途中経過も確認する</h3>
+          <h3 className="text-sm font-bold text-white">{title}</h3>
           <p className="mt-1 text-xs leading-relaxed text-zinc-400">期間末だけでなく、毎月末の評価額がその時点の元本を下回った月を集計しました。</p>
         </div>
       </div>

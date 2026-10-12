@@ -5,6 +5,7 @@ import { FundId } from "@/types";
 import { buildShareUrl, parseShareParams } from "@/lib/utils/shareUrl";
 import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 import Link from "next/link";
+import PathInsights from "@/components/simulation/PathInsights";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -120,6 +121,9 @@ export default async function SharePage({ searchParams }: Props) {
               </article>
             );
           })}
+        </section>
+        <section className="space-y-4" aria-label="共有条件の月末経路分析">
+          {results.map((result) => <PathInsights key={result.fundId} result={result} title={`${result.fundName}の途中経過`} />)}
         </section>
         <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-xs leading-relaxed text-zinc-400">
           {includesReferenceSeries

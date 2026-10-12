@@ -3,6 +3,8 @@
 import { SimulationResult } from "@/types";
 import { formatCurrency } from "@/lib/simulation";
 import ComparisonChart from "@/components/simulation/ComparisonChart";
+import PathInsights from "@/components/simulation/PathInsights";
+import Link from "next/link";
 
 interface Props {
   resultA: SimulationResult;
@@ -10,8 +12,10 @@ interface Props {
 }
 
 export default function ComparePageClient({ resultA, resultB }: Props) {
-  const winner = resultA.profit >= resultB.profit ? resultA : resultB;
-  const diff   = Math.abs(resultA.profit - resultB.profit);
+  const isTie = resultA.finalValue === resultB.finalValue;
+  const winner = isTie ? null : (resultA.finalValue > resultB.finalValue ? resultA : resultB);
+  const diff = Math.abs(resultA.finalValue - resultB.finalValue);
+  const signed = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${formatCurrency(Math.abs(value))}`;
 
   return (
     <div className="space-y-8">
@@ -49,13 +53,13 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
                 <div>
                   <p className="text-[10px] text-zinc-500">利益</p>
                   <p className="text-sm font-bold tabular-nums" style={{ color: r.fundColor }}>
-                    +{formatCurrency(r.profit)}
+                    {signed(r.profit)}
                   </p>
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-500">リターン</p>
                   <p className="text-sm font-bold tabular-nums" style={{ color: r.fundColor }}>
-                    +{r.returnRate}%
+                    {r.returnRate > 0 ? "+" : ""}{r.returnRate}%
                   </p>
                 </div>
               </div>
@@ -72,13 +76,27 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
         {/* 差額バナー */}
         <div className="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4 text-center">
           <p className="text-xs text-zinc-500 mb-1">
-            <span className="font-bold text-white">{winner.fundName}</span> が上回った利益差
+            {winner ? <><span className="font-bold text-white">{winner.fundName}</span> の期間末評価額が高い</> : "この条件では期間末評価額が同額"}
           </p>
-          <p className="text-2xl font-black tabular-nums" style={{ color: winner.fundColor }}>
-            +{formatCurrency(diff)}
+          <p className="text-2xl font-black tabular-nums" style={{ color: winner?.fundColor ?? "#d4d4d8" }}>
+            {winner ? `差 ${formatCurrency(diff)}` : "同額"}
           </p>
         </div>
       </section>
+
+      <div className="grid gap-4">
+        <PathInsights result={resultA} title={`${resultA.fundName}の途中経過`} />
+        <PathInsights result={resultB} title={`${resultB.fundName}の途中経過`} />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
+          自分の条件で比較する
+        </Link>
+        <Link href="/about/data-sources" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-300">
+          データ期間・出典を確認
+        </Link>
+      </div>
 
       {/* グラフ比較 */}
       <section>

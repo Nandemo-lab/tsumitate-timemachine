@@ -13,6 +13,9 @@ import { MainTab } from "@/components/layout/BottomNav";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { RETURN_SERIES_REGISTRY, VERIFIED_FUND_IDS } from "@/lib/return-series";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
+import RecentConditions from "@/components/simulation/RecentConditions";
+import { RecentSimulation } from "@/lib/recent-simulations";
+import { trackSourceView } from "@/lib/analytics";
 
 const TARAEBA: { fundId: FundId; startYear: number; startMonth: number; monthlyAmount: number; scene: string }[] = [
   { fundId: "nasdaq100", startYear: 2020, startMonth: 1, monthlyAmount: 30000, scene: "2020年のコロナショック直後に始めていたら" },
@@ -25,6 +28,7 @@ interface Props {
   onNavigate: (tab: MainTab) => void;
   onFundSelect: (fundId: FundId) => void;
   onTaraeba: (fundId: FundId, startYear: number, startMonth: number, monthlyAmount: number) => void;
+  onRestoreRecent: (item: RecentSimulation) => void;
 }
 
 const subscribeToJstDate = () => () => {};
@@ -36,7 +40,7 @@ const getJstPickIndex = () => {
   return day % VERIFIED_FUND_IDS.length;
 };
 
-export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props) {
+export default function HomeView({ onNavigate, onFundSelect, onTaraeba, onRestoreRecent }: Props) {
   // SSR/hydrationは固定snapshot、hydration後はJSTの日付snapshotを使う。
   const todayPickIndex = useSyncExternalStore(
     subscribeToJstDate,
@@ -127,7 +131,7 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
         <div className="flex flex-wrap gap-2 text-[11px] text-zinc-300">
           <span className="rounded-full bg-white/[0.06] px-2.5 py-1">実績期間：2026年8月まで</span>
           <span className="rounded-full bg-white/[0.06] px-2.5 py-1">A品質9系列・G参考1系列</span>
-          <Link href="/about/data-sources" className="inline-flex min-h-11 items-center rounded-full bg-indigo-400/15 px-3 py-2 text-xs font-bold text-indigo-200 underline underline-offset-2">
+          <Link href="/about/data-sources" onClick={() => trackSourceView("home_trust_panel")} className="inline-flex min-h-11 items-center rounded-full bg-indigo-400/15 px-3 py-2 text-xs font-bold text-indigo-200 underline underline-offset-2">
             出典と計算方法
           </Link>
         </div>
@@ -164,6 +168,8 @@ export default function HomeView({ onNavigate, onFundSelect, onTaraeba }: Props)
           元本・期間末評価額・損益を、検証済みの月次データで確認できます
         </p>
       </motion.div>
+
+      <RecentConditions onRestore={onRestoreRecent} />
 
       {/* ── 条件別の検証例 ── */}
       <motion.section

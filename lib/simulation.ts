@@ -3,7 +3,7 @@ import {
   RankingItem, FundId, InvestmentEvent, AdvancedSimulationResult, AdvancedDataPoint
 } from "@/types";
 import { FUNDS, FUND_LIST } from "./funds";
-import { VERIFIED_FUND_IDS, UnverifiedReturnSeriesError, getAvailableEndMonth, getCommonStartMonth, getMonthlyJpyReturn, isVerifiedReturnSeries } from "./return-series";
+import { VERIFIED_FUND_IDS, UnverifiedReturnSeriesError, getAvailableEndMonth, getCommonStartMonth, getMonthlyJpyReturn, isReturnMonthAvailable, isVerifiedReturnSeries } from "./return-series";
 
 export const CURRENT_YEAR = 2026;
 export const CURRENT_MONTH = 8;
@@ -32,6 +32,9 @@ export function simulate(params: SimulationParams): SimulationResult {
   const { fundId, startYear, startMonth, monthlyAmount } = params;
   if (!isVerifiedReturnSeries(fundId)) throw new UnverifiedReturnSeriesError(fundId);
   if (!isValidMonthlyAmount(monthlyAmount)) throw new RangeError("monthlyAmount must be a positive integer no greater than 1,000,000");
+  if (!isReturnMonthAvailable(fundId, startYear, startMonth)) {
+    throw new RangeError("start month is outside the verified return series");
+  }
   const fund = FUNDS[fundId];
   const dataPoints: MonthlyDataPoint[] = [];
 
@@ -44,6 +47,11 @@ export function simulate(params: SimulationParams): SimulationResult {
   const requestedEnd = params.endYear === undefined
     ? [availableEndYear, availableEndMonth] as const
     : [params.endYear, params.endMonth ?? 12] as const;
+  if (requestedEnd[1] < 1 || requestedEnd[1] > 12
+    || requestedEnd[0] < startYear
+    || (requestedEnd[0] === startYear && requestedEnd[1] < startMonth)) {
+    throw new RangeError("end month must not be earlier than the start month");
+  }
   const [endYear, endMonth] = requestedEnd[0] < availableEndYear
     || (requestedEnd[0] === availableEndYear && requestedEnd[1] < availableEndMonth)
     ? requestedEnd
