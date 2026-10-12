@@ -1,11 +1,21 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { FUNDS } from "@/lib/funds";
 import { clearRecentSimulations, getRecentSimulationsServerSnapshot, getRecentSimulationsSnapshot, RecentSimulation, removeRecentSimulation, subscribeRecentSimulations } from "@/lib/recent-simulations";
+import { trackReturnVisit } from "@/lib/analytics";
 
 export default function RecentConditions({ onRestore }: { onRestore: (item: RecentSimulation) => void }) {
   const items = useSyncExternalStore(subscribeRecentSimulations, getRecentSimulationsSnapshot, getRecentSimulationsServerSnapshot);
+  const returnVisitTracked = useRef(false);
+
+  useEffect(() => {
+    if (items.length > 0 && !returnVisitTracked.current) {
+      returnVisitTracked.current = true;
+      trackReturnVisit("recent_conditions");
+    }
+  }, [items.length]);
+
   if (items.length === 0) return null;
 
   return (

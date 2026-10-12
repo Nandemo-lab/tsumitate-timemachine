@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, simulateAll, formatCurrency, MONTH_OPTIONS } from "@/lib/simulation";
@@ -14,7 +14,7 @@ import RankingView from "@/components/simulation/RankingView";
 import QuickScenarios from "@/components/simulation/QuickScenarios";
 import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
 import { QuickScenario } from "@/lib/scenarios";
-import { trackCalculate, trackCompareClick } from "@/lib/analytics";
+import { trackCalculate, trackCompareClick, trackSimulationStart } from "@/lib/analytics";
 import { getReturnDataSource } from "@/lib/return-data-sources";
 import { ChevronDown, Zap, Trophy, Settings2, GitCompareArrows, Share2, ShieldCheck, Clock3, Target } from "lucide-react";
 import { saveRecentSimulation } from "@/lib/recent-simulations";
@@ -49,6 +49,12 @@ export default function TimeMachineView({
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
   const [subMode, setSubMode] = useState<SubMode>("single");
+  const startTracked = useRef(false);
+  const markSimulationStart = (mode: SubMode = subMode) => {
+    if (startTracked.current) return;
+    startTracked.current = true;
+    trackSimulationStart(mode, "time_machine");
+  };
   const effectiveStart = subMode === "ranking" ? getCommonStartMonth(VERIFIED_FUND_IDS) : getAvailableStartMonth(fund);
   const availableYears = subMode === "ranking"
     ? Array.from({ length: 2025 - Number(effectiveStart.slice(0, 4)) + 1 }, (_, i) => Number(effectiveStart.slice(0, 4)) + i)
@@ -56,6 +62,7 @@ export default function TimeMachineView({
   const minimumMonth = startYear === Number(effectiveStart.slice(0, 4)) ? Number(effectiveStart.slice(5, 7)) : 1;
 
   const selectMode = (mode: SubMode) => {
+    markSimulationStart(mode);
     setSubMode(mode);
     const minimum = mode === "ranking" ? getCommonStartMonth(VERIFIED_FUND_IDS) : getAvailableStartMonth(fund);
     if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
@@ -66,6 +73,7 @@ export default function TimeMachineView({
   };
 
   const selectFund = (id: FundId) => {
+    markSimulationStart();
     setFund(id);
     const minimum = getAvailableStartMonth(id);
     if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
@@ -177,7 +185,7 @@ export default function TimeMachineView({
             {availableYears.map((y) => (
               <button
                 key={y}
-                onClick={() => { setStartYear(y); setShowResult(false); }}
+                onClick={() => { markSimulationStart(); setStartYear(y); setShowResult(false); }}
                 aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
@@ -195,7 +203,7 @@ export default function TimeMachineView({
             {MONTH_OPTIONS.filter((m) => m >= minimumMonth).map((m) => (
               <button
                 key={m}
-                onClick={() => { setStartMonth(m); setShowResult(false); }}
+                onClick={() => { markSimulationStart(); setStartMonth(m); setShowResult(false); }}
                 aria-pressed={startMonth === m}
                 className={`flex-shrink-0 rounded-lg text-xs font-bold transition-all ${
                   startMonth === m
@@ -220,7 +228,7 @@ export default function TimeMachineView({
             {MONTHLY_AMOUNTS.map((a) => (
               <button
                 key={a}
-                onClick={() => { setMonthlyAmount(a); setShowResult(false); }}
+                onClick={() => { markSimulationStart(); setMonthlyAmount(a); setShowResult(false); }}
                 aria-pressed={monthlyAmount === a}
                 className={`rounded-xl text-sm font-black transition-all border ${
                   monthlyAmount === a

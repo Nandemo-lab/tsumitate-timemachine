@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, formatCurrency } from "@/lib/simulation";
@@ -13,7 +13,7 @@ import ComparisonChart from "@/components/simulation/ComparisonChart";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
 import { ChevronDown, Zap, Share2, ShieldCheck, GitCompareArrows } from "lucide-react";
-import { trackCalculate } from "@/lib/analytics";
+import { trackCalculate, trackSimulationStart } from "@/lib/analytics";
 import { saveRecentSimulation } from "@/lib/recent-simulations";
 
 const MONTHLY_AMOUNTS = [10000, 20000, 30000, 50000, 100000];
@@ -38,11 +38,18 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   const [showResult, setShowResult] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
+  const startTracked = useRef(false);
+  const markSimulationStart = () => {
+    if (startTracked.current) return;
+    startTracked.current = true;
+    trackSimulationStart("compare", "compare_form");
+  };
   const startYearOptions = getCommonStartOptions([fundA, fundB]);
   const commonEnd = getCommonEndMonth([fundA, fundB]);
   const commonEndYear = Number(commonEnd.slice(0, 4));
   const commonEndMonth = Number(commonEnd.slice(5, 7));
   const normalizeStartForFunds = (first: FundId, second: FundId) => {
+    markSimulationStart();
     const minimum = getCommonStartMonth([first, second]);
     if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
       setStartYear(Number(minimum.slice(0, 4)));
@@ -102,7 +109,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
             {startYearOptions.map((y) => (
               <button
                 key={y}
-                onClick={() => { setStartYear(y); setShowResult(false); }}
+                onClick={() => { markSimulationStart(); setStartYear(y); setShowResult(false); }}
                 aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
@@ -127,7 +134,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
             {MONTHLY_AMOUNTS.slice(0, 6).map((a) => (
               <button
                 key={a}
-                onClick={() => { setMonthlyAmount(a); setShowResult(false); }}
+                onClick={() => { markSimulationStart(); setMonthlyAmount(a); setShowResult(false); }}
                 aria-pressed={monthlyAmount === a}
                 className={`rounded-xl text-xs font-black transition-all border ${
                   monthlyAmount === a

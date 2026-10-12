@@ -5,6 +5,7 @@ import { formatCurrency } from "@/lib/simulation";
 import ComparisonChart from "@/components/simulation/ComparisonChart";
 import PathInsights from "@/components/simulation/PathInsights";
 import Link from "next/link";
+import { trackCompareClick, trackSourceView } from "@/lib/analytics";
 
 interface Props {
   resultA: SimulationResult;
@@ -90,10 +91,10 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
+        <Link href="/" onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
           自分の条件で比較する
         </Link>
-        <Link href="/about/data-sources" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-300">
+        <Link href="/about/data-sources" onClick={() => trackSourceView("compare_result")} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-300">
           データ期間・出典を確認
         </Link>
       </div>

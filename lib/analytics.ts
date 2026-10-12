@@ -45,3 +45,13 @@ export function trackCompareClick(params: CompareClickParams) {
 export function trackSourceView(surface: string) {
   track("source_view", { surface });
 }
+
+/** 入力条件を初めて変更した時点。呼び出し側で1画面1回に制御する。 */
+export function trackSimulationStart(mode: "single" | "ranking" | "compare", surface: string) {
+  track("simulation_start", { mode, surface });
+}
+
+/** 保存済み条件がある端末での再訪。条件や計算結果は送信しない。 */
+export function trackReturnVisit(surface: string) {
+  track("return_visit", { surface });
+}
