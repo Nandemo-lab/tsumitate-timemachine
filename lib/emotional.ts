@@ -36,6 +36,9 @@ export function getDifferenceMessage(
   winnerName: string,
   loserName: string
 ): string {
-  const man = Math.round(difference / 10_000);
+  // WinnerBanner's compact currency display truncates to whole ten-thousands.
+  // Use the same rule in the explanatory sentence so one exact difference
+  // never appears as two different amounts (for example 10万円 and 11万円).
+  const man = Math.trunc(difference / 10_000);
   return `${winnerName}と${loserName}の期間末評価額の差は${man}万円でした。同じ開始月・終了月・積立額を使った過去結果です。`;
 }

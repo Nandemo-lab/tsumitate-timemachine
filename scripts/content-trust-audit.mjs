@@ -85,6 +85,7 @@ assert(compareView.includes("resultA.finalValue === resultB.finalValue") && comp
 assert(compareView.includes("Math.abs(resultA.finalValue - resultB.finalValue)"), "比較フォームの差額が円単位の期間末評価額から算出されていない");
 assert(compareClient.includes("Math.abs(resultA.finalValue - resultB.finalValue)"), "静的Compareの差額が円単位の期間末評価額から算出されていない");
 assert(shareCard.includes("Math.abs(winner.finalValue - loser.finalValue)"), "ShareCardの差額が円単位の期間末評価額から算出されていない");
+assert(emotional.includes("Math.trunc(difference / 10_000)"), "比較差額のカード表示と説明文で万円丸め規則が一致していない");
 assert(winnerBanner.includes("この条件で評価額が高い") && resultCard.includes("この条件で評価額が高い"), "比較UIの優位ラベルが条件限定であることを示していない");
 assert(!winnerBanner.includes("🏆 WINNER") && !resultCard.includes(">WINNER<"), "比較UIに推奨と誤認されるWINNER表示が残っている");
 assert(winnerBanner.includes('n >= 0 ? "+" : ""') && winnerBanner.includes('winner.returnRate >= 0 ? "+" : ""'), "比較UIが負の損益へ+記号を付ける可能性がある");
