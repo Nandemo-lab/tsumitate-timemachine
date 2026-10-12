@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { getCommonEndMonth, getCommonStartMonth, getCommonStartOptions, getReturnSeriesDefinition } from "@/lib/return-series";
-import { FUNDS } from "@/lib/funds";
+import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import FundSelector from "@/components/simulation/FundSelector";
 import ResultCard from "@/components/simulation/ResultCard";
 import WinnerBanner from "@/components/simulation/WinnerBanner";
@@ -67,8 +67,9 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
     [showResult, fundB, startYear, startMonth, monthlyAmount, commonEndYear, commonEndMonth]
   );
 
-  const winnerResult = resultA && resultB ? (resultA.profit >= resultB.profit ? resultA : resultB) : null;
-  const loserResult  = resultA && resultB ? (resultA.profit >= resultB.profit ? resultB : resultA) : null;
+  const isTie = Boolean(resultA && resultB && resultA.finalValue === resultB.finalValue);
+  const winnerResult = resultA && resultB ? (resultA.finalValue >= resultB.finalValue ? resultA : resultB) : null;
+  const loserResult  = resultA && resultB ? (resultA.finalValue >= resultB.finalValue ? resultB : resultA) : null;
   const difference   = resultA && resultB ? Math.abs(resultA.profit - resultB.profit) : 0;
 
   return (
@@ -204,7 +205,14 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
               </p>
             </div>
 
-            <WinnerBanner winner={winnerResult} loser={loserResult} difference={difference} />
+            {isTie ? (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-center">
+                <p className="text-sm font-bold text-white">この条件では期間末評価額が同額です</p>
+                <p className="mt-1 text-xs leading-relaxed text-zinc-400">同じ開始月・終了月・積立額で比較した過去結果です。</p>
+              </div>
+            ) : (
+              <WinnerBanner winner={winnerResult} loser={loserResult} difference={difference} />
+            )}
 
             {/* 信頼性の根拠（常時表示） */}
             <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 -mt-2">
@@ -212,22 +220,22 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
               <span>{getReturnSeriesDefinition(fundA).quality === "A" && getReturnSeriesDefinition(fundB).quality === "A" ? "両系列とも公式月次データ・共通期間で比較" : "参考データを含む比較（原典未検証）"}</span>
             </div>
 
-            {/* なぜ差が出たか */}
+            {/* 比較結果と混同しない客観的な商品属性 */}
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
-              <p className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">なぜ差が出たのか</p>
-              {[winnerResult, loserResult].map((r, i) => {
+              <p className="text-[11px] font-bold tracking-widest uppercase text-zinc-400">比較する商品の確認事項</p>
+              {[resultA, resultB].map((r, index) => {
                 const enc = FUNDS[r.fundId].encyclopedia;
                 return (
-                  <div key={r.fundId} className="flex gap-3">
+                  <div key={`${r.fundId}-${index}`} className="flex gap-3">
                     <div className="h-2 w-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: r.fundColor }} />
                     <div>
                       <p className="text-sm font-bold text-white mb-1">
-                        {enc.nickname}{i === 0 ? "が勝った理由" : "の特徴"}
+                        {enc.nickname}の商品属性
                       </p>
                       <ul className="space-y-0.5">
-                        {enc.pros.slice(0, 3).map((p) => (
-                          <li key={p} className="text-sm text-zinc-300 leading-relaxed">・{p}</li>
-                        ))}
+                        <li className="text-sm text-zinc-300 leading-relaxed">・投資対象：{FUNDS[r.fundId].description}</li>
+                        <li className="text-sm text-zinc-300 leading-relaxed">・構成銘柄数：{FUNDS[r.fundId].shareCount}</li>
+                        <li className="text-sm text-zinc-300 leading-relaxed">・表示コスト：{formatExpenseRatio(r.fundId)}</li>
                       </ul>
                     </div>
                   </div>
@@ -236,8 +244,8 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <ResultCard result={resultA} label="" isWinner={resultA.profit >= resultB.profit} delay={0} />
-              <ResultCard result={resultB} label="" isWinner={resultB.profit > resultA.profit} delay={0.08} />
+              <ResultCard result={resultA} label="" isWinner={!isTie && resultA.finalValue > resultB.finalValue} delay={0} />
+              <ResultCard result={resultB} label="" isWinner={!isTie && resultB.finalValue > resultA.finalValue} delay={0.08} />
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">

@@ -33,7 +33,7 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
           className="absolute top-0 right-0 px-2.5 py-1 text-[10px] font-bold tracking-widest rounded-bl-xl"
           style={{ background: result.fundColor, color: "#000" }}
         >
-          WINNER
+          この条件で評価額が高い
         </div>
       )}
 
@@ -51,7 +51,7 @@ export default function ResultCard({ result, label, isWinner, delay = 0 }: Props
         </p>
 
         {/* HERO: 利益額（リターン率を隣接させて関連性を強調） */}
-        <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">利益</p>
+        <p className="text-[10px] text-zinc-400 mb-1 font-semibold tracking-widest uppercase">損益</p>
         <div className="flex items-baseline gap-2 mb-5">
           {isProfit
             ? <TrendingUp className="h-5 w-5 mb-1 flex-shrink-0" style={{ color: profitColor }} />

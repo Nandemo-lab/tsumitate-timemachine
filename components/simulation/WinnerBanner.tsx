@@ -14,6 +14,7 @@ interface Props {
 
 export default function WinnerBanner({ winner, loser, difference }: Props) {
   const diffMessage = getDifferenceMessage(difference, winner.fundName, loser.fundName);
+  const resultColor = winner.profit >= 0 ? "#10b981" : "#ef4444";
 
   return (
     <motion.div
@@ -26,12 +27,12 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
         border: `1px solid ${winner.fundColor}50`,
       }}
     >
-      {/* WINNER badge — 唯一の強調ポイント */}
+      {/* 同条件の過去結果だけを示すラベル */}
       <div
         className="absolute top-0 right-0 px-3 py-1.5 text-[10px] font-bold tracking-widest rounded-bl-xl"
         style={{ background: winner.fundColor, color: "#000" }}
       >
-        🏆 WINNER
+        この条件で評価額が高い
       </div>
 
       <div className="px-5 pt-5 pb-4">
@@ -39,20 +40,20 @@ export default function WinnerBanner({ winner, loser, difference }: Props) {
         <p className="font-heading text-lg font-bold text-white mb-3">{winner.fundName}</p>
 
         {/* HERO: 利益額（リターン率を隣接させて関連性を強調） */}
-        <p className="text-xs text-zinc-400 mb-1">利益</p>
+        <p className="text-xs text-zinc-400 mb-1">損益</p>
         <div className="flex items-baseline gap-2 mb-4">
           <p
             className="font-heading font-number text-4xl font-bold"
-            style={{ color: "#10b981", filter: "drop-shadow(0 0 9px #10b98133)" }}
+            style={{ color: resultColor, filter: `drop-shadow(0 0 9px ${resultColor}33)` }}
           >
             <AnimatedNumber
               value={winner.profit}
-              formatter={(n) => `+${formatCurrency(Math.round(n))}`}
+              formatter={(n) => `${n >= 0 ? "+" : ""}${formatCurrency(Math.round(n))}`}
               duration={1600}
             />
           </p>
-          <p className="font-number text-lg font-semibold text-emerald-300">
-            （+{winner.returnRate.toFixed(1)}%）
+          <p className="font-number text-lg font-semibold" style={{ color: resultColor }}>
+            （{winner.returnRate >= 0 ? "+" : ""}{winner.returnRate.toFixed(1)}%）
           </p>
         </div>
 
