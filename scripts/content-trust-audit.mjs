@@ -29,6 +29,7 @@ const returnDataSources = read("lib/return-data-sources.ts");
 const timeMachine = read("components/views/TimeMachineView.tsx");
 const homePage = read("app/page.tsx");
 const emotional = read("lib/emotional.ts");
+const animatedNumber = read("components/simulation/AnimatedNumber.tsx");
 
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
 assert(guides.includes("nisaMonthly10kExample.finalValue"), "NISA実績例がsimulate結果を参照していない");
@@ -56,6 +57,7 @@ assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf
 assert(!timeMachine.includes("2025 + 5 / 12") && timeMachine.includes("getAvailableEndMonth"), "期間表示が旧終端2025年6月へ固定されている");
 assert(timeMachine.includes("year: startYear, month: startMonth, amount: monthlyAmount") && homePage.includes("initialAmount={comparePreset.amount}"), "単一結果から比較へ開始年月・月額を引き継いでいない");
 assert(emotional.includes("Math.trunc(profit / 10_000)"), "結果カードと説明文で損益の万円丸めが一致しない");
+assert(animatedNumber.includes("useState(value)") && animatedNumber.includes("useRef(value)"), "画面外の結果カードが実値ではなく0円を初期表示する可能性がある");
 assert(dataSourcesPage.includes("現在の収録最終月は2026年8月です"), "Data SourcesがA品質系列の最新終端2026年8月を明示していない");
 assert(dataSourcesPage.includes("9つのA系列"), "Data Sourcesが最新終端の対象をA品質9系列に限定していない");
 assert(returnDataSources.includes('dataThrough: verified ? definition.endMonth : "原典検証待ち（公開計算の対象外）"'), "Data SourcesがG品質系列を検証済み終端として表示する可能性がある");
