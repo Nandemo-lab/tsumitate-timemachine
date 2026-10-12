@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FundId } from "@/types";
 import BottomNav, { MainTab } from "@/components/layout/BottomNav";
@@ -34,6 +34,13 @@ export default function Home() {
     fund: "orcan", year: 2020, month: 1, amount: 30000, autoRun: false,
   });
 
+  // AnimatePresence swaps views after the click handler returns. Scrolling in
+  // the handler can therefore be undone when the old view is removed. Reset
+  // after the active view has committed so every tab starts at its heading.
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [activeTab]);
+
   // From home taraeba cards: preload TM with result shown
   const goToTaraeba = (fundId: FundId, year: number, month: number, amount: number) => {
     setTmPreset({ fund: fundId, year, month, amount, autoRun: true });
@@ -43,7 +50,6 @@ export default function Home() {
   const goToEncyclopedia = (fundId: FundId) => {
     setEncyclopediaFund(fundId);
     setActiveTab("encyclopedia");
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const goToCompare = (fundId: FundId, conditions?: { year: number; month: number; amount: number }) => {
@@ -54,7 +60,6 @@ export default function Home() {
       amount: conditions?.amount ?? 30000,
     });
     setActiveTab("compare");
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleTabChange = (tab: MainTab) => {
@@ -62,7 +67,6 @@ export default function Home() {
     // Reset autoRun when user manually switches to timemachine
     if (tab === "timemachine") setTmPreset((p) => ({ ...p, autoRun: false }));
     setActiveTab(tab);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
