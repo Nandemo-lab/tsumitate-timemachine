@@ -29,7 +29,8 @@ export default function ShareCard({ planA, planB, startYear, startMonth, monthly
   const sorted = planB && !includesReferenceSeries ? [planA, planB].sort((a, b) => b.finalValue - a.finalValue) : [planA, ...(planB ? [planB] : [])];
   const winner = sorted[0];
   const loser = sorted[1];
-  const diff = loser ? winner.profit - loser.profit : null;
+  const isTie = Boolean(loser && winner.finalValue === loser.finalValue);
+  const diff = loser ? Math.abs(winner.finalValue - loser.finalValue) : null;
 
   const lastPoint = planA.dataPoints.at(-1);
   const [endYear, endMonth] = (lastPoint?.date ?? `${startYear}/${startMonth}`).split("/").map(Number);
@@ -126,9 +127,11 @@ ${url}
           </p>
           <div className="space-y-2">
             {sorted.map((r, i) => (
-              <div key={r.fundId} className="flex items-center justify-between gap-4">
+              <div key={`${r.fundId}-${i}`} className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm">{!includesReferenceSeries && planB && i === 0 ? "🏆" : "  "}</span>
+                  <span className="min-w-10 text-[10px] font-bold text-indigo-200">
+                    {planB && isTie ? "同額" : planB && i === 0 ? "評価額↑" : ""}
+                  </span>
                   <div className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
                   <span className="text-sm font-bold" style={{ color: r.fundColor }}>{r.fundName}</span>
                 </div>

@@ -9,6 +9,7 @@ import FundSelector from "@/components/simulation/FundSelector";
 import EmotionalMessage from "@/components/simulation/EmotionalMessage";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
+import PathInsights from "@/components/simulation/PathInsights";
 import RankingView from "@/components/simulation/RankingView";
 import QuickScenarios from "@/components/simulation/QuickScenarios";
 import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
@@ -138,12 +139,14 @@ export default function TimeMachineView({
       <div className="flex rounded-xl border border-white/10 bg-white/[0.04] p-1 gap-1">
         <button
           onClick={() => selectMode("single")}
+          aria-pressed={subMode === "single"}
           className={`flex-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "single" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
           <span className="inline-flex items-center gap-1"><Target className="h-3.5 w-3.5" />銘柄ひとつ</span>
         </button>
         <button
           onClick={() => selectMode("ranking")}
+          aria-pressed={subMode === "ranking"}
           className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2.5 text-xs font-bold transition-all ${subMode === "ranking" ? "bg-white/15 text-white" : "text-zinc-400"}`}
         >
           <Trophy className="h-3.5 w-3.5" />
@@ -166,6 +169,7 @@ export default function TimeMachineView({
               <button
                 key={y}
                 onClick={() => { setStartYear(y); setShowResult(false); }}
+                aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
                     ? "bg-white/8 text-indigo-300 border-indigo-400/40"
@@ -208,6 +212,7 @@ export default function TimeMachineView({
               <button
                 key={a}
                 onClick={() => { setMonthlyAmount(a); setShowResult(false); }}
+                aria-pressed={monthlyAmount === a}
                 className={`rounded-xl text-sm font-black transition-all border ${
                   monthlyAmount === a
                     ? "bg-white/8 text-indigo-300 border-indigo-400/40"
@@ -316,13 +321,13 @@ export default function TimeMachineView({
                 boxShadow: `0 0 22px ${result.fundColor}10`,
               }}
             >
-              <p className="text-xs text-zinc-400 mb-1">{result.fundName}の利益</p>
+              <p className="text-xs text-zinc-400 mb-1">{result.fundName}の損益</p>
               <div className="flex items-baseline justify-center gap-2 mb-1">
-                <p className="font-heading font-number text-5xl font-bold text-emerald-400">
-                  +{formatCurrency(result.profit)}
+                <p className={`font-heading font-number text-5xl font-bold ${result.profit >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                  {result.profit >= 0 ? "+" : ""}{formatCurrency(result.profit)}
                 </p>
-                <p className="font-number text-base font-semibold text-emerald-300">
-                  （+{result.returnRate.toFixed(1)}%）
+                <p className={`font-number text-base font-semibold ${result.returnRate >= 0 ? "text-emerald-300" : "text-rose-300"}`}>
+                  （{result.returnRate >= 0 ? "+" : ""}{result.returnRate.toFixed(1)}%）
                 </p>
               </div>
               <p className="text-sm text-zinc-400">
@@ -335,6 +340,8 @@ export default function TimeMachineView({
                 <span>{getReturnDataSource(fund).sourceStatus === "verified" ? "公式月次データ・税金等は個別計算なし" : "参考データ・原典未検証"}</span>
               </div>
             </div>
+
+            <PathInsights result={result} />
 
             {/* 優先順位2位：人生換算 */}
             <EmotionalMessage result={result} yearsElapsed={yearsElapsed} />
@@ -423,7 +430,7 @@ export default function TimeMachineView({
               startMonth={startMonth}
             />
             <p className="mt-4 text-center text-xs text-zinc-400 px-4 leading-relaxed">
-              ※ 原典未特定の年次参考系列による簡易計算です。実際の商品実績や将来の成果を示すものではありません。
+              ※ A品質の検証済み月次実績だけを、同じ開始月・終了月・積立額で比較しています。過去実績であり、将来の成果を示すものではありません。
             </p>
           </motion.div>
         )}

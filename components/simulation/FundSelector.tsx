@@ -67,6 +67,7 @@ export default function FundSelector({ value, onChange, label }: Props) {
               key={fund.id}
               whileTap={{ scale: 0.97 }}
               onClick={() => onChange(fund.id)}
+              aria-pressed={isSelected}
               className={cn(
                 "relative rounded-xl border p-3 text-left transition-all duration-200"
               )}

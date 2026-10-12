@@ -66,6 +66,7 @@ function EventRow({
           {/* Event type & time */}
           <div className="flex items-center gap-2 flex-wrap">
             <select
+              aria-label="イベントの種類"
               value={event.type}
               onChange={(e) => onChange({ ...event, type: e.target.value as EventType })}
               className="flex-1 min-w-0 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs font-bold text-white appearance-none"
@@ -76,6 +77,7 @@ function EventRow({
             </select>
             <button
               onClick={onDelete}
+              aria-label={`${EVENT_LABELS[event.type]}を削除`}
               className="p-1.5 rounded-lg hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition-colors flex-shrink-0"
             >
               <Trash2 className="h-3.5 w-3.5" />
@@ -85,6 +87,7 @@ function EventRow({
           {/* Year/Month */}
           <div className="flex gap-2">
             <select
+              aria-label="イベントの年"
               value={event.year}
               onChange={(e) => onChange({ ...event, year: Number(e.target.value) })}
               className="flex-1 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
@@ -94,6 +97,7 @@ function EventRow({
               ))}
             </select>
             <select
+              aria-label="イベントの月"
               value={event.month}
               onChange={(e) => onChange({ ...event, month: Number(e.target.value) })}
               className="w-20 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
@@ -107,6 +111,7 @@ function EventRow({
           {/* Fund selector (where applicable) */}
           {(event.type === "start" || event.type === "add_fund" || event.type === "change_amount" || event.type === "lump_sum" || event.type === "bonus") && (
             <select
+              aria-label="商品"
               value={event.fundId ?? "orcan"}
               onChange={(e) => onChange({ ...event, fundId: e.target.value as FundId })}
               className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
@@ -120,6 +125,7 @@ function EventRow({
           {/* Monthly amount */}
           {(event.type === "start" || event.type === "change_amount" || event.type === "add_fund") && (
             <select
+              aria-label="毎月の積立額"
               value={event.monthlyAmount ?? 30000}
               onChange={(e) => onChange({ ...event, monthlyAmount: Number(e.target.value) })}
               className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
@@ -133,6 +139,7 @@ function EventRow({
           {/* Lump sum */}
           {event.type === "lump_sum" && (
             <select
+              aria-label="一括投資額"
               value={event.lumpAmount ?? 100000}
               onChange={(e) => onChange({ ...event, lumpAmount: Number(e.target.value) })}
               className="w-full bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
@@ -147,6 +154,7 @@ function EventRow({
           {event.type === "bonus" && (
             <div className="flex gap-2">
               <select
+                aria-label="ボーナス投資額"
                 value={event.bonusAmount ?? 50000}
                 onChange={(e) => onChange({ ...event, bonusAmount: Number(e.target.value) })}
                 className="flex-1 bg-white/[0.06] border border-white/12 rounded-lg px-2 py-1.5 text-xs text-zinc-300 appearance-none"
@@ -159,6 +167,7 @@ function EventRow({
                 {[6, 12].map((m) => (
                   <button
                     key={m}
+                    aria-pressed={(event.bonusMonths ?? []).includes(m)}
                     onClick={() => {
                       const months = event.bonusMonths ?? [];
                       const next = months.includes(m) ? months.filter((x) => x !== m) : [...months, m];

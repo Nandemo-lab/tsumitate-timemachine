@@ -98,6 +98,7 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
               <button
                 key={y}
                 onClick={() => { setStartYear(y); setShowResult(false); }}
+                aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
                     ? "bg-white/8 text-indigo-300 border-indigo-400/40"
@@ -122,6 +123,7 @@ export default function CompareView({ initialFundA = "sp500", initialYear = 2020
               <button
                 key={a}
                 onClick={() => { setMonthlyAmount(a); setShowResult(false); }}
+                aria-pressed={monthlyAmount === a}
                 className={`rounded-xl text-xs font-black transition-all border ${
                   monthlyAmount === a
                     ? "bg-white/8 text-indigo-300 border-indigo-400/40"
