@@ -59,6 +59,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   };
 
   const run = useCallback(() => {
+    markSimulationStart();
     simulate({ fundId: fundA, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth });
     simulate({ fundId: fundB, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth });
     saveRecentSimulation({ mode: "compare", fundA, fundB, startYear, startMonth, endYear: commonEndYear, endMonth: commonEndMonth, monthlyAmount });

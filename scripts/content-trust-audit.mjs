@@ -33,6 +33,9 @@ const animatedNumber = read("components/simulation/AnimatedNumber.tsx");
 const compareView = read("components/views/CompareView.tsx");
 const winnerBanner = read("components/simulation/WinnerBanner.tsx");
 const resultCard = read("components/simulation/ResultCard.tsx");
+const compareClient = read("app/compare/[slug]/ComparePageClient.tsx");
+const analytics = read("lib/analytics.ts");
+const recentConditions = read("components/simulation/RecentConditions.tsx");
 
 assert(!guides.includes("評価額は約162万円"), "再現不能なNISA評価額が再混入");
 assert(guides.includes("nisaMonthly10kExample.finalValue"), "NISA実績例がsimulate結果を参照していない");
@@ -57,9 +60,12 @@ assert(home.includes("商品設定前の期間や欠損値は別系列で補い�
 assert(home.includes("実績期間：2026年8月まで"), "トップでデータ終端を開示していない");
 assert(home.includes("条件を選んで積立実績を調べる"), "トップでシミュレーションを主行動として示していない");
 assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf("条件別の検証例"), "トップで検証例が主行動より先に表示される");
+assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseComparePreset"), "静的Compareから同じ2商品の比較フォームへ条件を引き継いでいない");
+assert(analytics.includes("trackShareSuccess") && !analytics.includes('track("compare_click", params);\n  track("compare_start", params);'), "共有成功または比較開始の計測定義がクリックと混在している");
+assert(recentConditions.includes("ttm:last-seen-date:v1") && recentConditions.includes("previous < today"), "同日内の表示を再訪として計測する可能性がある");
 assert(!timeMachine.includes("2025 + 5 / 12") && timeMachine.includes("getAvailableEndMonth"), "期間表示が旧終端2025年6月へ固定されている");
-assert(timeMachine.includes("year: startYear, month: startMonth, amount: monthlyAmount") && homePage.includes("initialAmount={comparePreset.amount}"), "単一結果から比較へ開始年月・月額を引き継いでいない");
-assert(homePage.includes("useLayoutEffect") && homePage.includes("}, [activeTab])") && !homePage.includes('behavior: "smooth"'), "SPA画面切替のスクロールが遷移後も中間位置へ残る可能性がある");
+assert(timeMachine.includes("year: startYear, month: startMonth, amount: monthlyAmount") && homePage.includes("initialAmount={displayedComparePreset.amount}"), "単一結果から比較へ開始年月・月額を引き継いでいない");
+assert(homePage.includes("useLayoutEffect") && homePage.includes("}, [displayedTab])") && !homePage.includes('behavior: "smooth"'), "SPA画面切替のスクロールが遷移後も中間位置へ残る可能性がある");
 assert(emotional.includes("Math.trunc(profit / 10_000)"), "結果カードと説明文で損益の万円丸めが一致しない");
 assert(animatedNumber.includes("useState(value)") && animatedNumber.includes("useRef(value)"), "画面外の結果カードが実値ではなく0円を初期表示する可能性がある");
 assert(!compareView.includes("が勝った理由") && compareView.includes("比較する商品の確認事項"), "比較結果から未検証の勝因を断定している");

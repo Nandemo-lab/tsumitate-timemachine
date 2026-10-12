@@ -10,10 +10,15 @@ export default function RecentConditions({ onRestore }: { onRestore: (item: Rece
   const returnVisitTracked = useRef(false);
 
   useEffect(() => {
-    if (items.length > 0 && !returnVisitTracked.current) {
-      returnVisitTracked.current = true;
-      trackReturnVisit("recent_conditions");
-    }
+    if (items.length === 0 || returnVisitTracked.current) return;
+    returnVisitTracked.current = true;
+    const key = "ttm:last-seen-date:v1";
+    const today = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit",
+    }).format(new Date());
+    const previous = window.localStorage.getItem(key);
+    window.localStorage.setItem(key, today);
+    if (previous && previous < today) trackReturnVisit("recent_conditions");
   }, [items.length]);
 
   if (items.length === 0) return null;

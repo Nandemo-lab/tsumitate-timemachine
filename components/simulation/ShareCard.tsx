@@ -6,7 +6,7 @@ import { formatCurrency } from "@/lib/simulation";
 import { Copy, Check } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import { trackShareClick } from "@/lib/analytics";
+import { trackShareClick, trackShareSuccess } from "@/lib/analytics";
 import { buildShareUrl } from "@/lib/utils/shareUrl";
 import { RETURN_SERIES_REGISTRY } from "@/lib/return-series";
 
@@ -85,6 +85,7 @@ ${url}
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shareText);
     trackShareClick({ method: "copy", context: planB ? "compare" : "single" });
+    trackShareSuccess({ method: "copy", context: planB ? "compare" : "single" });
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };

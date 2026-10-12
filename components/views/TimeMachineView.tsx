@@ -120,6 +120,7 @@ export default function TimeMachineView({
   }, [fund, startYear, startMonth, subMode]);
 
   const run = () => {
+    markSimulationStart();
     if (subMode === "single") {
       const [endYear, endMonth] = getAvailableEndMonth(fund).split("-").map(Number);
       simulate({ fundId: fund, startYear, startMonth, monthlyAmount, endYear, endMonth });

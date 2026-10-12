@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FundId } from "@/types";
 import BottomNav, { MainTab } from "@/components/layout/BottomNav";
@@ -9,6 +9,8 @@ import EncyclopediaView from "@/components/views/EncyclopediaView";
 import TimeMachineView from "@/components/views/TimeMachineView";
 import CompareView from "@/components/views/CompareView";
 import { RecentSimulation } from "@/lib/recent-simulations";
+import { isValidMonthlyAmount, parseStrictInteger } from "@/lib/simulation";
+import { isReturnMonthAvailable, isVerifiedReturnSeries } from "@/lib/return-series";
 
 interface TmPreset {
   fund: FundId;
@@ -26,7 +28,28 @@ interface ComparePreset {
   amount: number;
 }
 
+const subscribeToLocation = () => () => {};
+const getLocationSearch = () => window.location.search;
+const getServerLocationSearch = () => "";
+
+function parseComparePreset(search: string): ComparePreset | null {
+  const params = new URLSearchParams(search);
+  if (params.get("tab") !== "compare") return null;
+  const fund = params.get("fund") as FundId | null;
+  const fundB = params.get("fundB") as FundId | null;
+  const year = parseStrictInteger(params.get("year"));
+  const month = parseStrictInteger(params.get("month"));
+  const amount = parseStrictInteger(params.get("amount"));
+  if (!fund || !fundB || fund === fundB || !isVerifiedReturnSeries(fund) || !isVerifiedReturnSeries(fundB)) return null;
+  if (year === null || month === null || amount === null || month < 1 || month > 12 || !isValidMonthlyAmount(amount)) return null;
+  if (!isReturnMonthAvailable(fund, year, month) || !isReturnMonthAvailable(fundB, year, month)) return null;
+  return { fund, fundB, year, month, amount };
+}
+
 export default function Home() {
+  const locationSearch = useSyncExternalStore(subscribeToLocation, getLocationSearch, getServerLocationSearch);
+  const urlComparePreset = parseComparePreset(locationSearch);
+  const [urlPresetDismissed, setUrlPresetDismissed] = useState(false);
   const [activeTab, setActiveTab] = useState<MainTab>("home");
   const [encyclopediaFund, setEncyclopediaFund] = useState<FundId | null>(null);
   const [comparePreset, setComparePreset] = useState<ComparePreset>({
@@ -39,9 +62,12 @@ export default function Home() {
   // AnimatePresence swaps views after the click handler returns. Scrolling in
   // the handler can therefore be undone when the old view is removed. Reset
   // after the active view has committed so every tab starts at its heading.
+  const displayedTab: MainTab = !urlPresetDismissed && urlComparePreset ? "compare" : activeTab;
+  const displayedComparePreset = !urlPresetDismissed && urlComparePreset ? urlComparePreset : comparePreset;
+
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
-  }, [activeTab]);
+  }, [displayedTab]);
 
 
   // From home taraeba cards: preload TM with result shown
@@ -76,6 +102,7 @@ export default function Home() {
   };
 
   const handleTabChange = (tab: MainTab) => {
+    setUrlPresetDismissed(true);
     if (tab !== "encyclopedia") setEncyclopediaFund(null);
     // Reset autoRun when user manually switches to timemachine
     if (tab === "timemachine") setTmPreset((p) => ({ ...p, autoRun: false }));
@@ -97,7 +124,7 @@ export default function Home() {
 
       <div className="relative max-w-lg mx-auto">
         <AnimatePresence mode="wait">
-          {activeTab === "home" && (
+          {displayedTab === "home" && (
             <motion.div
               key="home"
               initial={{ opacity: 0, y: 10 }}
@@ -114,7 +141,7 @@ export default function Home() {
             </motion.div>
           )}
 
-          {activeTab === "encyclopedia" && (
+          {displayedTab === "encyclopedia" && (
             <motion.div
               key="encyclopedia"
               initial={{ opacity: 0, y: 10 }}
@@ -129,7 +156,7 @@ export default function Home() {
             </motion.div>
           )}
 
-          {activeTab === "timemachine" && (
+          {displayedTab === "timemachine" && (
             <motion.div
               key={`timemachine-${tmPreset.fund}-${tmPreset.year}-${tmPreset.autoRun}`}
               initial={{ opacity: 0, y: 10 }}
@@ -148,27 +175,27 @@ export default function Home() {
             </motion.div>
           )}
 
-          {activeTab === "compare" && (
+          {displayedTab === "compare" && (
             <motion.div
-              key={`compare-${comparePreset.fund}-${comparePreset.year}-${comparePreset.month}-${comparePreset.amount}`}
+              key={`compare-${displayedComparePreset.fund}-${displayedComparePreset.year}-${displayedComparePreset.month}-${displayedComparePreset.amount}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.22 }}
             >
               <CompareView
-                initialFundA={comparePreset.fund}
-                initialFundB={comparePreset.fundB}
-                initialYear={comparePreset.year}
-                initialMonth={comparePreset.month}
-                initialAmount={comparePreset.amount}
+                initialFundA={displayedComparePreset.fund}
+                initialFundB={displayedComparePreset.fundB}
+                initialYear={displayedComparePreset.year}
+                initialMonth={displayedComparePreset.month}
+                initialAmount={displayedComparePreset.amount}
               />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <BottomNav active={activeTab} onChange={handleTabChange} />
+      <BottomNav active={displayedTab} onChange={handleTabChange} />
     </main>
   );
 }

@@ -32,13 +32,16 @@ export function trackCalculate(params: CalculateParams) {
 /** シェアボタン押下（X共有・ネイティブ共有・URLコピー） */
 export function trackShareClick(params: ShareClickParams) {
   track("share_click", params);
+}
+
+/** 共有処理が完了した場合だけ送信する。 */
+export function trackShareSuccess(params: ShareClickParams) {
   track("share", params);
 }
 
 /** 「他の銘柄と比較する」導線タップ */
 export function trackCompareClick(params: CompareClickParams) {
   track("compare_click", params);
-  track("compare_start", params);
 }
 
 /** データ出典を実際に開いた時だけ送信する。自由入力やURLは送らない。 */

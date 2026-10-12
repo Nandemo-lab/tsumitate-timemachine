@@ -49,7 +49,11 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
       "暴落時に強いのはS&P500とNASDAQ100のどちらですか？",
       "初心者向きなのはS&P500とNASDAQ100のどちらですか？",
     ],
-    "orukan-vs-nasdaq100": ["初心者にはオルカンとNASDAQ100のどちらが向いていますか？"],
+    "orukan-vs-nasdaq100": [
+      "初心者にはオルカンとNASDAQ100のどちらが向いていますか？",
+      "オルカンとNASDAQ100を両方積み立てるのはありですか？",
+      "新NISAでオルカンとNASDAQ100どちらが人気ですか？",
+    ],
     "nasdaq100-vs-fangplus": [
       "NASDAQ100とFANG+の違いは何ですか？",
       "リターンが高いのはNASDAQ100とFANG+のどちらですか？",
@@ -117,6 +121,9 @@ for (const previous of baselineModule.exports.COMPARE_PAGES) {
   };
   if (current.faqs.length !== previous.faqs.length) throw new Error(`FAQ count regression ${previous.slug}`);
   const authorizedQuestionChanges = {
+    "orukan-vs-nasdaq100": new Map([
+      ["新NISAでオルカンとNASDAQ100どちらが人気ですか？", "新NISAでオルカンとNASDAQ100を比べるときの確認点は？"],
+    ]),
     "schd-vs-vym": new Map([
       ["NISAで買うならSCHDとVYMのどちらがおすすめですか？", "NISAでSCHDとVYMを比較するときの確認点は？"],
     ]),

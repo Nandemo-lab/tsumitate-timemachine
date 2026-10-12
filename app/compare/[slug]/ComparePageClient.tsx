@@ -17,6 +17,7 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
   const winner = isTie ? null : (resultA.finalValue > resultB.finalValue ? resultA : resultB);
   const diff = Math.abs(resultA.finalValue - resultB.finalValue);
   const signed = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${formatCurrency(Math.abs(value))}`;
+  const compareHref = `/?tab=compare&fund=${resultA.fundId}&fundB=${resultB.fundId}&year=${resultA.startYear}&month=${resultA.startMonth}&amount=${resultA.monthlyAmount}`;
 
   return (
     <div className="space-y-8">
@@ -40,7 +41,7 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
               className="rounded-xl border p-4 space-y-3"
               style={{ borderColor: r.fundColor + "44", background: r.fundColor + "0a" }}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 leading-tight">
                 <div className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ background: r.fundColor }} />
                 <span className="text-sm font-bold text-white">{r.fundName}</span>
               </div>
@@ -50,16 +51,16 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
                   {formatCurrency(r.finalValue)}
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2 min-[390px]:grid-cols-2">
                 <div>
                   <p className="text-[10px] text-zinc-500">利益</p>
-                  <p className="text-sm font-bold tabular-nums" style={{ color: r.fundColor }}>
+                  <p className="whitespace-nowrap text-xs font-bold tabular-nums min-[390px]:text-sm" style={{ color: r.fundColor }}>
                     {signed(r.profit)}
                   </p>
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-500">リターン</p>
-                  <p className="text-sm font-bold tabular-nums" style={{ color: r.fundColor }}>
+                  <p className="whitespace-nowrap text-xs font-bold tabular-nums min-[390px]:text-sm" style={{ color: r.fundColor }}>
                     {r.returnRate > 0 ? "+" : ""}{r.returnRate}%
                   </p>
                 </div>
@@ -91,8 +92,8 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Link href="/" onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
-          自分の条件で比較する
+        <Link href={compareHref} onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white">
+          同じ2商品で条件を変える
         </Link>
         <Link href="/about/data-sources" onClick={() => trackSourceView("compare_result")} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-zinc-300">
           データ期間・出典を確認
