@@ -70,6 +70,8 @@ assert(home.includes("条件を選んで積立実績を調べる"), "トップ�
 assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf("条件別の検証例"), "トップで検証例が主行動より先に表示される");
 assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseComparePreset"), "静的Compareから同じ2商品の比較フォームへ条件を引き継いでいない");
 assert(analytics.includes("trackShareSuccess") && !analytics.includes('track("compare_click", params);\n  track("compare_start", params);'), "共有成功または比較開始の計測定義がクリックと混在している");
+assert(analytics.includes('mode === "compare" ? "compare_start" : "simulation_start"'), "比較開始と単一シミュレーション開始のイベントが分離されていない");
+assert(analytics.includes('params.mode === "compare" ? "compare_complete" : "simulation_complete"'), "比較完了と単一シミュレーション完了のイベントが分離されていない");
 assert(recentConditions.includes("ttm:last-seen-date:v1") && recentConditions.includes("previous < today"), "同日内の表示を再訪として計測する可能性がある");
 assert(compareClient.includes("repeat(2,minmax(0,1fr))") && compareClient.includes("min-w-0 space-y-3"), "Compare結果カードがモバイル幅を押し広げる可能性がある");
 assert(homePage.includes("parseComparePreset"), "比較条件のURL復元が欠落している");
@@ -80,6 +82,9 @@ assert(emotional.includes("Math.trunc(profit / 10_000)"), "結果カードと説
 assert(animatedNumber.includes("useState(value)") && animatedNumber.includes("useRef(value)"), "画面外の結果カードが実値ではなく0円を初期表示する可能性がある");
 assert(!compareView.includes("が勝った理由") && compareView.includes("比較する商品の確認事項"), "比較結果から未検証の勝因を断定している");
 assert(compareView.includes("resultA.finalValue === resultB.finalValue") && compareView.includes("この条件では期間末評価額が同額です"), "比較UIが同額時に片側だけを優位表示する可能性がある");
+assert(compareView.includes("Math.abs(resultA.finalValue - resultB.finalValue)"), "比較フォームの差額が円単位の期間末評価額から算出されていない");
+assert(compareClient.includes("Math.abs(resultA.finalValue - resultB.finalValue)"), "静的Compareの差額が円単位の期間末評価額から算出されていない");
+assert(shareCard.includes("Math.abs(winner.finalValue - loser.finalValue)"), "ShareCardの差額が円単位の期間末評価額から算出されていない");
 assert(winnerBanner.includes("この条件で評価額が高い") && resultCard.includes("この条件で評価額が高い"), "比較UIの優位ラベルが条件限定であることを示していない");
 assert(!winnerBanner.includes("🏆 WINNER") && !resultCard.includes(">WINNER<"), "比較UIに推奨と誤認されるWINNER表示が残っている");
 assert(winnerBanner.includes('n >= 0 ? "+" : ""') && winnerBanner.includes('winner.returnRate >= 0 ? "+" : ""'), "比較UIが負の損益へ+記号を付ける可能性がある");

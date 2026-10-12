@@ -83,7 +83,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   const isTie = Boolean(resultA && resultB && resultA.finalValue === resultB.finalValue);
   const winnerResult = resultA && resultB ? (resultA.finalValue >= resultB.finalValue ? resultA : resultB) : null;
   const loserResult  = resultA && resultB ? (resultA.finalValue >= resultB.finalValue ? resultB : resultA) : null;
-  const difference   = resultA && resultB ? Math.abs(resultA.profit - resultB.profit) : 0;
+  const difference   = resultA && resultB ? Math.abs(resultA.finalValue - resultB.finalValue) : 0;
 
   return (
     <div className="pt-6 pb-28 px-4 space-y-4">

@@ -55,6 +55,17 @@ Query×Pageで確認できた主要語は、オルカン/NASDAQ100の比較・�
 - 90日後: 2027-01-10前後。検索入口からシミュレーション完了までの実測が蓄積していることを条件に、改善継続・縮小・方向転換を判断する。
 - 180日後: 2027-04-10前後。AdSense承認後の実RPMが取得できた場合だけ、月3万円に必要なPVとの距離を再計算する。未承認・未計測なら収益額を推定実績として扱わない。
 
+## 比較差額とファネル定義（2026-10-12追加確認）
+
+- 2020年1月〜2026年8月・月3万円では、オルカン対S&P500の本番表示は516万円対541万円、円単位の期間末評価額差を表示用に丸めて24万円。84万円はオルカン対NASDAQ100（516万円対600万円）の差額で、前回報告の比較対象記載が不足していた。
+- Compare、条件変更フォーム、ShareCardはいずれも丸め前の`finalValue`差を使用する。表示済みの万円文字列同士を減算しない。
+- Organic Landing → Simulation Start: GA4のOrganic Searchランディングセッションを分母、同じ対象期間の`simulation_start`発生セッションを分子とする。探索レポートでセッション単位に集計する。
+- Simulation Start → Complete: `simulation_start`発生セッションを分母、`simulation_complete`発生セッションを分子とする。
+- Compare Start → Complete: `compare_start`発生セッションを分母、`compare_complete`発生セッションを分子とする。
+- Complete → Share: `simulation_complete`または`compare_complete`発生セッションを分母、コピー成功時の`share`発生セッションを分子とする。
+- 保存条件を利用した再訪: 保存条件があり、前回確認日より後の日に表示した端末で送る`return_visit`を使用する。同日再読込は再訪に数えない。ユーザーIDを収集しないため、端末・ブラウザをまたぐ再訪率ではない。
+- 新イベントの計測開始日は、`compare_start`分離修正の本番公開日とする（公開後にSHAと日時を追記）。公開前の欠損期間を0件として扱わない。
+
 ## 検証証拠
 
 - lint 0 errors / 0 warnings、TypeScript 0 errors、Next.js 16.3.8 build成功（218 static generation units）。
