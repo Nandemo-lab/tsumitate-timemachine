@@ -64,5 +64,7 @@ NYSE FANG+指数は年次で構成銘柄を入替することがある。
 
 | 用途 | ソース | 更新頻度 |
 |---|---|---|
-| 年次リターン（自動） | Stooq.com | 6時間キャッシュ |
-| 年次リターン（手動フォールバック） | `lib/funds.ts` の `annualReturns` | 毎年末に手動追記 |
+| 検証済み月次リターン | Vanguard / iShares / 国内運用会社 / 日本銀行 | 共通確定月がそろった時点 |
+| 年次表示値 | 検証済み月次ledgerから集計 | 月次データ更新時 |
+
+月次更新の取得・独立検算・公開ゲートは [`docs/VERIFIED_DATA_UPDATE_RUNBOOK.md`](VERIFIED_DATA_UPDATE_RUNBOOK.md) に従う。Stooqや推測値を公開月次系列のfallbackとして使用しない。

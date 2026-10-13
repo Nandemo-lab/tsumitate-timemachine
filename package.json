@@ -20,7 +20,8 @@
     "system-check-audit": "node scripts/system-check-audit.mjs",
     "verified-ledger-audit": "node scripts/verified-ledger-audit.mjs",
     "return-series-audit": "node scripts/return-series-audit.mjs",
-    "september-data-audit": "node scripts/september-data-audit.mjs"
+    "september-data-audit": "node scripts/september-data-audit.mjs",
+    "verified-data-release-audit": "node scripts/verified-data-release-audit.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
