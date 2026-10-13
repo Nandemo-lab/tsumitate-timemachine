@@ -78,6 +78,10 @@ assert(analytics.includes('window.location.hostname !== "tsumitate-timemachine.c
 assert(analyticsLoader.includes('window.location.hostname === PRODUCTION_HOST') && analyticsLoader.includes('() => false'), "Google tagが本番ホスト以外で読み込まれる可能性がある");
 assert(rootLayout.includes('bg-[#263A53]') && rootLayout.includes('text-white'), "本文スキップリンクの文字と背景が同色になる可能性がある");
 assert(recentConditions.includes("ttm:last-seen-date:v1") && recentConditions.includes("previous < today"), "同日内の表示を再訪として計測する可能性がある");
+assert(!timeMachine.includes('text-xl font-black text-white">{formatCurrency(monthlyAmount)}') && !compareView.includes('text-xl font-black text-white">{formatCurrency(monthlyAmount)}'), "白背景の条件フォームで月額が白文字になり読めない");
+assert(!analytics.includes("final_value") && !analytics.includes("profit") && !analytics.includes("return_rate"), "GA4へ評価額・損益・利益率を送信する可能性がある");
+assert(timeMachine.indexOf("markSimulationStart();") < timeMachine.indexOf("trackCalculate({ mode: subMode"), "単一シミュレーションでstartより先にcompleteを送信する可能性がある");
+assert(compareView.indexOf("markSimulationStart();") < compareView.indexOf('trackCalculate({ mode: "compare"'), "比較でstartより先にcompleteを送信する可能性がある");
 assert(compareClient.includes("repeat(2,minmax(0,1fr))") && compareClient.includes("min-w-0 space-y-3"), "Compare結果カードがモバイル幅を押し広げる可能性がある");
 assert(homePage.includes("parseComparePreset"), "比較条件のURL復元が欠落している");
 assert(!timeMachine.includes("2025 + 5 / 12") && timeMachine.includes("getAvailableEndMonth"), "期間表示が旧終端2025年6月へ固定されている");

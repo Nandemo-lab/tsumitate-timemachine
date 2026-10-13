@@ -1,7 +1,7 @@
 {
-  "project": "3.0公開後成長検証・AdSense最終準備",
-  "phase": 8,
-  "status": "post_3_measurement_fix_verified_locally",
+  "project": "3.0成長計測精度・AdSense最終確認・次期SEO準備",
+  "phase": 7,
+  "status": "release_candidate_verified",
   "progressPercent": 90,
   "completedTasks": [
     "3.0 Production SHA 16931b8と公開日を記録",
@@ -12,10 +12,14 @@
     "本文スキップリンクのコントラストを修正",
     "lint・TypeScript・build・127ページQA・全関連auditを完了",
     "隔離production serverでlive QA 100/100を完了"
+    ,"GA4のstart/complete順序・本番hostname制限・個人情報非送信を精査"
+    ,"GSC公開前基準と次期SEO候補3URLの3か月実測を保存"
+    ,"2026年9月公式データの取得可能性を一次情報で確認"
+    ,"白背景フォームで月額が読めない表示不整合を修正"
   ],
-  "pendingTasks": ["commit・push・GitHub Actions追跡", "Vercel Production反映", "公開後のタグ隔離・E2E確認", "2026-11-10基準の28日評価"],
+  "pendingTasks": ["commit・push・GitHub Actions追跡", "Vercel Production反映と公開後確認", "2026-11-12以降の28日評価"],
   "blockers": [],
-  "commitSHA": "16931b861e02569f87935d6c8b3fcfc74efb63a2",
-  "verifiedAt": "2026-10-13T20:00:00+09:00",
-  "evidencePaths": ["docs/audits/post-3-growth-baseline-2026-10-13.md", "scripts/content-trust-audit.mjs"]
+  "commitSHA": "e58bfc51fa0ec0f7777ddd17eb69136b2ebfe583",
+  "verifiedAt": "2026-10-13T21:00:00+09:00",
+  "evidencePaths": ["docs/audits/post-3-growth-baseline-2026-10-13.md", "docs/audits/growth-measurement-readiness-2026-10-13.md", "scripts/content-trust-audit.mjs"]
 }

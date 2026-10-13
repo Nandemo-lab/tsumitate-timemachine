@@ -129,7 +129,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
         <div>
           <div className="flex items-baseline justify-between mb-2">
             <p className="text-xs font-black tracking-widest uppercase text-slate-600">毎月の積立額</p>
-            <span className="text-xl font-black text-white">{formatCurrency(monthlyAmount)}</span>
+            <span className="text-xl font-black text-[#263A53]">{formatCurrency(monthlyAmount)}</span>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {MONTHLY_AMOUNTS.slice(0, 6).map((a) => (
