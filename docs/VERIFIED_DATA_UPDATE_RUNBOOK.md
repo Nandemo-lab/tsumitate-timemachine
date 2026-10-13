@@ -27,8 +27,8 @@ rawは `data/verified/raw/` に保存し、manifestのSHA-256と一致させる�
 npm run verified-data-release-audit
 npm run verified-ledger-audit
 npm run return-series-audit
-npm run vt-data-audit
-npm run compare-return-audit
+node scripts/vt-data-audit.mjs
+node scripts/compare-return-audit.mjs
 npm run g-quality-boundary-audit
 ```
 
