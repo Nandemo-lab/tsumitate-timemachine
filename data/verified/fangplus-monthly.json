@@ -15,10 +15,10 @@
   "feeTreatment": "reflected in NAV",
   "fxTreatment": "none",
   "firstMonth": "2018-02",
-  "lastMonth": "2026-08",
+  "lastMonth": "2026-09",
   "rawDataUrl": "https://www.daiwa-am.co.jp/funds/detail/csv_out.php?code=3346&type=1",
-  "retrievedAt": "2026-10-11",
-  "observationCount": 103,
+  "retrievedAt": "2026-10-13",
+  "observationCount": 104,
   "missingMonths": [],
   "inceptionTreatment": "product observations only; no pre-inception backfill",
   "notes": "No interpolation or fallback.",
@@ -948,6 +948,15 @@
       "previousMonthEndReinvestedNav": 91805,
       "monthEndDate": "2026-08-31",
       "monthEndReinvestedNav": 101309,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-09",
+      "monthlyReturn": -0.0015003602838840058,
+      "previousMonthEndDate": "2026-08-31",
+      "previousMonthEndReinvestedNav": 101309,
+      "monthEndDate": "2026-09-30",
+      "monthEndReinvestedNav": 101157,
       "sourceBasis": "official reinvested NAV, last published business day of each month"
     }
   ]

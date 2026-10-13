@@ -45,7 +45,7 @@ function analyze(points, monthlyAmount) {
 
 for (const [fundId, expected] of Object.entries(cases)) {
   const doc = JSON.parse(fs.readFileSync(path.join(verifiedRoot, `${fundId}-monthly.json`), "utf8"));
-  const points = doc.observations.filter((point) => point.month >= "2020-01" && point.month <= "2026-08");
+  const points = doc.observations.filter((point) => point.month >= "2020-01" && point.month <= "2026-09");
   const actual = analyze(points, 30_000);
   if (actual.below !== expected[0] || actual.longest !== expected[1] || actual.worst !== expected[2] || actual.worstMonth !== expected[3]) {
     throw new Error(`${fundId}: expected ${expected.join("/")}, got ${actual.below}/${actual.longest}/${actual.worst}/${actual.worstMonth}`);

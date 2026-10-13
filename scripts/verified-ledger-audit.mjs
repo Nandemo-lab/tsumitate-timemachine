@@ -2,14 +2,14 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.join(process.cwd(), "data", "verified");
-const expected = { vt: ["2015-01", "2026-08", 140], vti: ["2015-01", "2026-08", 140], vym: ["2015-01", "2026-08", 140], eem: ["2015-01", "2026-08", 140], inda: ["2015-01", "2026-08", 140], orcan: ["2018-11", "2026-08", 94], sp500: ["2018-08", "2026-08", 97], nasdaq100: ["2018-09", "2026-08", 96], fangplus: ["2018-02", "2026-08", 103] };
+const expected = { vt: ["2015-01", "2026-09", 141], vti: ["2015-01", "2026-09", 141], vym: ["2015-01", "2026-09", 141], eem: ["2015-01", "2026-09", 141], inda: ["2015-01", "2026-09", 141], orcan: ["2018-11", "2026-09", 95], sp500: ["2018-08", "2026-09", 98], nasdaq100: ["2018-09", "2026-09", 97], fangplus: ["2018-02", "2026-09", 104] };
 let failures = 0;
 const fail = (message) => { failures++; console.error(`ERROR ${message}`); };
 const monthBefore = (month) => { let [y, m] = month.split("-").map(Number); if (--m === 0) { y--; m = 12; } return `${y}-${String(m).padStart(2, "0")}`; };
 const simulate = (points, amount) => { let value = 0; for (const p of points) value = (value + amount) * (1 + p.monthlyReturn); return Math.round(value); };
 
 const manifest = JSON.parse(await readFile(path.join(root, "manifest.json"), "utf8"));
-if (manifest.fx.observationCount !== 141) fail("FX observation count");
+if (manifest.fx.observationCount !== 142) fail("FX observation count");
 for (const [id, [first, last, count]] of Object.entries(expected)) {
   const doc = JSON.parse(await readFile(path.join(root, `${id}-monthly.json`), "utf8"));
   const p = doc.observations; const months = p.map((x) => x.month);

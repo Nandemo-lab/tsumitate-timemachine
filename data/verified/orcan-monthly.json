@@ -15,10 +15,10 @@
   "feeTreatment": "reflected in NAV",
   "fxTreatment": "none",
   "firstMonth": "2018-11",
-  "lastMonth": "2026-08",
+  "lastMonth": "2026-09",
   "rawDataUrl": "https://www.am.mufg.jp/fund_file/setteirai/253425.csv",
-  "retrievedAt": "2026-10-11",
-  "observationCount": 94,
+  "retrievedAt": "2026-10-13",
+  "observationCount": 95,
   "missingMonths": [],
   "inceptionTreatment": "product observations only; no pre-inception backfill",
   "notes": "No interpolation or fallback.",
@@ -867,6 +867,15 @@
       "previousMonthEndReinvestedNav": 37521,
       "monthEndDate": "2026-08-31",
       "monthEndReinvestedNav": 38905,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-09",
+      "monthlyReturn": -0.02863385169001409,
+      "previousMonthEndDate": "2026-08-31",
+      "previousMonthEndReinvestedNav": 38905,
+      "monthEndDate": "2026-09-30",
+      "monthEndReinvestedNav": 37791,
       "sourceBasis": "official reinvested NAV, last published business day of each month"
     }
   ]

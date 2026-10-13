@@ -1,8 +1,8 @@
 {
-  "project": "3.0成長計測精度・AdSense最終確認・次期SEO準備",
-  "phase": 7,
-  "status": "release_candidate_verified",
-  "progressPercent": 90,
+  "project": "3.0公式月次データ2026年9月更新・成長計測準備",
+  "phase": 8,
+  "status": "local_qa_in_progress",
+  "progressPercent": 75,
   "completedTasks": [
     "3.0 Production SHA 16931b8と公開日を記録",
     "GSC直近28日・前28日の最新実測を読み取り専用で取得",
@@ -16,10 +16,15 @@
     ,"GSC公開前基準と次期SEO候補3URLの3か月実測を保存"
     ,"2026年9月公式データの取得可能性を一次情報で確認"
     ,"白背景フォームで月額が読めない表示不整合を修正"
+    ,"A品質9系列の2026年9月公式rawを取得しSHA-256を保存"
+    ,"9月リターンを一次rawから独立再計算"
+    ,"2026年8月以前の全観測が不変であることをprefix SHAで確認"
+    ,"共通終端・表示・シミュレーション条件を2026年9月へ更新"
+    ,"lint・TypeScript・Build・127ページQAと主要金融auditを完了"
   ],
-  "pendingTasks": ["commit・push・GitHub Actions追跡", "Vercel Production反映と公開後確認", "2026-11-12以降の28日評価"],
+  "pendingTasks": ["live QAと4 viewport実画面確認", "commit・push・GitHub Actions追跡", "Vercel Production反映と公開後確認", "2026-11-12以降の28日評価"],
   "blockers": [],
   "commitSHA": "e58bfc51fa0ec0f7777ddd17eb69136b2ebfe583",
-  "verifiedAt": "2026-10-13T21:00:00+09:00",
-  "evidencePaths": ["docs/audits/post-3-growth-baseline-2026-10-13.md", "docs/audits/growth-measurement-readiness-2026-10-13.md", "scripts/content-trust-audit.mjs"]
+  "verifiedAt": "2026-10-13T23:00:00+09:00",
+  "evidencePaths": ["docs/audits/verified-data-update-2026-09.md", "scripts/september-data-audit.mjs", "data/verified/manifest.json"]
 }

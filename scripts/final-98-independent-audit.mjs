@@ -75,7 +75,7 @@ for (const url of urls) {
   const sources = links.filter((href) => official.test(href));
   const hasCalculation = /(元本|評価額|リターン|積立回数|元本割れ月数|月末の最大乖離|シミュレーション)/.test(mainText);
   const hasQuality = /(A：公式月次データ|G：参考データ|データ品質|検証済み月次)/.test(mainText);
-  const hasFreshness = /(2026年8月|更新日|最終更新|確認日|データ終端)/.test(mainText);
+  const hasFreshness = /(2026年9月|更新日|最終更新|確認日|データ終端)/.test(mainText);
   const [treatment, necessity] = roleAssessment(path, type, mainText);
   pages.push({ url, path, type, status: response.status, title, description, canonical, mainText, links, sources, hasCalculation, hasQuality, hasFreshness, treatment, necessity });
 }

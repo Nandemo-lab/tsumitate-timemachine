@@ -134,8 +134,8 @@ export default function RankingView({ page }: Props) {
             <h2 className="text-xs font-bold text-[#236B8E]">{isHighDividend ? "実績と商品属性の分け方" : "数値順位の計算方法"}</h2>
             <p className="text-xs leading-relaxed text-slate-600">
               {isHighDividend
-                ? `VYMは${page.simYear}年${page.simMonth}月から2026年8月まで月初に${formatCurrency(page.simAmount)}を積み立てたA品質の検証済み結果を表示します。SCHDはG品質のため評価額・利益・順位を表示せず、公式に確認できる商品属性だけを掲載します。`
-                : `${page.simYear}年${page.simMonth}月から2026年8月まで、月初に${formatCurrency(page.simAmount)}を積み立てた期間末評価額の高い順です。元本は${comparisonResult ? formatCurrency(comparisonResult.totalPrincipal) : "対象結果で確認"}で、期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}
+                ? `VYMは${page.simYear}年${page.simMonth}月から2026年9月まで月初に${formatCurrency(page.simAmount)}を積み立てたA品質の検証済み結果を表示します。SCHDはG品質のため評価額・利益・順位を表示せず、公式に確認できる商品属性だけを掲載します。`
+                : `${page.simYear}年${page.simMonth}月から2026年9月まで、月初に${formatCurrency(page.simAmount)}を積み立てた期間末評価額の高い順です。元本は${comparisonResult ? formatCurrency(comparisonResult.totalPrincipal) : "対象結果で確認"}で、期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}
             </p>
             <p className="text-xs leading-relaxed text-slate-500">
               候補商品はこのページの目的に沿って絞っています。順位は将来予測、推奨順位、価格変動の小ささを表すものではありません。G品質は順位外の参考情報として分けます。

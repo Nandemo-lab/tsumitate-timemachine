@@ -24,7 +24,7 @@ ok(/filter\(\(fund\) => VERIFIED_FUND_IDS\.includes/.test(simulationSource), "pe
 ok(/managementFee: "0\.060%（年率）"/.test(fundsSource), "SCHD expense ratio is 0.060%");
 ok(/formalName: "Schwab U\.S\. Dividend Equity ETF（SCHD）"/.test(fundsSource), "SCHD identity is US ETF");
 
-const expected = { vt: 140, vti: 140, vym: 140, eem: 140, inda: 140, orcan: 94, sp500: 97, nasdaq100: 96, fangplus: 103 };
+const expected = { vt: 141, vti: 141, vym: 141, eem: 141, inda: 141, orcan: 95, sp500: 98, nasdaq100: 97, fangplus: 104 };
 for (const [key, count] of Object.entries(expected)) {
   const entry = manifest.series[key];
   const ledger = JSON.parse(read(`data/verified/${entry.file}`));

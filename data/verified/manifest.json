@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-10-11",
+  "retrievedAt": "2026-10-13",
   "fx": {
     "sourceName": "日本銀行",
     "sourceUrl": "https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_m_1_en.html",
@@ -8,10 +8,10 @@
     "seriesCode": "FM08'FXERM06",
     "currency": "JPY per USD",
     "firstMonth": "2014-12",
-    "lastMonth": "2026-08",
-    "observationCount": 141,
+    "lastMonth": "2026-09",
+    "observationCount": 142,
     "conversionFormula": "(1 + USD monthly NAV TR) * (current month-end USDJPY / previous month-end USDJPY) - 1",
-    "rawSha256": "08b675d97568f82b414a25e48a35ddc5d146eae4d24ba527ff134b71db601026"
+    "rawSha256": "30748a66d509c00f43d363a4c9a41c18aa952bafef3ef516bff1b0058d965181"
   },
   "series": {
     "vt": {
@@ -31,11 +31,11 @@
       "feeTreatment": "net of fund expenses",
       "fxTreatment": "converted with BOJ month-end USD/JPY",
       "firstMonth": "2015-01",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/vt-nav.json",
       "rawDataUrl": "https://advisors.vanguard.com/investments/products/api/funds/3141/performance/nav",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 140,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 141,
       "missingMonths": [],
       "rawSha256": "aa3cac50899f3cd2951197e8f730a74abb84f9fc554ab79b9d6f23d13a292111"
     },
@@ -46,7 +46,7 @@
       "identifier": "VTI / fund 0970",
       "manager": "The Vanguard Group",
       "inceptionDate": "2001-05-24",
-      "sourceName": "Vanguard Advisors",
+      "sourceName": "Vanguard",
       "sourceUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vti",
       "sourceSeriesDefinition": "Monthly NAV Total Return (1MTH)",
       "currency": "USD",
@@ -56,11 +56,11 @@
       "feeTreatment": "net of fund expenses",
       "fxTreatment": "converted with BOJ month-end USD/JPY",
       "firstMonth": "2015-01",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/vti-nav.json",
       "rawDataUrl": "https://advisors.vanguard.com/investments/products/api/funds/0970/performance/nav",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 140,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 141,
       "missingMonths": [],
       "rawSha256": "faef2fb2553986d60c38c44c9c3c90e83c12a2d6a31c33190ef5c47510071f99"
     },
@@ -81,11 +81,11 @@
       "feeTreatment": "net of fund expenses",
       "fxTreatment": "converted with BOJ month-end USD/JPY",
       "firstMonth": "2015-01",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/vym-nav.json",
       "rawDataUrl": "https://advisors.vanguard.com/investments/products/api/funds/0923/performance/nav",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 140,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 141,
       "missingMonths": [],
       "rawSha256": "35a8b9cd7bff24cef4d4db7566ddecdf27f1c972f55f40ead7993453ab0c6540"
     },
@@ -106,13 +106,13 @@
       "feeTreatment": "fund expenses deducted",
       "fxTreatment": "converted with BOJ month-end USD/JPY",
       "firstMonth": "2015-01",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/eem-performance.json",
       "rawDataUrl": "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 140,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 141,
       "missingMonths": [],
-      "rawSha256": "56da74108ca09264bf67ec3ff2e929e6e6e02ece80e0c5b3bcc5e92d736d659f"
+      "rawSha256": "a06820bb12b603a6f3d32da59146d6d381ba82438d8b5562e3464c342281b2f0"
     },
     "inda": {
       "file": "inda-monthly.json",
@@ -131,13 +131,13 @@
       "feeTreatment": "fund expenses deducted",
       "fxTreatment": "converted with BOJ month-end USD/JPY",
       "firstMonth": "2015-01",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/inda-performance.json",
       "rawDataUrl": "https://www.ishares.com/us/products/239659/ishares-msci-india-etf",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 140,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 141,
       "missingMonths": [],
-      "rawSha256": "449339148a57a912512711d3f5b617e34a7c17c7a66e275a5a127d1c070b5bd8"
+      "rawSha256": "b3411db346f6b6fe65341969885929632b8524809e93dfd90330b6ec8ae12235"
     },
     "orcan": {
       "file": "orcan-monthly.json",
@@ -156,13 +156,13 @@
       "feeTreatment": "reflected in NAV",
       "fxTreatment": "none",
       "firstMonth": "2018-11",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/orukan-setteirai.csv",
       "rawDataUrl": "https://www.am.mufg.jp/fund_file/setteirai/253425.csv",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 94,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 95,
       "missingMonths": [],
-      "rawSha256": "dd308276dd10d33ea675e0999a5233ad1c33f5a2cb4f9ea452582d9ae8e074fa"
+      "rawSha256": "7c81cf4604abe698e8f13a08a01ea2bc57c8306cc2d72ede224c51c855fc8517"
     },
     "sp500": {
       "file": "sp500-monthly.json",
@@ -181,13 +181,13 @@
       "feeTreatment": "reflected in NAV",
       "fxTreatment": "none",
       "firstMonth": "2018-08",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/sp500-setteirai.csv",
       "rawDataUrl": "https://www.am.mufg.jp/fund_file/setteirai/253266.csv",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 97,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 98,
       "missingMonths": [],
-      "rawSha256": "6395c47b6bacb6c491aa61bba3452f6eec1225a2f8633df489436c96308c39a7"
+      "rawSha256": "6d07cb606088dacdba28bcb000082a4e47e4d31d785c649117fe37bb61d77b6c"
     },
     "nasdaq100": {
       "file": "nasdaq100-monthly.json",
@@ -206,13 +206,13 @@
       "feeTreatment": "reflected in NAV",
       "fxTreatment": "none",
       "firstMonth": "2018-09",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/nasdaq100-history.csv",
       "rawDataUrl": "https://www.daiwa-am.co.jp/funds/detail/csv_out.php?code=3373&type=1",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 96,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 97,
       "missingMonths": [],
-      "rawSha256": "383ca96f43948fd064bad6d5c538917505e362e5756fcca10daa6c3218ed3af6"
+      "rawSha256": "b0d54c081da87d7d6dac3f16c168c8d7cf8db4aea1ff0a743de913a356954586"
     },
     "fangplus": {
       "file": "fangplus-monthly.json",
@@ -231,13 +231,13 @@
       "feeTreatment": "reflected in NAV",
       "fxTreatment": "none",
       "firstMonth": "2018-02",
-      "lastMonth": "2026-08",
+      "lastMonth": "2026-09",
       "rawFile": "raw/fangplus-history.csv",
       "rawDataUrl": "https://www.daiwa-am.co.jp/funds/detail/csv_out.php?code=3346&type=1",
-      "retrievedAt": "2026-10-11",
-      "observationCount": 103,
+      "retrievedAt": "2026-10-13",
+      "observationCount": 104,
       "missingMonths": [],
-      "rawSha256": "a8f00f48d541db2b96178afaf7b44476bce4d48d543d5d67ffba44680c5be436"
+      "rawSha256": "49fd99b44dd88e4be568c7a4a62beab1e0415ce0ece5e10dce5008d5a9ee23d0"
     }
   }
 }

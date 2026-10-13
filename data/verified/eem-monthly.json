@@ -15,10 +15,10 @@
   "feeTreatment": "fund expenses deducted",
   "fxTreatment": "converted with BOJ month-end USD/JPY",
   "firstMonth": "2015-01",
-  "lastMonth": "2026-08",
+  "lastMonth": "2026-09",
   "rawDataUrl": "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf",
-  "retrievedAt": "2026-10-11",
-  "observationCount": 140,
+  "retrievedAt": "2026-10-13",
+  "observationCount": 141,
   "missingMonths": [],
   "inceptionTreatment": "product observations only; no pre-inception backfill",
   "notes": "No interpolation or fallback.",
@@ -1141,6 +1141,14 @@
       "usdNavTotalReturn": 0.04226213000000012,
       "previousMonthEndYenPerUsd": 160.21,
       "monthEndYenPerUsd": 159.57,
+      "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
+    },
+    {
+      "month": "2026-09",
+      "monthlyReturn": -0.020942359973052604,
+      "usdNavTotalReturn": -0.004344989999999993,
+      "previousMonthEndYenPerUsd": 159.57,
+      "monthEndYenPerUsd": 156.91,
       "sourceBasis": "iShares Growth of Hypothetical $10,000 NAV series"
     }
   ]

@@ -15,10 +15,10 @@
   "feeTreatment": "reflected in NAV",
   "fxTreatment": "none",
   "firstMonth": "2018-09",
-  "lastMonth": "2026-08",
+  "lastMonth": "2026-09",
   "rawDataUrl": "https://www.daiwa-am.co.jp/funds/detail/csv_out.php?code=3373&type=1",
-  "retrievedAt": "2026-10-11",
-  "observationCount": 96,
+  "retrievedAt": "2026-10-13",
+  "observationCount": 97,
   "missingMonths": [],
   "inceptionTreatment": "product observations only; no pre-inception backfill",
   "notes": "This ledger is iFreeNEXT NASDAQ100 Index, not eMAXIS NASDAQ100.",
@@ -885,6 +885,15 @@
       "previousMonthEndReinvestedNav": 53840,
       "monthEndDate": "2026-08-31",
       "monthEndReinvestedNav": 56142,
+      "sourceBasis": "official reinvested NAV, last published business day of each month"
+    },
+    {
+      "month": "2026-09",
+      "monthlyReturn": 0.013643974208257692,
+      "previousMonthEndDate": "2026-08-31",
+      "previousMonthEndReinvestedNav": 56142,
+      "monthEndDate": "2026-09-30",
+      "monthEndReinvestedNav": 56908,
       "sourceBasis": "official reinvested NAV, last published business day of each month"
     }
   ]

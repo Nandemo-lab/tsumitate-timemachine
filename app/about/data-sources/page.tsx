@@ -87,7 +87,7 @@ export default function DataSourcesPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-slate-700">収録最終月と更新履歴</p>
               <p className="text-sm text-slate-500 leading-relaxed">
-                現在の収録最終月は2026年8月です。2026年10月11日に9つのA系列を公式一次情報から再取得し、保存した元データのSHA-256、連続月、円換算式を再検証しました。各系列は同月までの値だけを使用し、未来データや年次値で補いません。
+                現在の収録最終月は2026年9月です。2026年10月13日に9つのA系列を公式一次情報から再取得し、保存した元データのSHA-256、連続月、円換算式を再検証しました。各系列は同月までの値だけを使用し、未来データや年次値で補いません。
               </p>
             </div>
             <div className="space-y-1.5">

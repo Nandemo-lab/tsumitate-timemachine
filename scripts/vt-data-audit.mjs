@@ -3,7 +3,7 @@ import path from "node:path";
 
 const doc = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "verified", "vt-monthly.json"), "utf8"));
 const points = doc.observations;
-if (doc.firstMonth !== "2015-01" || doc.lastMonth !== "2026-08" || points.length !== 140) throw new Error("VT ledger range mismatch");
+if (doc.firstMonth !== "2015-01" || doc.lastMonth !== "2026-09" || points.length !== 141) throw new Error("VT ledger range mismatch");
 for (const point of points) {
   const independent = (1 + point.usdNavTotalReturn) * (point.monthEndYenPerUsd / point.previousMonthEndYenPerUsd) - 1;
   if (Math.abs(independent - point.monthlyReturn) > 1e-14) throw new Error(`VT FX mismatch: ${point.month}`);

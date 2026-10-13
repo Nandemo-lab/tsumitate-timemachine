@@ -5,8 +5,8 @@ import path from "node:path";
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, "data", "verified");
 const RAW_DIR = path.join(DATA_DIR, "raw");
-const RETRIEVED_AT = "2026-10-11";
-const LAST_MONTH = "2026-08";
+const RETRIEVED_AT = "2026-10-13";
+const LAST_MONTH = "2026-09";
 const fetchMode = process.argv.includes("--fetch");
 
 const SOURCES = {
@@ -35,7 +35,7 @@ const META = {
 };
 
 for (const meta of Object.values(META)) meta.lastMonth = LAST_MONTH;
-const expectedCounts = { vt: 140, vti: 140, vym: 140, eem: 140, inda: 140, orcan: 94, sp500: 97, nasdaq100: 96, fangplus: 103 };
+const expectedCounts = { vt: 141, vti: 141, vym: 141, eem: 141, inda: 141, orcan: 95, sp500: 98, nasdaq100: 97, fangplus: 104 };
 const monthKey = (date) => date.slice(0, 7).replaceAll("/", "-");
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const expectedMonths = (first, last) => { const out = []; let [y, m] = first.split("-").map(Number); const [ey, em] = last.split("-").map(Number); while (y < ey || (y === ey && m <= em)) { out.push(`${y}-${String(m).padStart(2, "0")}`); if (++m === 13) { m = 1; y++; } } return out; };
@@ -72,14 +72,14 @@ function parseDomestic(text, id) { const lines = text.trim().split(/\r?\n/); con
 
 async function buildLedgers() {
   await mkdir(DATA_DIR, { recursive: true });
-  const fxDoc = JSON.parse(await readRaw(SOURCES.fx.raw)); const fx = Object.fromEntries(fxDoc.observations.map((p) => [p.month, p.yenPerUsd])); if (fxDoc.observations.length !== 141) throw new Error(`FX count ${fxDoc.observations.length}`);
+  const fxDoc = JSON.parse(await readRaw(SOURCES.fx.raw)); const fx = Object.fromEntries(fxDoc.observations.map((p) => [p.month, p.yenPerUsd])); if (fxDoc.observations.length !== 142) throw new Error(`FX count ${fxDoc.observations.length}`);
   const ledgers = {};
   for (const id of ["vt", "vti", "vym", "eem", "inda"]) {
     const usd = id === "vt" || id === "vti" || id === "vym" ? parseVanguard(await readRaw(SOURCES[id].raw), META[id].firstMonth, META[id].lastMonth) : parseIShares(await readRaw(SOURCES[id].raw), META[id].firstMonth, META[id].lastMonth);
     ledgers[id] = usd.map((p) => { const [y, m] = p.month.split("-").map(Number); const prev = m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, "0")}`; if (fx[prev] === undefined || fx[p.month] === undefined) throw new Error(`${id} FX missing ${prev}/${p.month}`); return { month: p.month, monthlyReturn: (1 + p.usdNavTotalReturn) * (fx[p.month] / fx[prev]) - 1, usdNavTotalReturn: p.usdNavTotalReturn, previousMonthEndYenPerUsd: fx[prev], monthEndYenPerUsd: fx[p.month], sourceBasis: p.sourceBasis }; });
   }
   for (const id of ["orcan", "sp500", "nasdaq100", "fangplus"]) ledgers[id] = parseDomestic(await readRaw(SOURCES[id].raw), id);
-  const manifest = { schemaVersion: 1, retrievedAt: RETRIEVED_AT, fx: { sourceName: "日本銀行", sourceUrl: SOURCES.fx.url, rawDataUrl: SOURCES.fx.url, seriesCode: "FM08'FXERM06", currency: "JPY per USD", firstMonth: "2014-12", lastMonth: LAST_MONTH, observationCount: 141, conversionFormula: "(1 + USD monthly NAV TR) * (current month-end USDJPY / previous month-end USDJPY) - 1", rawSha256: sha256(await readRaw(SOURCES.fx.raw)) }, series: {} };
+  const manifest = { schemaVersion: 1, retrievedAt: RETRIEVED_AT, fx: { sourceName: "日本銀行", sourceUrl: SOURCES.fx.url, rawDataUrl: SOURCES.fx.url, seriesCode: "FM08'FXERM06", currency: "JPY per USD", firstMonth: "2014-12", lastMonth: LAST_MONTH, observationCount: 142, conversionFormula: "(1 + USD monthly NAV TR) * (current month-end USDJPY / previous month-end USDJPY) - 1", rawSha256: sha256(await readRaw(SOURCES.fx.raw)) }, series: {} };
   for (const [id, points] of Object.entries(ledgers)) { validateMonths(id, points); const raw = await readRaw(SOURCES[id].raw); const doc = { schemaVersion: 1, ...META[id], rawDataUrl: SOURCES[id].url, retrievedAt: RETRIEVED_AT, observationCount: points.length, missingMonths: [], inceptionTreatment: "product observations only; no pre-inception backfill", notes: id === "nasdaq100" ? "This ledger is iFreeNEXT NASDAQ100 Index, not eMAXIS NASDAQ100." : "No interpolation or fallback.", observations: points }; await writeFile(path.join(DATA_DIR, `${id}-monthly.json`), JSON.stringify(doc, null, 2) + "\n", "utf8"); manifest.series[id] = { file: `${id}-monthly.json`, ...META[id], rawFile: path.posix.join("raw", SOURCES[id].raw), rawDataUrl: SOURCES[id].url, retrievedAt: RETRIEVED_AT, observationCount: points.length, missingMonths: [], rawSha256: sha256(raw) }; }
   await writeFile(path.join(DATA_DIR, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n", "utf8");
 }

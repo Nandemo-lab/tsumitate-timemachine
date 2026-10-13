@@ -259,7 +259,7 @@ export default async function FromYearPage({ params }: Props) {
               </h1>
             </div>
             <p className="text-sm text-slate-600">
-              月3万円 / {year}年{SIM_MONTH}月スタート / 2026年8月までの検証済み実績
+              月3万円 / {year}年{SIM_MONTH}月スタート / 2026年9月までの検証済み実績
             </p>
 
             {winner && (

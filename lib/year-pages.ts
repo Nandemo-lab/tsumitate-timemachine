@@ -94,8 +94,8 @@ export const YEAR_PAGES: YearPage[] = Object.entries(FUND_YEAR_CONFIG).flatMap(
         fundId: config.fundId,
         year,
         metaTitle: `${year}年（${label}）から${fundName}積立→今いくら？過去実績シミュレーション`,
-        metaDescription: `${prefix}${year}年から2026年8月まで${fundName}を月3万円積み立てた場合の期間末評価額・利益・リターンを、検証済み月次データで公開。`,
-        yearContext: `${year}年1月から2026年8月まで、商品設定後の円ベース・分配金再投資込み月次系列を使って積立経過を計算します。単年の市場解説、日中最大下落率、将来の回復予測とは別の検証です。`,
+        metaDescription: `${prefix}${year}年から2026年9月まで${fundName}を月3万円積み立てた場合の期間末評価額・利益・リターンを、検証済み月次データで公開。`,
+        yearContext: `${year}年1月から2026年9月まで、商品設定後の円ベース・分配金再投資込み月次系列を使って積立経過を計算します。単年の市場解説、日中最大下落率、将来の回復予測とは別の検証です。`,
         simMonth: 1,
         simAmount: 30000,
         faqs: [

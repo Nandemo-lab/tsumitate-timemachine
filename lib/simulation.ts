@@ -6,9 +6,9 @@ import { FUNDS, FUND_LIST } from "./funds";
 import { VERIFIED_FUND_IDS, UnverifiedReturnSeriesError, getAvailableEndMonth, getCommonStartMonth, getMonthlyJpyReturn, isReturnMonthAvailable, isVerifiedReturnSeries } from "./return-series";
 
 export const CURRENT_YEAR = 2026;
-export const CURRENT_MONTH = 8;
+export const CURRENT_MONTH = 9;
 export const DATA_SOURCE = "一次情報から検証した月次円建てリターン（A系列）と、原典未検証の年次参考モデル（G系列）";
-export const DATA_UPDATED = "2026年10月11日（収録最終月：2026年8月）";
+export const DATA_UPDATED = "2026年10月13日（収録最終月：2026年9月）";
 export const MAX_MONTHLY_AMOUNT = 1_000_000;
 
 export function isValidMonthlyAmount(value: number): boolean {

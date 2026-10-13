@@ -67,7 +67,7 @@ assert(!compares.includes("テック企業の成長力に賭けて高いリタ�
 assert(!compares.includes("過去20年のデータではS&P500"), "商品設定前を含む比較主張が再混入");
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
-assert(home.includes("実績期間：2026年8月まで"), "トップでデータ終端を開示していない");
+assert(home.includes("実績期間：2026年9月まで"), "トップでデータ終端を開示していない");
 assert(home.includes("条件を選んで積立実績を調べる"), "トップでシミュレーションを主行動として示していない");
 assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf("条件別の検証例"), "トップで検証例が主行動より先に表示される");
 assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseComparePreset"), "静的Compareから同じ2商品の比較フォームへ条件を引き継いでいない");
@@ -99,7 +99,7 @@ assert(winnerBanner.includes("この条件で評価額が高い") && resultCard.
 assert(!winnerBanner.includes("🏆 WINNER") && !resultCard.includes(">WINNER<"), "比較UIに推奨と誤認されるWINNER表示が残っている");
 assert(winnerBanner.includes('n >= 0 ? "+" : ""') && winnerBanner.includes('winner.returnRate >= 0 ? "+" : ""'), "比較UIが負の損益へ+記号を付ける可能性がある");
 assert(winnerBanner.includes('winner.profit >= 0 ? "#10b981" : "#ef4444"'), "比較UIが負の損益を利益色で表示する可能性がある");
-assert(dataSourcesPage.includes("現在の収録最終月は2026年8月です"), "Data SourcesがA品質系列の最新終端2026年8月を明示していない");
+assert(dataSourcesPage.includes("現在の収録最終月は2026年9月です"), "Data SourcesがA品質系列の最新終端2026年9月を明示していない");
 assert(dataSourcesPage.includes("9つのA系列"), "Data Sourcesが最新終端の対象をA品質9系列に限定していない");
 assert(returnDataSources.includes('dataThrough: verified ? definition.endMonth : "原典検証待ち（公開計算の対象外）"'), "Data SourcesがG品質系列を検証済み終端として表示する可能性がある");
 assert(returnDataSources.includes('granularity: verified ? `${definition.startMonth}〜${definition.endMonth}の月次データ` : "検証済み月次系列なし"'), "Data SourcesがG品質系列を検証済み月次系列として表示する可能性がある");
@@ -150,7 +150,7 @@ if (fs.existsSync(path.join(root, ".next/server/app/guide/nisa-tsumitate-ikura.h
 
 if (fs.existsSync(path.join(root, ".next/server/app/about/data-sources.html"))) {
   const built = read(".next/server/app/about/data-sources.html");
-  assert(built.includes("現在の収録最終月は2026年8月です"), "Data Sourcesの生成HTMLにA品質系列の最新終端がない");
+  assert(built.includes("現在の収録最終月は2026年9月です"), "Data Sourcesの生成HTMLにA品質系列の最新終端がない");
   assert(built.includes("G：参考データ・原典未検証") && built.includes("原典未検証の年次参考系列"), "Data Sourcesの生成HTMLでSCHDのG品質境界が不明確");
   assert(built.includes("参考系列") && built.includes("原典検証待ち（公開計算の対象外）"), "Data Sourcesの生成HTMLがSCHDの参考期間と公開計算対象外を区別していない");
   for (const phrase of [

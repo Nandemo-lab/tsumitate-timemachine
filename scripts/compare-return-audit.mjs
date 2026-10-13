@@ -180,7 +180,7 @@ if (/10年・20年・30年|5年・10年・20年/.test(`${guide.metaTitle} ${guid
 const ageFaq = guide.faqs.find((faq) => faq.q === "何歳から始めると何年間積み立てられますか？");
 if (!ageFaq.a.includes("20歳開始なら40年") || !ageFaq.a.includes("拠出元本") || !ageFaq.a.includes("必ず利益が増えるわけではありません")) throw new Error("age and contribution explanation mismatch");
 if (/2015|オルカン.*10〜15年以上の積立期間があれば損失/.test(guideText)) throw new Error("pre-inception guide claims remain");
-const independentPoints = points("orcan").filter((point) => point.month >= "2020-01" && point.month <= "2026-08");
+const independentPoints = points("orcan").filter((point) => point.month >= "2020-01" && point.month <= "2026-09");
 const independentValue = independentPoints
   .reduce((value, point) => (value + 30000) * (1 + point.monthlyReturn), 0);
 const example = guide.sections.flatMap((section) => section.subsections ?? []).find((section) => section.h3.includes("2020年1月"));

@@ -39,7 +39,7 @@ for (const required of ["つみたて投資枠／年", "非課税保有限度額
 for (const forbidden of ["配当品質", "★★★★★", "SCHDでシミュレーション"]) {
   assert(!highDividend.includes(forbidden), `/ranking/high-dividend contains subjective or G result: ${forbidden}`);
 }
-for (const required of ["VYMは2020年1月から2026年8月まで", "G品質・数値比較外", "公式に確認できる商品属性"]) {
+for (const required of ["VYMは2020年1月から2026年9月まで", "G品質・数値比較外", "公式に確認できる商品属性"]) {
   assert(highDividend.includes(required), `/ranking/high-dividend missing evidence boundary: ${required}`);
 }
 for (const required of ["過去の期間末評価額", "共通期間", "元本は", "将来予測"]) {
