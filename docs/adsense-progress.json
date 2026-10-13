@@ -1,5 +1,5 @@
 {
-  "project": "3.0公式月次データ2026年9月更新・成長計測準備",
+  "project": "3.0次期成長施策・運用自動化",
   "phase": 9,
   "status": "production_verified",
   "progressPercent": 100,
@@ -24,10 +24,14 @@
     ,"GitHub Actions QA Check #103成功"
     ,"Vercel Productionで2026年9月終端と4 viewport表示を確認"
     ,"本番127ページlive QA 100/100を完了"
+    ,"GSC最新28日と前28日、主要ページ実績を読み取り専用で再取得"
+    ,"GA4イベント受信とQA混入による測定限界を再確認"
+    ,"次回公式データ更新runbookと共通リリースゲートを追加"
+    ,"11月12日固定28日分析の分母・分子・比較期間を記録"
   ],
   "pendingTasks": ["2026-11-12以降の28日評価"],
   "blockers": [],
-  "commitSHA": "d0ecb5e0de8482c0a8f6786c68f4da2924cf0e4a",
-  "verifiedAt": "2026-10-13T21:20:00+09:00",
-  "evidencePaths": ["docs/audits/verified-data-update-2026-09.md", "scripts/september-data-audit.mjs", "data/verified/manifest.json"]
+  "commitSHA": "253414d2c4b1d93253928b0ed0f955333cd16a49",
+  "verifiedAt": "2026-10-13T22:00:00+09:00",
+  "evidencePaths": ["docs/audits/growth-operations-2026-10-13.md", "docs/VERIFIED_DATA_UPDATE_RUNBOOK.md", "scripts/verified-data-release-audit.mjs", "data/verified/manifest.json"]
 }
