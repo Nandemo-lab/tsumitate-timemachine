@@ -20,6 +20,7 @@ interface CompareClickParams {
 
 function track(name: string, params: object) {
   if (typeof window === "undefined") return;
+  if (window.location.hostname !== "tsumitate-timemachine.com") return;
   sendGAEvent("event", name, params);
 }
 

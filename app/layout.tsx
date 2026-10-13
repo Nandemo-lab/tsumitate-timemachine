@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_JP, Noto_Serif_JP, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { ProductionGoogleAnalytics } from "@/components/analytics/ProductionGoogleAnalytics";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -132,14 +132,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-dvh bg-[#FAFAF7] text-[#263A53] antialiased">
-        <a href="#main-content" className="sr-only z-[100] rounded-xl bg-[#263A53] px-4 py-3 text-[#263A53] focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+        <a href="#main-content" className="sr-only z-[100] rounded-xl bg-[#263A53] px-4 py-3 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
           本文へ移動
         </a>
         <div id="main-content" tabIndex={-1}>{children}</div>
       </body>
-      {process.env.NODE_ENV === "production" && (
-        <GoogleAnalytics gaId="G-0MWMWGWGBT" />
-      )}
+      <ProductionGoogleAnalytics gaId="G-0MWMWGWGBT" />
     </html>
   );
 }

@@ -1,20 +1,21 @@
 {
-  "project": "GSC実測連携・検索流入成長スプリント",
-  "phase": 9,
-  "status": "local_release_candidate_verified",
-  "progressPercent": 85,
+  "project": "3.0公開後成長検証・AdSense最終準備",
+  "phase": 8,
+  "status": "post_3_measurement_fix_verified_locally",
+  "progressPercent": 90,
   "completedTasks": [
-    "GSC直近28日・前28日・3か月の基準値を照合",
-    "上位3 CompareのQuery×Pageとデバイス別実績を取得",
-    "GA4直近28日のイベント表を確認し新ファネルをNOT MEASUREDと判定",
-    "検索流入上位3 Compareへ検索意図別の短い回答を実装",
-    "375px・390px・PCの比較ページと条件引き継ぎE2Eを確認",
+    "3.0 Production SHA 16931b8と公開日を記録",
+    "GSC直近28日・前28日の最新実測を読み取り専用で取得",
+    "指定3URLのページ別実績を確認し追加変更より28日観測を優先",
+    "GA4直近28日のイベント受信と10月12日のQA混入を確認",
+    "本番hostname以外でGoogle tagとカスタムイベントを停止",
+    "本文スキップリンクのコントラストを修正",
     "lint・TypeScript・build・127ページQA・全関連auditを完了",
     "隔離production serverでlive QA 100/100を完了"
   ],
-  "pendingTasks": ["commit・push・GitHub Actions追跡", "Vercel Production反映", "公開後QA"],
+  "pendingTasks": ["commit・push・GitHub Actions追跡", "Vercel Production反映", "公開後のタグ隔離・E2E確認", "2026-11-10基準の28日評価"],
   "blockers": [],
-  "commitSHA": "d9274237e5dfb0ed565219911fad84666325835b",
-  "verifiedAt": "2026-10-12T23:45:00+09:00",
-  "evidencePaths": ["docs/audits/gsc-growth-sprint-2026-10-12.md", "scripts/content-trust-audit.mjs"]
+  "commitSHA": "16931b861e02569f87935d6c8b3fcfc74efb63a2",
+  "verifiedAt": "2026-10-13T20:00:00+09:00",
+  "evidencePaths": ["docs/audits/post-3-growth-baseline-2026-10-13.md", "scripts/content-trust-audit.mjs"]
 }

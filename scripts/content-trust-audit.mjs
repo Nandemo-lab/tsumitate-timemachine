@@ -35,6 +35,8 @@ const winnerBanner = read("components/simulation/WinnerBanner.tsx");
 const resultCard = read("components/simulation/ResultCard.tsx");
 const compareClient = read("app/compare/[slug]/ComparePageClient.tsx");
 const analytics = read("lib/analytics.ts");
+const analyticsLoader = read("components/analytics/ProductionGoogleAnalytics.tsx");
+const rootLayout = read("app/layout.tsx");
 const recentConditions = read("components/simulation/RecentConditions.tsx");
 
 for (const snippet of [
@@ -72,6 +74,9 @@ assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseCo
 assert(analytics.includes("trackShareSuccess") && !analytics.includes('track("compare_click", params);\n  track("compare_start", params);'), "共有成功または比較開始の計測定義がクリックと混在している");
 assert(analytics.includes('mode === "compare" ? "compare_start" : "simulation_start"'), "比較開始と単一シミュレーション開始のイベントが分離されていない");
 assert(analytics.includes('params.mode === "compare" ? "compare_complete" : "simulation_complete"'), "比較完了と単一シミュレーション完了のイベントが分離されていない");
+assert(analytics.includes('window.location.hostname !== "tsumitate-timemachine.com"'), "ローカルQAのカスタムイベントがGA4へ混入する可能性がある");
+assert(analyticsLoader.includes('window.location.hostname === PRODUCTION_HOST') && analyticsLoader.includes('() => false'), "Google tagが本番ホスト以外で読み込まれる可能性がある");
+assert(rootLayout.includes('bg-[#263A53]') && rootLayout.includes('text-white'), "本文スキップリンクの文字と背景が同色になる可能性がある");
 assert(recentConditions.includes("ttm:last-seen-date:v1") && recentConditions.includes("previous < today"), "同日内の表示を再訪として計測する可能性がある");
 assert(compareClient.includes("repeat(2,minmax(0,1fr))") && compareClient.includes("min-w-0 space-y-3"), "Compare結果カードがモバイル幅を押し広げる可能性がある");
 assert(homePage.includes("parseComparePreset"), "比較条件のURL復元が欠落している");
