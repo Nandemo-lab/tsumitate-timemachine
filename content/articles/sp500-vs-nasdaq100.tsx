@@ -135,7 +135,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="S&P500とは？特徴と仕組み" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          S&P500は、米国の代表的企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾン・メタといった大型企業に加え、金融・ヘルスケア・生活必需品など全業種をカバーします。日本では「eMAXIS Slim米国株式（S&P500）」が最も人気のある商品です。
+          S&P500は、米国の代表的企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾン・メタといった大型企業に加え、金融・ヘルスケア・生活必需品など全業種をカバーします。本記事では「eMAXIS Slim米国株式（S&P500）」を比較対象にしています。
         </p>
         <SpecCard rows={[
           ["対象", "米国大型株500社（全業種）"],

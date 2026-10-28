@@ -375,8 +375,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-9" className="space-y-4">
         <SectionHeading index={9} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          実際にSCHDとVYMを同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
-          開始年・毎月の積立額を変え、参考値と検証済み実績の品質差を確認できます。
+          比較ページでは、投資対象や費用、データ品質の違いを確認できます。SCHDの検証済み実績が揃うまでは、積立結果の数値比較は表示しません。
+          表示できる項目と、未検証のため表示しない項目を区別しています。
         </p>
         <Link
           href="/compare/schd-vs-vym"
@@ -387,7 +387,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-lg font-black text-[#263A53] leading-tight">
             SCHDとVYMを<br />実際に比較してみませんか？
           </p>
-          <p className="text-xs text-[#263A53]/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
+          <p className="text-xs text-[#263A53]/70">投資対象・費用・データ品質を確認</p>
           <div className="flex items-center gap-1.5 mt-3">
             <span className="text-sm font-black text-white">比較シミュレーションを開く</span>
             <ArrowRight className="h-4 w-4 text-[#263A53]" />

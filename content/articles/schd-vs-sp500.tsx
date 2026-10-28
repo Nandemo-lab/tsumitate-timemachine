@@ -153,7 +153,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="S&P500とは？特徴と仕組み" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          S&P500は、米国の代表的企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾンといった大型企業に加え、金融・ヘルスケア・生活必需品など全業種をカバーします。日本では「eMAXIS Slim米国株式（S&P500）」が最も人気のある商品です。
+          S&P500は、米国の代表的企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾンといった大型企業に加え、金融・ヘルスケア・生活必需品など全業種をカバーします。本記事では「eMAXIS Slim米国株式（S&P500）」を比較対象にしています。
         </p>
         <SpecCard rows={[
           ["対象", "米国大型株500社（全業種）"],
@@ -430,8 +430,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-11" className="space-y-4">
         <SectionHeading index={11} title="積立タイムマシンで実際に確かめよう" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          実際にSCHDとS&P500を同じ条件で積み立てた場合の結果は、シミュレーションでも確認できます。
-          開始年・毎月の積立額を変え、参考値と検証済み実績の品質差を確認できます。
+          比較ページでは、投資対象や費用、データ品質の違いを確認できます。SCHDの検証済み実績が揃うまでは、積立結果の数値比較は表示しません。
+          表示できる項目と、未検証のため表示しない項目を区別しています。
         </p>
         <Link
           href="/compare/schd-vs-sp500"
@@ -442,7 +442,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <p className="text-lg font-black text-[#263A53] leading-tight">
             SCHDとS&P500を<br />実際に比較してみませんか？
           </p>
-          <p className="text-xs text-[#263A53]/70">開始年・積立額を自分で設定 ・ 差額をリアルタイム計算</p>
+          <p className="text-xs text-[#263A53]/70">投資対象・費用・データ品質を確認</p>
           <div className="flex items-center gap-1.5 mt-3">
             <span className="text-sm font-black text-white">比較シミュレーションを開く</span>
             <ArrowRight className="h-4 w-4 text-[#263A53]" />

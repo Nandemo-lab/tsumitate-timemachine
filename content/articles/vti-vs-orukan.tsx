@@ -146,7 +146,8 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["新NISA対応", "成長投資枠（ETF）／楽天VTIはつみたて投資枠にも対応"],
         ]} />
         <p className="text-sm text-slate-600 leading-relaxed">
-          米国市場を「1銘柄漏らさずまとめて買う」設計のため、S&P500より裾野の広い米国分散ができます。ETF本体（VTI）は米国市場での売買が必要ですが、楽天VTIのような投資信託経由であれば国内証券会社から円貨で積立設定ができます。
+          米国の大型・中型・小型株へ幅広く投資し、指数への連動を目指すサンプリング運用です。指数の全銘柄を必ず保有するという意味ではなく、費用などにより指数との乖離も生じます。
+          <a href="https://fund-docs.vanguard.com/F0970.pdf" target="_blank" rel="noopener noreferrer">出典：Vanguard VTIファクトシート（2026年9月末基準、2026年10月28日確認）</a>ETF本体（VTI）は米国市場での売買が必要ですが、楽天VTIのような投資信託経由であれば国内証券会社から円貨で積立設定ができます。
         </p>
       </section>
 
@@ -283,7 +284,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         <div className="rounded-xl bg-amber-500/8 border border-amber-500/20 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-orange-600 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-slate-700 leading-relaxed">
-            VTIは米国市場に100%連動するため、米国の景気動向・金利政策の影響を直接受けます。オルカンは非米国資産も含むため、米国以外の地域の動きが下支え・下押しの両方に働くことがあります。
+            VTIは米国株式市場の指数への連動を目指すため、米国の景気動向・金利政策の影響を直接受けます。オルカンは非米国資産も含むため、米国以外の地域の動きが下支え・下押しの両方に働くことがあります。
           </p>
         </div>
       </section>
