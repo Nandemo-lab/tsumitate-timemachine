@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { validateCalculateEvents } from "./check-calculate-events.mjs";
 
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
@@ -73,7 +74,7 @@ assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf
 assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseComparePreset"), "静的Compareから同じ2商品の比較フォームへ条件を引き継いでいない");
 assert(analytics.includes("trackShareSuccess") && !analytics.includes('track("compare_click", params);\n  track("compare_start", params);'), "共有成功または比較開始の計測定義がクリックと混在している");
 assert(analytics.includes('mode === "compare" ? "compare_start" : "simulation_start"'), "比較開始と単一シミュレーション開始のイベントが分離されていない");
-assert(analytics.includes('params.mode === "compare" ? "compare_complete" : "simulation_complete"'), "比較完了と単一シミュレーション完了のイベントが分離されていない");
+assert(validateCalculateEvents(analytics), "計算完了イベントの分離・入力値除去・固定mode制限を満たしていない");
 assert(analytics.includes('window.location.hostname !== "tsumitate-timemachine.com"'), "ローカルQAのカスタムイベントがGA4へ混入する可能性がある");
 assert(analyticsLoader.includes('window.location.hostname === PRODUCTION_HOST') && analyticsLoader.includes('() => false'), "Google tagが本番ホスト以外で読み込まれる可能性がある");
 assert(rootLayout.includes('bg-[#263A53]') && rootLayout.includes('text-white'), "本文スキップリンクの文字と背景が同色になる可能性がある");

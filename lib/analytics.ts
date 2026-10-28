@@ -26,8 +26,12 @@ function track(name: string, params: object) {
 
 /** シミュレーション実行（単体/ランキング/比較/クイックシナリオ） */
 export function trackCalculate(params: CalculateParams) {
-  track("calculate", params);
-  track(params.mode === "compare" ? "compare_complete" : "simulation_complete", params);
+  // Keep caller compatibility, but never forward input conditions or results.
+  const mode = params.mode;
+  if (mode !== "single" && mode !== "ranking" && mode !== "compare" && mode !== "quick_scenario") return;
+  const eventParams = { mode };
+  track("calculate", eventParams);
+  track(mode === "compare" ? "compare_complete" : "simulation_complete", eventParams);
 }
 
 /** シェアボタン押下（X共有・ネイティブ共有・URLコピー） */
