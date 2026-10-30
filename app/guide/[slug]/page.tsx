@@ -23,6 +23,7 @@ import { FundId } from "@/types";
 import SiteFooter from "@/components/layout/SiteFooter";
 import GuideEeat from "@/components/guide/GuideEeat";
 import GuideBodyText from "@/components/guide/GuideBodyText";
+import BeginnerGuideLead from "@/components/guide/BeginnerGuideLead";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -119,6 +120,7 @@ export default async function GuidePage({ params }: Props) {
   const { slug } = await params;
   const page = getGuidePage(slug);
   if (!page) notFound();
+  const isBeginnerGuide = slug.startsWith("kodomo-nisa");
 
   // シミュレーション行の計算
   const simResults = page.simRows.map((row) => {
@@ -194,11 +196,40 @@ export default async function GuidePage({ params }: Props) {
                 {page.h1}
               </h1>
             </div>
-            <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
+            {!isBeginnerGuide && (
+              <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
+            )}
           </section>
 
+          {isBeginnerGuide && page.tldr && page.conclusion && (
+            <BeginnerGuideLead
+              intro={page.intro}
+              readTime={page.tldr.readTime}
+              forWho={page.tldr.forWho}
+              bullets={page.tldr.bullets}
+              conclusion={page.conclusion}
+            />
+          )}
+
+          {slug === "kodomo-nisa" && (
+            <section aria-label="制度の確定状況" className="space-y-3 rounded-2xl bg-[#F7FAFB] p-5">
+              <div>
+                <p className="text-sm font-bold text-emerald-800">確定していること</p>
+                <p className="mt-1 text-base leading-7 text-[#40556C]">
+                  2027年1月開始、対象年齢、年間投資枠、非課税保有限度額は金融庁の公式案内で確認できます。
+                </p>
+              </div>
+              <div className="border-t border-[#DDE6EA] pt-3">
+                <p className="text-sm font-bold text-amber-800">金融機関ごとに確認すること</p>
+                <p className="mt-1 text-base leading-7 text-[#40556C]">
+                  口座開設の受付日、必要書類、取扱商品、払出し手続は利用する金融機関の正式案内を確認します。
+                </p>
+              </div>
+            </section>
+          )}
+
           {/* ── 結論（最初に表示。検索から来た読者が数秒で要点を掴む）─ */}
-          {page.conclusion && page.conclusion.length > 0 && (
+          {!isBeginnerGuide && page.conclusion && page.conclusion.length > 0 && (
             <section className="rounded-xl bg-[#F7FAFB] border border-[#D2DEE4] p-4 space-y-2">
               <p className="text-xs font-bold text-[#263A53]">結論</p>
               <div className="space-y-1.5">
@@ -210,7 +241,7 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {/* ── ◯分で分かること（読了時間を前面に出す）───────────── */}
-          {page.tldr && (
+          {!isBeginnerGuide && page.tldr && (
             <section className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2">
               <p className="text-xs font-bold text-[#236B8E]">
                 <span className="text-[#236B8E]">⏱ {page.tldr.readTime}</span>
@@ -257,7 +288,7 @@ export default async function GuidePage({ params }: Props) {
                   <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[#236B8E] mt-0.5" />
                   <p className="text-sm font-bold text-[#263A53]">{pt.title}</p>
                 </div>
-                <p className="text-sm text-slate-600 leading-relaxed pl-6">{pt.body}</p>
+                <p className={`${isBeginnerGuide ? "text-base leading-7" : "text-sm leading-relaxed"} text-slate-600 pl-6`}>{pt.body}</p>
               </div>
             ))}
           </section>
@@ -273,14 +304,14 @@ export default async function GuidePage({ params }: Props) {
             <section className="rounded-xl bg-emerald-500/[0.04] border border-emerald-500/15 p-4 space-y-2.5">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-700 flex-shrink-0" />
-                <p className="text-xs font-bold text-emerald-200">制度情報の確認状況</p>
+                <p className="text-sm font-bold text-emerald-800">制度情報の確認状況</p>
               </div>
               <ul className="space-y-1.5">
                 {page.systemCheck.map((sc, i) => (
                   <li
                     key={i}
                     data-system-check-date={sc.lastConfirmed}
-                    className="text-[11px] text-slate-600 leading-relaxed"
+                    className={`${isBeginnerGuide ? "text-sm leading-6" : "text-[11px] leading-relaxed"} text-slate-600`}
                   >
                     「{sc.topic}」を{sc.lastConfirmed}に{sc.source}で確認
                     {sc.sourceUrl && (
@@ -378,11 +409,22 @@ export default async function GuidePage({ params }: Props) {
                 >
                   {sec.h2}
                 </h2>
-                <GuideBodyText body={sec.body} />
+                {isBeginnerGuide && simEntry && (
+                  <p className="rounded-lg bg-[#FFF7F1] px-3 py-2 text-sm leading-6 text-[#6B4A36]">
+                    ここに示す金額は2020年以降の過去実績です。2027年以降の成果を予測するものではありません。
+                  </p>
+                )}
+                <GuideBodyText
+                  body={sec.body}
+                  className={isBeginnerGuide ? "text-base leading-7 text-slate-700" : undefined}
+                />
                 {sec.subsections?.map((sub, j) => (
                   <div key={j} className="pl-4 border-l-2 border-indigo-500/30 space-y-1.5">
                     <h3 className="text-sm font-bold text-slate-700">{sub.h3}</h3>
-                    <GuideBodyText body={sub.body} />
+                    <GuideBodyText
+                      body={sub.body}
+                      className={isBeginnerGuide ? "text-base leading-7 text-slate-700" : undefined}
+                    />
                   </div>
                 ))}
                 {/* シミュレーション実績カード */}
@@ -449,7 +491,7 @@ export default async function GuidePage({ params }: Props) {
                         href={sl.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-700 bg-white border border-[#DDE6EA] rounded px-2 py-1 transition-colors"
+                        className={`flex items-center gap-1 text-slate-600 hover:text-slate-700 bg-white border border-[#DDE6EA] rounded transition-colors ${isBeginnerGuide ? "min-h-11 px-3 py-2 text-sm" : "px-2 py-1 text-[10px]"}`}
                       >
                         <ExternalLink className="h-2.5 w-2.5 flex-shrink-0" />
                         {sl.label}
@@ -478,6 +520,7 @@ export default async function GuidePage({ params }: Props) {
           })}
 
           {/* ── シミュレーション結果 ─────────────────────────── */}
+          {simResults.length > 0 && (
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
@@ -538,8 +581,10 @@ export default async function GuidePage({ params }: Props) {
               })}
             </div>
           </section>
+          )}
 
           {/* ── 銘柄カード ──────────────────────────────────── */}
+          {page.fundCards.length > 0 && (
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
@@ -630,6 +675,7 @@ export default async function GuidePage({ params }: Props) {
               })}
             </div>
           </section>
+          )}
 
           {/* ── よくある質問 ─────────────────────────────────── */}
           <section>
@@ -640,15 +686,24 @@ export default async function GuidePage({ params }: Props) {
               よくある質問
             </h2>
             <div className="space-y-4">
-              {page.faqs.map((faq, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
-                >
-                  <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
-                  <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
-                </div>
-              ))}
+              {page.faqs.map((faq, i) =>
+                isBeginnerGuide ? (
+                  <details key={i} className="group rounded-xl border border-[#DDE6EA] bg-white p-4">
+                    <summary className="cursor-pointer list-none text-base font-bold leading-7 text-[#263A53] marker:content-none">
+                      <span className="flex items-start justify-between gap-3">
+                        <span>Q. {faq.q}</span>
+                        <span aria-hidden="true" className="text-[#236B8E] group-open:rotate-45">＋</span>
+                      </span>
+                    </summary>
+                    <p className="mt-3 border-t border-[#E5ECEF] pt-3 text-base leading-7 text-slate-600">A. {faq.a}</p>
+                  </details>
+                ) : (
+                  <div key={i} className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
+                    <p className="text-sm font-bold text-[#263A53]">Q. {faq.q}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">A. {faq.a}</p>
+                  </div>
+                )
+              )}
             </div>
           </section>
 
@@ -659,13 +714,13 @@ export default async function GuidePage({ params }: Props) {
                 className="text-base font-bold text-[#263A53]"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
-                {page.recommendHeading ?? "こんな人におすすめ"}
+                {page.recommendHeading ?? (isBeginnerGuide ? "このページが役立つ場面" : "こんな人におすすめ")}
               </h2>
               <div className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2.5">
                 {page.recommendFor.map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="text-[#236B8E] text-sm flex-shrink-0 mt-0.5">✓</span>
-                    <p className="text-sm text-slate-700 leading-relaxed">{item}</p>
+                    <p className={`${isBeginnerGuide ? "text-base leading-7" : "text-sm leading-relaxed"} text-slate-700`}>{item}</p>
                   </div>
                 ))}
               </div>
@@ -688,7 +743,7 @@ export default async function GuidePage({ params }: Props) {
                     className="rounded-xl bg-amber-500/[0.05] border border-amber-500/20 p-4 space-y-1.5"
                   >
                     <p className="text-sm font-bold text-amber-700">⚠ {m.label}</p>
-                    <p className="text-sm text-slate-600 leading-relaxed">{m.body}</p>
+                    <p className={`${isBeginnerGuide ? "text-base leading-7" : "text-sm leading-relaxed"} text-slate-600`}>{m.body}</p>
                   </div>
                 ))}
               </div>
