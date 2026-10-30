@@ -42,6 +42,8 @@ const GUIDE_LABELS: Record<string, string> = {
   "kodomo-nisa-vs-gakushi-hoken": "こどもNISA vs 学資保険",
   "kodomo-nisa-hikidashi":       "こどもNISAの引き出し",
   "kodomo-nisa-daigaku-shikin-deguchi": "こどもNISAで大学資金",
+  "kodomo-nisa-nansai-kara": "こどもNISAは何歳から？",
+  "kodomo-nisa-oya-nisa-tsukaiwake": "親のNISAとの使い分け",
   "nisa-beginner":              "新NISAの商品比較",
   "index-investing":            "インデックス投資とは",
   "how-to-start":               "積立投資の始め方",

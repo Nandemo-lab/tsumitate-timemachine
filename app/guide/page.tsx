@@ -26,6 +26,8 @@ const KODOMO_NISA_SLUGS = [
   "kodomo-nisa-vs-gakushi-hoken",
   "kodomo-nisa-hikidashi",
   "kodomo-nisa-daigaku-shikin-deguchi",
+  "kodomo-nisa-nansai-kara",
+  "kodomo-nisa-oya-nisa-tsukaiwake",
 ] as const;
 
 const SECTIONS = [
@@ -130,6 +132,33 @@ export default function GuideIndexPage() {
                 <p className="mt-1 text-xs leading-relaxed text-slate-500">{body}</p>
               </div>
             ))}
+          </section>
+
+          <section className="space-y-3" aria-labelledby="kodomo-nisa-paths">
+            <div>
+              <p className="text-xs font-bold text-[#236B8E]">こどもNISA特集</p>
+              <h2 id="kodomo-nisa-paths" className="mt-1 text-lg font-black text-[#263A53]">
+                今の疑問から選ぶ
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                制度の全体像、積立期間、月額、使う時期を分けて確認できます。
+              </p>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {[
+                ["まず制度を知る", "/guide/kodomo-nisa", "開始時期・対象年齢・投資枠を確認"],
+                ["今の年齢から考える", "/guide/kodomo-nisa-nansai-kara", "18歳までの積立回数と元本を確認"],
+                ["毎月いくらか考える", "/guide/kodomo-nisa-tsumitate-ikura", "月1万・3万・5万円の条件を確認"],
+                ["親のNISAと分ける", "/guide/kodomo-nisa-oya-nisa-tsukaiwake", "名義・目的・払出し条件を確認"],
+                ["商品や準備方法を比べる", "/guide/kodomo-nisa-orukan-vs-sp500", "オルカンとS&P500の違いを確認"],
+                ["使う時期を考える", "/guide/kodomo-nisa-daigaku-shikin-deguchi", "大学資金の現金化までを確認"],
+              ].map(([title, href, body]) => (
+                <Link key={href} href={href} className="min-h-20 rounded-xl border border-[#D9E3E8] bg-white p-4 transition-colors hover:bg-[#F7FAFB]">
+                  <p className="text-sm font-bold text-[#263A53]">{title}</p>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+                </Link>
+              ))}
+            </div>
           </section>
 
           {/* クラスタハブ（税金・制度・暴落） */}

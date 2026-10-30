@@ -9,6 +9,15 @@ const continuationOrcanStart = getAvailableStartMonth("orcan");
 const continuationOrcanStartLabel = `${continuationOrcanStart.slice(0, 4)}年${Number(continuationOrcanStart.slice(5))}月`;
 const nisaMonthly10kExample = simulate({ fundId: "orcan", startYear: 2020, startMonth: 1, monthlyAmount: 10000 });
 const nisaMonthly10kPeriod = `2020年1月〜${CURRENT_YEAR}年${CURRENT_MONTH}月`;
+const KODOMO_MONTHLY_EXAMPLE = 10_000;
+
+function kodomoMonthsUntilAdult(startAge: number): number {
+  return Math.max(0, (KODOMO_NISA_LIMITS.adultTransitionAge - startAge) * 12);
+}
+
+function kodomoPrincipalUntilAdult(startAge: number): number {
+  return kodomoMonthsUntilAdult(startAge) * KODOMO_MONTHLY_EXAMPLE;
+}
 
 const SP500_DRAWDOWN_SOURCE = {
   label: "S&P Dow Jones Indices『Natural Selection: Tactics and Strategy with Equity Sectors』（2024年7月、2026年9月19日確認）",
@@ -2854,7 +2863,7 @@ export const GUIDE_PAGES: GuidePage[] = [
     metaTitle: `こどもNISAとは？${KODOMO_NISA_LIMITS.startYear}年開始・年${formatManEn(KODOMO_NISA_LIMITS.annual)}・${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}を解説`,
     metaDescription: `2027年から始まる未成年者向けNISAを一次情報で整理。0〜17歳、年間60万円、非課税保有限度額600万円、対象商品、払出し条件、18歳以降の扱いを解説します。`,
     h1: `こどもNISAとは？${KODOMO_NISA_LIMITS.startYear}年からの未成年者向けNISAを解説`,
-    intro: `結論からいうと、いわゆる「こどもNISA」は、${KODOMO_NISA_LIMITS.startYear}年1月から0〜17歳もNISAのつみたて投資枠を利用できる制度です。年間投資枠は${formatManEn(KODOMO_NISA_LIMITS.annual)}、非課税保有限度額（税金がかからない状態で保有できる買付額の上限）は${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}です。制度は確定していますが、口座開設の受付時期や必要書類など金融機関ごとの手続は、各社の正式案内を確認する必要があります。`,
+    intro: `結論からいうと、いわゆる「こどもNISA」は、${KODOMO_NISA_LIMITS.startYear}年1月から0〜17歳もNISAのつみたて投資枠を利用できる制度です。口座内で投資信託を売って得た利益や受け取った分配金に、通常かかる税金がかからなくなります。年間投資枠は${formatManEn(KODOMO_NISA_LIMITS.annual)}、非課税保有限度額（税金がかからない状態で保有できる買付額の上限）は${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}です。制度は確定していますが、口座開設の受付時期や必要書類など金融機関ごとの手続は、各社の正式案内を確認する必要があります。`,
     lastUpdated: "2026年10月",
     tldr: {
       readTime: "要点は約3分・詳しい説明まで約7分",
@@ -2942,7 +2951,7 @@ export const GUIDE_PAGES: GuidePage[] = [
     conclusion: ["家計から無理なく継続できる金額を先に決める", "試算結果は想定利回りで大きく変わる", "非課税保有限度額600万円を超える買付けは未成年者向け枠ではできない"],
     systemCheck: [{ topic: "未成年者向けNISAの開始時期・年間投資枠・非課税保有限度額", lastConfirmed: "2026-10-30", source: "金融庁 NISA特設ウェブサイト", sourceUrl: "https://www.fsa.go.jp/policy/nisa2/know/index.html" }],
     points: [
-      { title: "月1万円", body: "元本216万円。年3%なら約286万円、年5%なら約349万円、年7%なら約431万円という仮定上の結果です。" },
+      { title: "月1万円", body: "0歳から18年間続ける例では元本216万円です。年3%なら約286万円、年5%なら約349万円、年7%なら約431万円という仮定上の結果ですが、途中で元本を下回る可能性があり、同じ利回りで増え続ける前提ではありません。" },
       { title: "月3万円", body: "元本648万円。年3%なら約858万円、年5%なら約1,048万円、年7%なら約1,292万円という仮定上の結果です。未成年者向け枠だけでは元本600万円に達した時点で新規買付けが止まります。" },
       { title: "月5万円", body: "元本1,080万円。年3%なら約1,430万円、年5%なら約1,746万円、年7%なら約2,154万円という数学上の比較です。月5万円なら10年で非課税保有限度額600万円に達します。" },
     ],
@@ -2970,7 +2979,7 @@ export const GUIDE_PAGES: GuidePage[] = [
     intro: `結論は一つではありません。世界の株式へ広く分散する範囲を重視するならオルカン、米国大型株への集中を受け入れるならS&P500という違いがあります。どちらも株式型の投資信託で元本割れがあり、子どもの口座だから値動きが小さくなるわけではありません。`,
     lastUpdated: "2026年10月",
     tldr: { readTime: "要点は約3分・詳しい説明まで約7分", forWho: "こどもNISAの積立先として2商品を比較したい家庭", bullets: ["オルカンは全世界株式へ分散", "S&P500は米国大型株へ集中", "費用と過去実績はサイト共通の検証済みデータで比較"] },
-    conclusion: ["地域分散の広さを重視 → オルカン", "米国大型株への集中を選ぶ → S&P500", "教育費を使う直前まで株式100%を維持するかは別に検討"],
+    conclusion: ["オルカン：米国を含む世界の株式へ広く分散", "S&P500：米国大型株へ集中", "どちらを選んでも元本割れがあり、教育費を使う時期は別に確認"],
     systemCheck: [{ topic: "未成年者向けNISAの対象商品・制度開始時期", lastConfirmed: "2026-10-30", source: "金融庁 NISA特設ウェブサイト", sourceUrl: "https://www.fsa.go.jp/policy/nisa2/know/index.html" }],
     points: [
       { title: "分散範囲", body: `オルカンは先進国・新興国を含む全世界の約${FUNDS.orcan.shareCount}銘柄、S&P500は米国の約${FUNDS.sp500.shareCount}銘柄が対象です。` },
@@ -3079,7 +3088,7 @@ export const GUIDE_PAGES: GuidePage[] = [
       { h2: "0歳から大学進学までの4ステップ", body: "教育費を使う時期から逆算し、積立・確認・現金化・支払いを分けて考えます。", subsections: [
         { h3: "1. 積立を始める", body: "家計から無理なく続けられる月額を設定します。" },
         { h3: "2. 年に一度確認する", body: "評価額、必要額、進学までの残り期間を確認します。" },
-        { h3: "3. 進学前に現金化を検討する", body: "近く使う金額を売却するか、値動きの小さい資産へ移すか、運用を続けるかを検討します。" },
+        { h3: "3. 進学前に現金化を検討する", body: "近く使う金額を売却して預貯金など必要額を確認しやすい形へ移すか、運用を続けるかを検討します。" },
         { h3: "4. 納付期限に備える", body: "売却代金の受渡日、学校の納付期限、こどもNISAの払出し手続きを確認します。" },
       ] },
       { h2: "一括売却と段階的な現金化", body: "一括売却は必要額を一度に確保できますが、売却日の価格に結果が左右されます。複数回に分ける方法は売却時期を分散できますが、その間も残った資産は値動きします。どちらが必ず有利とはいえず、納付時期と確保済みの現金から決めます。" },
@@ -3095,6 +3104,108 @@ export const GUIDE_PAGES: GuidePage[] = [
     relatedGuides: ["kodomo-nisa", "kodomo-nisa-tsumitate-ikura", "kodomo-nisa-hikidashi", "kodomo-nisa-vs-gakushi-hoken"],
     recommendFor: ["大学資金を長期で準備したい家庭", "積立後の売却・現金化まで計画したい家庭"],
     commonMistakes: [{ label: "18歳まで株式100%なら問題ないと考える", body: "進学直前にも価格下落は起こり得ます。使用時期が近い資金の値動きを確認します。" }, { label: "払出し可能年齢と売却時期を同じと考える", body: "制度上引き出せることと、市場価格を見ていつ売却するかは別の判断です。" }],
+  },
+  {
+    slug: "kodomo-nisa-nansai-kara",
+    metaTitle: "こどもNISAは何歳から始める？年齢別の積立回数と元本",
+    metaDescription: "こどもNISAを0歳・5歳・10歳・15歳から月1万円で始めた場合の、18歳までの積立回数と元本を比較。早さだけで決めず、教育費を使う時期と元本割れも確認します。",
+    h1: "こどもNISAは何歳から始める？年齢別の積立回数と元本",
+    intro: `始められるのは${KODOMO_NISA_LIMITS.startYear}年1月以降の0〜17歳です。ただし「何歳が正解」とは決まりません。現在の年齢で18歳まで何回積み立てられるか、教育費を使うまで何年あるか、家計から無理なく続けられるかを分けて確認します。`,
+    lastUpdated: "2026年10月",
+    tldr: {
+      readTime: "要点は約3分・詳しい説明まで約6分",
+      forWho: "現在の子どもの年齢から、18歳までの積立期間を確認したい家庭",
+      bullets: [
+        "始める年齢が違うと、18歳までの積立回数と元本が変わる",
+        "月1万円の例は将来利益ではなく、積み立てる元本だけを比較",
+        "期間が短いほど、値下がりから回復を待てる時間も短い",
+      ],
+    },
+    conclusion: [
+      "0歳から始めることが全家庭の正解ではない",
+      "現在の年齢から18歳までの月数を先に確認する",
+      "近く使う教育費と、長期運用できるお金を分ける",
+    ],
+    systemCheck: [{
+      topic: "未成年者向けNISAの開始時期・対象年齢・18歳以降の移行",
+      lastConfirmed: "2026-10-30",
+      source: "金融庁 NISA特設ウェブサイト",
+      sourceUrl: "https://www.fsa.go.jp/policy/nisa2/know/index.html",
+    }],
+    points: [0, 5, 10, 15].map((age) => ({
+      title: `${age}歳から月1万円の例`,
+      body: `18歳まで${kodomoMonthsUntilAdult(age)}回、元本は${formatCurrencyFull(kodomoPrincipalUntilAdult(age))}です。これは値上がりを含まない積立額の合計で、将来の評価額ではありません。`,
+    })),
+    sections: [
+      { h2: "年齢で変わるのは積み立てられる期間", body: "同じ月1万円でも、開始年齢が高いほど18歳までの積立回数は少なくなります。反対に、早く始めれば利益が保証されるわけではありません。投資信託は途中も期間末も元本を下回る可能性があります。" },
+      { h2: "始める前に確認する3つのこと", body: "①入学金や授業料を使う時期、②預貯金で確保する金額、③価格が下がっても積立を続けられる月額を確認します。教育費を使うまでの期間が短い家庭は、全額を投資へ回さない選択もあります。" },
+      { h2: "制度の開始年と子どもの年齢をそろえて考える", body: `${KODOMO_NISA_LIMITS.startYear}年1月より前に、こどもNISAで買付けることはできません。上の例は各年齢から18歳まで毎月積み立てる単純な比較で、実際の開始日は制度開始日・口座開設日・積立設定日によって変わります。${NISA_SYSTEM_DISCLAIMER}`, sourceLinks: [{ label: "金融庁 NISAを知る", href: "https://www.fsa.go.jp/policy/nisa2/know/index.html" }] },
+      { h2: "利益を含む金額は条件を分けて確認する", body: "将来の利回りは確定しません。まず元本と積立回数を確認し、過去実績は[月額別の積立試算](/guide/kodomo-nisa-tsumitate-ikura)で将来予測と分けて確認します。" },
+    ],
+    fundCards: [],
+    simRows: [],
+    faqs: [
+      { q: "0歳から始めないと遅いですか？", a: "遅いとは決められません。現在の年齢、教育費を使う時期、家計から継続できる月額、価格変動を受け入れられる期間を確認します。" },
+      { q: "10歳からでも利用できますか？", a: `利用できます。${KODOMO_NISA_LIMITS.startYear}年1月以降の0〜17歳が対象です。ただし18歳までの期間が短いため、近く使う教育費と投資するお金を分けて考えます。` },
+      { q: "早く始めれば必ず増えますか？", a: "いいえ。運用期間が長くても利益は保証されず、元本割れがあります。長い期間は価格変動を受ける期間も長いという意味です。" },
+    ],
+    relatedGuides: ["kodomo-nisa", "kodomo-nisa-tsumitate-ikura", "kodomo-nisa-daigaku-shikin-deguchi", "kodomo-nisa-hikidashi"],
+    recommendFor: ["子どもの現在年齢から積立回数を確認したい家庭", "教育費を使う時期から積立期間を逆算したい家庭"],
+    commonMistakes: [
+      { label: "早く始めれば必ず増えると考える", body: "投資信託は元本割れがあり、運用期間だけで利益は決まりません。" },
+      { label: "18歳までの全期間を運用できると考える", body: "実際の積立開始は制度開始・口座開設・積立設定の後です。" },
+    ],
+  },
+  {
+    slug: "kodomo-nisa-oya-nisa-tsukaiwake",
+    metaTitle: "親のNISAとこどもNISAはどう使い分ける？名義と目的で整理",
+    metaDescription: "親のNISAとこどもNISAの違いを、口座名義、資金の目的、年間投資枠、払出し、金融機関変更、贈与の確認事項から初心者向けに整理します。",
+    h1: "親のNISAとこどもNISAはどう使い分ける？名義と目的で整理",
+    intro: "使い分けは、枠の大きさだけでは決まりません。親の将来資金として管理するお金か、子ども本人に帰属する教育費などのお金かを先に分けます。こどもNISAは子ども名義で、払出しや金融機関変更に成人向けNISAとは異なる制約があります。",
+    lastUpdated: "2026年10月",
+    tldr: {
+      readTime: "要点は約3分・詳しい説明まで約7分",
+      forWho: "親名義と子ども名義のどちらで教育資金を管理するか整理したい家庭",
+      bullets: [
+        "親のNISAは親名義、こどもNISAは子ども名義",
+        "誰のお金として、何に使うかを先に決める",
+        "子どもへの資金移転は贈与税の確認が別に必要",
+      ],
+    },
+    conclusion: [
+      "親の老後資金と子どもの教育資金を同じ枠の大きさだけで比べない",
+      "こどもNISAは子ども本人に帰属する資金として管理する",
+      "贈与・払出し・金融機関の実務は公式案内を確認する",
+    ],
+    systemCheck: [
+      { topic: "成人向けNISAと未成年者向けNISAの投資枠・名義・払出し", lastConfirmed: "2026-10-30", source: "金融庁 NISA特設ウェブサイト", sourceUrl: "https://www.fsa.go.jp/policy/nisa2/know/index.html" },
+      { topic: "贈与税がかかる場合の基本事項", lastConfirmed: "2026-10-30", source: "国税庁 No.4402 贈与税がかかる場合", sourceUrl: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/zoyo/4402.htm" },
+    ],
+    points: [
+      { title: "名義と資金の目的", body: "親のNISAは親名義の資産です。こどもNISAは子ども名義で、子ども本人に帰属する資金を積み立てます。教育費の準備でも、誰の資産として管理するかを区別します。" },
+      { title: "利用できる枠", body: `成人のつみたて投資枠は年${formatManEn(NISA_LIMITS.tsumitateAnnual)}、こどもNISAは年${formatManEn(KODOMO_NISA_LIMITS.annual)}です。上限は目標額ではなく、家計から無理なく続けられる金額を先に確認します。` },
+      { title: "払出しと金融機関", body: `成人向けNISAと異なり、こどもNISAは原則として自由に払い出せず、${KODOMO_NISA_LIMITS.conditionalWithdrawalAge}歳以降も一定の要件があります。未成年者は金融機関を年単位で変更できません。` },
+    ],
+    sections: [
+      { h2: "最初に『誰のためのお金か』を分ける", body: "親の老後資金、家族で自由に使う予備資金、子ども本人の教育費を分けます。非課税枠を先に埋めるのではなく、資金の持ち主と使用時期を決めてから口座を選びます。" },
+      { h2: "親のNISAで教育費を準備する場合", body: "資産は親名義のまま管理します。売却や使い道を親が判断しやすい一方、親自身の老後資金などと同じ口座で管理する場合は、教育費として確保した金額を別に把握する必要があります。" },
+      { h2: "こどもNISAで教育費を準備する場合", body: `資産は子ども名義です。0〜17歳はつみたて投資枠のみを利用し、年間${formatManEn(KODOMO_NISA_LIMITS.annual)}・非課税保有限度額${formatManEn(KODOMO_NISA_LIMITS.lifetimeTotal)}です。払出し条件と、金融機関を変更できない点を確認します。`, sourceLinks: [{ label: "金融庁 NISAを知る", href: "https://www.fsa.go.jp/policy/nisa2/know/index.html" }] },
+      { h2: "親から子へ資金を移す前に贈与を確認", body: `親や祖父母の資金を子ども名義へ移す場合は、NISAの非課税と贈与税を同じものとして扱えません。贈与税は資金の移転状況や他の贈与も含めて判定されるため、個別の課税関係は税務署・税理士等へ確認してください。${NISA_SYSTEM_DISCLAIMER}`, sourceLinks: [{ label: "国税庁 No.4402 贈与税がかかる場合", href: "https://www.nta.go.jp/taxes/shiraberu/taxanswer/zoyo/4402.htm" }] },
+      { h2: "迷ったときの確認順序", body: "①誰の資金か、②いつ使うか、③元本割れをどこまで受け入れられるか、④払出し条件、⑤税務上の確認事項の順に整理します。一律に親の枠・子の枠のどちらを先に使うべきとは決められません。" },
+    ],
+    fundCards: [],
+    simRows: [],
+    faqs: [
+      { q: "親のNISAを先に満額にすべきですか？", a: "一律の優先順位はありません。親の老後資金、教育費を使う時期、名義、払出しの自由度、家計から継続できる金額を分けて確認します。" },
+      { q: "親が出したお金をこどもNISAへ入れてもよいですか？", a: "子ども名義へ資金を移す場合は、子ども本人に帰属する資金として管理し、贈与税の確認が必要です。個別の課税関係は税務署・税理士等へ確認してください。" },
+      { q: "親と子で同じ投資信託を買えますか？", a: "各口座の対象商品として金融機関が取り扱っていれば可能です。ただし名義、投資枠、払出し条件は別々に管理します。" },
+    ],
+    relatedGuides: ["kodomo-nisa", "kodomo-nisa-nansai-kara", "kodomo-nisa-tsumitate-ikura", "kodomo-nisa-hikidashi"],
+    recommendFor: ["親名義と子ども名義の違いを整理したい家庭", "教育費と親の老後資金を分けて管理したい家庭"],
+    commonMistakes: [
+      { label: "NISAなら贈与税も非課税になると考える", body: "NISAの運用益に対する非課税と、親から子への資金移転に関する贈与税は別の制度です。" },
+      { label: "枠が大きい口座を先に使えばよいと考える", body: "名義、資金の目的、使う時期、払出し条件を先に確認します。" },
+    ],
   },
 ];
 
@@ -3123,6 +3234,8 @@ export const GUIDE_SERIES: Record<string, GuideSeries> = {
       "kodomo-nisa-vs-gakushi-hoken",
       "kodomo-nisa-hikidashi",
       "kodomo-nisa-daigaku-shikin-deguchi",
+      "kodomo-nisa-nansai-kara",
+      "kodomo-nisa-oya-nisa-tsukaiwake",
     ],
   },
   tax: {
