@@ -91,7 +91,7 @@ export default function SiteFooter() {
         <div className="mb-8 grid gap-3 md:grid-cols-3 md:gap-x-8 md:gap-y-8">
           {SECTIONS.map((section) => (
             <details key={section.title} className="footer-group rounded-xl border border-[#E1E8EC] bg-[#FAFAF7] px-4 py-3 md:border-0 md:bg-transparent md:p-0">
-              <summary className="cursor-pointer list-none text-sm font-bold text-[#263A53] md:cursor-default">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-bold text-[#263A53] md:cursor-default">
                 {section.title}
               </summary>
               <ul className="mt-3 space-y-2">

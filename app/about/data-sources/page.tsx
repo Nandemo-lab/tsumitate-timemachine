@@ -5,6 +5,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { FUND_LIST, formatExpenseRatio } from "@/lib/funds";
 import { RETURN_DATA_SOURCES } from "@/lib/return-data-sources";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 
 const BASE_URL = SITE_URL;
 
@@ -62,6 +63,8 @@ export default function DataSourcesPage() {
             9系列は一次情報から作成した検証済み月次データを使用します。米国ETFは配当を含む公式の基準価額リターンを日本銀行の月末為替で円換算し、国内投信は商品設定後の分配金再投資基準価額を使用します。SCHDだけは月次原典の検証が未完了のため参考データとして分離しています。
           </p>
         </header>
+
+        <PageVisualStory kind="data" />
 
         {/* 計算方法 */}
         <section className="space-y-4">

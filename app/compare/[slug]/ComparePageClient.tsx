@@ -6,6 +6,7 @@ import ComparisonChart from "@/components/simulation/ComparisonChart";
 import PathInsights from "@/components/simulation/PathInsights";
 import Link from "next/link";
 import { trackCompareClick, trackSourceView } from "@/lib/analytics";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 
 interface Props {
   resultA: SimulationResult;
@@ -21,6 +22,7 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
 
   return (
     <div className="min-w-0 space-y-8">
+      <PageVisualStory kind="compare" />
       {/* シミュレーション結果カード */}
       <section>
         <h2

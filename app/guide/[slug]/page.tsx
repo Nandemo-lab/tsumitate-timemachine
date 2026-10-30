@@ -25,6 +25,7 @@ import GuideEeat from "@/components/guide/GuideEeat";
 import GuideBodyText from "@/components/guide/GuideBodyText";
 import BeginnerGuideLead from "@/components/guide/BeginnerGuideLead";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import { GuideConceptVisual } from "@/components/visual/VisualStory";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -202,6 +203,8 @@ export default async function GuidePage({ params }: Props) {
               <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
             )}
           </section>
+
+          <GuideConceptVisual slug={slug} />
 
           {isBeginnerGuide && page.tldr && page.conclusion && (
             <BeginnerGuideLead
@@ -691,7 +694,7 @@ export default async function GuidePage({ params }: Props) {
               {page.faqs.map((faq, i) =>
                 isBeginnerGuide ? (
                   <details key={i} className="group rounded-xl border border-[#DDE6EA] bg-white p-4">
-                    <summary className="cursor-pointer list-none text-base font-bold leading-7 text-[#263A53] marker:content-none">
+                    <summary className="flex min-h-11 cursor-pointer list-none items-center text-base font-bold leading-7 text-[#263A53] marker:content-none">
                       <span className="flex items-start justify-between gap-3">
                         <span>Q. {faq.q}</span>
                         <span aria-hidden="true" className="text-[#236B8E] group-open:rotate-45">＋</span>

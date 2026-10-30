@@ -12,6 +12,7 @@ import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import { FUND_SEO_MAP } from "@/lib/fund-seo";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { NISA_LIMITS, NISA_SYSTEM_DISCLAIMER, formatManEn } from "@/lib/nisa";
 
@@ -117,6 +118,8 @@ export default function RankingView({ page }: Props) {
             </div>
             <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
           </section>
+
+          <PageVisualStory kind="ranking" />
 
           {isRoot && (
             <section className="rounded-xl border border-[#D9E3E8] bg-white p-4 space-y-2">

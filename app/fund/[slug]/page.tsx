@@ -17,6 +17,7 @@ import { simulate, formatCurrency } from "@/lib/simulation";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
@@ -209,6 +210,8 @@ export default async function FundPage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          <PageVisualStory kind="fund" />
 
           <PageRoleGuide
             label={page.fundId === "fangplus" ? "商品情報と積立結果を一つのページで確認する" : "正式商品・費用・データ品質を確認する資料"}

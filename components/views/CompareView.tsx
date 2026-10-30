@@ -240,7 +240,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
 
             {/* 比較結果と混同しない客観的な商品属性 */}
             <details className="rounded-2xl border border-[#D2DEE4] bg-white p-5">
-              <summary className="cursor-pointer list-none text-sm font-bold text-[#263A53]">商品の違いと費用を見る</summary>
+              <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-bold text-[#263A53]">商品の違いと費用を見る</summary>
               <div className="mt-4 space-y-4">
               <p className="text-xs font-bold tracking-widest uppercase text-slate-600">比較する商品の確認事項</p>
               {[resultA, resultB].map((r, index) => {

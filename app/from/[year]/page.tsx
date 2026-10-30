@@ -8,6 +8,7 @@ import { getReturnSeriesDefinition, monthKey } from "@/lib/return-series";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 import { FundId } from "@/types";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -292,6 +293,8 @@ export default async function FromYearPage({ params }: Props) {
               </div>
             )}
           </section>
+
+          <PageVisualStory kind="timeline" />
 
           {/* ── 1位ハイライト ─────────────────────────────────────── */}
           {winner ? <section

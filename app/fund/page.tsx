@@ -5,6 +5,7 @@ import { FUND_PAGES } from "@/lib/fund-seo-pages";
 import { FUNDS, FUND_CATEGORIES } from "@/lib/funds";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 
 const BASE_URL = SITE_URL;
 
@@ -73,6 +74,8 @@ export default function FundIndexPage() {
               人気銘柄の特徴・信託報酬・NISA対応・積立実績を1銘柄ずつ解説しています。
             </p>
           </header>
+
+          <PageVisualStory kind="fund" />
 
           <section className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 space-y-2">
             <h2 className="text-xs font-bold text-emerald-200">知りたい項目から銘柄を選ぶ</h2>

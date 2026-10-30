@@ -11,6 +11,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import RecentConditions from "@/components/simulation/RecentConditions";
 import { RecentSimulation } from "@/lib/recent-simulations";
 import { trackSourceView } from "@/lib/analytics";
+import { HomeEditorialIllustration } from "@/components/visual/VisualStory";
 
 interface Props {
   onNavigate: (tab: MainTab) => void;
@@ -35,10 +36,18 @@ export default function HomeView({ onNavigate, onTaraeba, onRestoreRecent }: Pro
 
   return (
     <div className="pb-28 pt-5 md:pt-10">
-      <section className="px-4 text-center md:px-8">
-        <p className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-[#DCEFFA] px-4 py-2 text-xs font-bold text-[#236B8E]"><BarChart3 className="h-4 w-4" /> 公式月次データで過去を検証</p>
-        <h1 className="font-heading text-[2rem] font-bold leading-[1.35] tracking-tight text-[#263A53] md:text-5xl">あの時から積み立てていたら、<br className="hidden sm:block" />いくらになった？</h1>
-        <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-600 md:text-base">商品・開始年・月額を選ぶだけ。過去の月次実績から、元本と期間末評価額を同じ条件で確かめられます。</p>
+      <section className="mx-auto grid max-w-6xl items-center gap-7 px-4 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:px-8">
+        <div className="text-center md:text-left">
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#DCEFFA] px-4 py-2 text-xs font-bold text-[#236B8E]"><BarChart3 className="h-4 w-4" /> 公式月次データで過去を検証</p>
+          <h1 className="font-heading text-[2rem] font-bold leading-[1.35] tracking-tight text-[#263A53] md:text-5xl">あの時から積み立てていたら、<br className="hidden sm:block" />いくらになった？</h1>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-8 text-slate-600 md:mx-0">商品・開始年・月額を選ぶだけ。元本と評価額の動きを、過去の公式月次データで確かめられます。</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-2 text-xs font-bold text-[#40556C] md:justify-start">
+            <span className="rounded-full bg-[#CDEFE2] px-3 py-2">登録不要</span>
+            <span className="rounded-full bg-[#FFF1E7] px-3 py-2">同じ条件で比較</span>
+            <span className="rounded-full bg-[#EEF4FA] px-3 py-2">出典を公開</span>
+          </div>
+        </div>
+        <HomeEditorialIllustration />
       </section>
 
       <section className="mx-4 mt-7 rounded-[1.75rem] border border-[#D9E3E8] bg-white p-5 shadow-[0_18px_45px_rgba(38,58,83,0.08)] md:mx-auto md:max-w-3xl md:p-8" aria-labelledby="quick-start-title">

@@ -4,6 +4,7 @@ import { ChevronRight, ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { getGuidePage, GUIDE_SERIES } from "@/lib/guide-pages";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 
 const BASE_URL = SITE_URL;
 
@@ -119,6 +120,8 @@ export default function GuideIndexPage() {
               新NISA・税金・制度・暴落対応から、初心者向けの始め方、運用中の判断基準、出口戦略まで、テーマ別に整理しています。
             </p>
           </header>
+
+          <PageVisualStory kind="guide" />
 
           <section className="grid gap-2 sm:grid-cols-2" aria-label="疑問別のガイド案内">
             {[

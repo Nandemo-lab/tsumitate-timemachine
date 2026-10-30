@@ -9,6 +9,7 @@ import {
   buildOgImageUrl,
 } from "@/lib/article-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { PageVisualStory } from "@/components/visual/VisualStory";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -117,6 +118,8 @@ export default async function ArticlePage({ params }: Props) {
             counterpartHref={comparisonHref}
             counterpartLabel={comparisonHref ? "同じ条件の積立比較を開く" : undefined}
           />
+
+          <PageVisualStory kind="compare" />
 
           {/* 記事本文（各記事コンポーネントが H1〜CTA まで全て担う） */}
           <Content meta={meta} />

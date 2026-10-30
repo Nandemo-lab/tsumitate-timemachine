@@ -1,0 +1,236 @@
+import Image from "next/image";
+import type { LucideIcon } from "lucide-react";
+import {
+  Baby,
+  Banknote,
+  CalendarDays,
+  CircleDollarSign,
+  Clock3,
+  Coins,
+  Database,
+  GitCompareArrows,
+  Globe2,
+  GraduationCap,
+  Landmark,
+  LineChart,
+  PiggyBank,
+  School,
+  ShieldCheck,
+  Users,
+  WalletCards,
+} from "lucide-react";
+import { KODOMO_NISA_LIMITS, formatManEn } from "@/lib/nisa";
+import { FUNDS } from "@/lib/funds";
+
+type PageVisualKind = "guide" | "compare" | "fund" | "ranking" | "timeline" | "data";
+
+const PAGE_VISUALS: Record<PageVisualKind, {
+  eyebrow: string;
+  title: string;
+  steps: { label: string; detail: string; icon: LucideIcon }[];
+}> = {
+  guide: {
+    eyebrow: "迷ったら、疑問から選ぶ",
+    title: "知る → 条件を決める → 数字で確かめる",
+    steps: [
+      { label: "しくみを知る", detail: "専門用語は、最初にやさしく整理", icon: School },
+      { label: "条件を決める", detail: "目的・期間・使う時期を確認", icon: CalendarDays },
+      { label: "実績を確かめる", detail: "公式月次データで同じ条件を検証", icon: LineChart },
+    ],
+  },
+  compare: {
+    eyebrow: "同じものさしで比べる",
+    title: "商品をそろえた条件で比較",
+    steps: [
+      { label: "商品A", detail: "投資対象と費用を確認", icon: Globe2 },
+      { label: "共通条件", detail: "期間と毎月の金額を統一", icon: GitCompareArrows },
+      { label: "商品B", detail: "経路と結果を同時に確認", icon: LineChart },
+    ],
+  },
+  fund: {
+    eyebrow: "商品を数字の前に知る",
+    title: "対象・費用・データ品質を確認",
+    steps: [
+      { label: "投資対象", detail: "どの国や企業に投資するか", icon: Globe2 },
+      { label: "費用", detail: "信託報酬・経費率を一次情報で確認", icon: Coins },
+      { label: "実績データ", detail: "設定日以降の検証可能な期間だけ使用", icon: ShieldCheck },
+    ],
+  },
+  ranking: {
+    eyebrow: "順位だけで決めない",
+    title: "条件と対象を確認して読む",
+    steps: [
+      { label: "同じ期間", detail: "比較できる共通期間にそろえる", icon: CalendarDays },
+      { label: "同じ月額", detail: "元本の条件を統一", icon: WalletCards },
+      { label: "過去実績", detail: "将来の順位予測ではない", icon: LineChart },
+    ],
+  },
+  timeline: {
+    eyebrow: "開始時期で経路は変わる",
+    title: "毎月の元本と評価額を時間軸で確認",
+    steps: [
+      { label: "積立開始", detail: "開始年と月額を決める", icon: Clock3 },
+      { label: "月末の経路", detail: "元本割れも月末観測で確認", icon: LineChart },
+      { label: "期間末", detail: "元本と評価額を分けて読む", icon: CircleDollarSign },
+    ],
+  },
+  data: {
+    eyebrow: "数字の出どころをたどれる",
+    title: "一次情報 → 月次データ → 計算結果",
+    steps: [
+      { label: "公式データ", detail: "運用会社・指数提供元・日本銀行", icon: Landmark },
+      { label: "検証台帳", detail: "取得日とSHA-256を保存", icon: Database },
+      { label: "計算結果", detail: "欠損や設定前データは補完しない", icon: ShieldCheck },
+    ],
+  },
+};
+
+export function HomeEditorialIllustration() {
+  return (
+    <figure className="tm-editorial-illustration" aria-labelledby="home-illustration-caption">
+      <Image
+        src="/images/illustrations/family-education-planning.png"
+        alt="親子が貯金箱、カレンダー、学校と積立グラフを見ながら将来のお金を考えるイラスト"
+        width={2048}
+        height={1152}
+        priority
+        sizes="(max-width: 767px) 92vw, 560px"
+        className="h-auto w-full"
+      />
+      <figcaption id="home-illustration-caption" className="sr-only">
+        積立条件を決め、教育費など将来のお金を過去の公式データで確かめる流れを表しています。
+      </figcaption>
+    </figure>
+  );
+}
+
+export function PageVisualStory({ kind }: { kind: PageVisualKind }) {
+  const visual = PAGE_VISUALS[kind];
+  return (
+    <section className="tm-visual-story" aria-label={visual.title}>
+      <div className="tm-visual-story__heading">
+        <p>{visual.eyebrow}</p>
+        <h2>{visual.title}</h2>
+      </div>
+      <ol className="tm-visual-story__steps">
+        {visual.steps.map((step, index) => {
+          const Icon = step.icon;
+          return (
+            <li key={step.label}>
+              <span className="tm-visual-story__number" aria-hidden="true">{index + 1}</span>
+              <span className="tm-visual-story__icon" aria-hidden="true"><Icon /></span>
+              <strong>{step.label}</strong>
+              <span>{step.detail}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  );
+}
+
+const KODOMO_VISUALS: Record<string, {
+  label: string;
+  title: string;
+  items: { title: string; detail: string; icon: LucideIcon }[];
+}> = {
+  "kodomo-nisa": {
+    label: "制度の全体像",
+    title: `${KODOMO_NISA_LIMITS.startYear}年から、子どもの名義で長期の積立を考える制度`,
+    items: [
+      { title: "子どもの名義", detail: `${KODOMO_NISA_LIMITS.minAge}〜${KODOMO_NISA_LIMITS.maxAge}歳が対象`, icon: Baby },
+      { title: "年間の投資枠", detail: formatManEn(KODOMO_NISA_LIMITS.annual), icon: PiggyBank },
+      { title: "使う時期も確認", detail: "払出し条件と価格変動を先に確認", icon: GraduationCap },
+    ],
+  },
+  "kodomo-nisa-tsumitate-ikura": {
+    label: "月額の決め方",
+    title: "使う時期から逆算し、続けられる金額を決める",
+    items: [
+      { title: "毎月の金額", detail: "家計に無理のない範囲を確認", icon: WalletCards },
+      { title: "積立できる月数", detail: "始める年齢で元本が変わる", icon: CalendarDays },
+      { title: "元本と値動き", detail: "将来試算は仮定として分けて読む", icon: LineChart },
+    ],
+  },
+  "kodomo-nisa-orukan-vs-sp500": {
+    label: "投資対象の違い",
+    title: "全世界と米国大型株を、同じ条件で比べる",
+    items: [
+      { title: "オルカン", detail: `${FUNDS.orcan.shareCount}・世界へ分散`, icon: Globe2 },
+      { title: "共通する部分", detail: "米国の大型企業を多く含む", icon: GitCompareArrows },
+      { title: "S&P500", detail: `${FUNDS.sp500.shareCount}・米国大型株`, icon: LineChart },
+    ],
+  },
+  "kodomo-nisa-vs-gakushi-hoken": {
+    label: "準備方法の違い",
+    title: "値動き・保障・使う時期を分けて考える",
+    items: [
+      { title: "NISA", detail: "価格変動があり、元本割れもある", icon: LineChart },
+      { title: "共通の目的", detail: "教育費を必要な時期まで準備", icon: School },
+      { title: "学資保険", detail: "保障内容と受取条件を契約で確認", icon: ShieldCheck },
+    ],
+  },
+  "kodomo-nisa-hikidashi": {
+    label: "払出しの確認",
+    title: "年齢・目的・手続を、使う前に確認する",
+    items: [
+      { title: "積立中", detail: "価格変動を見ながら長期で準備", icon: PiggyBank },
+      { title: "払出し条件", detail: "制度と金融機関の案内を確認", icon: CalendarDays },
+      { title: "使用時", detail: "教育費など目的に合わせて現金化", icon: GraduationCap },
+    ],
+  },
+  "kodomo-nisa-daigaku-shikin-deguchi": {
+    label: "大学資金の出口",
+    title: "必要な直前まで投資を続ける前提にしない",
+    items: [
+      { title: "数年前", detail: "必要額と時期を洗い出す", icon: CalendarDays },
+      { title: "段階的に", detail: "使う分を現金へ移す考え方", icon: Banknote },
+      { title: "入学時", detail: "相場にかかわらず必要な支出へ", icon: GraduationCap },
+    ],
+  },
+  "kodomo-nisa-nansai-kara": {
+    label: "始める年齢",
+    title: "年齢ではなく、18歳までの残り月数から考える",
+    items: [
+      { title: "今の年齢", detail: "残りの積立期間を確認", icon: Baby },
+      { title: "毎月の元本", detail: "月額×積立回数で整理", icon: Coins },
+      { title: "使う時期", detail: "元本割れに備える余裕も確認", icon: School },
+    ],
+  },
+  "kodomo-nisa-oya-nisa-tsukaiwake": {
+    label: "親子口座の使い分け",
+    title: "名義・目的・払出し条件を混ぜずに整理する",
+    items: [
+      { title: "親のNISA", detail: "親名義・家計全体の目的", icon: Users },
+      { title: "目的を分ける", detail: "誰のお金を何に使うか確認", icon: GitCompareArrows },
+      { title: "こどもNISA", detail: "子ども名義・制度条件を確認", icon: Baby },
+    ],
+  },
+};
+
+export function GuideConceptVisual({ slug }: { slug: string }) {
+  const visual = KODOMO_VISUALS[slug];
+  if (!visual) return null;
+  return (
+    <figure className="tm-concept-figure" aria-labelledby={`visual-${slug}`}>
+      <div className="tm-concept-figure__heading">
+        <span>{visual.label}</span>
+        <h2 id={`visual-${slug}`}>{visual.title}</h2>
+      </div>
+      <div className="tm-concept-figure__items">
+        {visual.items.map((item, index) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.title} className="tm-concept-figure__item">
+              <div className="tm-concept-figure__icon" aria-hidden="true"><Icon /></div>
+              <strong>{item.title}</strong>
+              <p>{item.detail}</p>
+              {index < visual.items.length - 1 && <span className="tm-concept-figure__connector" aria-hidden="true">→</span>}
+            </div>
+          );
+        })}
+      </div>
+      <figcaption>図の内容は本文で詳しく説明しています。制度条件は公式情報の更新に合わせて表示します。</figcaption>
+    </figure>
+  );
+}
