@@ -2982,7 +2982,7 @@ export const GUIDE_PAGES: GuidePage[] = [
     conclusion: ["オルカン：米国を含む世界の株式へ広く分散", "S&P500：米国大型株へ集中", "どちらを選んでも元本割れがあり、教育費を使う時期は別に確認"],
     systemCheck: [{ topic: "未成年者向けNISAの対象商品・制度開始時期", lastConfirmed: "2026-10-30", source: "金融庁 NISA特設ウェブサイト", sourceUrl: "https://www.fsa.go.jp/policy/nisa2/know/index.html" }],
     points: [
-      { title: "分散範囲", body: `オルカンは先進国・新興国を含む全世界の約${FUNDS.orcan.shareCount}銘柄、S&P500は米国の約${FUNDS.sp500.shareCount}銘柄が対象です。` },
+      { title: "分散範囲", body: `オルカンは先進国・新興国を含む全世界の${FUNDS.orcan.shareCount}、S&P500は米国の${FUNDS.sp500.shareCount}が対象です。` },
       { title: "信託報酬", body: `オルカンは${formatExpenseRatio("orcan")}、S&P500は${formatExpenseRatio("sp500")}です。いずれも保有中に継続して差し引かれます。` },
       { title: "過去実績", body: `2022年の暦年リターンはオルカン${formatAnnualReturn("orcan", 2022)}、S&P500${formatAnnualReturn("sp500", 2022)}でした。過去実績は将来の成果を示すものではありません。` },
     ],

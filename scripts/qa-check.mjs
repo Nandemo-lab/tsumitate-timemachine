@@ -256,6 +256,13 @@ async function main() {
       liveCheckTargets.add(canonical);
     }
 
+    // --- 読者向け本文の単位・修飾語重複（SSOT文字列への二重付与） ---
+    for (const duplicatedText of ["約約", "銘柄銘柄"]) {
+      if (html.includes(duplicatedText)) {
+        report("ERROR", url, `本文に重複表記「${duplicatedText}」があります`);
+      }
+    }
+
     // --- 6. JSON-LD 必須項目・型チェック ---
     const jsonLdMatches = [...html.matchAll(/type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
     const rawJsonLdMatches = [
