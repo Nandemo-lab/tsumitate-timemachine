@@ -4,6 +4,7 @@ const read = (path) => fs.readFileSync(path, "utf8");
 const analytics = read("lib/analytics.ts");
 const tracker = read("components/analytics/ArticleEngagementTracker.tsx");
 const journey = read("components/editorial/ReadingJourney.tsx");
+const productionGa = read("components/analytics/ProductionGoogleAnalytics.tsx");
 const article = read("app/articles/[slug]/page.tsx");
 const guide = read("app/guide/[slug]/page.tsx");
 
@@ -15,6 +16,8 @@ for (const event of ["article_view", "article_end_reached", "related_article_cli
   assert(analytics.includes(`track(\"${event}\"`), `${event} is not defined`);
 }
 assert(analytics.includes('window.location.hostname !== "tsumitate-timemachine.com"'), "events are not production-host limited");
+assert(analytics.includes("pendingEvents.push") && analytics.includes("flushPendingAnalytics"), "pre-initialization events can be lost");
+assert(productionGa.includes("window.dataLayer = window.dataLayer ?? []") && productionGa.includes("flushPendingAnalytics"), "GA bootstrap does not flush queued events");
 for (const forbidden of ["monthly_amount", "final_value", "profit", "return_rate", "email", "name"]) {
   const editorialSection = analytics.slice(analytics.indexOf("trackArticleView"));
   assert(!editorialSection.includes(forbidden), `editorial event leaks ${forbidden}`);

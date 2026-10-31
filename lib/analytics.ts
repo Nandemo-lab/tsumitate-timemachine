@@ -25,10 +25,29 @@ interface EditorialEventParams {
   content_id: string;
 }
 
+interface PendingEvent {
+  name: string;
+  params: object;
+}
+
+const pendingEvents: PendingEvent[] = [];
+
 function track(name: string, params: object) {
   if (typeof window === "undefined") return;
   if (window.location.hostname !== "tsumitate-timemachine.com") return;
+  if (!Array.isArray(window.dataLayer)) {
+    pendingEvents.push({ name, params });
+    return;
+  }
   sendGAEvent("event", name, params);
+}
+
+/** Googleタグ初期化前に起きた初回表示イベントを、安全に後送する。 */
+export function flushPendingAnalytics() {
+  if (typeof window === "undefined" || !Array.isArray(window.dataLayer)) return;
+  for (const event of pendingEvents.splice(0)) {
+    sendGAEvent("event", event.name, event.params);
+  }
 }
 
 /** シミュレーション実行（単体/ランキング/比較/クイックシナリオ） */

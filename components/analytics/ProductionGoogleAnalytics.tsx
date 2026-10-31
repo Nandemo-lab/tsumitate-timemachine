@@ -1,7 +1,8 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { flushPendingAnalytics } from "@/lib/analytics";
 
 const PRODUCTION_HOST = "tsumitate-timemachine.com";
 
@@ -15,6 +16,13 @@ export function ProductionGoogleAnalytics({ gaId }: { gaId: string }) {
     () => window.location.hostname === PRODUCTION_HOST,
     () => false,
   );
+
+  useEffect(() => {
+    if (!isProductionHost) return;
+    window.dataLayer = window.dataLayer ?? [];
+    const timer = window.setTimeout(flushPendingAnalytics, 0);
+    return () => window.clearTimeout(timer);
+  }, [isProductionHost]);
 
   return isProductionHost ? <GoogleAnalytics gaId={gaId} /> : null;
 }
