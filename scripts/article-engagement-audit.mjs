@@ -17,7 +17,8 @@ for (const event of ["article_view", "article_end_reached", "related_article_cli
 }
 assert(analytics.includes('window.location.hostname !== "tsumitate-timemachine.com"'), "events are not production-host limited");
 assert(analytics.includes("pendingEvents.push") && analytics.includes("flushPendingAnalytics"), "pre-initialization events can be lost");
-assert(analytics.includes('get("qa") === "1"') && analytics.includes("debug_mode: true"), "QA traffic is not marked for DebugView");
+assert(analytics.includes('QA_DEBUG_SESSION_KEY = "tm_qa_debug"'), "QA marker is not retained across internal navigation");
+assert(analytics.includes('qaFlag === "1"') && analytics.includes('qaFlag === "0"') && analytics.includes("debug_mode: true"), "QA traffic is not marked for DebugView or cannot be cleared");
 assert(productionGa.includes("window.dataLayer = window.dataLayer ?? []") && productionGa.includes("flushPendingAnalytics"), "GA bootstrap does not flush queued events");
 for (const forbidden of ["monthly_amount", "final_value", "profit", "return_rate", "email", "name"]) {
   const editorialSection = analytics.slice(analytics.indexOf("trackArticleView"));

@@ -31,7 +31,7 @@ Organic限定値はSession default channel groupが`Organic Search`のsessionだ
 ## QAアクセスと重複の扱い
 
 - Googleタグとカスタムイベントは本番ホストでだけ送信する。localhost / preview / Vercel固有URLは送信しない。
-- 本番E2Eは対象URLへ`?qa=1`を付け、全イベントへGA4標準の`debug_mode: true`を付与する。氏名・端末IDなどの識別情報は追加しない。
+- 本番E2Eは最初の対象URLへ`?qa=1`を付ける。同じタブの`sessionStorage`にQA状態を保持し、内部遷移後も全イベントへGA4標準の`debug_mode: true`を付与する。QA終了時は`?qa=0`を一度開くかタブを閉じる。氏名・端末IDなどの識別情報は追加しない。
 - `article_view`と`article_end_reached`は画面インスタンスごとのガードを持つ。
 - 読後導線のクリックはcapture段階で末尾到達を確定してから、`related_article_click`または`article_to_simulation`を送る。IntersectionObserverの非同期通知より先に遷移してもイベント順序を保つ。
 - `page_view`はGoogleタグのブラウザ履歴変更による自動計測だけを使い、手動送信を追加しない。
@@ -46,6 +46,7 @@ Organic限定値はSession default channel groupが`Organic Search`のsessionだ
 ## 2026年12月1日評価
 
 - 評価期間: 2026-11-01〜2026-11-28（28日固定）
+- 本番QA実施: 2026-10-31（`debug_mode: true`。評価期間外）
 - データ成熟: 11月28日分がGA4標準レポートで確定してから集計する
 - 順序条件: GA4探索の同一session内で、表の分母イベントより後に分子イベントが発生したsessionだけを数える
 - 期間開始前または実装前の欠損日は0件補完せず、条件を満たせない指標は`NOT MEASURED`とする

@@ -31,11 +31,24 @@ interface PendingEvent {
 }
 
 const pendingEvents: PendingEvent[] = [];
+const QA_DEBUG_SESSION_KEY = "tm_qa_debug";
+
+function isQaDebugSession() {
+  if (typeof window === "undefined") return false;
+
+  const qaFlag = new URLSearchParams(window.location.search).get("qa");
+  try {
+    if (qaFlag === "1") window.sessionStorage.setItem(QA_DEBUG_SESSION_KEY, "1");
+    if (qaFlag === "0") window.sessionStorage.removeItem(QA_DEBUG_SESSION_KEY);
+    return qaFlag === "1" || (qaFlag !== "0" && window.sessionStorage.getItem(QA_DEBUG_SESSION_KEY) === "1");
+  } catch {
+    return qaFlag === "1";
+  }
+}
 
 function withQaDebugMarker(params: object) {
   if (typeof window === "undefined") return params;
-  const isQaRun = new URLSearchParams(window.location.search).get("qa") === "1";
-  return isQaRun ? { ...params, debug_mode: true } : params;
+  return isQaDebugSession() ? { ...params, debug_mode: true } : params;
 }
 
 function track(name: string, params: object) {
