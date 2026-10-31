@@ -14,6 +14,7 @@ import { NISA_SYSTEM_DISCLAIMER } from "@/lib/nisa";
 import GuideEeat from "@/components/guide/GuideEeat";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { SectionHeading, SpecCard, SimCard } from "@/components/articles/ArticleBlocks";
+import ArticleToc from "@/components/articles/ArticleToc";
 import type { ArticleMeta } from "@/lib/article-pages";
 
 // ─── メタデータ ────────────────────────────────────────────────────────────
@@ -89,23 +90,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       {/* E-E-A-T */}
       <GuideEeat lastUpdated={meta.lastUpdated} />
 
-      {/* 目次 */}
-      <nav className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
-        <p className="text-xs font-bold text-slate-700">目次</p>
-        <ol className="space-y-1.5">
-          {TOC.map((title, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="text-xs font-bold text-[#236B8E] mt-0.5 flex-shrink-0">{i + 1}.</span>
-              <a
-                href={`#section-${i}`}
-                className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
-              >
-                {title}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <ArticleToc titles={TOC} />
 
       {/* 0. 結論 */}
       <section id="section-0" className="space-y-4">

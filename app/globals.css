@@ -220,10 +220,11 @@ input[type="range"] {
 .tm-breadcrumbs ol {
   display: flex;
   min-height: 2.75rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: .25rem;
   margin: 0;
+  overflow: hidden;
   padding: 0;
   list-style: none;
 }
@@ -234,6 +235,13 @@ input[type="range"] {
   min-width: 0;
   align-items: center;
   gap: .3rem;
+}
+
+.tm-breadcrumbs li,
+.tm-breadcrumbs a {
+  flex-grow: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .tm-breadcrumbs a {
@@ -248,7 +256,11 @@ input[type="range"] {
 
 .tm-breadcrumbs a:hover { color: #194f6b; text-decoration-color: currentColor; }
 .tm-breadcrumbs svg { width: .85rem; height: .85rem; flex: none; }
-.tm-breadcrumbs li[aria-current="page"] { max-width: min(25rem, 64vw); }
+.tm-breadcrumbs li[aria-current="page"] {
+  flex: 1 1 auto;
+  max-width: none;
+  overflow: hidden;
+}
 .tm-breadcrumbs li[aria-current="page"] span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .tm-kicker { letter-spacing: .035em; }
@@ -323,6 +335,48 @@ input[type="range"] {
 .tm-article-body > div > section:first-child > h1 {
   display: none;
 }
+
+.tm-article-toc {
+  border-block: 1px solid #d9e3e8;
+  background: #fff;
+}
+
+.tm-article-toc summary {
+  display: flex;
+  min-height: 3.25rem;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .75rem .25rem;
+  color: #20364c;
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.tm-article-toc summary::-webkit-details-marker { display: none; }
+.tm-article-toc summary svg { width: 1rem; height: 1rem; transition: transform 160ms ease; }
+.tm-article-toc[open] summary svg { transform: rotate(180deg); }
+.tm-article-toc nav { border-top: 1px solid #e6ecef; padding: 1rem .25rem 1.15rem; }
+.tm-article-toc ol { display: grid; gap: .65rem; }
+.tm-article-toc li {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: .35rem;
+  color: #52677a;
+  font-size: .85rem;
+  line-height: 1.6;
+}
+.tm-article-toc li > span { color: #236b8e; font-weight: 800; }
+.tm-article-toc a:hover { color: #174f6a; text-decoration: underline; text-underline-offset: .2em; }
+.tm-article-body .rounded-xl,
+.tm-article-body .rounded-2xl { border-radius: .5rem; }
+.tm-article-body a[style*="linear-gradient"] {
+  border: 1px solid #bfd5df;
+  background: #eef7f9 !important;
+}
+.tm-article-body a[style*="linear-gradient"] .text-white { color: #236b8e !important; }
 
 .tm-article-lead__label {
   color: var(--tm-blue-strong);
