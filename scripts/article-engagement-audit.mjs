@@ -25,8 +25,8 @@ for (const forbidden of ["monthly_amount", "final_value", "profit", "return_rate
   assert(!editorialSection.includes(forbidden), `editorial event leaks ${forbidden}`);
 }
 assert(tracker.includes("IntersectionObserver"), "article end is not observed in the rendered page");
-assert(tracker.includes("endTracked.current"), "article end event has no duplicate guard");
-assert(tracker.includes("viewTracked.current"), "article view event has no duplicate guard");
+assert(tracker.includes("endTrackedFor.current === contentKey"), "article end event has no per-article duplicate guard");
+assert(tracker.includes("viewTrackedFor.current === contentKey"), "article view event has no per-article duplicate guard");
 assert(tracker.includes("markEndReached()") && tracker.includes('document.addEventListener("click", onClick, true)'), "ordered end-before-click capture is missing");
 assert(journey.includes("trackRelatedArticleClick"), "related article clicks are not tracked");
 assert(article.includes('contentType="article"') && article.includes('sourceType="article"'), "article template is not instrumented");

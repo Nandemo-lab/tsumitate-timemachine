@@ -32,7 +32,7 @@ Organic限定値はSession default channel groupが`Organic Search`のsessionだ
 
 - Googleタグとカスタムイベントは本番ホストでだけ送信する。localhost / preview / Vercel固有URLは送信しない。
 - 本番E2Eは最初の対象URLへ`?qa=1`を付ける。同じタブの`sessionStorage`にQA状態を保持し、内部遷移後も全イベントへGA4標準の`debug_mode: true`を付与する。QA終了時は`?qa=0`を一度開くかタブを閉じる。氏名・端末IDなどの識別情報は追加しない。
-- `article_view`と`article_end_reached`は画面インスタンスごとのガードを持つ。
+- `article_view`と`article_end_reached`は記事ID単位のガードを持つ。同じ記事内の再レンダーでは重複せず、SPAで別記事へ遷移した場合は新しい記事のイベントを送る。
 - 読後導線のクリックはcapture段階で末尾到達を確定してから、`related_article_click`または`article_to_simulation`を送る。IntersectionObserverの非同期通知より先に遷移してもイベント順序を保つ。
 - `page_view`はGoogleタグのブラウザ履歴変更による自動計測だけを使い、手動送信を追加しない。
 - 本番QAを行った日時・対象URLは分析時に注記し、除外できない場合は自然利用の確定値と扱わない。

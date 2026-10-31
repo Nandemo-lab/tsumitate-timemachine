@@ -16,20 +16,21 @@ export default function ArticleEngagementTracker({
   contentId: string;
 }) {
   const endRef = useRef<HTMLDivElement>(null);
-  const viewTracked = useRef(false);
-  const endTracked = useRef(false);
+  const viewTrackedFor = useRef<string | null>(null);
+  const endTrackedFor = useRef<string | null>(null);
+  const contentKey = `${contentType}:${contentId}`;
 
   const markEndReached = useCallback(() => {
-    if (endTracked.current) return;
-    endTracked.current = true;
+    if (endTrackedFor.current === contentKey) return;
+    endTrackedFor.current = contentKey;
     trackArticleEndReached({ content_type: contentType, content_id: contentId });
-  }, [contentId, contentType]);
+  }, [contentId, contentKey, contentType]);
 
   useEffect(() => {
-    if (viewTracked.current) return;
-    viewTracked.current = true;
+    if (viewTrackedFor.current === contentKey) return;
+    viewTrackedFor.current = contentKey;
     trackArticleView({ content_type: contentType, content_id: contentId });
-  }, [contentId, contentType]);
+  }, [contentId, contentKey, contentType]);
 
   useEffect(() => {
     const target = endRef.current;
@@ -37,7 +38,7 @@ export default function ArticleEngagementTracker({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (endTracked.current || !entries.some((entry) => entry.isIntersecting)) return;
+        if (endTrackedFor.current === contentKey || !entries.some((entry) => entry.isIntersecting)) return;
         markEndReached();
         observer.disconnect();
       },
@@ -45,7 +46,7 @@ export default function ArticleEngagementTracker({
     );
     observer.observe(target);
     return () => observer.disconnect();
-  }, [markEndReached]);
+  }, [contentKey, markEndReached]);
 
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
