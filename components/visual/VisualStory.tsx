@@ -16,6 +16,8 @@ import {
   PiggyBank,
   School,
   ShieldCheck,
+  Signpost,
+  Target,
   Users,
   WalletCards,
 } from "lucide-react";
@@ -134,25 +136,75 @@ export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
   const ids = fundIds.filter((id): id is FundId => id in FUNDS).slice(0, 2);
   if (ids.length !== 2) return null;
   const [fundA, fundB] = ids.map((id) => FUNDS[id]);
+  const focus: Partial<Record<FundId, string>> = {
+    orcan: "先進国・新興国を含む世界株式",
+    sp500: "米国を代表する大型株",
+    nasdaq100: "NASDAQ上場の非金融大型株",
+    fangplus: "米国の大型テクノロジー企業",
+    vt: "世界の株式市場",
+    vti: "米国株式市場全体",
+    vym: "米国の高配当株",
+    schd: "米国の連続配当株",
+    india: "インド株式",
+    emerging: "新興国株式",
+  };
   return (
-    <figure className="tm-comparison-figure" aria-label={`${fundA.shortName}と${fundB.shortName}の商品構造比較`}>
+    <figure className="tm-comparison-figure tm-comparison-map" aria-label={`${fundA.shortName}と${fundB.shortName}の商品構造比較`}>
+      <div className="tm-comparison-map__heading">
+        <span>ひと目で見る違い</span>
+        <strong>投資先の広さと費用を、先に分けて確認</strong>
+      </div>
       <div className="tm-comparison-figure__fund">
         <span>商品 A</span>
         <strong>{fundA.shortName}</strong>
-        <p>{fundA.description}</p>
-        <dl><dt>費用</dt><dd>{formatExpenseRatio(fundA.id)}</dd></dl>
+        <div className="tm-comparison-map__scope" aria-hidden="true"><Globe2 /></div>
+        <p>{focus[fundA.id] ?? fundA.description}</p>
+        <dl>
+          <div><dt>構成</dt><dd>{fundA.shareCount}</dd></div>
+          <div><dt>費用</dt><dd>{formatExpenseRatio(fundA.id)}</dd></div>
+        </dl>
       </div>
       <div className="tm-comparison-figure__axis" aria-hidden="true">
         <GitCompareArrows />
-        <span>同じ条件で確認</span>
+        <span>違いを分ける</span>
       </div>
       <div className="tm-comparison-figure__fund">
         <span>商品 B</span>
         <strong>{fundB.shortName}</strong>
-        <p>{fundB.description}</p>
-        <dl><dt>費用</dt><dd>{formatExpenseRatio(fundB.id)}</dd></dl>
+        <div className="tm-comparison-map__scope tm-comparison-map__scope--focused" aria-hidden="true"><Target /></div>
+        <p>{focus[fundB.id] ?? fundB.description}</p>
+        <dl>
+          <div><dt>構成</dt><dd>{fundB.shareCount}</dd></div>
+          <div><dt>費用</dt><dd>{formatExpenseRatio(fundB.id)}</dd></div>
+        </dl>
       </div>
-      <figcaption>投資対象と費用を先に確認し、評価額の差は共通条件の比較ページで確かめます。</figcaption>
+      <figcaption>構成数だけで分散効果は決まりません。投資対象を確認したうえで、評価額の差は共通条件の比較ページで確かめます。</figcaption>
+    </figure>
+  );
+}
+
+export function GuidePointVisual({ points }: { points: { title: string; body: string }[] }) {
+  const icons = [Signpost, LineChart, ShieldCheck];
+  return (
+    <figure className="tm-guide-point-map" aria-labelledby="guide-point-map-title">
+      <div className="tm-guide-point-map__heading">
+        <span>迷わないための3つの確認</span>
+        <h2 id="guide-point-map-title">この記事の要点を、順番に整理</h2>
+      </div>
+      <ol>
+        {points.slice(0, 3).map((point, index) => {
+          const Icon = icons[index] ?? ShieldCheck;
+          return (
+            <li key={point.title}>
+              <span className="tm-guide-point-map__icon" aria-hidden="true"><Icon /></span>
+              <span className="tm-guide-point-map__step">0{index + 1}</span>
+              <strong>{point.title}</strong>
+              <p>{point.body}</p>
+            </li>
+          );
+        })}
+      </ol>
+      <figcaption>上から順に確認すると、制度・数字・注意点を混ぜずに読めます。</figcaption>
     </figure>
   );
 }

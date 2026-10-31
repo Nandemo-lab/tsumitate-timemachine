@@ -5,7 +5,6 @@ import {
   TrendingUp,
   Globe,
   Flag,
-  BookOpen,
   ArrowRight,
 } from "lucide-react";
 import { simulate, formatCurrency, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
@@ -70,23 +69,6 @@ const TOC = [
 export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
   return (
     <div className="space-y-10">
-
-      {/* カテゴリバッジ + H1 + 導入 */}
-      <section className="space-y-3">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1">
-          <BookOpen className="h-3 w-3 text-[#236B8E]" />
-          <span className="text-xs font-bold text-[#236B8E]">{meta.category}</span>
-        </div>
-        <h1
-          className="text-2xl font-black text-[#263A53] leading-tight"
-          style={{ fontFamily: "var(--font-serif-jp), serif" }}
-        >
-          {meta.h1}
-        </h1>
-        <p className="text-sm text-slate-600 leading-relaxed">
-          新NISAで積立を始めようとしたとき、多くの人が「オルカンとS&P500、どちらを選べばいい？」と悩みます。この記事では両者の違いを事実ベースで比較し、どちらが自分に向いているかを判断する材料を提供します。
-        </p>
-      </section>
 
       {/* E-E-A-T */}
       <GuideEeat lastUpdated={meta.lastUpdated} />

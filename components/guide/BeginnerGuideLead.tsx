@@ -19,6 +19,10 @@ export default function BeginnerGuideLead({
   bullets,
   conclusion,
 }: Props) {
+  const sentences = intro.match(/[^。]+。?/g) ?? [intro];
+  const leadSentence = sentences[0]?.trim() ?? intro;
+  const detail = sentences.slice(1).join("").trim();
+
   return (
     <section
       aria-labelledby="beginner-guide-summary"
@@ -55,7 +59,7 @@ export default function BeginnerGuideLead({
 
         <div className="space-y-3 border-t border-[#E5ECEF] pt-5">
           <h2 className="text-lg font-black text-[#263A53]">先に結論</h2>
-          <p className="text-base leading-7 text-[#40556C]">{intro}</p>
+          <p className="text-base font-medium leading-7 text-[#263A53]">{leadSentence}</p>
           <ul className="space-y-2">
             {conclusion.map((line) => (
               <li
@@ -69,6 +73,14 @@ export default function BeginnerGuideLead({
               </li>
             ))}
           </ul>
+          {detail && (
+            <details className="border-t border-[#E5ECEF] pt-2">
+              <summary className="min-h-11 cursor-pointer py-2 text-sm font-bold text-[#236B8E]">
+                制度の前提を詳しく確認する
+              </summary>
+              <p className="pb-1 text-base leading-7 text-[#40556C]">{detail}</p>
+            </details>
+          )}
         </div>
       </div>
     </section>

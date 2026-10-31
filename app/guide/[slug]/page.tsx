@@ -25,7 +25,8 @@ import GuideEeat from "@/components/guide/GuideEeat";
 import GuideBodyText from "@/components/guide/GuideBodyText";
 import BeginnerGuideLead from "@/components/guide/BeginnerGuideLead";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
-import { GuideConceptVisual } from "@/components/visual/VisualStory";
+import { GuideConceptVisual, GuidePointVisual } from "@/components/visual/VisualStory";
+import ArticleToc from "@/components/articles/ArticleToc";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -268,23 +269,7 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {/* ── 要点3つ（判断基準・理由の詳細）─────────────────── */}
-          <section className="space-y-4">
-            <h2
-              className="text-base font-bold text-[#263A53]"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
-              この記事のポイント
-            </h2>
-            <div className="tm-editorial-list">
-              {page.points.map((pt, i) => (
-                <div key={i} className="grid grid-cols-[2rem_1fr] gap-x-3 gap-y-1">
-                  <span className="row-span-2 font-number text-sm font-bold text-[#236B8E]">0{i + 1}</span>
-                  <p className="font-bold text-[#263A53]">{pt.title}</p>
-                  <p className={`${isBeginnerGuide ? "text-base" : "text-sm"} text-slate-600`}>{pt.body}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          <GuidePointVisual points={page.points} />
 
           {/* ── E-E-A-T 編集部情報 ───────────────────────────── */}
           {page.lastUpdated && <GuideEeat lastUpdated={page.lastUpdated} />}
@@ -373,35 +358,22 @@ export default async function GuidePage({ params }: Props) {
 
           {/* ── 目次 ────────────────────────────────────────── */}
           {page.sections && page.sections.length > 0 && (
-            <nav className="rounded-xl bg-white border border-[#E1E8EC] p-4 space-y-2">
-              <p className="text-xs font-bold text-slate-700">目次</p>
-              <ol className="space-y-1.5">
-                {page.sections.map((sec, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="text-[10px] font-bold text-[#236B8E] mt-0.5 flex-shrink-0">{i + 1}.</span>
-                    <a
-                      href={`#section-${i}`}
-                      className="text-xs text-slate-600 hover:text-slate-700 transition-colors leading-snug"
-                    >
-                      {sec.h2}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <ArticleToc titles={page.sections.map((section) => section.h2)} />
           )}
 
           {/* ── 本文セクション（H2・H3） ─────────────────────── */}
           {page.sections?.map((sec, i) => {
             const simEntry = sec.simCallout !== undefined ? simResults[sec.simCallout] : undefined;
             return (
-              <section key={i} id={`section-${i}`} className="space-y-4">
+              <section key={i} id={`section-${i}`} className="tm-guide-section">
                 <h2
-                  className="text-base font-bold text-[#263A53]"
-                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
+                  className="text-xl font-bold leading-[1.55] text-[#263A53]"
                 >
                   {sec.h2}
                 </h2>
+                <details open={i === 0 || /注意|リスク|元本割れ/.test(sec.h2)}>
+                  <summary>この項目の要点と詳しい説明</summary>
+                  <div className="tm-guide-section__body">
                 {isBeginnerGuide && simEntry && (
                   <p className="rounded-lg bg-[#FFF7F1] px-3 py-2 text-sm leading-6 text-[#6B4A36]">
                     ここに示す金額は2020年以降の過去実績です。2027年以降の成果を予測するものではありません。
@@ -508,6 +480,8 @@ export default async function GuidePage({ params }: Props) {
                     </Link>
                   </div>
                 )}
+                  </div>
+                </details>
               </section>
             );
           })}
@@ -517,7 +491,6 @@ export default async function GuidePage({ params }: Props) {
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               実際の積立シミュレーション
             </h2>
@@ -581,7 +554,6 @@ export default async function GuidePage({ params }: Props) {
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               商品ごとの確認項目を見る
             </h2>
@@ -674,7 +646,6 @@ export default async function GuidePage({ params }: Props) {
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-5"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               よくある質問
             </h2>
@@ -705,7 +676,6 @@ export default async function GuidePage({ params }: Props) {
             <section className="space-y-3">
               <h2
                 className="text-base font-bold text-[#263A53]"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 {page.recommendHeading ?? (isBeginnerGuide ? "このページが役立つ場面" : "こんな人におすすめ")}
               </h2>
@@ -725,7 +695,6 @@ export default async function GuidePage({ params }: Props) {
             <section className="space-y-3">
               <h2
                 className="text-base font-bold text-[#263A53]"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 よくある失敗パターン
               </h2>
@@ -747,7 +716,6 @@ export default async function GuidePage({ params }: Props) {
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               関連する投資ガイド
             </h2>
@@ -776,7 +744,6 @@ export default async function GuidePage({ params }: Props) {
               <section>
                 <h2
                   className="text-base font-bold text-[#263A53] mb-4"
-                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
                   関連コラム
                 </h2>
@@ -805,7 +772,6 @@ export default async function GuidePage({ params }: Props) {
               <TrendingUp className="h-5 w-5 text-emerald-700" />
               <h2
                 className="text-base font-bold text-[#263A53]"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
                 自分の条件でシミュレーション
               </h2>
@@ -826,7 +792,6 @@ export default async function GuidePage({ params }: Props) {
           <section className="space-y-3">
             <h2
               className="text-sm font-bold text-slate-600"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
               人気ページ
             </h2>

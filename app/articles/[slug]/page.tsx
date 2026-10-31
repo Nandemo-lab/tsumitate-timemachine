@@ -119,8 +119,13 @@ export default async function ArticlePage({ params }: Props) {
 
           <ArticleComparisonVisual fundIds={relatedFunds} />
 
-          {/* 記事本文（各記事コンポーネントが H1〜CTA まで全て担う） */}
-          <div className="tm-article-body"><Content meta={meta} /></div>
+          <details className="tm-article-details">
+            <summary>
+              <span>商品構造・過去実績・リスクを詳しく読む</span>
+              <small>約7分</small>
+            </summary>
+            <div className="tm-article-body"><Content meta={meta} /></div>
+          </details>
 
         </div>
         <SiteFooter />
