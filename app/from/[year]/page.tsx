@@ -11,6 +11,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import { PageVisualStory } from "@/components/visual/VisualStory";
 import { FundId } from "@/types";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { getFundPageSlug } from "@/lib/fund-seo-pages";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -248,14 +249,14 @@ export default async function FromYearPage({ params }: Props) {
           ]} />
 
           {/* ── H1 ───────────────────────────────────────────────── */}
-          <section className="space-y-4">
+          <section id="conditions" className="scroll-mt-4 space-y-4">
             <div className="flex items-center gap-2">
               <Trophy className="h-5 w-5 text-orange-600 flex-shrink-0" />
               <h1
                 className="text-2xl font-black text-[#263A53] leading-tight"
                 style={{ fontFamily: "var(--font-serif-jp), serif" }}
               >
-              {year}年から積み立てていたら？<br />検証済み銘柄リターンランキング
+              {year}年から積み立てていたら？<br />検証済み銘柄の積立損益率ランキング
               </h1>
             </div>
             <p className="text-sm text-slate-600">
@@ -293,6 +294,13 @@ export default async function FromYearPage({ params }: Props) {
             )}
           </section>
 
+          <nav aria-label="このページの案内" className="flex gap-4 overflow-x-auto border-y border-[#D9E3E8] py-3 text-sm font-bold text-[#236B8E]">
+            <a href="#conditions" className="min-h-11 shrink-0 content-center">条件</a>
+            <a href="#principal-path" className="min-h-11 shrink-0 content-center">元本割れ</a>
+            <a href="#ranking" className="min-h-11 shrink-0 content-center">順位</a>
+            <a href="#other-years" className="min-h-11 shrink-0 content-center">他の開始年</a>
+          </nav>
+
           <PageVisualStory kind="timeline" />
 
           {/* ── 1位ハイライト ─────────────────────────────────────── */}
@@ -312,7 +320,7 @@ export default async function FromYearPage({ params }: Props) {
             }}
           >
             <p className="text-xs font-black tracking-widest uppercase text-slate-600">
-              🥇 {year}年スタート 最高リターン
+              🥇 {year}年スタート 最高積立損益率
             </p>
             <div className="flex items-end justify-between">
               <div>
@@ -346,21 +354,52 @@ export default async function FromYearPage({ params }: Props) {
             </section>
           )}
 
-          <section className="space-y-3" data-start-year-analysis={yearNum}>
+          <section id="principal-path" className="scroll-mt-4 space-y-3" data-start-year-analysis={yearNum}>
             <div className="space-y-1">
               <h2 className="text-base font-bold text-[#263A53]">{year}年開始で、途中の元本割れは何か月あったか</h2>
               <p className="text-xs leading-relaxed text-slate-500">
                 月初に3万円を追加した直後の月末評価額を、同月までの拠出元本と比較しています。日中の最大下落率や将来の回復期間ではありません。
               </p>
             </div>
-            <div className="overflow-x-auto rounded-xl border border-[#D9E3E8]">
+            <div className="space-y-2 md:hidden" aria-label="商品別の元本割れ分析">
+              {pathAnalyses.map(({ fund, result, belowPrincipalMonths, firstBelowPrincipal, lastBelowPrincipal, worstPoint }) => (
+                <article key={fund.id} className="rounded-xl border border-[#D9E3E8] bg-white p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</h3>
+                      <p className="mt-1 text-xs text-slate-500">元本 {formatCurrency(result.totalPrincipal)}</p>
+                    </div>
+                    <p className="text-right text-sm font-bold text-slate-700">{belowPrincipalMonths}か月<span className="block text-[10px] font-normal text-slate-500">元本割れ</span></p>
+                  </div>
+                  <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-[#E1E8EC] pt-3 text-xs">
+                    <div>
+                      <dt className="text-slate-500">期間末評価額</dt>
+                      <dd className="mt-1 font-bold text-slate-700">{formatCurrency(result.finalValue)}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-slate-500">期間末損益</dt>
+                      <dd className={`mt-1 font-bold ${result.profit >= 0 ? "text-emerald-700" : "text-red-600"}`}>{result.profit >= 0 ? "+" : ""}{formatCurrency(result.profit)}</dd>
+                    </div>
+                    <div className="col-span-2">
+                      <dt className="text-slate-500">元本割れが確認された月</dt>
+                      <dd className="mt-1 text-slate-700">{firstBelowPrincipal ? `最初 ${firstBelowPrincipal}／最後 ${lastBelowPrincipal}` : "該当なし"}</dd>
+                    </div>
+                    <div className="col-span-2">
+                      <dt className="text-slate-500">{belowPrincipalMonths > 0 ? "元本割れ率が最大だった月（差額）" : "元本との差が最小だった月"}</dt>
+                      <dd className="mt-1 text-slate-700">{worstPoint ? `${worstPoint.date} ${worstPoint.profit >= 0 ? "+" : ""}${formatCurrency(worstPoint.profit)}` : "—"}</dd>
+                    </div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+            <div className="hidden overflow-x-auto rounded-xl border border-[#D9E3E8] md:block">
               <table className="w-full min-w-[460px] text-left text-xs">
                 <thead className="bg-[#F7FAFB] text-slate-500">
                   <tr>
                     <th className="px-3 py-2 font-medium">商品</th>
                     <th className="px-3 py-2 font-medium">元本割れ月数</th>
-                    <th className="px-3 py-2 font-medium">確認された期間</th>
-                    <th className="px-3 py-2 font-medium">月末の最大乖離</th>
+                    <th className="px-3 py-2 font-medium">最初／最後の該当月</th>
+                    <th className="px-3 py-2 font-medium">最大元本割れ率の月・最小含み益</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/[0.06]">
@@ -369,29 +408,28 @@ export default async function FromYearPage({ params }: Props) {
                       <td className="px-3 py-2.5 font-bold" style={{ color: fund.color }}>{fund.shortName}</td>
                       <td className="px-3 py-2.5 text-slate-700">{belowPrincipalMonths}か月</td>
                       <td className="px-3 py-2.5 text-slate-600">
-                        {firstBelowPrincipal ? `${firstBelowPrincipal}〜${lastBelowPrincipal}` : "該当なし"}
+                        {firstBelowPrincipal ? `${firstBelowPrincipal}／${lastBelowPrincipal}` : "該当なし"}
                       </td>
                       <td className="px-3 py-2.5 text-slate-600">
-                        {worstPoint ? `${worstPoint.date} ${worstPoint.profit >= 0 ? "+" : ""}${formatCurrency(worstPoint.profit)}` : "—"}
+                        {worstPoint ? `${belowPrincipalMonths > 0 ? "最大元本割れ率の月（差額）" : "最小含み益"}：${worstPoint.date} ${worstPoint.profit >= 0 ? "+" : ""}${formatCurrency(worstPoint.profit)}` : "—"}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="text-[11px] text-slate-500 sm:hidden">表は横にスクロールして全項目を確認できます。</p>
             <p className="text-[11px] leading-relaxed text-slate-500">
-              開始年が違えば積立回数と元本も変わるため、別の開始年ページとの評価額だけの比較はできません。この表は各開始年の中で、同じ月額・終了月の商品差を確認するためのものです。
+              「最初／最後の該当月」は連続期間ではありません。元本割れが複数回に分かれた場合も、最初と最後の月だけを示します。開始年が違えば積立回数と元本も変わるため、別の開始年ページとの評価額だけの比較はできません。
             </p>
           </section>
 
           {/* ── 全銘柄ランキング ─────────────────────────────────── */}
-          <section>
+          <section id="ranking" className="scroll-mt-4">
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              {year}年スタート・検証済み{ranked.length}銘柄リターンランキング
+              {year}年スタート・検証済み{ranked.length}銘柄の積立損益率ランキング
             </h2>
             <div className="space-y-2" data-ranked-count={ranked.length}>
               {ranked.map(({ fund, result }, i) => {
@@ -400,6 +438,8 @@ export default async function FromYearPage({ params }: Props) {
                 const hasYearPage = yearPageSlug && YEAR_PAGES.some(
                   (p) => p.fundSlug === yearPageSlug && p.year === yearNum
                 );
+                const detailSlug = getFundPageSlug(fund.id);
+                const detailHref = detailSlug ? `/fund/${detailSlug}` : fund.id === "vt" ? "/vt" : "/fund";
 
                 const CardContent = (
                   <>
@@ -428,9 +468,7 @@ export default async function FromYearPage({ params }: Props) {
                           {isProfit ? "+" : ""}{formatCurrency(result.profit)}
                         </p>
                       </div>
-                      {hasYearPage && (
-                        <ChevronRight className="h-4 w-4 text-slate-500 flex-shrink-0" />
-                      )}
+                      <ChevronRight className="h-4 w-4 text-slate-500 flex-shrink-0" />
                     </div>
                   </>
                 );
@@ -441,27 +479,18 @@ export default async function FromYearPage({ params }: Props) {
                     ? "bg-[#EFF5F7] border border-[#C7D6DE]"
                     : "bg-white border border-[#DDE6EA]");
 
-                return hasYearPage ? (
+                return (
                   <Link
                     key={fund.id}
                     data-ranked-position={i + 1}
                     data-ranked-fund-id={fund.id}
                     data-ranked-quality={getReturnSeriesDefinition(fund.id).quality}
-                    href={`/${yearPageSlug}/${yearNum}`}
-                    className={baseClass + " hover:bg-white/[0.08]"}
+                    href={hasYearPage ? `/${yearPageSlug}/${yearNum}` : detailHref}
+                    aria-label={`${fund.encyclopedia.nickname}の${hasYearPage ? `${yearNum}年開始の詳細` : "商品情報"}を見る`}
+                    className={baseClass + " hover:bg-[#F7FAFB]"}
                   >
                     {CardContent}
                   </Link>
-                ) : (
-                  <div
-                    key={fund.id}
-                    data-ranked-position={i + 1}
-                    data-ranked-fund-id={fund.id}
-                    data-ranked-quality={getReturnSeriesDefinition(fund.id).quality}
-                    className={baseClass}
-                  >
-                    {CardContent}
-                  </div>
                 );
               })}
               {ranked.length === 0 && (
@@ -471,7 +500,7 @@ export default async function FromYearPage({ params }: Props) {
               )}
             </div>
             <p className="text-[10px] text-slate-500 mt-3 text-center">
-              ※月3万円 / {year}年{SIM_MONTH}月〜{CURRENT_YEAR}年{CURRENT_MONTH}月 / 検証済み月次データを使用
+              ※積立損益率＝（期間末評価額−累計元本）÷累計元本。IRRや時間加重収益率ではありません。月3万円 / {year}年{SIM_MONTH}月〜{CURRENT_YEAR}年{CURRENT_MONTH}月
             </p>
           </section>
 
@@ -545,7 +574,7 @@ export default async function FromYearPage({ params }: Props) {
           )}
 
           {/* ── 他の年との比較 ───────────────────────────────────── */}
-          <section>
+          <section id="other-years" className="scroll-mt-4">
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}

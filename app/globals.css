@@ -324,6 +324,9 @@ input[type="range"] {
   font-weight: 850;
   letter-spacing: -0.035em;
   line-height: 1.45;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .tm-article-header > span {

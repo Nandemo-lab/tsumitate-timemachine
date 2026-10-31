@@ -39,6 +39,8 @@ const analytics = read("lib/analytics.ts");
 const analyticsLoader = read("components/analytics/ProductionGoogleAnalytics.tsx");
 const rootLayout = read("app/layout.tsx");
 const recentConditions = read("components/simulation/RecentConditions.tsx");
+const fromPage = read("app/from/[year]/page.tsx");
+const comparePage = read("app/compare/[slug]/page.tsx");
 
 for (const snippet of [
   "同じ開始月・終了月・月額で期間末評価額だけでなく、月末時点の元本割れ月数と最大評価損も比較できます",
@@ -75,6 +77,11 @@ assert(home.includes("商品設定前の期間や欠損値は別系列で補い�
 assert(home.includes("実績期間：2026年9月まで"), "トップでデータ終端を開示していない");
 assert(home.includes("条件を選んで積立実績を調べる"), "トップでシミュレーションを主行動として示していない");
 assert(home.indexOf("条件を選んで積立実績を調べる") < home.indexOf("条件別の検証例"), "トップで検証例が主行動より先に表示される");
+assert(home.includes("getAvailableStartMonth") && home.includes("effectiveStartMonth"), "トップが商品設定月より前の開始月を計算する可能性がある");
+assert(timeMachine.includes("resultSection?.focus({ preventScroll: true })") && timeMachine.includes("tabIndex={-1}"), "試算後に結果へフォーカスが移らない");
+assert(fromPage.includes("積立損益率＝（期間末評価額−累計元本）÷累計元本") && !fromPage.includes("確認された期間</th>"), "Fromが積立損益率または非連続の元本割れ月を誤解させる");
+assert(fromPage.includes("元本割れ率が最大だった月（差額）") && !fromPage.includes('"最大元本割れ額"'), "Fromが最大元本割れ率の月を最大円損失と誤表示している");
+assert(comparePage.includes('hasReferenceSeries ? "商品構造とデータ品質を確認する"'), "G品質Compareの役割説明が数値比較を案内している");
 assert(compareClient.includes("tab=compare&fund=") && homePage.includes("parseComparePreset"), "静的Compareから同じ2商品の比較フォームへ条件を引き継いでいない");
 assert(analytics.includes("trackShareSuccess") && !analytics.includes('track("compare_click", params);\n  track("compare_start", params);'), "共有成功または比較開始の計測定義がクリックと混在している");
 assert(analytics.includes('mode === "compare" ? "compare_start" : "simulation_start"'), "比較開始と単一シミュレーション開始のイベントが分離されていない");
@@ -106,6 +113,7 @@ assert(winnerBanner.includes('n >= 0 ? "+" : ""') && winnerBanner.includes('winn
 assert(winnerBanner.includes('winner.profit >= 0 ? "#10b981" : "#ef4444"'), "比較UIが負の損益を利益色で表示する可能性がある");
 assert(dataSourcesPage.includes("現在の収録最終月は2026年9月です"), "Data SourcesがA品質系列の最新終端2026年9月を明示していない");
 assert(dataSourcesPage.includes("9つのA系列"), "Data Sourcesが最新終端の対象をA品質9系列に限定していない");
+assert(dataSourcesPage.includes("SP500_EXAMPLE_MONTH") && dataSourcesPage.includes("sp500Example.monthlyReturn"), "Data Sourcesの1か月計算例が検証台帳を参照していない");
 assert(returnDataSources.includes('dataThrough: verified ? definition.endMonth : "原典検証待ち（公開計算の対象外）"'), "Data SourcesがG品質系列を検証済み終端として表示する可能性がある");
 assert(returnDataSources.includes('granularity: verified ? `${definition.startMonth}〜${definition.endMonth}の月次データ` : "検証済み月次系列なし"'), "Data SourcesがG品質系列を検証済み月次系列として表示する可能性がある");
 for (const phrase of ["配当・分配金を含む総合リターン", "ファンド内部の運用費用控除後", "欠損値を補間せず、別系列でも補わない"]) {

@@ -13,6 +13,7 @@ import { RecentSimulation } from "@/lib/recent-simulations";
 import { trackSourceView } from "@/lib/analytics";
 import { HomeEditorialIllustration } from "@/components/visual/VisualStory";
 import ReadingJourney from "@/components/editorial/ReadingJourney";
+import { getAvailableStartMonth } from "@/lib/return-series";
 
 interface Props {
   onNavigate: (tab: MainTab) => void;
@@ -33,7 +34,12 @@ export default function HomeView({ onNavigate, onTaraeba, onRestoreRecent }: Pro
   const [fund, setFund] = useState<FundId>("orcan");
   const [startYear, setStartYear] = useState(2020);
   const [amount, setAmount] = useState(30000);
-  const preview = useMemo(() => simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount: amount }), [fund, startYear, amount]);
+  const [firstYear, firstMonth] = getAvailableStartMonth(fund).split("-").map(Number);
+  const effectiveStartMonth = startYear === firstYear ? firstMonth : 1;
+  const preview = useMemo(
+    () => simulate({ fundId: fund, startYear, startMonth: effectiveStartMonth, monthlyAmount: amount }),
+    [fund, startYear, effectiveStartMonth, amount]
+  );
 
   return (
     <div className="tm-home pb-28 pt-5 md:pt-12">
@@ -56,15 +62,19 @@ export default function HomeView({ onNavigate, onTaraeba, onRestoreRecent }: Pro
         <div className="space-y-5">
           <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">1. 商品</legend><div className="grid grid-cols-3 gap-2">{PICKS.map((id) => <button key={id} type="button" aria-pressed={fund === id} onClick={() => setFund(id)} className={`min-h-12 rounded-xl border px-2 text-sm font-bold ${fund === id ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{FUNDS[id].shortName}</button>)}</div></fieldset>
           <div className="grid gap-5 sm:grid-cols-2">
-            <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">2. 開始年</legend><div className="grid grid-cols-3 gap-2">{[2018, 2020, 2022].map((year) => <button key={year} type="button" aria-pressed={startYear === year} onClick={() => setStartYear(year)} className={`min-h-12 rounded-xl border text-sm font-bold ${startYear === year ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{year}年</button>)}</div></fieldset>
+            <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">2. 開始年月</legend><div className="grid grid-cols-3 gap-2">{[2018, 2020, 2022].map((year) => {
+              const disabled = year < firstYear;
+              const label = year === firstYear && firstMonth !== 1 ? `${year}年${firstMonth}月` : `${year}年`;
+              return <button key={year} type="button" disabled={disabled} aria-pressed={startYear === year} onClick={() => setStartYear(year)} className={`min-h-12 rounded-xl border px-1 text-sm font-bold ${disabled ? "cursor-not-allowed border-[#E6EAEC] bg-[#F3F4F5] text-slate-400" : startYear === year ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{label}</button>;
+            })}</div></fieldset>
             <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">3. 毎月の積立額</legend><div className="grid grid-cols-3 gap-2">{AMOUNTS.map((value) => <button key={value} type="button" aria-pressed={amount === value} onClick={() => setAmount(value)} className={`min-h-12 rounded-xl border text-sm font-bold ${amount === value ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{value / 10000}万円</button>)}</div></fieldset>
           </div>
         </div>
-        <button type="button" onClick={() => onTaraeba(fund, startYear, 1, amount)} className="tm-primary-button mt-6 flex w-full items-center justify-center gap-2 px-5 py-4 text-base">条件を選んで積立実績を調べる <ChevronRight className="h-5 w-5" /></button>
+        <button type="button" onClick={() => onTaraeba(fund, startYear, effectiveStartMonth, amount)} className="tm-primary-button mt-6 flex w-full items-center justify-center gap-2 px-5 py-4 text-base">条件を選んで積立実績を調べる <ChevronRight className="h-5 w-5" /></button>
         <p className="mt-3 text-center text-xs leading-5 text-slate-600">過去実績であり、将来の成果を示すものではありません。</p>
       </section>
 
-      <section className="mx-4 mt-6 border-y border-[#cfe2da] bg-[#F4FAF7] px-1 py-5 md:mx-auto md:max-w-3xl md:px-5" aria-label="条件別の検証例"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-bold text-emerald-800">条件別の検証例</p><p className="mt-1 text-sm text-slate-600">{FUNDS[fund].shortName}・{startYear}年1月〜・月{formatCurrency(amount)}</p></div><div className="text-right"><p className="text-xs text-slate-600">期間末評価額</p><p className="font-number text-2xl font-bold text-[#263A53]">{formatCurrency(preview.finalValue)}</p></div></div></section>
+      <section className="mx-4 mt-6 border-y border-[#cfe2da] bg-[#F4FAF7] px-1 py-5 md:mx-auto md:max-w-3xl md:px-5" aria-label="条件別の検証例"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-bold text-emerald-800">条件別の検証例</p><p className="mt-1 text-sm text-slate-600">{FUNDS[fund].shortName}・{startYear}年{effectiveStartMonth}月〜・月{formatCurrency(amount)}</p></div><div className="text-right"><p className="text-xs text-slate-600">期間末評価額</p><p className="font-number text-2xl font-bold text-[#263A53]">{formatCurrency(preview.finalValue)}</p></div></div></section>
 
       <div className="mx-4 mt-8 md:mx-auto md:max-w-3xl"><RecentConditions onRestore={onRestoreRecent} /></div>
       <section className="mx-4 mt-10 md:mx-auto md:max-w-3xl"><div className="mb-4 flex items-end justify-between gap-3"><div><p className="text-xs font-bold text-[#236B8E]">代表的な比較</p><h2 className="mt-1 text-xl font-bold text-[#263A53]">同じ条件で比べる</h2></div><button type="button" onClick={() => onNavigate("compare")} className="min-h-11 text-sm font-bold text-[#236B8E]">比較を試す</button></div><div className="tm-home-link-list">{POPULAR_COMPARE.map((item) => <Link key={item.href} href={item.href} className="flex min-h-14 items-center justify-between px-1 py-3 text-sm font-bold text-[#263A53]"><span>{item.label}</span><GitCompareArrows className="h-4 w-4 text-[#4E94B3]" /></Link>)}</div></section>

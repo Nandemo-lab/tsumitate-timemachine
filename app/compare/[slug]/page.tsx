@@ -182,7 +182,14 @@ export default async function ComparePage({ params }: Props) {
             </div>
           </section>
 
+          <nav aria-label="このページの案内" className="flex gap-4 overflow-x-auto border-y border-[#D9E3E8] py-3 text-sm font-bold text-[#236B8E]">
+            <a href="#comparison-result" className="min-h-11 shrink-0 content-center">比較結果</a>
+            <a href="#product-differences" className="min-h-11 shrink-0 content-center">商品の違い</a>
+            <a href="#questions" className="min-h-11 shrink-0 content-center">よくある質問</a>
+          </nav>
+
           {/* ── 積立シミュレーション比較（クライアント） ─────────── */}
+          <div id="comparison-result" className="scroll-mt-4">
           {hasReferenceSeries ? (
             <section className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] p-5 space-y-2">
               <h2 className="text-sm font-bold text-amber-200">この組み合わせは商品属性だけを比較します</h2>
@@ -191,9 +198,10 @@ export default async function ComparePage({ params }: Props) {
               </p>
             </section>
           ) : resultA && resultB && <ComparePageClient resultA={resultA} resultB={resultB} />}
+          </div>
 
           {/* ── 比較表 ─────────────────────────────────────────── */}
-          <section>
+          <section id="product-differences" className="scroll-mt-4">
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
@@ -224,8 +232,10 @@ export default async function ComparePage({ params }: Props) {
           </section>
 
           <PageRoleGuide
-            label="同じ開始月・月額・共通終端で数値を比べる"
-            description="元本をそろえ、期間末評価額と推移を検証済み月次系列で比較します。商品構造や選択時の確認事項は比較コラムと役割を分けています。"
+            label={hasReferenceSeries ? "商品構造とデータ品質を確認する" : "同じ開始月・月額・共通終端で数値を比べる"}
+            description={hasReferenceSeries
+              ? "G品質の参考系列を含むため、未検証の評価額・利益・優劣は表示しません。投資対象、費用、商品設定日、公式出典を確認できます。"
+              : "元本をそろえ、期間末評価額と推移を検証済み月次系列で比較します。商品構造や選択時の確認事項は比較コラムと役割を分けています。"}
             counterpartHref={relatedArticle ? `/articles/${relatedArticle.slug}` : undefined}
             counterpartLabel={relatedArticle ? "商品構造と比較結果の読み方を見る" : undefined}
           />
@@ -319,7 +329,7 @@ export default async function ComparePage({ params }: Props) {
           </section>
 
           {/* ── FAQ ────────────────────────────────────────────── */}
-          <section>
+          <section id="questions" className="scroll-mt-4">
             <h2
               className="text-base font-bold text-[#263A53] mb-5"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}

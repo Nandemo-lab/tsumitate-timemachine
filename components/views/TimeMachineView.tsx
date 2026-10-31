@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useRef } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId } from "@/types";
 import { simulate, simulateAll, formatCurrency, MONTH_OPTIONS } from "@/lib/simulation";
@@ -46,10 +46,22 @@ export default function TimeMachineView({
   const [startMonth, setStartMonth] = useState(initialMonth);
   const [monthlyAmount, setMonthlyAmount] = useState(initialAmount);
   const [showResult, setShowResult] = useState(autoRun);
+  const autoRunResultFocused = useRef(false);
   const [showShare, setShowShare] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
   const [subMode, setSubMode] = useState<SubMode>("single");
+
+  useEffect(() => {
+    if (!autoRun || !showResult || autoRunResultFocused.current) return;
+    autoRunResultFocused.current = true;
+    const timer = window.setTimeout(() => {
+      const resultSection = document.getElementById("tm-result");
+      resultSection?.scrollIntoView({ behavior: "auto", block: "start" });
+      resultSection?.focus({ preventScroll: true });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [autoRun, showResult]);
   const startTracked = useRef(false);
   const markSimulationStart = (mode: SubMode = subMode) => {
     if (startTracked.current) return;
@@ -97,7 +109,9 @@ export default function TimeMachineView({
     setShowResult(true);
     setShowShare(false);
     setTimeout(() => {
-      document.getElementById("tm-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const resultSection = document.getElementById("tm-result");
+      resultSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+      resultSection?.focus({ preventScroll: true });
     }, 150);
   }, []);
 
@@ -131,7 +145,9 @@ export default function TimeMachineView({
     setShowResult(true);
     setShowShare(false);
     setTimeout(() => {
-      document.getElementById("tm-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const resultSection = document.getElementById("tm-result");
+      resultSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+      resultSection?.focus({ preventScroll: true });
     }, 150);
   };
 
@@ -318,6 +334,7 @@ export default function TimeMachineView({
         {showResult && subMode === "single" && result && (
           <motion.div
             id="tm-result"
+            tabIndex={-1}
             role="region"
             aria-live="polite"
             aria-label="シミュレーション結果"
@@ -325,7 +342,7 @@ export default function TimeMachineView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="space-y-5"
+            className="scroll-mt-4 space-y-5"
           >
             <div className="text-center">
               <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-1">シミュレーション結果</p>
@@ -439,6 +456,8 @@ export default function TimeMachineView({
         {showResult && subMode === "ranking" && (
           <motion.div
             id="tm-result"
+            tabIndex={-1}
+            className="scroll-mt-4"
             key="ranking-result"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

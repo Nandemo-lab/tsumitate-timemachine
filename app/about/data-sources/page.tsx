@@ -6,8 +6,18 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import { FUND_LIST, formatExpenseRatio } from "@/lib/funds";
 import { RETURN_DATA_SOURCES } from "@/lib/return-data-sources";
 import { PageVisualStory } from "@/components/visual/VisualStory";
+import sp500Verified from "@/data/verified/sp500-monthly.json";
 
 const BASE_URL = SITE_URL;
+const SP500_EXAMPLE_MONTH = "2021-01";
+const SP500_EXAMPLE_AMOUNT = 30000;
+const sp500Example = (() => {
+  const observation = sp500Verified.observations.find((item) => item.month === SP500_EXAMPLE_MONTH);
+  if (!observation) throw new Error(`Verified S&P 500 observation missing: ${SP500_EXAMPLE_MONTH}`);
+  return observation;
+})();
+
+const sp500ExampleValue = SP500_EXAMPLE_AMOUNT * (1 + sp500Example.monthlyReturn);
 
 export const metadata: Metadata = {
   title: "データソース・計算方法",
@@ -90,7 +100,7 @@ export default function DataSourcesPage() {
             <div className="space-y-1.5">
               <p className="text-xs font-bold text-slate-700">収録最終月と更新履歴</p>
               <p className="text-sm text-slate-500 leading-relaxed">
-                現在の収録最終月は2026年9月です。2026年10月13日に9つのA系列を公式一次情報から再取得し、保存した元データのSHA-256、連続月、円換算式を再検証しました。各系列は同月までの値だけを使用し、未来データや年次値で補いません。
+                現在の収録最終月は2026年9月です。2026年10月13日に9つのA系列を公式一次情報から再取得し、保存した元データのSHA-256（後から変わっていないか確かめるデータの指紋）、連続月、円換算式を再検証しました。各系列は同月までの値だけを使用し、未来データや年次値で補いません。
               </p>
             </div>
             <div className="space-y-1.5">
@@ -111,6 +121,40 @@ export default function DataSourcesPage() {
             <p>国内投信は商品設定後だけを公式実績として扱います。設定前の指数や別商品による補完は行いません。</p>
             <p>SCHDは商品定義を米国ETFへ統一していますが、月次原典の検証完了までは「G：参考データ・原典未検証」です。</p>
           </div>
+        </section>
+
+        <section className="space-y-4" aria-labelledby="monthly-calculation-example">
+          <div className="space-y-1">
+            <h2 id="monthly-calculation-example" className="text-base font-bold text-[#263A53]">
+              1か月分の計算例
+            </h2>
+            <p className="text-sm leading-relaxed text-slate-600">
+              S&amp;P500投信へ2021年1月の月初に3万円を初めて積み立てた例です。数値は保存済みの検証台帳から表示しています。
+            </p>
+          </div>
+          <ol className="grid gap-3 sm:grid-cols-3">
+            <li className="border-l-2 border-[#8AB7C8] pl-4">
+              <p className="text-xs font-bold text-[#236B8E]">1　元データ</p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-700">
+                分配金再投資基準価額が{sp500Example.previousMonthEndReinvestedNav.toLocaleString("ja-JP")}から{sp500Example.monthEndReinvestedNav.toLocaleString("ja-JP")}へ変化。
+              </p>
+            </li>
+            <li className="border-l-2 border-[#8AB7C8] pl-4">
+              <p className="text-xs font-bold text-[#236B8E]">2　月次リターン</p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-700">
+                {sp500Example.monthEndReinvestedNav.toLocaleString("ja-JP")} ÷ {sp500Example.previousMonthEndReinvestedNav.toLocaleString("ja-JP")} − 1 ＝ 約{(sp500Example.monthlyReturn * 100).toFixed(4)}%。
+              </p>
+            </li>
+            <li className="border-l-2 border-[#8AB7C8] pl-4">
+              <p className="text-xs font-bold text-[#236B8E]">3　積立結果へ反映</p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-700">
+                （0円＋3万円）×（1＋月次リターン）＝表示時に{Math.round(sp500ExampleValue).toLocaleString("ja-JP")}円。
+              </p>
+            </li>
+          </ol>
+          <p className="text-xs leading-relaxed text-slate-500">
+            国内投信は円建てのため、この例に為替換算はありません。米国ETFは公式の配当込み基準価額リターンに、前月末から当月末までの日銀USD/JPYの変化を掛けて円換算します。内部計算では小数を保持し、画面表示で円単位に丸めます。
+          </p>
         </section>
 
         {/* 銘柄別データソース */}
