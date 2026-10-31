@@ -244,10 +244,7 @@ export default async function SimulatePage({ params, searchParams }: Props) {
             </p>
             <p>
               {fundData.shortName}（{fundData.name}）は{fundData.description}。
-              {fundData.riskLevel !== null && <>リスクレベルは5段階中{fundData.riskLevel}で、
-              {fundData.riskLevel <= 2 ? "比較的安定した運用が期待できます" :
-               fundData.riskLevel <= 3 ? "中程度のリスク・リターンが特徴です" :
-               "高リターンの可能性がありますが、価格変動も大きいです"}。</>}
+              {fundData.riskLevel !== null && <>サイト内の参考リスク区分は5段階中{fundData.riskLevel}です。この区分は将来の値動きや利益を保証するものではありません。</>}
             </p>
             <p>
               {getReturnDataSource(fund).sourceStatus === "verified" ? (

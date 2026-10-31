@@ -67,6 +67,10 @@ assert(!compares.includes("過去の実績ではインド株のほうが平均�
 assert(!compares.includes("テック企業の成長力に賭けて高いリターンを狙いたい"), "VTI/NASDAQ100比較に将来成果を示唆する助言が残っている");
 assert(!compares.includes("過去20年のデータではS&P500"), "商品設定前を含む比較主張が再混入");
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
+assert(!fundSeoPages.includes("信託報酬は年率年"), "信託報酬の年率表記が重複している");
+assert(!fundSeo.includes("残高No.1") && !fundSeo.includes("人気ランキング1位"), "根拠・基準日のないNo.1表示が商品ページに残っている");
+assert(!fundSeoPages.includes("年300円のコストのみ"), "VTIの経費率を全費用と誤認させる表現が残っている");
+assert(!article.includes("米国経済の動向をほぼそのまま反映"), "S&P500を米国経済全体と同一視する表現が残っている");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年9月まで"), "トップでデータ終端を開示していない");
 assert(home.includes("条件を選んで積立実績を調べる"), "トップでシミュレーションを主行動として示していない");

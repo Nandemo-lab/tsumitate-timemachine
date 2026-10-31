@@ -120,7 +120,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-2" className="space-y-4">
         <SectionHeading index={2} title="S&P500とは？特徴と仕組み" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          S&P500は、米国の代表的企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾン・メタといったテクノロジー大企業が上位を占め、米国経済の動向をほぼそのまま反映します。本記事では「eMAXIS Slim米国株式（S&P500）」を比較対象にしています。
+          S&P500は、米国の代表的な大型企業500社で構成される株価指数です。アップル・マイクロソフト・エヌビディア・アマゾン・メタといったテクノロジー大企業が上位を占め、米国大型株市場の値動きを表す代表的な指数です。本記事では「eMAXIS Slim米国株式（S&P500）」を比較対象にしています。
         </p>
         <SpecCard rows={[
           ["対象", "米国企業500社のみ"],
@@ -267,7 +267,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           新NISA（2024年〜）のつみたて投資枠は年間{formatManEn(NISA_LIMITS.tsumitateAnnual)}、成長投資枠と合わせた年間投資枠は{formatManEn(NISA_LIMITS.tsumitateAnnual + NISA_LIMITS.growthAnnual)}、生涯の非課税保有限度額は{formatManEn(NISA_LIMITS.lifetimeTotal)}です。{NISA_SYSTEM_DISCLAIMER}
         </p>
         <p className="text-sm text-slate-700 leading-relaxed">
-          金融庁は「長期・積立・分散」の原則を推奨しています。この観点からは、47カ国・約3,000銘柄に分散するオルカンは原則に沿った選択といえます。
+          金融庁は長期・積立・分散投資の考え方を案内しています。オルカンは47カ国・約3,000銘柄へ分散し、S&P500は米国大型株へ投資します。どちらか一方を制度が推奨しているわけではないため、投資範囲・費用・値動き・資金を使う時期を分けて確認します。
         </p>
         <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-3">
           <p className="text-xs font-bold text-slate-700">新NISAで選ぶ際のポイント</p>

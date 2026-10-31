@@ -25,17 +25,17 @@ export default function SimulatePageClient({ fundId, result }: Props) {
       <div
         className="rounded-2xl p-6 relative overflow-hidden"
         style={{
-          background: `linear-gradient(145deg, ${fund.color}22 0%, #09090b 70%)`,
+          background: `linear-gradient(145deg, ${fund.color}18 0%, #ffffff 72%)`,
           border: `1px solid ${fund.color}44`,
-          boxShadow: `0 0 60px ${fund.color}18`,
+          boxShadow: `0 18px 44px ${fund.color}12`,
         }}
       >
         <div
           className="absolute top-0 left-0 right-0 h-px"
           style={{ background: `linear-gradient(90deg, transparent, ${fund.color}, transparent)` }}
         />
-        <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: fund.color }}>
-          利益
+        <p className="text-xs font-black tracking-widest mb-1" style={{ color: fund.color }}>
+          期間全体の損益
         </p>
         <p className="text-5xl font-black mb-2" style={{ color: "#10b981" }}>
           +<AnimatedNumber
@@ -48,7 +48,7 @@ export default function SimulatePageClient({ fundId, result }: Props) {
           <TrendingUp className="h-4 w-4 text-emerald-700" />
           <span className="text-sm text-emerald-700 font-bold">+{result.returnRate.toFixed(1)}%</span>
         </div>
-        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#D2DEE4]">
+        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#BFCFD7]">
           <div>
             <p className="text-xs text-slate-600 mb-0.5">現在評価額</p>
             <p className="text-lg font-black text-[#263A53]">{formatCurrency(result.finalValue)}</p>
