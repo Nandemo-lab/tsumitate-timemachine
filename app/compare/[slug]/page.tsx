@@ -14,6 +14,7 @@ import ComparePageClient from "./ComparePageClient";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import { getCommonEndMonth, getReturnSeriesDefinition, isVerifiedReturnSeries } from "@/lib/return-series";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -136,14 +137,10 @@ export default async function ComparePage({ params }: Props) {
       <div className="min-h-dvh overflow-x-hidden bg-[#FAFAF7] text-[#263A53]">
         <div className="mx-auto w-full min-w-0 max-w-3xl space-y-10 px-4 pb-16 pt-8">
 
-          {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500">
-            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
-            <ChevronRight className="h-3 w-3" />
-            <span>比較</span>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-slate-600">{fundA.shortName} vs {fundB.shortName}</span>
-          </nav>
+          <Breadcrumbs items={[
+            { label: "比較", href: "/compare" },
+            { label: `${fundA.shortName} vs ${fundB.shortName}` },
+          ]} />
 
           {/* ── ファーストビュー ────────────────────────────────── */}
           <section className="space-y-4">

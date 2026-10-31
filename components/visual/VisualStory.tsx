@@ -20,7 +20,8 @@ import {
   WalletCards,
 } from "lucide-react";
 import { KODOMO_NISA_LIMITS, formatManEn } from "@/lib/nisa";
-import { FUNDS } from "@/lib/funds";
+import { FUNDS, formatExpenseRatio } from "@/lib/funds";
+import type { FundId } from "@/types";
 
 type PageVisualKind = "guide" | "compare" | "fund" | "ranking" | "timeline" | "data";
 
@@ -126,6 +127,33 @@ export function PageVisualStory({ kind }: { kind: PageVisualKind }) {
         })}
       </ol>
     </section>
+  );
+}
+
+export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
+  const ids = fundIds.filter((id): id is FundId => id in FUNDS).slice(0, 2);
+  if (ids.length !== 2) return null;
+  const [fundA, fundB] = ids.map((id) => FUNDS[id]);
+  return (
+    <figure className="tm-comparison-figure" aria-label={`${fundA.shortName}と${fundB.shortName}の商品構造比較`}>
+      <div className="tm-comparison-figure__fund">
+        <span>商品 A</span>
+        <strong>{fundA.shortName}</strong>
+        <p>{fundA.description}</p>
+        <dl><dt>費用</dt><dd>{formatExpenseRatio(fundA.id)}</dd></dl>
+      </div>
+      <div className="tm-comparison-figure__axis" aria-hidden="true">
+        <GitCompareArrows />
+        <span>同じ条件で確認</span>
+      </div>
+      <div className="tm-comparison-figure__fund">
+        <span>商品 B</span>
+        <strong>{fundB.shortName}</strong>
+        <p>{fundB.description}</p>
+        <dl><dt>費用</dt><dd>{formatExpenseRatio(fundB.id)}</dd></dl>
+      </div>
+      <figcaption>投資対象と費用を先に確認し、評価額の差は共通条件の比較ページで確かめます。</figcaption>
+    </figure>
   );
 }
 

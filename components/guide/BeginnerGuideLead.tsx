@@ -22,9 +22,9 @@ export default function BeginnerGuideLead({
   return (
     <section
       aria-labelledby="beginner-guide-summary"
-      className="overflow-hidden rounded-2xl border border-[#CFE1E8] bg-white"
+      className="overflow-hidden border-y border-[#CFE1E8] bg-white"
     >
-      <div className="border-b border-[#DDE9ED] bg-[#EEF7FA] px-5 py-4">
+      <div className="border-b border-[#DDE9ED] bg-[#EEF7FA] px-5 py-5">
         <p className="text-sm font-bold text-[#236B8E]">{readTime}</p>
         <p className="mt-1 text-base leading-7 text-[#40556C]">{forWho}</p>
       </div>

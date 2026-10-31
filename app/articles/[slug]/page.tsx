@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Metadata } from "next";
-import { ChevronRight } from "lucide-react";
 import {
   ARTICLE_REGISTRY,
   ARTICLE_PAGES,
@@ -9,7 +7,8 @@ import {
   buildOgImageUrl,
 } from "@/lib/article-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
-import { PageVisualStory } from "@/components/visual/VisualStory";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { ArticleComparisonVisual } from "@/components/visual/VisualStory";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
@@ -101,16 +100,15 @@ export default async function ArticlePage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
-        <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
+        <div className="tm-editorial-page mx-auto max-w-3xl px-4 pb-16 pt-5 md:pt-8">
 
-          {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
-            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-500">コラム</span>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-600 truncate max-w-[160px]">{meta.h1}</span>
-          </nav>
+          <Breadcrumbs items={[{ label: "コラム", href: "/articles" }, { label: meta.h1 }]} />
+
+          <header className="tm-article-header">
+            <p>{meta.category}</p>
+            <h1>{meta.h1}</h1>
+            <span>更新：{meta.lastUpdated}</span>
+          </header>
 
           <PageRoleGuide
             label="商品の仕組みと比較結果の読み方を整理する"
@@ -119,10 +117,10 @@ export default async function ArticlePage({ params }: Props) {
             counterpartLabel={comparisonHref ? "同じ条件の積立比較を開く" : undefined}
           />
 
-          <PageVisualStory kind="compare" />
+          <ArticleComparisonVisual fundIds={relatedFunds} />
 
           {/* 記事本文（各記事コンポーネントが H1〜CTA まで全て担う） */}
-          <Content meta={meta} />
+          <div className="tm-article-body"><Content meta={meta} /></div>
 
         </div>
         <SiteFooter />

@@ -15,6 +15,7 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import { PageVisualStory } from "@/components/visual/VisualStory";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { NISA_LIMITS, NISA_SYSTEM_DISCLAIMER, formatManEn } from "@/lib/nisa";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -90,20 +91,10 @@ export default function RankingView({ page }: Props) {
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
         <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
-          {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
-            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            {isRoot ? (
-              <span className="text-slate-600">ランキング</span>
-            ) : (
-              <>
-                <Link href="/ranking" className="hover:text-slate-700 transition-colors">ランキング</Link>
-                <ChevronRight className="h-3 w-3 flex-shrink-0" />
-                <span className="text-slate-600">{RANKING_LABELS[page.slug]}</span>
-              </>
-            )}
-          </nav>
+          <Breadcrumbs items={isRoot
+            ? [{ label: "ランキング" }]
+            : [{ label: "ランキング", href: "/ranking" }, { label: RANKING_LABELS[page.slug] }]}
+          />
 
           {/* ── H1 ────────────────────────────────────────────── */}
           <section className="space-y-3">

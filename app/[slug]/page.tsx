@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ChevronRight, TrendingUp, ArrowRight, ShieldCheck } from "lucide-react";
+import { TrendingUp, ArrowRight, ShieldCheck } from "lucide-react";
 import { getFundSeoPage, FUND_SEO_PAGES, FundSeoPage } from "@/lib/fund-seo";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
@@ -11,6 +11,7 @@ import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { getFundPageSlug } from "@/lib/fund-seo-pages";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -139,16 +140,9 @@ export default async function FundLandingPage({ params }: Props) {
           />
         </div>
 
-        {/* Breadcrumb nav */}
-        <nav className="relative border-b border-[#D9E3E8] px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
-            <Link href="/" className="hover:text-slate-700 transition-colors">
-              積立タイムマシン
-            </Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-700">{fund.shortName}</span>
-          </div>
-        </nav>
+        <div className="relative mx-auto max-w-2xl px-4 pt-5">
+          <Breadcrumbs items={[{ label: fund.shortName }]} />
+        </div>
 
         <div className="relative max-w-2xl mx-auto px-4 pb-20">
 

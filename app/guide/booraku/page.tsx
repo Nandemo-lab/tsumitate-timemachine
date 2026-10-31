@@ -93,7 +93,7 @@ export default function BoorakuGuideIndexPage() {
           <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600 flex-wrap">
             <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-500">投資ガイド</span>
+            <Link href="/guide" className="text-slate-500 hover:text-slate-700 transition-colors">投資ガイド</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
             <span className="text-slate-700">暴落ガイド一覧</span>
           </div>

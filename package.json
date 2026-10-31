@@ -16,6 +16,7 @@
     "structure-consolidation-audit": "node scripts/structure-consolidation-audit.mjs",
     "content-value-audit": "node scripts/cd-value-sprint-audit.mjs",
     "qa:live": "node scripts/qa-check.mjs --server http://localhost:3000",
+    "breadcrumb-audit": "node scripts/breadcrumb-audit.mjs",
     "new-article": "node scripts/new-article.mjs",
     "system-check-audit": "node scripts/system-check-audit.mjs",
     "verified-ledger-audit": "node scripts/verified-ledger-audit.mjs",

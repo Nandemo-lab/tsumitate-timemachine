@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_JP, Noto_Serif_JP, Geist_Mono } from "next/font/google";
+import { Noto_Sans_JP, Geist_Mono } from "next/font/google";
 import { ProductionGoogleAnalytics } from "@/components/analytics/ProductionGoogleAnalytics";
 import "./globals.css";
 
@@ -7,12 +7,6 @@ const notoSansJP = Noto_Sans_JP({
   variable: "--font-sans-jp",
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
-  display: "swap",
-});
-const notoSerifJP = Noto_Serif_JP({
-  variable: "--font-serif-jp",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "900"],
   display: "swap",
 });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -119,7 +113,7 @@ const webappLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable} ${geistMono.variable}`}>
+    <html lang="ja" className={`${notoSansJP.variable} ${geistMono.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />

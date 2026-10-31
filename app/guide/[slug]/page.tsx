@@ -26,6 +26,7 @@ import GuideBodyText from "@/components/guide/GuideBodyText";
 import BeginnerGuideLead from "@/components/guide/BeginnerGuideLead";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { GuideConceptVisual } from "@/components/visual/VisualStory";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -177,25 +178,15 @@ export default async function GuidePage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
-        <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
+        <div className="tm-editorial-page mx-auto max-w-3xl px-4 pb-16 pt-5 md:pt-8">
 
-          {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
-            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-500">投資ガイド</span>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-600">{GUIDE_LABELS[slug]}</span>
-          </nav>
+          <Breadcrumbs items={[{ label: "投資ガイド", href: "/guide" }, { label: GUIDE_LABELS[slug] ?? page.h1 }]} />
 
           {/* ── H1 ────────────────────────────────────────────── */}
           <section className="space-y-3">
             <div className="flex items-start gap-3">
               <BookOpen className="h-6 w-6 flex-shrink-0 text-[#236B8E] mt-0.5" />
-              <h1
-                className="text-2xl font-black text-[#263A53] leading-tight"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
-              >
+              <h1 className="text-2xl font-bold leading-[1.5] text-[#20364c] md:text-3xl">
                 {page.h1}
               </h1>
             </div>
@@ -284,18 +275,15 @@ export default async function GuidePage({ params }: Props) {
             >
               この記事のポイント
             </h2>
-            {page.points.map((pt, i) => (
-              <div
-                key={i}
-                className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2"
-              >
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[#236B8E] mt-0.5" />
-                  <p className="text-sm font-bold text-[#263A53]">{pt.title}</p>
+            <div className="tm-editorial-list">
+              {page.points.map((pt, i) => (
+                <div key={i} className="grid grid-cols-[2rem_1fr] gap-x-3 gap-y-1">
+                  <span className="row-span-2 font-number text-sm font-bold text-[#236B8E]">0{i + 1}</span>
+                  <p className="font-bold text-[#263A53]">{pt.title}</p>
+                  <p className={`${isBeginnerGuide ? "text-base" : "text-sm"} text-slate-600`}>{pt.body}</p>
                 </div>
-                <p className={`${isBeginnerGuide ? "text-base leading-7" : "text-sm leading-relaxed"} text-slate-600 pl-6`}>{pt.body}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </section>
 
           {/* ── E-E-A-T 編集部情報 ───────────────────────────── */}

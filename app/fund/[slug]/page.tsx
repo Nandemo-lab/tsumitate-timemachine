@@ -21,6 +21,7 @@ import { PageVisualStory } from "@/components/visual/VisualStory";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -159,14 +160,10 @@ export default async function FundPage({ params }: Props) {
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
         <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
-          {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500">
-            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
-            <ChevronRight className="h-3 w-3" />
-            <span>銘柄解説</span>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-slate-600">{enc.nickname}</span>
-          </nav>
+          <Breadcrumbs items={[
+            { label: "銘柄解説", href: "/fund" },
+            { label: enc.nickname },
+          ]} />
 
           {/* ── ファーストビュー ─────────────────────────────────── */}
           <section className="space-y-4">

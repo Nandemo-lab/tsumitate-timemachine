@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { ChevronRight, ArrowRight, BookOpen, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { getGuidePage, GUIDE_SERIES } from "@/lib/guide-pages";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { PageVisualStory } from "@/components/visual/VisualStory";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = SITE_URL;
 
@@ -96,13 +97,7 @@ export default function GuideIndexPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
-        <nav className="border-b border-[#DDE6EA] px-4 py-3">
-          <div className="max-w-2xl mx-auto flex items-center gap-1.5 text-xs text-slate-600">
-            <Link href="/" className="hover:text-slate-700 transition-colors">積立タイムマシン</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <span className="text-slate-700">投資ガイド</span>
-          </div>
-        </nav>
+        <div className="mx-auto max-w-2xl px-4 pt-5"><Breadcrumbs items={[{ label: "投資ガイド" }]} /></div>
 
         <div className="max-w-2xl mx-auto px-4 py-10 pb-20 space-y-10">
           <header className="space-y-2">

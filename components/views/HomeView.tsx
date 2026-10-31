@@ -35,23 +35,23 @@ export default function HomeView({ onNavigate, onTaraeba, onRestoreRecent }: Pro
   const preview = useMemo(() => simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount: amount }), [fund, startYear, amount]);
 
   return (
-    <div className="pb-28 pt-5 md:pt-10">
-      <section className="mx-auto grid max-w-6xl items-center gap-7 px-4 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:px-8">
+    <div className="tm-home pb-28 pt-5 md:pt-12">
+      <section className="tm-home-hero mx-auto grid max-w-6xl items-center gap-7 px-4 md:grid-cols-[minmax(0,1fr)_minmax(26rem,0.92fr)] md:px-8">
         <div className="text-center md:text-left">
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#DCEFFA] px-4 py-2 text-xs font-bold text-[#236B8E]"><BarChart3 className="h-4 w-4" /> 公式月次データで過去を検証</p>
-          <h1 className="font-heading text-[2rem] font-bold leading-[1.35] tracking-tight text-[#263A53] md:text-5xl">あの時から積み立てていたら、<br className="hidden sm:block" />いくらになった？</h1>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-8 text-slate-600 md:mx-0">商品・開始年・月額を選ぶだけ。元本と評価額の動きを、過去の公式月次データで確かめられます。</p>
-          <div className="mt-5 flex flex-wrap justify-center gap-2 text-xs font-bold text-[#40556C] md:justify-start">
-            <span className="rounded-full bg-[#CDEFE2] px-3 py-2">登録不要</span>
-            <span className="rounded-full bg-[#FFF1E7] px-3 py-2">同じ条件で比較</span>
-            <span className="rounded-full bg-[#EEF4FA] px-3 py-2">出典を公開</span>
+          <p className="tm-kicker mb-4 inline-flex items-center gap-2 text-sm font-bold text-[#236B8E]"><BarChart3 className="h-4 w-4" /> 検証済みの公式月次データ</p>
+          <h1 className="text-[2rem] font-bold leading-[1.36] tracking-[-0.035em] text-[#20364c] md:text-[3.25rem] md:leading-[1.28]">過去の積立を、<br className="hidden sm:block" />自分の条件で確かめる。</h1>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-slate-600 md:mx-0 md:text-lg">商品・開始年・月額を選ぶと、元本と評価額の経路をその場で確認できます。</p>
+          <div className="tm-trust-line mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-[#40556C] md:justify-start">
+            <span>登録不要</span>
+            <span>同じ条件で比較</span>
+            <span>出典・計算方法を公開</span>
           </div>
         </div>
         <HomeEditorialIllustration />
       </section>
 
-      <section className="mx-4 mt-7 rounded-[1.75rem] border border-[#D9E3E8] bg-white p-5 shadow-[0_18px_45px_rgba(38,58,83,0.08)] md:mx-auto md:max-w-3xl md:p-8" aria-labelledby="quick-start-title">
-        <div className="mb-6 flex items-center justify-between gap-4"><div><p className="text-xs font-bold text-[#236B8E]">3つ選んですぐ確認</p><h2 id="quick-start-title" className="mt-1 text-xl font-bold text-[#263A53]">積立条件を選ぶ</h2></div><span className="rounded-full bg-[#CDEFE2] px-3 py-1.5 text-xs font-bold text-emerald-800">無料・登録不要</span></div>
+      <section className="tm-simulator-panel mx-4 mt-8 border-y border-[#D9E3E8] bg-white px-1 py-7 md:mx-auto md:max-w-3xl md:border md:px-8 md:py-8" aria-labelledby="quick-start-title">
+        <div className="mb-7 flex items-end justify-between gap-4"><div><p className="text-sm font-bold text-[#236B8E]">3つの条件で計算</p><h2 id="quick-start-title" className="mt-1 text-2xl font-bold tracking-tight text-[#20364c]">積立条件を選ぶ</h2></div><span className="text-xs font-bold text-emerald-800">無料・登録不要</span></div>
         <div className="space-y-5">
           <fieldset><legend className="mb-2 text-sm font-bold text-slate-700">1. 商品</legend><div className="grid grid-cols-3 gap-2">{PICKS.map((id) => <button key={id} type="button" aria-pressed={fund === id} onClick={() => setFund(id)} className={`min-h-12 rounded-xl border px-2 text-sm font-bold ${fund === id ? "border-[#4E94B3] bg-[#DCEFFA] text-[#1D5B79]" : "border-[#D9E3E8] bg-white text-slate-700"}`}>{FUNDS[id].shortName}</button>)}</div></fieldset>
           <div className="grid gap-5 sm:grid-cols-2">

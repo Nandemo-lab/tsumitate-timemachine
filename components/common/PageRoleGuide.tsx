@@ -10,14 +10,14 @@ interface Props {
 
 export default function PageRoleGuide({ label, description, counterpartHref, counterpartLabel }: Props) {
   return (
-    <aside className="rounded-xl border border-sky-400/20 bg-sky-400/[0.05] p-4 space-y-2">
+    <aside className="border-y border-[#bfd5df] bg-[#eef7f9] px-4 py-5 space-y-2">
       <div className="flex items-center gap-2">
-        <Compass className="h-4 w-4 text-sky-300 flex-shrink-0" />
-        <p className="text-xs font-bold text-sky-200">このページの役割：{label}</p>
+        <Compass className="h-4 w-4 text-[#236B8E] flex-shrink-0" />
+        <p className="text-sm font-bold text-[#20364c]">このページでわかること：{label}</p>
       </div>
-      <p className="text-xs leading-relaxed text-slate-600">{description}</p>
+      <p className="text-sm leading-7 text-slate-700">{description}</p>
       {counterpartHref && counterpartLabel && (
-        <Link href={counterpartHref} className="inline-flex items-center gap-1 text-xs font-bold text-sky-300 hover:text-sky-200">
+        <Link href={counterpartHref} className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-[#236B8E] hover:text-[#174f6a]">
           {counterpartLabel}<ArrowRight className="h-3 w-3" />
         </Link>
       )}

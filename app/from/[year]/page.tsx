@@ -10,6 +10,7 @@ import { COMPARE_PAGES } from "@/lib/compare-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { PageVisualStory } from "@/components/visual/VisualStory";
 import { FundId } from "@/types";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -241,12 +242,10 @@ export default async function FromYearPage({ params }: Props) {
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
         <div className="mx-auto max-w-3xl px-4 pb-16 pt-8 space-y-10">
 
-          {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500">
-            <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-slate-600">{year}年から積み立てていたら</span>
-          </nav>
+          <Breadcrumbs items={[
+            { label: "開始年別比較", href: "/ranking" },
+            { label: `${year}年から積み立てていたら` },
+          ]} />
 
           {/* ── H1 ───────────────────────────────────────────────── */}
           <section className="space-y-4">

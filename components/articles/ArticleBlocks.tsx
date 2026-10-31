@@ -8,8 +8,7 @@ import { formatCurrency } from "@/lib/simulation";
 export function SectionHeading({ index, title }: { index: number; title: string }) {
   return (
     <h2
-      className="flex items-start gap-2 text-xl font-black leading-snug text-[#263A53] md:text-2xl"
-      style={{ fontFamily: "var(--font-serif-jp), serif" }}
+      className="flex items-start gap-3 border-b border-[#D9E3E8] pb-3 text-xl font-bold leading-[1.55] tracking-[-0.02em] text-[#20364c] md:text-2xl"
     >
       <span className="text-[#236B8E] font-black text-base mt-0.5 flex-shrink-0">{index + 1}.</span>
       {title}
@@ -19,7 +18,7 @@ export function SectionHeading({ index, title }: { index: number; title: string 
 
 export function SpecCard({ rows }: { rows: [string, string][] }) {
   return (
-    <div className="rounded-2xl bg-white border border-[#DDE6EA] p-5">
+    <div className="border-y border-[#DDE6EA] py-5">
       <dl className="space-y-3">
         {rows.map(([k, v]) => (
           <div key={k} className="grid gap-1 text-sm sm:grid-cols-[8rem_1fr] sm:gap-4">
@@ -39,10 +38,9 @@ export function SimCard({ name, color, sim }: {
 }) {
   return (
     <div
-      className="rounded-xl p-4 space-y-2"
+      className="border-y py-4 space-y-2"
       style={{
-        background: `linear-gradient(145deg, ${color}12 0%, transparent 70%)`,
-        border: `1px solid ${color}30`,
+        borderColor: `${color}30`,
       }}
     >
       <p className="text-xs font-bold" style={{ color }}>{name}</p>
