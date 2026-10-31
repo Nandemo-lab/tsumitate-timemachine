@@ -31,11 +31,21 @@ Organic限定値はSession default channel groupが`Organic Search`のsessionだ
 ## QAアクセスと重複の扱い
 
 - Googleタグとカスタムイベントは本番ホストでだけ送信する。localhost / preview / Vercel固有URLは送信しない。
+- 本番E2Eは対象URLへ`?qa=1`を付け、全イベントへGA4標準の`debug_mode: true`を付与する。氏名・端末IDなどの識別情報は追加しない。
 - `article_view`と`article_end_reached`は画面インスタンスごとのガードを持つ。
+- 読後導線のクリックはcapture段階で末尾到達を確定してから、`related_article_click`または`article_to_simulation`を送る。IntersectionObserverの非同期通知より先に遷移してもイベント順序を保つ。
 - `page_view`はGoogleタグのブラウザ履歴変更による自動計測だけを使い、手動送信を追加しない。
 - 本番QAを行った日時・対象URLは分析時に注記し、除外できない場合は自然利用の確定値と扱わない。
+- GA4管理画面でDeveloper Trafficフィルタを有効化できる場合はDebug Modeのイベントを分析用データから除外する。設定を変更していない場合は、`debug_mode`付きQA実行日時を台帳に残して期間集計から差し引く。
 - `content_type` / `content_id` / `destination_type`をGA4画面で分類軸に使うには、GA4管理画面でイベントスコープのカスタムディメンション登録が別途必要。未登録中もイベント件数と標準のpage path / landing pageによる分析は可能。
 
 ## 判定の限界
 
 末尾到達、クリック、完了は行動の観測であり、記事の理解度や満足度を直接示さない。改善判断はGSCの検索意図、GA4の行動、実画面レビューを合わせて行う。
+
+## 2026年12月1日評価
+
+- 評価期間: 2026-11-01〜2026-11-28（28日固定）
+- データ成熟: 11月28日分がGA4標準レポートで確定してから集計する
+- 順序条件: GA4探索の同一session内で、表の分母イベントより後に分子イベントが発生したsessionだけを数える
+- 期間開始前または実装前の欠損日は0件補完せず、条件を満たせない指標は`NOT MEASURED`とする

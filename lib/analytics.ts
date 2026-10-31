@@ -32,14 +32,21 @@ interface PendingEvent {
 
 const pendingEvents: PendingEvent[] = [];
 
+function withQaDebugMarker(params: object) {
+  if (typeof window === "undefined") return params;
+  const isQaRun = new URLSearchParams(window.location.search).get("qa") === "1";
+  return isQaRun ? { ...params, debug_mode: true } : params;
+}
+
 function track(name: string, params: object) {
   if (typeof window === "undefined") return;
   if (window.location.hostname !== "tsumitate-timemachine.com") return;
+  const eventParams = withQaDebugMarker(params);
   if (!Array.isArray(window.dataLayer)) {
-    pendingEvents.push({ name, params });
+    pendingEvents.push({ name, params: eventParams });
     return;
   }
-  sendGAEvent("event", name, params);
+  sendGAEvent("event", name, eventParams);
 }
 
 /** Googleタグ初期化前に起きた初回表示イベントを、安全に後送する。 */
