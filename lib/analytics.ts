@@ -18,6 +18,13 @@ interface CompareClickParams {
   fund_id: string;
 }
 
+export type EditorialContentType = "article" | "guide";
+
+interface EditorialEventParams {
+  content_type: EditorialContentType;
+  content_id: string;
+}
+
 function track(name: string, params: object) {
   if (typeof window === "undefined") return;
   if (window.location.hostname !== "tsumitate-timemachine.com") return;
@@ -62,4 +69,24 @@ export function trackSimulationStart(mode: "single" | "ranking" | "compare", sur
 /** 保存済み条件がある端末での再訪。条件や計算結果は送信しない。 */
 export function trackReturnVisit(surface: string) {
   track("return_visit", { surface });
+}
+
+/** 記事本文が表示された時。タイトル・URL・自由入力は送らない。 */
+export function trackArticleView(params: EditorialEventParams) {
+  track("article_view", params);
+}
+
+/** 記事末尾の観測点が画面に入った時。読了や満足を意味するイベントではない。 */
+export function trackArticleEndReached(params: EditorialEventParams) {
+  track("article_end_reached", params);
+}
+
+/** 読後導線から別の記事・ガイドを実際に開いた時。 */
+export function trackRelatedArticleClick(params: EditorialEventParams & { destination_type: "article" | "guide" | "other" }) {
+  track("related_article_click", params);
+}
+
+/** 記事本文または読後CTAからシミュレーションへ進んだ時。 */
+export function trackArticleToSimulation(params: EditorialEventParams & { destination_type: "home" | "compare" }) {
+  track("article_to_simulation", params);
 }

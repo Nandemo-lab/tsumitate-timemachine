@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, BarChart3, BookOpenCheck, CircleHelp, ShieldAlert } from "lucide-react";
+import { type EditorialContentType, trackRelatedArticleClick } from "@/lib/analytics";
 
 export type ReadingJourneyKind = "question" | "compare" | "risk" | "action";
 
@@ -21,10 +24,14 @@ export default function ReadingJourney({
   items,
   title = "次の疑問を、ひとつずつ",
   description = "いま読んだ内容から自然につながるテーマだけを選びました。",
+  sourceType,
+  sourceId,
 }: {
   items: ReadingJourneyItem[];
   title?: string;
   description?: string;
+  sourceType?: EditorialContentType;
+  sourceId?: string;
 }) {
   if (items.length === 0) return null;
 
@@ -40,7 +47,22 @@ export default function ReadingJourney({
           const Icon = ICONS[item.kind ?? "question"];
           return (
             <li key={item.href}>
-              <Link href={item.href}>
+              <Link
+                href={item.href}
+                onClick={() => {
+                  if (!sourceType || !sourceId) return;
+                  const destinationType = item.href.startsWith("/articles/")
+                    ? "article"
+                    : item.href.startsWith("/guide/")
+                      ? "guide"
+                      : "other";
+                  trackRelatedArticleClick({
+                    content_type: sourceType,
+                    content_id: sourceId,
+                    destination_type: destinationType,
+                  });
+                }}
+              >
                 <span className={`tm-reading-journey__icon tm-reading-journey__icon--${item.kind ?? "question"}`} aria-hidden="true">
                   <Icon />
                   <i /><i /><i />

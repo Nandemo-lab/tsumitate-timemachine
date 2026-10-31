@@ -28,6 +28,7 @@ import ArticleToc from "@/components/articles/ArticleToc";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ReadingJourney, { type ReadingJourneyItem } from "@/components/editorial/ReadingJourney";
 import { KODOMO_READING_JOURNEYS } from "@/lib/reading-journeys";
+import ArticleEngagementTracker from "@/components/analytics/ArticleEngagementTracker";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -725,7 +726,9 @@ export default async function GuidePage({ params }: Props) {
             </section>
           )}
 
-          <ReadingJourney items={readingJourney} />
+          <ArticleEngagementTracker contentType="guide" contentId={slug} />
+
+          <ReadingJourney items={readingJourney} sourceType="guide" sourceId={slug} />
 
           {/* ── CTA ────────────────────────────────────────── */}
           <section className="tm-guide-simulation-cta space-y-4">

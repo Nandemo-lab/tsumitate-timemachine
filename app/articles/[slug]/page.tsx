@@ -12,6 +12,7 @@ import { ArticleComparisonVisual } from "@/components/visual/VisualStory";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
 import ReadingJourney from "@/components/editorial/ReadingJourney";
 import { ARTICLE_READING_JOURNEYS } from "@/lib/reading-journeys";
+import ArticleEngagementTracker from "@/components/analytics/ArticleEngagementTracker";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -123,10 +124,14 @@ export default async function ArticlePage({ params }: Props) {
 
           <div className="tm-article-body"><Content meta={meta} /></div>
 
+          <ArticleEngagementTracker contentType="article" contentId={slug} />
+
           <ReadingJourney
             items={ARTICLE_READING_JOURNEYS[slug] ?? []}
             title="比較の次に、確かめたいこと"
             description="商品の優劣ではなく、条件・リスク・使い方へ理解をつなげます。"
+            sourceType="article"
+            sourceId={slug}
           />
 
         </div>
