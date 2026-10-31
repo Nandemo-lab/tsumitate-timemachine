@@ -24,7 +24,7 @@ const SP500_DRAWDOWN_SOURCE = {
   href: "https://www.spglobal.com/spdji/en/documents/research/research-natural-selection-tactics-and-strategy-with-equity-sectors.pdf",
 };
 const SP500_DRAWDOWN_SUMMARY =
-  "S&P Dow Jones Indicesの調査が示すS&P 500 Total Returnの各イベント期間の累積下落率は、ITバブル-47.4%、世界金融危機-55.3%、コロナショック-33.8%、2022年弱気相場-23.4%です。米ドル建て・配当込みの指数値であり、円建て投資信託の実績、暦年リターン、日中の最大下落率ではありません。";
+  "S&P Dow Jones Indicesの調査が示すS&P 500 Total Returnの各イベント期間の累積下落率は、ITバブル-47.4%、世界金融危機-55.3%、コロナショック-33.8%、2022年弱気相場-23.4%です。\n\n米ドル建て・配当込みの指数値であり、円建て投資信託の実績、暦年リターン、日中の最大下落率ではありません。";
 
 export interface GuidePoint {
   title: string;
@@ -906,7 +906,7 @@ export const GUIDE_PAGES: GuidePage[] = [
       "新NISAのポートフォリオはどう組む？オルカン100%、値動きを抑える配分、NASDAQ100を加える成長重視型など、割合の違いと判断基準を整理します。",
     h1: "新NISAのポートフォリオ割合・配分例｜どう組むかを整理",
     intro:
-      `新NISAのポートフォリオに唯一の正解はありません。管理を簡単にするならオルカンなどの全世界株式1本、値動きを抑えたいなら株式以外の資産を組み合わせる方法、米国大型グロース株の比率を上げたいならNASDAQ100などを一部加える方法があります。割合は投資期間・目的・リスク許容度から決めます。「積立NISA ポートフォリオ」と検索している方も、2024年に始まった現行NISAの制度を基準に確認してください。${NISA_SYSTEM_DISCLAIMER}`,
+      `新NISAのポートフォリオに唯一の正解はありません。管理を簡単にするなら全世界株式1本、値動きを抑えたいなら株式以外の資産を組み合わせる方法があります。\n\n米国大型グロース株の比率を上げる例では、NASDAQ100などを一部加えます。割合は投資期間・目的・リスク許容度から決めます。\n\n「積立NISA ポートフォリオ」と検索している方も、2024年に始まった現行NISAの制度を基準に確認してください。${NISA_SYSTEM_DISCLAIMER}`,
     lastUpdated: "2026年8月",
     systemCheck: [
       {

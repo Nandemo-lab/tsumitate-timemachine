@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ReactNode } from "react";
 
 interface Props {
   body: string;
@@ -37,9 +36,8 @@ function parseBody(body: string): Part[] {
 }
 
 export default function GuideBodyText({ body, className }: Props) {
-  const parts = parseBody(body);
-
-  const nodes: ReactNode[] = parts.map((part, i) => {
+  const paragraphs = body.split(/\n\n+/).filter(Boolean);
+  const renderParts = (paragraph: string) => parseBody(paragraph).map((part, i) => {
     if (part.type === "text") return <span key={i}>{part.content}</span>;
 
     const cls =
@@ -67,8 +65,12 @@ export default function GuideBodyText({ body, className }: Props) {
   });
 
   return (
-    <p className={className ?? "text-base leading-8 text-slate-700"}>
-      {nodes}
-    </p>
+    <div className="space-y-3">
+      {paragraphs.map((paragraph, index) => (
+        <p key={index} className={className ?? "text-base leading-8 text-slate-700"}>
+          {renderParts(paragraph)}
+        </p>
+      ))}
+    </div>
   );
 }

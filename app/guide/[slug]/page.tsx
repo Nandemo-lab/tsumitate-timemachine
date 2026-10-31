@@ -201,7 +201,11 @@ export default async function GuidePage({ params }: Props) {
               </h1>
             </div>
             {!isBeginnerGuide && (
-              <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
+              <div className="space-y-3">
+                {page.intro.split(/\n\n+/).map((paragraph) => (
+                  <p key={paragraph} className="text-sm text-slate-600 leading-relaxed">{paragraph}</p>
+                ))}
+              </div>
             )}
           </section>
 

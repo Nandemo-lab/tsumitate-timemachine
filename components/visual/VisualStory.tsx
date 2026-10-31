@@ -291,7 +291,9 @@ export function GuidePointVisual({ slug, points }: { slug: string; points: { tit
               <span className="tm-guide-point-map__icon" aria-hidden="true"><Icon /></span>
               <span className="tm-guide-point-map__step">0{index + 1}</span>
               <strong>{point.title}</strong>
-              <p>{point.body}</p>
+              <div className="tm-guide-point-map__copy">
+                {point.body.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
             </li>
           );
         })}

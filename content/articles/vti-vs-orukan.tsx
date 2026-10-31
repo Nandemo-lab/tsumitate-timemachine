@@ -103,7 +103,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="VTIとは？特徴と仕組み" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          VTI（バンガード・トータル・ストック・マーケットETF）は、バンガード社が運用するETFで、米国の上場株式ほぼ全銘柄を対象にしています。大型株中心のS&P500と異なり、中小型株も含めて{FUNDS.vti.shareCount}をカバーする点が特徴です。日本では楽天証券の「楽天・全米株式インデックス・ファンド（楽天VTI）」として投資信託化されており、証券会社を通じて円建てで積み立てることもできます。
+          VTI（バンガード・トータル・ストック・マーケットETF）は、米国の上場株式ほぼ全銘柄を対象にするETFです。大型株中心のS&P500と異なり、中小型株も含めて{FUNDS.vti.shareCount}をカバーします。
+        </p>
+        <p className="text-sm text-slate-700 leading-relaxed">
+          国内では「楽天・全米株式インデックス・ファンド（楽天VTI）」などを通じて、円建てで積立設定する方法もあります。ETF本体とは別商品です。
         </p>
         <SpecCard rows={[
           ["対象", "米国上場株式ほぼ全銘柄（1ヵ国）"],
@@ -114,7 +117,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
         ]} />
         <p className="text-sm text-slate-600 leading-relaxed">
           米国の大型・中型・小型株へ幅広く投資し、指数への連動を目指すサンプリング運用です。指数の全銘柄を必ず保有するという意味ではなく、費用などにより指数との乖離も生じます。
-          <a href="https://fund-docs.vanguard.com/F0970.pdf" target="_blank" rel="noopener noreferrer">出典：Vanguard VTIファクトシート（2026年9月末基準、2026年10月28日確認）</a>ETF本体（VTI）は米国市場での売買が必要ですが、楽天VTIのような投資信託経由であれば国内証券会社から円貨で積立設定ができます。
+        </p>
+        <p className="text-sm text-slate-600 leading-relaxed">
+          ETF本体（VTI）は米国市場での売買が必要です。国内投資信託を経由する場合は、国内証券会社から円建てで積立設定できます。
+          <a href="https://fund-docs.vanguard.com/F0970.pdf" target="_blank" rel="noopener noreferrer" className="ml-1">出典：Vanguard VTIファクトシート（2026年9月末基準、2026年10月28日確認）</a>
         </p>
       </section>
 

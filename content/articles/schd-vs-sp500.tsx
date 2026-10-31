@@ -101,7 +101,10 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
       <section id="section-1" className="space-y-4">
         <SectionHeading index={1} title="SCHDとは？特徴と仕組み" />
         <p className="text-sm text-slate-700 leading-relaxed">
-          SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。Dow Jones U.S. Dividend 100 Indexへの連動を目指し、財務健全性や増配実績などを基準に銘柄を選定します。SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
+          SCHD（Schwab U.S. Dividend Equity ETF）は、Schwab Asset Managementが運用するUSD建ての米国高配当ETFです。Dow Jones U.S. Dividend 100 Indexへの連動を目指し、財務健全性や増配実績などを基準に銘柄を選定します。
+        </p>
+        <p className="text-sm text-slate-700 leading-relaxed">
+          SCHDを主要投資対象とする国内投信は、米国ETF SCHDとは別商品です。
         </p>
         <SpecCard rows={[
           ["対象", "米国高配当株（財務優良約100社）"],
