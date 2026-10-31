@@ -45,6 +45,9 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
     trackSimulationStart("compare", "compare_form");
   };
   const startYearOptions = getCommonStartOptions([fundA, fundB]);
+  const commonStart = getCommonStartMonth([fundA, fundB]);
+  const commonStartYear = Number(commonStart.slice(0, 4));
+  const commonStartMonth = Number(commonStart.slice(5, 7));
   const commonEnd = getCommonEndMonth([fundA, fundB]);
   const commonEndYear = Number(commonEnd.slice(0, 4));
   const commonEndMonth = Number(commonEnd.slice(5, 7));
@@ -58,6 +61,13 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
     setShowResult(false);
   };
 
+  const selectStartYear = (year: number) => {
+    markSimulationStart();
+    setStartYear(year);
+    setStartMonth(year === commonStartYear ? commonStartMonth : 1);
+    setShowResult(false);
+  };
+
   const run = useCallback(() => {
     markSimulationStart();
     simulate({ fundId: fundA, startYear, startMonth, monthlyAmount, endYear: commonEndYear, endMonth: commonEndMonth });
@@ -67,7 +77,9 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
     setShowResult(true);
     setShowShare(false);
     setTimeout(() => {
-      document.getElementById("compare-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const resultSection = document.getElementById("compare-result");
+      resultSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+      resultSection?.focus({ preventScroll: true });
     }, 150);
   }, [fundA, fundB, startYear, startMonth, monthlyAmount, commonEndYear, commonEndMonth]);
 
@@ -110,7 +122,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
             {startYearOptions.map((y) => (
               <button
                 key={y}
-                onClick={() => { markSimulationStart(); setStartYear(y); setShowResult(false); }}
+                onClick={() => selectStartYear(y)}
                 aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
@@ -119,10 +131,15 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
               >
-                {y}年
+                {y}年{y === commonStartYear && commonStartMonth > 1 ? `${commonStartMonth}月` : ""}
               </button>
             ))}
           </div>
+          {commonStartMonth > 1 && (
+            <p className="mt-2 text-xs leading-relaxed text-slate-600">
+              両商品の公式データがそろう{commonStartYear}年{commonStartMonth}月から比較できます。
+            </p>
+          )}
         </div>
 
         {/* Amount */}
@@ -198,6 +215,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
         {showResult && resultA && resultB && winnerResult && loserResult && (
           <motion.div
             id="compare-result"
+            tabIndex={-1}
             role="region"
             aria-live="polite"
             aria-label="比較結果"

@@ -17,6 +17,7 @@ import AdvancedSimulation from "@/components/simulation/AdvancedSimulation";
 import { QuickScenario } from "@/lib/scenarios";
 import { trackCalculate, trackCompareClick, trackSimulationStart } from "@/lib/analytics";
 import { getReturnDataSource } from "@/lib/return-data-sources";
+import { FUNDS } from "@/lib/funds";
 import { ChevronDown, Zap, Trophy, Settings2, GitCompareArrows, Share2, ShieldCheck, Clock3, Target } from "lucide-react";
 import { saveRecentSimulation } from "@/lib/recent-simulations";
 
@@ -69,10 +70,19 @@ export default function TimeMachineView({
     trackSimulationStart(mode, "time_machine");
   };
   const effectiveStart = subMode === "ranking" ? getCommonStartMonth(VERIFIED_FUND_IDS) : getAvailableStartMonth(fund);
+  const effectiveStartYear = Number(effectiveStart.slice(0, 4));
+  const effectiveStartMonth = Number(effectiveStart.slice(5, 7));
   const availableYears = subMode === "ranking"
-    ? Array.from({ length: 2025 - Number(effectiveStart.slice(0, 4)) + 1 }, (_, i) => Number(effectiveStart.slice(0, 4)) + i)
+    ? Array.from({ length: 2025 - effectiveStartYear + 1 }, (_, i) => effectiveStartYear + i)
     : getStartYearOptions(fund);
-  const minimumMonth = startYear === Number(effectiveStart.slice(0, 4)) ? Number(effectiveStart.slice(5, 7)) : 1;
+  const minimumMonth = startYear === effectiveStartYear ? effectiveStartMonth : 1;
+
+  const selectStartYear = (year: number) => {
+    markSimulationStart();
+    setStartYear(year);
+    setStartMonth(year === effectiveStartYear ? effectiveStartMonth : 1);
+    setShowResult(false);
+  };
 
   const selectMode = (mode: SubMode) => {
     markSimulationStart(mode);
@@ -203,7 +213,7 @@ export default function TimeMachineView({
             {availableYears.map((y) => (
               <button
                 key={y}
-                onClick={() => { markSimulationStart(); setStartYear(y); setShowResult(false); }}
+                onClick={() => selectStartYear(y)}
                 aria-pressed={startYear === y}
                 className={`flex-shrink-0 rounded-xl text-sm font-black transition-all border ${
                   startYear === y
@@ -212,10 +222,16 @@ export default function TimeMachineView({
                 }`}
                 style={{ minHeight: 44, minWidth: 64, padding: "0 12px" }}
               >
-                {y}年
+                {y}年{y === effectiveStartYear && effectiveStartMonth > 1 ? `${effectiveStartMonth}月` : ""}
               </button>
             ))}
           </div>
+          {effectiveStartMonth > 1 && (
+            <p className="mt-2 text-xs leading-relaxed text-slate-600">
+              {subMode === "ranking" ? "全商品の公式データがそろう" : `${FUNDS[fund].shortName}の公式実績が始まる`}
+              {effectiveStartYear}年{effectiveStartMonth}月から計算します。
+            </p>
+          )}
           {/* Month — small, secondary */}
           <div className="flex gap-2 mt-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {MONTH_OPTIONS.filter((m) => m >= minimumMonth).map((m) => (

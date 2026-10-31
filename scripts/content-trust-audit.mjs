@@ -98,6 +98,11 @@ assert(compareClient.includes("repeat(2,minmax(0,1fr))") && compareClient.includ
 assert(homePage.includes("parseComparePreset"), "比較条件のURL復元が欠落している");
 assert(!timeMachine.includes("2025 + 5 / 12") && timeMachine.includes("getAvailableEndMonth"), "期間表示が旧終端2025年6月へ固定されている");
 assert(timeMachine.includes("year: startYear, month: startMonth, amount: monthlyAmount") && homePage.includes("initialAmount={displayedComparePreset.amount}"), "単一結果から比較へ開始年月・月額を引き継いでいない");
+assert(timeMachine.includes("setStartMonth(year === effectiveStartYear ? effectiveStartMonth : 1)"), "単一試算の最初の年が公式データ開始月へ補正されない");
+assert(timeMachine.includes("の公式実績が始まる") && timeMachine.includes("月から計算します"), "単一試算の開始月補正理由が利用者へ表示されない");
+assert(compareView.includes("setStartMonth(year === commonStartYear ? commonStartMonth : 1)"), "比較の最初の年が共通開始月へ補正されない");
+assert(compareView.includes("両商品の公式データがそろう") && compareView.includes("月から比較できます"), "比較の開始月補正理由が利用者へ表示されない");
+assert(compareView.includes('id="compare-result"') && compareView.includes("tabIndex={-1}") && compareView.includes("resultSection?.focus({ preventScroll: true })"), "比較結果へフォーカスが移動しない");
 assert(homePage.includes("useLayoutEffect") && homePage.includes("}, [displayedTab])") && !homePage.includes('behavior: "smooth"'), "SPA画面切替のスクロールが遷移後も中間位置へ残る可能性がある");
 assert(emotional.includes("Math.trunc(profit / 10_000)"), "結果カードと説明文で損益の万円丸めが一致しない");
 assert(animatedNumber.includes("useState(value)") && animatedNumber.includes("useRef(value)"), "画面外の結果カードが実値ではなく0円を初期表示する可能性がある");
