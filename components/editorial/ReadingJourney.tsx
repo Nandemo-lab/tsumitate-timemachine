@@ -41,7 +41,10 @@ export default function ReadingJourney({
           return (
             <li key={item.href}>
               <Link href={item.href}>
-                <span className="tm-reading-journey__icon" aria-hidden="true"><Icon /></span>
+                <span className={`tm-reading-journey__icon tm-reading-journey__icon--${item.kind ?? "question"}`} aria-hidden="true">
+                  <Icon />
+                  <i /><i /><i />
+                </span>
                 <span className="tm-reading-journey__copy">
                   <strong>{item.question}</strong>
                   <small>{item.description}</small>

@@ -21,7 +21,7 @@ import {
   Users,
   WalletCards,
 } from "lucide-react";
-import { KODOMO_NISA_LIMITS, formatManEn } from "@/lib/nisa";
+import { KODOMO_NISA_LIMITS, NISA_LIMITS, formatManEn } from "@/lib/nisa";
 import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import type { FundId } from "@/types";
 
@@ -148,6 +148,7 @@ export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
     india: "インド株式",
     emerging: "新興国株式",
   };
+  const isWorldVsNasdaq = ids.includes("orcan") && ids.includes("nasdaq100");
   return (
     <figure className="tm-comparison-figure tm-comparison-map" aria-label={`${fundA.shortName}と${fundB.shortName}の商品構造比較`}>
       <div className="tm-comparison-map__heading">
@@ -157,7 +158,17 @@ export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
       <div className="tm-comparison-figure__fund">
         <span>商品 A</span>
         <strong>{fundA.shortName}</strong>
-        <div className="tm-comparison-map__scope" aria-hidden="true"><Globe2 /></div>
+        {isWorldVsNasdaq && fundA.id === "orcan" ? (
+          <div className="tm-market-map tm-market-map--world" aria-hidden="true">
+            {Array.from({ length: 18 }, (_, index) => <i key={index} />)}
+            <span>世界へ広く</span>
+          </div>
+        ) : isWorldVsNasdaq && fundA.id === "nasdaq100" ? (
+          <div className="tm-market-map tm-market-map--focused" aria-hidden="true">
+            {Array.from({ length: 9 }, (_, index) => <i key={index} />)}
+            <span>大型株へ集中</span>
+          </div>
+        ) : <div className="tm-comparison-map__scope" aria-hidden="true"><Globe2 /></div>}
         <p>{focus[fundA.id] ?? fundA.description}</p>
         <dl>
           <div><dt>構成</dt><dd>{fundA.shareCount}</dd></div>
@@ -171,7 +182,17 @@ export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
       <div className="tm-comparison-figure__fund">
         <span>商品 B</span>
         <strong>{fundB.shortName}</strong>
-        <div className="tm-comparison-map__scope tm-comparison-map__scope--focused" aria-hidden="true"><Target /></div>
+        {isWorldVsNasdaq && fundB.id === "orcan" ? (
+          <div className="tm-market-map tm-market-map--world" aria-hidden="true">
+            {Array.from({ length: 18 }, (_, index) => <i key={index} />)}
+            <span>世界へ広く</span>
+          </div>
+        ) : isWorldVsNasdaq && fundB.id === "nasdaq100" ? (
+          <div className="tm-market-map tm-market-map--focused" aria-hidden="true">
+            {Array.from({ length: 9 }, (_, index) => <i key={index} />)}
+            <span>大型株へ集中</span>
+          </div>
+        ) : <div className="tm-comparison-map__scope tm-comparison-map__scope--focused" aria-hidden="true"><Target /></div>}
         <p>{focus[fundB.id] ?? fundB.description}</p>
         <dl>
           <div><dt>構成</dt><dd>{fundB.shareCount}</dd></div>
@@ -179,6 +200,64 @@ export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
         </dl>
       </div>
       <figcaption>構成数だけで分散効果は決まりません。投資対象を確認したうえで、評価額の差は共通条件の比較ページで確かめます。</figcaption>
+    </figure>
+  );
+}
+
+function KodomoAgeTimeline() {
+  const ages = [0, 5, 10, 15];
+  return (
+    <figure className="tm-age-timeline" aria-labelledby="kodomo-age-timeline-title">
+      <div className="tm-diagram-heading">
+        <span>月1万円の元本だけを比較</span>
+        <h2 id="kodomo-age-timeline-title">開始年齢で、18歳までの時間が変わる</h2>
+      </div>
+      <div className="tm-age-timeline__scale" aria-hidden="true"><span>0歳</span><span>6歳</span><span>12歳</span><span>18歳</span></div>
+      <ol>
+        {ages.map((age) => {
+          const months = (KODOMO_NISA_LIMITS.adultTransitionAge - age) * 12;
+          const principal = months * 10_000;
+          return (
+            <li key={age}>
+              <strong>{age}歳から</strong>
+              <span className="tm-age-timeline__track" aria-hidden="true"><i style={{ width: `${((18 - age) / 18) * 100}%` }} /></span>
+              <span><b>{months}回</b><small>元本 {formatManEn(principal)}</small></span>
+            </li>
+          );
+        })}
+      </ol>
+      <div className="tm-age-timeline__risk"><ShieldCheck aria-hidden="true" /><span>長く積み立てても利益は確定しません。教育費を使う時期と元本割れを一緒に確認します。</span></div>
+      <figcaption>棒の長さは18歳までの積立期間です。運用益を示すグラフではありません。</figcaption>
+    </figure>
+  );
+}
+
+function ParentChildNisaMap() {
+  return (
+    <figure className="tm-account-map" aria-labelledby="parent-child-map-title">
+      <div className="tm-diagram-heading">
+        <span>枠の大きさより、名義と目的</span>
+        <h2 id="parent-child-map-title">同じ教育費でも、お金の持ち主が違う</h2>
+      </div>
+      <div className="tm-account-map__question"><span>まず確認</span><strong>誰のお金？<br />いつ使う？</strong></div>
+      <div className="tm-account-map__branches" aria-label="親のNISAとこどもNISAの違い">
+        <section>
+          <div className="tm-account-map__person"><Users aria-hidden="true" /><span>親</span></div>
+          <h3>親のNISA</h3>
+          <p>親名義で管理</p>
+          <strong>年 {formatManEn(NISA_LIMITS.tsumitateAnnual)}</strong>
+          <small>家計全体・老後資金など</small>
+        </section>
+        <section>
+          <div className="tm-account-map__person tm-account-map__person--child"><Baby aria-hidden="true" /><span>子</span></div>
+          <h3>こどもNISA</h3>
+          <p>子ども名義で管理</p>
+          <strong>年 {formatManEn(KODOMO_NISA_LIMITS.annual)}</strong>
+          <small>教育費など子どもの目的</small>
+        </section>
+      </div>
+      <div className="tm-account-map__notice"><GitCompareArrows aria-hidden="true" /><span>NISAの非課税と、親から子への贈与税は別の制度です。</span></div>
+      <figcaption>払出し条件と資金の帰属を確認してから、利用する口座を分けます。</figcaption>
     </figure>
   );
 }
@@ -204,7 +283,7 @@ export function GuidePointVisual({ slug, points }: { slug: string; points: { tit
         <span>{settings.label}</span>
         <h2 id={`guide-point-map-${slug}`}>{settings.title}</h2>
       </div>
-      <ol>
+      <ol aria-label={settings.title}>
         {points.slice(0, 3).map((point, index) => {
           const Icon = settings.icons[index] ?? ShieldCheck;
           return (
@@ -302,10 +381,19 @@ const KODOMO_VISUALS: Record<string, {
 };
 
 export function GuideConceptVisual({ slug }: { slug: string }) {
+  if (slug === "kodomo-nisa-nansai-kara") return <KodomoAgeTimeline />;
+  if (slug === "kodomo-nisa-oya-nisa-tsukaiwake") return <ParentChildNisaMap />;
   const visual = KODOMO_VISUALS[slug];
   if (!visual) return null;
+  const variant = slug === "kodomo-nisa"
+    ? "system"
+    : slug === "kodomo-nisa-tsumitate-ikura"
+      ? "budget"
+      : slug === "kodomo-nisa-orukan-vs-sp500" || slug === "kodomo-nisa-vs-gakushi-hoken"
+        ? "compare"
+        : "timeline";
   return (
-    <figure className="tm-concept-figure" aria-labelledby={`visual-${slug}`}>
+    <figure className={`tm-concept-figure tm-concept-figure--${variant}`} aria-labelledby={`visual-${slug}`}>
       <div className="tm-concept-figure__heading">
         <span>{visual.label}</span>
         <h2 id={`visual-${slug}`}>{visual.title}</h2>
