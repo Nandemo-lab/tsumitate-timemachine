@@ -10,13 +10,11 @@ import {
   BookOpen,
   ExternalLink,
   BarChart2,
-  FileText,
   ShieldCheck,
   ListOrdered,
 } from "lucide-react";
 import { getGuidePage, GUIDE_PAGES, getGuideSeriesForSlug } from "@/lib/guide-pages";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
-import { getArticlesRelatedToGuide } from "@/lib/article-pages";
 import { FUNDS } from "@/lib/funds";
 import { simulate, formatCurrency, formatYearMonth, CURRENT_YEAR, CURRENT_MONTH } from "@/lib/simulation";
 import { FundId } from "@/types";
@@ -28,6 +26,8 @@ import DisclaimerBar from "@/components/common/DisclaimerBar";
 import { GuideConceptVisual, GuidePointVisual } from "@/components/visual/VisualStory";
 import ArticleToc from "@/components/articles/ArticleToc";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import ReadingJourney, { type ReadingJourneyItem } from "@/components/editorial/ReadingJourney";
+import { KODOMO_READING_JOURNEYS } from "@/lib/reading-journeys";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -144,6 +144,15 @@ export default async function GuidePage({ params }: Props) {
     slug: s,
     label: GUIDE_LABELS[s] ?? s,
   }));
+  const readingJourney: ReadingJourneyItem[] = KODOMO_READING_JOURNEYS[slug] ?? relatedGuideItems.slice(0, 3).map(({ slug: relatedSlug, label }) => {
+    const relatedPage = getGuidePage(relatedSlug);
+    return {
+      href: `/guide/${relatedSlug}`,
+      question: label,
+      description: relatedPage?.points[0]?.title ?? relatedPage?.metaDescription ?? "次の疑問を整理します。",
+      kind: "question",
+    };
+  });
 
   // クラスタ内シリーズナビ（前へ・次へ）
   const seriesInfo = getGuideSeriesForSlug(slug);
@@ -269,7 +278,7 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {/* ── 要点3つ（判断基準・理由の詳細）─────────────────── */}
-          <GuidePointVisual points={page.points} />
+          <GuidePointVisual slug={slug} points={page.points} />
 
           {/* ── E-E-A-T 編集部情報 ───────────────────────────── */}
           {page.lastUpdated && <GuideEeat lastUpdated={page.lastUpdated} />}
@@ -712,62 +721,10 @@ export default async function GuidePage({ params }: Props) {
             </section>
           )}
 
-          {/* ── 関連ガイド ───────────────────────────────────── */}
-          <section>
-            <h2
-              className="text-base font-bold text-[#263A53] mb-4"
-            >
-              関連する投資ガイド
-            </h2>
-            <div className="space-y-2">
-              {relatedGuideItems.map(({ slug: gs, label }) => (
-                <Link
-                  key={gs}
-                  href={`/guide/${gs}`}
-                  className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
-                    <span className="text-sm text-slate-700">{label}</span>
-                  </div>
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* ── 関連コラム ───────────────────────────────────── */}
-          {(() => {
-            const articles = getArticlesRelatedToGuide(slug);
-            if (articles.length === 0) return null;
-            return (
-              <section>
-                <h2
-                  className="text-base font-bold text-[#263A53] mb-4"
-                >
-                  関連コラム
-                </h2>
-                <div className="space-y-2">
-                  {articles.map((a) => (
-                    <Link
-                      key={a.slug}
-                      href={`/articles/${a.slug}`}
-                      className="flex items-center justify-between rounded-xl bg-[#F7FAFB] border border-[#D9E3E8] px-4 py-3 hover:bg-white/[0.07] transition-colors"
-                    >
-                      <div className="flex items-center gap-2 min-w-0">
-                        <FileText className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
-                        <span className="text-sm text-slate-700 leading-snug line-clamp-2">{a.h1}</span>
-                      </div>
-                      <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0 ml-2" />
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            );
-          })()}
+          <ReadingJourney items={readingJourney} />
 
           {/* ── CTA ────────────────────────────────────────── */}
-          <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
+          <section className="tm-guide-simulation-cta space-y-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-emerald-700" />
               <h2
@@ -781,40 +738,11 @@ export default async function GuidePage({ params }: Props) {
             </p>
             <Link
               href="/"
-              className="flex items-center justify-between rounded-xl px-4 py-3 font-bold text-sm text-[#263A53] bg-emerald-600 hover:bg-emerald-500 transition-colors"
+              className="flex min-h-12 items-center justify-between border-t border-[#bdd8ce] pt-3 font-bold text-sm text-[#17644d] transition-colors hover:text-[#0f4c3a]"
             >
               積立タイムマシンで試す
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </section>
-
-          {/* ── 人気ページ ───────────────────────────────────── */}
-          <section className="space-y-3">
-            <h2
-              className="text-sm font-bold text-slate-600"
-            >
-              人気ページ
-            </h2>
-            <div className="grid grid-cols-1 gap-2">
-              {[
-                { label: "オルカンとは？",           href: "/fund/orukan" },
-                { label: "S&P500とは？",             href: "/fund/sp500" },
-                { label: "オルカン vs S&P500",       href: "/compare/orukan-vs-sp500" },
-                { label: "2020年からオルカン",        href: "/orukan/2020" },
-                { label: "2020年からS&P500",          href: "/sp500/2020" },
-                { label: "月3万円オルカン積立",       href: "/orukan/monthly/30000" },
-                { label: "積立開始年ランキング",      href: "/from/2020" },
-              ].map(({ label: lbl, href }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center justify-between rounded-xl bg-white border border-[#E1E8EC] px-4 py-3 hover:bg-[#EFF5F7] transition-colors"
-                >
-                  <span className="text-sm text-slate-700">{lbl}</span>
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
-                </Link>
-              ))}
-            </div>
           </section>
 
           <DisclaimerBar />

@@ -10,6 +10,8 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { ArticleComparisonVisual } from "@/components/visual/VisualStory";
 import PageRoleGuide from "@/components/common/PageRoleGuide";
+import ReadingJourney from "@/components/editorial/ReadingJourney";
+import { ARTICLE_READING_JOURNEYS } from "@/lib/reading-journeys";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -119,13 +121,13 @@ export default async function ArticlePage({ params }: Props) {
 
           <ArticleComparisonVisual fundIds={relatedFunds} />
 
-          <details className="tm-article-details">
-            <summary>
-              <span>商品構造・過去実績・リスクを詳しく読む</span>
-              <small>約7分</small>
-            </summary>
-            <div className="tm-article-body"><Content meta={meta} /></div>
-          </details>
+          <div className="tm-article-body"><Content meta={meta} /></div>
+
+          <ReadingJourney
+            items={ARTICLE_READING_JOURNEYS[slug] ?? []}
+            title="比較の次に、確かめたいこと"
+            description="商品の優劣ではなく、条件・リスク・使い方へ理解をつなげます。"
+          />
 
         </div>
         <SiteFooter />

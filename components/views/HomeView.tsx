@@ -12,6 +12,7 @@ import RecentConditions from "@/components/simulation/RecentConditions";
 import { RecentSimulation } from "@/lib/recent-simulations";
 import { trackSourceView } from "@/lib/analytics";
 import { HomeEditorialIllustration } from "@/components/visual/VisualStory";
+import ReadingJourney from "@/components/editorial/ReadingJourney";
 
 interface Props {
   onNavigate: (tab: MainTab) => void;
@@ -67,6 +68,17 @@ export default function HomeView({ onNavigate, onTaraeba, onRestoreRecent }: Pro
 
       <div className="mx-4 mt-8 md:mx-auto md:max-w-3xl"><RecentConditions onRestore={onRestoreRecent} /></div>
       <section className="mx-4 mt-10 md:mx-auto md:max-w-3xl"><div className="mb-4 flex items-end justify-between gap-3"><div><p className="text-xs font-bold text-[#236B8E]">人気の比較</p><h2 className="mt-1 text-xl font-bold text-[#263A53]">同じ条件で比べる</h2></div><button type="button" onClick={() => onNavigate("compare")} className="min-h-11 text-sm font-bold text-[#236B8E]">比較を試す</button></div><div className="tm-home-link-list">{POPULAR_COMPARE.map((item) => <Link key={item.href} href={item.href} className="flex min-h-14 items-center justify-between px-1 py-3 text-sm font-bold text-[#263A53]"><span>{item.label}</span><GitCompareArrows className="h-4 w-4 text-[#4E94B3]" /></Link>)}</div></section>
+      <div className="mx-4 mt-12 md:mx-auto md:max-w-3xl">
+        <ReadingJourney
+          title="気になることから読む"
+          description="いまの疑問に近い入口を選べます。順番に読む必要はありません。"
+          items={[
+            { href: "/guide/kodomo-nisa", question: "子どもの将来のお金を考えたい", description: "こどもNISAの確定事項と注意点を、保護者向けに整理します。", kind: "question" },
+            { href: "/guide/nisa-beginner", question: "NISAと商品選びの基本を知りたい", description: "制度と投資商品の違いを混ぜずに確認します。", kind: "action" },
+            { href: "/guide/booraku-tsumitate-yameru", question: "元本割れや下落が不安", description: "過去の月次経路から、積立中の値動きを理解します。", kind: "risk" },
+          ]}
+        />
+      </div>
       <section className="tm-home-reference-links mx-4 mt-10 md:mx-auto md:max-w-3xl"><Link href="/about/data-sources" onClick={() => trackSourceView("home_trust_panel")} className="text-[#263A53]"><Database className="h-5 w-5 text-[#236B8E]" /><div><h2 className="font-bold">データの根拠を公開</h2><p className="mt-1 text-sm leading-6 text-slate-700">一次情報、計算方法、収録期間を商品ごとに確認できます。</p></div><ChevronRight className="h-4 w-4 text-[#4E94B3]" /></Link><Link href="/guide" className="text-[#263A53]"><BookOpen className="h-5 w-5 text-[#A65335]" /><div><h2 className="font-bold">結果の読み方を知る</h2><p className="mt-1 text-sm leading-6 text-slate-700">過去実績と将来予測を分けて、積立の考え方を整理します。</p></div><ChevronRight className="h-4 w-4 text-[#4E94B3]" /></Link></section>
       <div className="mx-4 mt-8 flex items-start gap-2 rounded-2xl border border-[#D9E3E8] bg-white p-4 text-xs leading-6 text-slate-600 md:mx-auto md:max-w-3xl"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" /><span>A品質9系列の実績期間：2026年9月まで。商品設定前の期間や欠損値は別系列で補いません。参考系列は数値シミュレーションから分離しています。</span></div>
       <div className="mt-12"><SiteFooter /></div>

@@ -183,17 +183,30 @@ export function ArticleComparisonVisual({ fundIds }: { fundIds: string[] }) {
   );
 }
 
-export function GuidePointVisual({ points }: { points: { title: string; body: string }[] }) {
-  const icons = [Signpost, LineChart, ShieldCheck];
+function getGuideVisualMode(slug: string) {
+  if (/vs-|chigai|wariate|kouza/.test(slug)) return "compare";
+  if (/nansnen|ikou|torikuzushi|shuuryou|henkou|kakuteishinkoku|how-to-start|tsumitate-ikura/.test(slug)) return "timeline";
+  if (/booraku|shippai|yameta|zeikin|koujo|tsukaikitta|necessary/.test(slug)) return "risk";
+  return "path";
+}
+
+export function GuidePointVisual({ slug, points }: { slug: string; points: { title: string; body: string }[] }) {
+  const mode = getGuideVisualMode(slug);
+  const settings = {
+    compare: { label: "違いを並べて確認", title: "判断するときの3つの軸", icons: [GitCompareArrows, Target, ShieldCheck] },
+    timeline: { label: "時間の流れで見る", title: "今から次の行動までを整理", icons: [CalendarDays, LineChart, Signpost] },
+    risk: { label: "先に知る注意点", title: "迷いやすいポイントを分けて確認", icons: [ShieldCheck, LineChart, Signpost] },
+    path: { label: "迷わないための3つの確認", title: "この記事の要点を、順番に整理", icons: [Signpost, LineChart, ShieldCheck] },
+  }[mode];
   return (
-    <figure className="tm-guide-point-map" aria-labelledby="guide-point-map-title">
+    <figure className={`tm-guide-point-map tm-guide-point-map--${mode}`} aria-labelledby={`guide-point-map-${slug}`}>
       <div className="tm-guide-point-map__heading">
-        <span>迷わないための3つの確認</span>
-        <h2 id="guide-point-map-title">この記事の要点を、順番に整理</h2>
+        <span>{settings.label}</span>
+        <h2 id={`guide-point-map-${slug}`}>{settings.title}</h2>
       </div>
       <ol>
         {points.slice(0, 3).map((point, index) => {
-          const Icon = icons[index] ?? ShieldCheck;
+          const Icon = settings.icons[index] ?? ShieldCheck;
           return (
             <li key={point.title}>
               <span className="tm-guide-point-map__icon" aria-hidden="true"><Icon /></span>
@@ -204,7 +217,7 @@ export function GuidePointVisual({ points }: { points: { title: string; body: st
           );
         })}
       </ol>
-      <figcaption>上から順に確認すると、制度・数字・注意点を混ぜずに読めます。</figcaption>
+      <figcaption>{mode === "compare" ? "3つの軸を別々に見ると、似ている点と異なる点を混同せずに読めます。" : mode === "timeline" ? "順番にたどると、今確認することと将来の手続を分けて読めます。" : mode === "risk" ? "不安を結論にせず、事実・条件・次の確認へ分けて読みます。" : "上から順に確認すると、制度・数字・注意点を混ぜずに読めます。"}</figcaption>
     </figure>
   );
 }
