@@ -192,14 +192,6 @@ export default async function SimulatePage({ params, searchParams }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="relative min-h-dvh bg-[#FAFAF7] overflow-hidden">
-        {/* Ambient glow */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl opacity-15"
-            style={{ background: `radial-gradient(ellipse, ${fundData.color} 0%, transparent 70%)` }}
-          />
-        </div>
-
         <div className="relative max-w-2xl mx-auto px-4 py-12 pb-24">
           {/* パンくず */}
           <nav className="flex items-center gap-2 text-xs text-slate-600 mb-8">

@@ -143,7 +143,10 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    max-width: 100%;
   }
+  body { max-width: 100%; overflow-x: clip; }
+  h1, h2, h3, p, li { overflow-wrap: anywhere; }
 }
 
 /* 4.1: Japanese headings and body use one calm sans-serif family. */
@@ -762,12 +765,14 @@ input[type="range"] {
 .tm-guide-section__body { padding-top: .75rem; display: grid; gap: 1rem; }
 
 @media (max-width: 639px) {
-  .tm-home-hero { gap: 1.1rem; }
-  .tm-home-hero h1 { font-size: 1.85rem; line-height: 1.32; }
+  .tm-home-hero { min-width: 0; gap: 1.1rem; }
+  .tm-home-hero > * { min-width: 0; max-width: 100%; }
+  .tm-home-hero h1 { max-width: 100%; font-size: 1.75rem; line-height: 1.34; overflow-wrap: anywhere; text-wrap: pretty; }
   .tm-home-hero p { margin-top: .85rem; line-height: 1.7; }
   .tm-home-hero .tm-trust-line { margin-top: 1rem; }
   .tm-home-hero .tm-editorial-illustration { max-width: 20rem; }
   .tm-home-hero .tm-editorial-illustration img { max-height: 9.5rem; object-fit: cover; object-position: center; }
+  .tm-article-header h1 { word-break: normal; text-wrap: pretty; }
 }
 
 .tm-editorial-illustration {

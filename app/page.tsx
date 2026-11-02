@@ -110,18 +110,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-dvh bg-[#FAFAF7] overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(ellipse, #DCEFFA 0%, transparent 70%)" }}
-        />
-        <div
-          className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(ellipse, #FFDFCB80 0%, transparent 70%)" }}
-        />
-      </div>
-
+    <main className="relative min-h-dvh overflow-hidden bg-[#FAFAF7]">
       <div className="relative mx-auto max-w-4xl">
         <AnimatePresence mode="wait">
           {displayedTab === "home" && (

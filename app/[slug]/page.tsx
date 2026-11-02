@@ -132,14 +132,6 @@ export default async function FundLandingPage({ params }: Props) {
         className="min-h-dvh bg-[#FAFAF7] text-[#263A53]"
         style={{ fontFamily: "var(--font-sans-jp), sans-serif" }}
       >
-        {/* Background glow */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full blur-3xl"
-            style={{ background: `radial-gradient(ellipse, ${fund.color}10 0%, transparent 70%)` }}
-          />
-        </div>
-
         <div className="relative mx-auto max-w-2xl px-4 pt-5">
           <Breadcrumbs items={[{ label: fund.shortName }]} />
         </div>

@@ -4,7 +4,6 @@ import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { getGuidePage, GUIDE_SERIES } from "@/lib/guide-pages";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
-import { PageVisualStory } from "@/components/visual/VisualStory";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const BASE_URL = SITE_URL;
@@ -33,10 +32,10 @@ const KODOMO_NISA_SLUGS = [
 ] as const;
 
 const SECTIONS = [
-  { key: "kodomo-nisa", label: "こどもNISAクラスタ", slugs: KODOMO_NISA_SLUGS },
-  { key: "beginner",  label: "初心者クラスタ",       slugs: BEGINNER_SLUGS },
-  { key: "operation",  label: "運用クラスタ",         slugs: OPERATION_SLUGS },
-  { key: "exit",       label: "出口戦略・家計クラスタ", slugs: EXIT_SLUGS },
+  { key: "kodomo-nisa", label: "子どもの将来のお金", slugs: KODOMO_NISA_SLUGS },
+  { key: "beginner",  label: "初めて積み立てる",       slugs: BEGINNER_SLUGS },
+  { key: "operation",  label: "積立を続けながら考える", slugs: OPERATION_SLUGS },
+  { key: "exit",       label: "使う時期・取り崩しを考える", slugs: EXIT_SLUGS },
 ] as const;
 
 const PAGE_TITLE = "投資ガイド一覧";
@@ -116,14 +115,13 @@ export default function GuideIndexPage() {
             </p>
           </header>
 
-          <PageVisualStory kind="guide" />
-
           <section className="grid gap-2 sm:grid-cols-2" aria-label="疑問別のガイド案内">
             {[
+              ["子どもの教育費を考えたい", "こどもNISAの制度、年齢、積立額、使う時期を保護者向けに確認"],
               ["制度・税金を確認したい", "制度ハブで投資枠と手続きを、税金ハブで口座・分配金・申告を確認"],
               ["商品を選ぶ前提を知りたい", "初心者クラスタで始め方、指数、失敗パターンを確認"],
               ["積立中の判断を整理したい", "運用クラスタで期間、一括との違い、継続・停止時の論点を確認"],
-              ["使う時期から逆算したい", "出口戦略で取り崩し、必要時期、価格変動リスクを確認"],
+              ["使う時期から逆算したい", "取り崩し、必要時期、価格変動リスクを確認"],
             ].map(([title, body]) => (
               <div key={title} className="rounded-xl border border-[#D9E3E8] bg-white p-4">
                 <p className="text-xs font-bold text-[#236B8E]">{title}</p>

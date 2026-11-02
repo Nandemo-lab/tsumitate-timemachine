@@ -70,39 +70,45 @@ export default function FundIndexPage() {
             </p>
           </header>
 
-          <PageVisualStory kind="fund" />
-
-          <section className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 space-y-2">
-            <h2 className="text-xs font-bold text-emerald-200">知りたい項目から銘柄を選ぶ</h2>
-            <p className="text-xs leading-relaxed text-slate-600">
-              Fund詳細では、正式商品名、投資対象、費用、NISA区分、設定日、検証可能な実績期間、一次情報を確認できます。利益額の違いは商品landingや比較ページで条件をそろえて確認します。
-            </p>
-            <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
-              データ品質と更新履歴を見る<ArrowRight className="h-3 w-3" />
-            </Link>
-          </section>
-
-          <div className="space-y-2">
+          <section aria-labelledby="fund-list-title">
+            <div className="mb-3 flex items-end justify-between gap-3">
+              <div>
+                <p className="text-xs font-bold text-[#236B8E]">商品を先に選ぶ</p>
+                <h2 id="fund-list-title" className="mt-1 text-lg font-black text-[#263A53]">投資対象から探す</h2>
+              </div>
+              <Link href="/about/data-sources" className="min-h-11 content-center text-xs font-bold text-[#236B8E]">データ品質</Link>
+            </div>
+            <div className="divide-y divide-[#E2EAEE] border-y border-[#D9E3E8]">
             {FUND_PAGES.map((fp) => {
               const fund = FUNDS[fp.fundId];
               return (
                 <Link
                   key={fp.slug}
                   href={`/fund/${fp.slug}`}
-                  className="flex items-center justify-between rounded-xl border border-[#D9E3E8] p-4 hover:bg-white transition-colors group"
+                  className="flex min-h-16 items-center justify-between gap-3 px-1 py-3 hover:bg-white transition-colors group"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <span className="text-xs">{FUND_CATEGORIES[fund.category].emoji}</span>
+                      <span className="text-[11px] font-semibold text-slate-600">{FUND_CATEGORIES[fund.category].label}</span>
                       <span className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</span>
                     </div>
-                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{fp.h1 ?? fp.metaTitle}</p>
+                    <p className="line-clamp-2 text-xs leading-relaxed text-slate-600">{fund.description}</p>
                   </div>
                   <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-slate-700 transition-colors flex-shrink-0" />
                 </Link>
               );
             })}
-          </div>
+            </div>
+          </section>
+
+          <PageVisualStory kind="fund" />
+
+          <section className="space-y-2 border-y border-[#CFE1E8] bg-[#F4FAF7] px-4 py-4">
+            <h2 className="text-xs font-bold text-emerald-800">商品詳細で確認できること</h2>
+            <p className="text-xs leading-relaxed text-slate-600">
+              正式商品名、投資対象、費用、NISA区分、設定日、検証可能な実績期間、一次情報を確認できます。利益額は条件をそろえた比較ページで確認します。
+            </p>
+          </section>
         </div>
 
         <SiteFooter />
