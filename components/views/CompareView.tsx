@@ -8,7 +8,6 @@ import { getCommonEndMonth, getCommonStartMonth, getCommonStartOptions, getRetur
 import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import FundSelector from "@/components/simulation/FundSelector";
 import ResultCard from "@/components/simulation/ResultCard";
-import WinnerBanner from "@/components/simulation/WinnerBanner";
 import ComparisonChart from "@/components/simulation/ComparisonChart";
 import ShareCard from "@/components/simulation/ShareCard";
 import CalculationDetails from "@/components/simulation/CalculationDetails";
@@ -30,6 +29,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   const initialCommonStart = getCommonStartMonth([initialFundA, initialFundB]);
   const requestedStart = `${initialYear}-${String(initialMonth).padStart(2, "0")}`;
   const safeInitialStart = requestedStart < initialCommonStart ? initialCommonStart : requestedStart;
+  const initialStartWasAdjusted = requestedStart < initialCommonStart;
   const [fundA, setFundA] = useState<FundId>(initialFundA);
   const [fundB, setFundB] = useState<FundId>(initialFundB);
   const [startYear, setStartYear] = useState(Number(safeInitialStart.slice(0, 4)));
@@ -38,6 +38,11 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   const [showResult, setShowResult] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [showCalcDetails, setShowCalcDetails] = useState(false);
+  const [startAdjustmentNotice, setStartAdjustmentNotice] = useState<string | null>(
+    initialStartWasAdjusted
+      ? `指定した${initialYear}年${initialMonth}月は公式データ開始前のため、${Number(initialCommonStart.slice(0, 4))}年${Number(initialCommonStart.slice(5, 7))}月へ変更しました。`
+      : null
+  );
   const startTracked = useRef(false);
   const markSimulationStart = () => {
     if (startTracked.current) return;
@@ -55,8 +60,12 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
     markSimulationStart();
     const minimum = getCommonStartMonth([first, second]);
     if (`${startYear}-${String(startMonth).padStart(2, "0")}` < minimum) {
+      const previous = `${startYear}年${startMonth}月`;
       setStartYear(Number(minimum.slice(0, 4)));
       setStartMonth(Number(minimum.slice(5, 7)));
+      setStartAdjustmentNotice(`${previous}は両商品の公式データがそろう前のため、${Number(minimum.slice(0, 4))}年${Number(minimum.slice(5, 7))}月へ変更しました。`);
+    } else {
+      setStartAdjustmentNotice(null);
     }
     setShowResult(false);
   };
@@ -65,6 +74,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
     markSimulationStart();
     setStartYear(year);
     setStartMonth(year === commonStartYear ? commonStartMonth : 1);
+    setStartAdjustmentNotice(null);
     setShowResult(false);
   };
 
@@ -93,8 +103,6 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
   );
 
   const isTie = Boolean(resultA && resultB && resultA.finalValue === resultB.finalValue);
-  const winnerResult = resultA && resultB ? (resultA.finalValue >= resultB.finalValue ? resultA : resultB) : null;
-  const loserResult  = resultA && resultB ? (resultA.finalValue >= resultB.finalValue ? resultB : resultA) : null;
   const difference   = resultA && resultB ? Math.abs(resultA.finalValue - resultB.finalValue) : 0;
 
   return (
@@ -138,6 +146,11 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
           {commonStartMonth > 1 && (
             <p className="mt-2 text-xs leading-relaxed text-slate-600">
               両商品の公式データがそろう{commonStartYear}年{commonStartMonth}月から比較できます。
+            </p>
+          )}
+          {startAdjustmentNotice && (
+            <p role="status" className="mt-2 rounded-lg border border-[#C9D9E1] bg-white px-3 py-2 text-xs leading-relaxed text-[#3D566C]">
+              {startAdjustmentNotice}
             </p>
           )}
         </div>
@@ -212,7 +225,7 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
 
       {/* Results */}
       <AnimatePresence>
-        {showResult && resultA && resultB && winnerResult && loserResult && (
+        {showResult && resultA && resultB && (
           <motion.div
             id="compare-result"
             tabIndex={-1}
@@ -241,39 +254,49 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
               </p>
             </div>
 
-            {isTie ? (
-              <div className="rounded-2xl border border-[#D2DEE4] bg-white p-5 text-center">
-                <p className="text-sm font-bold text-[#263A53]">この条件では期間末評価額が同額です</p>
-                <p className="mt-1 text-xs leading-relaxed text-slate-600">同じ開始月・終了月・積立額で比較した過去結果です。</p>
-              </div>
-            ) : (
-              <WinnerBanner winner={winnerResult} loser={loserResult} difference={difference} />
-            )}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3" aria-label="2商品の期間末結果">
+              <ResultCard result={resultA} label="" isWinner={!isTie && resultA.finalValue > resultB.finalValue} delay={0} />
+              <ResultCard result={resultB} label="" isWinner={!isTie && resultB.finalValue > resultA.finalValue} delay={0.08} />
+            </div>
+
+            <div className="rounded-xl border border-[#C9D9E1] bg-[#F4F8FA] px-4 py-3 text-center">
+              <p className="text-xs font-semibold text-slate-600">期間末評価額の差</p>
+              <p className="mt-0.5 font-number text-xl font-black text-[#263A53]">
+                {resultA.finalValue === resultB.finalValue ? "同額" : formatCurrency(difference)}
+              </p>
+              {resultA.finalValue === resultB.finalValue && (
+                <p className="mt-1 text-xs font-bold text-[#263A53]">この条件では期間末評価額が同額です</p>
+              )}
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">元本と積立期間をそろえた過去実績の差です。</p>
+            </div>
+
+            <div className="rounded-2xl border border-[#D2DEE4] bg-[#F7FAFB] p-5">
+              <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-3">資産推移グラフ</p>
+              <ComparisonChart planA={resultA} planB={resultB} />
+            </div>
 
             {/* 信頼性の根拠（常時表示） */}
-            <div className="flex items-center justify-center gap-1.5 text-xs text-slate-600 -mt-2">
-              <ShieldCheck className="h-3 w-3 flex-shrink-0" />
-              <span>{getReturnSeriesDefinition(fundA).quality === "A" && getReturnSeriesDefinition(fundB).quality === "A" ? "両系列とも公式月次データ・共通期間で比較" : "参考データを含む比較（原典未検証）"}</span>
+            <div className="flex items-start justify-center gap-1.5 text-xs leading-relaxed text-slate-600">
+              <ShieldCheck className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
+              <span>{getReturnSeriesDefinition(fundA).quality === "A" && getReturnSeriesDefinition(fundB).quality === "A" ? "両系列とも公式月次データを使い、同じ期間・月額で比較しています。" : "参考データを含むため、未検証の数値結果は表示しません。"}</span>
             </div>
 
             {/* 比較結果と混同しない客観的な商品属性 */}
-            <details className="rounded-2xl border border-[#D2DEE4] bg-white p-5">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-bold text-[#263A53]">商品の違いと費用を見る</summary>
-              <div className="mt-4 space-y-4">
-              <p className="text-xs font-bold tracking-widest uppercase text-slate-600">比較する商品の確認事項</p>
+            <details className="rounded-2xl border border-[#D2DEE4] bg-white px-5 py-3">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-bold text-[#263A53]">商品の違い・費用・出典を見る</summary>
+              <div className="mt-3 space-y-4 border-t border-[#E2EAEE] pt-4">
+              <p className="text-xs font-bold tracking-widest text-slate-600">比較する商品の確認事項</p>
               {[resultA, resultB].map((r, index) => {
                 const enc = FUNDS[r.fundId].encyclopedia;
                 return (
                   <div key={`${r.fundId}-${index}`} className="flex gap-3">
                     <div className="h-2 w-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: r.fundColor }} />
                     <div>
-                      <p className="text-sm font-bold text-[#263A53] mb-1">
-                        {enc.nickname}の商品属性
-                      </p>
+                      <p className="text-sm font-bold text-[#263A53] mb-1">{enc.nickname}</p>
                       <ul className="space-y-0.5">
-                        <li className="text-sm text-slate-700 leading-relaxed">・投資対象：{FUNDS[r.fundId].description}</li>
-                        <li className="text-sm text-slate-700 leading-relaxed">・構成銘柄数：{FUNDS[r.fundId].shareCount}</li>
-                        <li className="text-sm text-slate-700 leading-relaxed">・表示コスト：{formatExpenseRatio(r.fundId)}</li>
+                        <li className="text-sm text-slate-700 leading-relaxed">投資対象：{FUNDS[r.fundId].description}</li>
+                        <li className="text-sm text-slate-700 leading-relaxed">構成銘柄数：{FUNDS[r.fundId].shareCount}</li>
+                        <li className="text-sm text-slate-700 leading-relaxed">表示コスト：{formatExpenseRatio(r.fundId)}</li>
                       </ul>
                     </div>
                   </div>
@@ -281,16 +304,6 @@ export default function CompareView({ initialFundA = "sp500", initialFundB = "or
               })}
               </div>
             </details>
-
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <ResultCard result={resultA} label="" isWinner={!isTie && resultA.finalValue > resultB.finalValue} delay={0} />
-              <ResultCard result={resultB} label="" isWinner={!isTie && resultB.finalValue > resultA.finalValue} delay={0.08} />
-            </div>
-
-            <div className="rounded-2xl border border-[#D2DEE4] bg-[#F7FAFB] p-5">
-              <p className="text-xs font-black tracking-widest uppercase text-slate-600 mb-3">資産推移グラフ</p>
-              <ComparisonChart planA={resultA} planB={resultB} />
-            </div>
 
             <button
               onClick={() => setShowShare((v) => !v)}

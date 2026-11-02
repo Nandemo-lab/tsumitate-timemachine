@@ -88,20 +88,6 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
         </div>
       </section>
 
-      <div className="grid gap-4">
-        <PathInsights result={resultA} title={`${resultA.fundName}の途中経過`} />
-        <PathInsights result={resultB} title={`${resultB.fundName}の途中経過`} />
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Link href={compareHref} onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-[#263A53]">
-          同じ2商品で条件を変える
-        </Link>
-        <Link href="/about/data-sources" onClick={() => trackSourceView("compare_result")} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#D2DEE4] px-4 py-3 text-sm font-bold text-slate-700">
-          データ期間・出典を確認
-        </Link>
-      </div>
-
       {/* グラフ比較 */}
       <section>
         <h2
@@ -112,6 +98,23 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
         </h2>
         <ComparisonChart planA={resultA} planB={resultB} />
       </section>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Link href={compareHref} onClick={() => trackCompareClick({ fund_id: `${resultA.fundId}_vs_${resultB.fundId}` })} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#236B8E] px-4 py-3 text-sm font-bold text-white">
+          同じ2商品で条件を変える
+        </Link>
+        <Link href="/about/data-sources" onClick={() => trackSourceView("compare_result")} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#B9CBD4] bg-white px-4 py-3 text-sm font-bold text-[#365F78]">
+          データ期間・出典を確認
+        </Link>
+      </div>
+
+      <details className="rounded-xl border border-[#D9E3E8] bg-white px-4 py-3">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-bold text-[#263A53]">積立途中の元本割れを確認する</summary>
+        <div className="grid gap-4 border-t border-[#E2EAEE] pt-4">
+          <PathInsights result={resultA} title={`${resultA.fundName}の途中経過`} />
+          <PathInsights result={resultB} title={`${resultB.fundName}の途中経過`} />
+        </div>
+      </details>
     </div>
   );
 }
