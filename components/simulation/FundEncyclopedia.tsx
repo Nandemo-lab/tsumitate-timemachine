@@ -4,7 +4,7 @@ import { useState } from "react";
 import ReturnQualityPill from "@/components/common/ReturnQualityPill";
 import { motion, AnimatePresence } from "framer-motion";
 import { FundId, FundCategory } from "@/types";
-import { FUNDS, FUND_CATEGORIES, CATEGORY_ORDER, getFundsByCategory } from "@/lib/funds";
+import { FUNDS, FUND_CATEGORIES, CATEGORY_ORDER, formatExpenseRatio, getFundsByCategory } from "@/lib/funds";
 import { simulate, formatCurrency, START_YEAR_OPTIONS, MONTHLY_AMOUNT_OPTIONS } from "@/lib/simulation";
 import { ChevronRight, BookOpen, TrendingUp, AlertTriangle, CheckCircle, ChevronDown } from "lucide-react";
 import { isVerifiedReturnSeries } from "@/lib/return-series";
@@ -24,7 +24,7 @@ function InlineSimulator({
   if (!isVerifiedReturnSeries(fundId)) {
     return (
       <div className="space-y-3 rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4">
-        <p className="text-xs font-bold text-amber-200">G品質・数値シミュレーション対象外</p>
+        <p className="text-xs font-bold text-amber-800">G品質・数値シミュレーション対象外</p>
         <p className="text-xs leading-relaxed text-slate-600">
           月次原典、通貨、分配金、費用、為替処理が未検証のため、評価額・利益・リターンは表示しません。
         </p>
@@ -83,41 +83,26 @@ function InlineSimulator({
         transition={{ duration: 0.25 }}
         className="space-y-2"
       >
-        <div className="flex items-end justify-between">
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <p className="text-xs text-slate-600 mb-0.5">利益</p>
-            <div className="flex items-baseline gap-1.5">
-              <p
-                className="font-heading font-number text-3xl font-bold"
-                style={{ color: isProfit ? "#10b981" : "#ef4444" }}
-              >
-                {isProfit ? "+" : ""}{formatCurrency(result.profit)}
-              </p>
-              <span className="font-number text-sm font-bold" style={{ color: isProfit ? "#10b981" : "#ef4444" }}>
-                （{isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%）
-              </span>
-            </div>
+            <p className="text-xs text-slate-600 mb-0.5">元本</p>
+            <p className="text-sm font-bold text-[#263A53]">{formatCurrency(result.totalPrincipal)}</p>
           </div>
-          <div className="text-right">
+          <div>
             <div className="flex items-center gap-1 justify-end mb-0.5">
               <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
               <span className="text-xs text-slate-600">期間末評価額</span>
             </div>
-            <p className="text-xs font-bold text-slate-700">
+            <p className="text-right text-lg font-bold text-[#263A53]">
               {formatCurrency(result.finalValue)}
             </p>
           </div>
         </div>
-
-        {/* Progress bar */}
-        <div className="h-1.5 rounded-full bg-[#EAF3F7] overflow-hidden">
-          <motion.div
-            className="h-full rounded-full"
-            style={{ background: fund.color }}
-            initial={{ width: 0 }}
-            animate={{ width: `${Math.min(100, Math.max(0, (result.finalValue / (result.totalPrincipal * 2)) * 100))}%` }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          />
+        <div className="flex items-baseline justify-between border-t border-[#DDE6EA] pt-2">
+          <span className="text-xs text-slate-600">損益</span>
+          <p className="font-number text-base font-bold" style={{ color: isProfit ? "#047857" : "#b91c1c" }}>
+            {isProfit ? "+" : ""}{formatCurrency(result.profit)}（{isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%）
+          </p>
         </div>
       </motion.div>
 
@@ -179,7 +164,7 @@ function FundDetailCard({
       <div className="grid grid-cols-1 gap-3 px-5 pb-3">
         <div>
           <p className="text-xs text-slate-600 mb-0.5">信託報酬</p>
-          <p className="text-xs font-bold text-slate-700">{enc.managementFee}</p>
+          <p className="text-xs font-bold text-slate-700">{formatExpenseRatio(fundId)}</p>
         </div>
       </div>
 
@@ -232,7 +217,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
       <div className="flex items-center gap-2">
         <BookOpen className="h-4 w-4 text-[#236B8E]" />
         <p className="font-heading text-sm font-semibold text-[#263A53]">銘柄図鑑</p>
-        <span className="text-xs text-slate-600">タップして詳細・シミュレーション</span>
+        <span className="text-xs text-slate-600">投資対象・費用・品質を比べる</span>
       </div>
 
       {/* Category tabs */}
@@ -269,6 +254,8 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
             <div key={fund.id}>
               <motion.button
                 onClick={() => setExpandedFund(isExpanded ? null : fund.id)}
+                aria-expanded={isExpanded}
+                aria-controls={`fund-details-${fund.id}`}
                 className="w-full rounded-2xl p-4 text-left transition-all"
                 style={{
                   background: isExpanded ? "#F8FBFC" : "#FFFFFF",
@@ -280,26 +267,20 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className="font-heading text-sm font-semibold text-[#263A53]">{enc.nickname}</p>
-                      {enc.nisaSupport.tsumitate && (
-                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-indigo-500/20 text-[#236B8E]">
-                          つみたて枠
-                        </span>
-                      )}
-                      {enc.nisaSupport.growth && !enc.nisaSupport.tsumitate && (
-                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-300">
-                          成長投資枠
-                        </span>
-                      )}
-                      <ReturnQualityPill fundId={fund.id} />
                     </div>
-                    <p className="text-xs text-slate-600 truncate mt-0.5">{enc.formalName}</p>
+                    <p className="mt-0.5 text-xs leading-5 text-slate-600">{fund.description}</p>
+                    <p className="mt-1 text-[11px] leading-5 text-slate-600">
+                      費用 {formatExpenseRatio(fund.id)} ・ {isVerifiedReturnSeries(fund.id) ? "公式月次 A" : "参考 G"} ・ {enc.nisaSupport.tsumitate ? "つみたて・成長" : enc.nisaSupport.growth ? "成長投資枠" : "取扱金融機関で確認"}
+                    </p>
                   </div>
+                  <ChevronDown className={`h-4 w-4 flex-none text-slate-500 transition-transform ${isExpanded ? "rotate-180" : ""}`} aria-hidden="true" />
                 </div>
               </motion.button>
 
               <AnimatePresence>
                 {isExpanded && (
                   <motion.div
+                    id={`fund-details-${fund.id}`}
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}

@@ -227,7 +227,7 @@ function KodomoAgeTimeline() {
         })}
       </ol>
       <div className="tm-age-timeline__risk"><ShieldCheck aria-hidden="true" /><span>長く積み立てても利益は確定しません。教育費を使う時期と元本割れを一緒に確認します。</span></div>
-      <figcaption>棒の長さは18歳までの積立期間です。運用益を示すグラフではありません。</figcaption>
+      <figcaption>年齢から18歳まで毎月積み立てる単純な比較です。実際の開始日は制度開始・口座開設・積立設定で変わり、棒の長さは運用益を示しません。</figcaption>
     </figure>
   );
 }
@@ -323,7 +323,7 @@ const KODOMO_VISUALS: Record<string, {
     items: [
       { title: "毎月の金額", detail: "家計に無理のない範囲を確認", icon: WalletCards },
       { title: "積立できる月数", detail: "始める年齢で元本が変わる", icon: CalendarDays },
-      { title: "元本と値動き", detail: "将来試算は仮定として分けて読む", icon: LineChart },
+      { title: "月1万円の例", detail: `${KODOMO_NISA_LIMITS.minAge}歳から${KODOMO_NISA_LIMITS.adultTransitionAge}歳までなら元本${formatManEn((KODOMO_NISA_LIMITS.adultTransitionAge - KODOMO_NISA_LIMITS.minAge) * 12 * 10_000)}（利益を含まない）`, icon: LineChart },
     ],
   },
   "kodomo-nisa-orukan-vs-sp500": {

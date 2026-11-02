@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { FUND_PAGES } from "@/lib/fund-seo-pages";
-import { FUNDS, FUND_CATEGORIES } from "@/lib/funds";
+import { FUNDS, FUND_CATEGORIES, formatExpenseRatio } from "@/lib/funds";
+import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { PageVisualStory } from "@/components/visual/VisualStory";
@@ -59,14 +60,11 @@ export default function FundIndexPage() {
               <BookOpen className="h-3 w-3 text-emerald-700" />
               <span className="text-xs font-bold text-emerald-700">銘柄解説</span>
             </div>
-            <h1
-              className="text-2xl font-black text-[#263A53] leading-tight"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h1 className="text-2xl font-black text-[#263A53] leading-tight">
               銘柄解説一覧
             </h1>
             <p className="text-sm text-slate-600 leading-relaxed">
-              人気銘柄の特徴・信託報酬・NISA対応・積立実績を1銘柄ずつ解説しています。
+              詳細解説のある7商品を、投資対象・費用・データ品質から比べられます。試算画面では全10系列を確認できます。
             </p>
           </header>
 
@@ -81,6 +79,7 @@ export default function FundIndexPage() {
             <div className="divide-y divide-[#E2EAEE] border-y border-[#D9E3E8]">
             {FUND_PAGES.map((fp) => {
               const fund = FUNDS[fp.fundId];
+              const quality = getReturnSeriesDefinition(fp.fundId).quality;
               return (
                 <Link
                   key={fp.slug}
@@ -90,9 +89,14 @@ export default function FundIndexPage() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 mb-1">
                       <span className="text-[11px] font-semibold text-slate-600">{FUND_CATEGORIES[fund.category].label}</span>
-                      <span className="text-sm font-bold" style={{ color: fund.color }}>{fund.shortName}</span>
+                      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: fund.color }} aria-hidden="true" />
+                      <span className="text-sm font-bold text-[#263A53]">{fund.shortName}</span>
                     </div>
                     <p className="line-clamp-2 text-xs leading-relaxed text-slate-600">{fund.description}</p>
+                    <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[11px] leading-5 text-slate-600">
+                      <span>費用 {formatExpenseRatio(fp.fundId)}</span>
+                      <span>{quality === "A" ? "公式月次データ A" : "参考データ G"}</span>
+                    </div>
                   </div>
                   <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-slate-700 transition-colors flex-shrink-0" />
                 </Link>

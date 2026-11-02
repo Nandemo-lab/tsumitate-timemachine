@@ -20,19 +20,7 @@ const OPERATION_SLUGS = [
   "shinnisa-schd-kaeru",
 ] as const;
 const EXIT_SLUGS = ["tsumitate-torikuzushi", "retirement-investing"] as const;
-const KODOMO_NISA_SLUGS = [
-  "kodomo-nisa",
-  "kodomo-nisa-tsumitate-ikura",
-  "kodomo-nisa-orukan-vs-sp500",
-  "kodomo-nisa-vs-gakushi-hoken",
-  "kodomo-nisa-hikidashi",
-  "kodomo-nisa-daigaku-shikin-deguchi",
-  "kodomo-nisa-nansai-kara",
-  "kodomo-nisa-oya-nisa-tsukaiwake",
-] as const;
-
 const SECTIONS = [
-  { key: "kodomo-nisa", label: "子どもの将来のお金", slugs: KODOMO_NISA_SLUGS },
   { key: "beginner",  label: "初めて積み立てる",       slugs: BEGINNER_SLUGS },
   { key: "operation",  label: "積立を続けながら考える", slugs: OPERATION_SLUGS },
   { key: "exit",       label: "使う時期・取り崩しを考える", slugs: EXIT_SLUGS },
@@ -104,10 +92,7 @@ export default function GuideIndexPage() {
               <BookOpen className="h-3 w-3 text-[#236B8E]" />
               <span className="text-xs font-bold text-[#236B8E]">投資ガイド</span>
             </div>
-            <h1
-              className="text-2xl font-black text-[#263A53] leading-tight"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h1 className="text-2xl font-black text-[#263A53] leading-tight">
               投資ガイド一覧
             </h1>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -117,16 +102,19 @@ export default function GuideIndexPage() {
 
           <section className="grid gap-2 sm:grid-cols-2" aria-label="疑問別のガイド案内">
             {[
-              ["子どもの教育費を考えたい", "こどもNISAの制度、年齢、積立額、使う時期を保護者向けに確認"],
-              ["制度・税金を確認したい", "制度ハブで投資枠と手続きを、税金ハブで口座・分配金・申告を確認"],
-              ["商品を選ぶ前提を知りたい", "初心者クラスタで始め方、指数、失敗パターンを確認"],
-              ["積立中の判断を整理したい", "運用クラスタで期間、一括との違い、継続・停止時の論点を確認"],
-              ["使う時期から逆算したい", "取り崩し、必要時期、価格変動リスクを確認"],
-            ].map(([title, body]) => (
-              <div key={title} className="rounded-xl border border-[#D9E3E8] bg-white p-4">
-                <p className="text-xs font-bold text-[#236B8E]">{title}</p>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500">{body}</p>
-              </div>
+              ["子どもの教育費を考えたい", "#kodomo-nisa-paths", "制度、年齢、積立額、使う時期を保護者向けに確認"],
+              ["制度・税金を確認したい", "/guide/system", "投資枠、口座、分配金、申告の違いを確認"],
+              ["商品を選ぶ前提を知りたい", "/guide/nisa-beginner", "始め方、指数、値動きの基本を確認"],
+              ["積立中の判断を整理したい", "/guide/dollar-cost-averaging", "期間、一括との違い、継続時の論点を確認"],
+              ["使う時期から逆算したい", "/guide/tsumitate-torikuzushi", "取り崩し、必要時期、価格変動リスクを確認"],
+            ].map(([title, href, body]) => (
+              <Link key={title} href={href} className="group flex min-h-20 items-center justify-between gap-3 rounded-xl border border-[#D9E3E8] bg-white p-4 transition-colors hover:bg-[#F7FAFB]">
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-[#236B8E]">{title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{body}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 flex-none text-slate-400 transition-colors group-hover:text-[#236B8E]" aria-hidden="true" />
+              </Link>
             ))}
           </section>
 
@@ -147,6 +135,8 @@ export default function GuideIndexPage() {
                 ["毎月いくらか考える", "/guide/kodomo-nisa-tsumitate-ikura", "月1万・3万・5万円の条件を確認"],
                 ["親のNISAと分ける", "/guide/kodomo-nisa-oya-nisa-tsukaiwake", "名義・目的・払出し条件を確認"],
                 ["商品や準備方法を比べる", "/guide/kodomo-nisa-orukan-vs-sp500", "オルカンとS&P500の違いを確認"],
+                ["学資保険と比べる", "/guide/kodomo-nisa-vs-gakushi-hoken", "保障と価格変動の違いを確認"],
+                ["途中で使う条件を確認", "/guide/kodomo-nisa-hikidashi", "払出し条件と手続を確認"],
                 ["使う時期を考える", "/guide/kodomo-nisa-daigaku-shikin-deguchi", "大学資金の現金化までを確認"],
               ].map(([title, href, body]) => (
                 <Link key={href} href={href} className="min-h-20 rounded-xl border border-[#D9E3E8] bg-white p-4 transition-colors hover:bg-[#F7FAFB]">
@@ -182,21 +172,24 @@ export default function GuideIndexPage() {
 
           {/* テーマ別セクション */}
           {sections.map(({ key, label, guides }) => (
-            <section key={key} className="space-y-3">
-              <h2 className="text-sm font-bold text-[#263A53]">{label}</h2>
-              <div className="space-y-2">
+            <details key={key} className="border-y border-[#D9E3E8] bg-white">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-1 py-3">
+                <span className="text-sm font-bold text-[#263A53]">{label}</span>
+                <span className="text-xs text-slate-500">{guides.length}記事</span>
+              </summary>
+              <div className="space-y-1 border-t border-[#E2EAEE] py-2">
                 {guides.map(({ slug, page }) => (
                   <Link
                     key={slug}
                     href={`/guide/${slug}`}
-                    className="block rounded-xl border border-[#D9E3E8] p-4 hover:bg-white transition-colors group"
+                    className="block min-h-14 px-1 py-3 transition-colors hover:bg-[#F7FAFB]"
                   >
                     <p className="text-sm font-bold text-[#263A53] leading-snug">{page.h1}</p>
                     <p className="text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">{page.metaDescription}</p>
                   </Link>
                 ))}
               </div>
-            </section>
+            </details>
           ))}
         </div>
 

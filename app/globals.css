@@ -282,8 +282,22 @@ input[type="range"] {
 .tm-simulator-panel { border-radius: 0; box-shadow: none; }
 
 .tm-editorial-page {
+  min-width: 0;
+  max-width: 100%;
   font-size: 1rem;
   line-height: 1.85;
+}
+
+.tm-editorial-page > *,
+.tm-editorial-page section,
+.tm-editorial-page figure,
+.tm-editorial-page h1,
+.tm-editorial-page h2,
+.tm-editorial-page h3,
+.tm-editorial-page p {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .tm-editorial-page > * + * { margin-top: clamp(2.25rem, 6vw, 4.5rem); }
@@ -327,7 +341,7 @@ input[type="range"] {
   font-weight: 850;
   letter-spacing: -0.035em;
   line-height: 1.45;
-  word-break: keep-all;
+  word-break: normal;
   overflow-wrap: anywhere;
   text-wrap: balance;
 }
@@ -792,6 +806,8 @@ input[type="range"] {
 
 .tm-visual-story,
 .tm-concept-figure {
+  width: 100%;
+  max-width: 100%;
   overflow: hidden;
   border-block: 1px solid var(--tm-line);
   background: transparent;
@@ -824,6 +840,8 @@ input[type="range"] {
 .tm-visual-story__steps,
 .tm-concept-figure__items {
   display: grid;
+  min-width: 0;
+  max-width: 100%;
   gap: 0;
   padding: 1.1rem;
 }
@@ -840,6 +858,8 @@ input[type="range"] {
 }
 
 .tm-concept-figure__item {
+  min-width: 0;
+  max-width: 100%;
   grid-template-columns: 2.5rem minmax(0, 1fr);
   align-items: start;
 }

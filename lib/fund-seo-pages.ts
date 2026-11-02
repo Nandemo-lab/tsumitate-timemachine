@@ -114,7 +114,7 @@ export const FUND_PAGES: FundPage[] = [
     fundId: "nasdaq100",
     metaTitle: "NASDAQ100とは？S&P500との違い・リスク・積立実績を解説",
     metaDescription:
-      "NASDAQ100（eMAXIS Slim/iFreeNEXT）の信託報酬・リスク・積立実績を解説。S&P500との違いも比較→今すぐ確認",
+      "iFreeNEXT NASDAQ100インデックスの費用・リスク・公式月次実績を解説。S&P500との投資対象の違いも確認できます。",
     h1: "NASDAQ100とは？特徴・S&P500との違い・リスク",
     simYear: 2020,
     simMonth: 1,
@@ -132,7 +132,7 @@ export const FUND_PAGES: FundPage[] = [
       },
       {
         q: "NASDAQ100は新NISAで買えますか？",
-        a: "はい、eMAXIS Slim NASDAQ100やiFreeNEXT NASDAQ100などの投資信託として、つみたて投資枠・成長投資枠の両方で購入できます。",
+        a: "このページの計算対象はiFreeNEXT NASDAQ100インデックスです。NISAの対象区分や取扱商品は金融機関と商品ごとに異なるため、購入前に公式案内を確認してください。",
       },
       {
         q: "NASDAQ100のリスクはどのくらいですか？",
@@ -235,11 +235,11 @@ export const FUND_PAGES: FundPage[] = [
   // ── VTI ──────────────────────────────────────────────────────────────
   {
     slug: "vti",
-    contextualComparison: "米国株全体への分散と大型グロース株への集中の違いは、[VTIとNASDAQ100の比較](/compare/vti-vs-nasdaq100)で確認できます。",
+    contextualComparison: "このページの計算対象は米国ETFのVTIです。楽天VTIなどの国内投信は別商品です。米国株全体への分散と大型グロース株への集中の違いは、[VTIとNASDAQ100の比較](/compare/vti-vs-nasdaq100)で確認できます。",
     fundId: "vti",
     metaTitle: "VTIとは？S&P500との違い・楽天VTI・積立実績を解説",
     metaDescription:
-      "VTI（楽天VTI含む）の経費率・S&P500との違い・積立実績を解説。米国全体に投資するETFの特徴を今すぐ確認→",
+      "米国ETF VTIの経費率・S&P500との違い・公式月次積立実績を解説。楽天VTIなどの国内投信とは分けて確認できます。",
     h1: "VTIとは？特徴・楽天VTI・S&P500との違い",
     simYear: 2020,
     simMonth: 1,

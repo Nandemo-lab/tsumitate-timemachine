@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { getFundPage, FUND_PAGES } from "@/lib/fund-seo-pages";
 import { getComparePage } from "@/lib/compare-pages";
-import { FUNDS } from "@/lib/funds";
+import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
 import { YEAR_PAGES } from "@/lib/year-pages";
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -83,7 +83,7 @@ function NisaLabel({
 }) {
   if (tsumitate && growth) return <>つみたて枠・成長投資枠</>;
   if (growth) return <>成長投資枠のみ</>;
-  return <>非対応</>;
+  return <>取扱金融機関で確認</>;
 }
 
 export default async function FundPage({ params }: Props) {
@@ -176,10 +176,7 @@ export default async function FundPage({ params }: Props) {
               </div>
               <div>
                 <p className="text-xs text-slate-600 font-medium">{enc.formalName}</p>
-                <h1
-                  className="text-2xl font-black text-[#263A53] leading-tight"
-                  style={{ fontFamily: "var(--font-serif-jp), serif" }}
-                >
+                <h1 className="text-2xl font-black text-[#263A53] leading-tight">
                   {page.h1 ?? page.metaTitle}
                 </h1>
               </div>
@@ -222,16 +219,13 @@ export default async function FundPage({ params }: Props) {
           {/* ── 基本情報テーブル ────────────────────────────────── */}
           {page.contextualComparison && <GuideBodyText body={page.contextualComparison} />}
           <section>
-            <h2
-              className="text-base font-bold text-[#263A53] mb-4"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h2 className="text-base font-bold text-[#263A53] mb-4">
               {enc.nickname}の基本情報・信託報酬・NISA対応
             </h2>
             <div className="rounded-xl border border-[#D9E3E8] overflow-hidden">
               {[
                 { label: "投資対象", value: fund.description },
-                { label: page.fundId === "schd" ? "経費率" : "信託報酬・経費率", value: enc.managementFee },
+                { label: page.fundId === "schd" ? "経費率" : "信託報酬・経費率", value: formatExpenseRatio(page.fundId) },
                 {
                   label: "NISA対応",
                   value: (
@@ -259,10 +253,7 @@ export default async function FundPage({ params }: Props) {
 
           {/* ── メリット ────────────────────────────────────────── */}
           <section className="space-y-3">
-            <h2
-              className="text-base font-bold text-[#263A53]"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h2 className="text-base font-bold text-[#263A53]">
               {enc.nickname}の商品設計・確認できる特徴
             </h2>
             <div className="space-y-2">
@@ -283,10 +274,7 @@ export default async function FundPage({ params }: Props) {
 
           {/* ── デメリット ──────────────────────────────────────── */}
           <section className="space-y-3">
-            <h2
-              className="text-base font-bold text-[#263A53]"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h2 className="text-base font-bold text-[#263A53]">
               {page.fundId === "fangplus" ? `${enc.nickname}を確認するときの注意点` : `${enc.nickname}のリスク・デメリット・注意点`}
             </h2>
             <div className="space-y-2">
@@ -351,17 +339,6 @@ export default async function FundPage({ params }: Props) {
                 </div>
               </div>
 
-              {/* プログレスバー */}
-              <div className="h-2 rounded-full bg-[#EAF3F7] overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all"
-                  style={{
-                    background: fund.color,
-                    width: `${Math.min(100, Math.max(0, (result.finalValue / (totalPrincipal * 2)) * 100))}%`,
-                  }}
-                />
-              </div>
-
               {/* 3カラム */}
               <div className="grid grid-cols-3 gap-3 pt-1">
                 <div className="text-center">
@@ -416,10 +393,7 @@ export default async function FundPage({ params }: Props) {
 
           {/* ── 商品選択時の確認事項 ─────────────────────────────── */}
           {enc.forWhom && <section className="space-y-3">
-            <h2
-              className="text-base font-bold text-[#263A53]"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h2 className="text-base font-bold text-[#263A53]">
               商品選択時の確認ポイント
             </h2>
             <div className="rounded-xl bg-white border border-[#DDE6EA] px-4 py-4 space-y-2">
@@ -437,10 +411,7 @@ export default async function FundPage({ params }: Props) {
 
           {/* ── よくある質問 ─────────────────────────────────────── */}
           <section>
-            <h2
-              className="text-base font-bold text-[#263A53] mb-5"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
+            <h2 className="text-base font-bold text-[#263A53] mb-5">
               {enc.nickname}に関するよくある質問
             </h2>
             <div className="space-y-4">
@@ -459,10 +430,7 @@ export default async function FundPage({ params }: Props) {
           {/* ── 関連する比較ページ ───────────────────────────────── */}
           {relatedCompares.length > 0 && (
             <section>
-              <h2
-                className="text-base font-bold text-[#263A53] mb-4"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
-              >
+              <h2 className="text-base font-bold text-[#263A53] mb-4">
                 {enc.nickname}の比較記事
               </h2>
               <div className="grid grid-cols-1 gap-3">
@@ -492,10 +460,7 @@ export default async function FundPage({ params }: Props) {
           {/* ── 関連銘柄解説 ─────────────────────────────────────── */}
           {relatedFunds.length > 0 && (
             <section>
-              <h2
-                className="text-base font-bold text-[#263A53] mb-4"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
-              >
+              <h2 className="text-base font-bold text-[#263A53] mb-4">
                 関連する銘柄解説
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -523,10 +488,7 @@ export default async function FundPage({ params }: Props) {
           {/* ── 年別たられば ─────────────────────────────────────── */}
           {fundYearPages.length > 0 && (
             <section>
-              <h2
-                className="text-base font-bold text-[#263A53] mb-4"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
-              >
+              <h2 className="text-base font-bold text-[#263A53] mb-4">
                 {enc.nickname}のたられば：年別シミュレーション
               </h2>
               <div className="grid grid-cols-1 gap-2">
@@ -571,10 +533,7 @@ export default async function FundPage({ params }: Props) {
           {isVerifiedSeries && <section className="rounded-2xl bg-gradient-to-br from-emerald-900/40 to-emerald-800/20 border border-emerald-500/20 p-6 space-y-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-emerald-700" />
-              <h2
-                className="text-base font-bold text-[#263A53]"
-                style={{ fontFamily: "var(--font-serif-jp), serif" }}
-              >
+              <h2 className="text-base font-bold text-[#263A53]">
                 {enc.nickname}でシミュレーション
               </h2>
             </div>

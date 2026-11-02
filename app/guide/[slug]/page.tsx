@@ -195,9 +195,9 @@ export default async function GuidePage({ params }: Props) {
 
           {/* ── H1 ────────────────────────────────────────────── */}
           <section className="space-y-3">
-            <div className="flex items-start gap-3">
+            <div className="flex min-w-0 max-w-full items-start gap-3">
               <BookOpen className="h-6 w-6 flex-shrink-0 text-[#236B8E] mt-0.5" />
-              <h1 className="text-2xl font-bold leading-[1.5] text-[#20364c] md:text-3xl">
+              <h1 className="min-w-0 max-w-full break-words text-2xl font-bold leading-[1.5] text-[#20364c] md:text-3xl">
                 {page.h1}
               </h1>
             </div>
@@ -227,7 +227,7 @@ export default async function GuidePage({ params }: Props) {
               <div>
                 <p className="text-sm font-bold text-emerald-800">確定していること</p>
                 <p className="mt-1 text-base leading-7 text-[#40556C]">
-                  2027年1月開始、対象年齢、年間投資枠、非課税保有限度額は金融庁の公式案内で確認できます。
+                  2027年1月開始、対象年齢、年間投資枠、非課税保有限度額（非課税で持てる合計上限）は金融庁の公式案内で確認できます。
                 </p>
               </div>
               <div className="border-t border-[#DDE6EA] pt-3">
@@ -339,7 +339,7 @@ export default async function GuidePage({ params }: Props) {
                 {seriesPrev ? (
                   <Link
                     href={`/guide/${seriesPrev}`}
-                    className="flex items-center gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0"
+                    className="flex min-h-11 items-center gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0"
                   >
                     <ArrowLeft className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                     <span className="text-xs text-slate-600 truncate">{GUIDE_LABELS[seriesPrev] ?? seriesPrev}</span>
@@ -350,7 +350,7 @@ export default async function GuidePage({ params }: Props) {
                 {seriesNext ? (
                   <Link
                     href={`/guide/${seriesNext}`}
-                    className="flex items-center justify-end gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0 text-right"
+                    className="flex min-h-11 items-center justify-end gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0 text-right"
                   >
                     <span className="text-xs text-slate-600 truncate">{GUIDE_LABELS[seriesNext] ?? seriesNext}</span>
                     <ArrowRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
@@ -359,7 +359,7 @@ export default async function GuidePage({ params }: Props) {
                   seriesInfo.series.hubSlug && (
                     <Link
                       href={`/guide/${seriesInfo.series.hubSlug}`}
-                      className="flex items-center justify-end gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0 text-right"
+                      className="flex min-h-11 items-center justify-end gap-1.5 rounded-lg bg-white hover:bg-[#EFF5F7] transition-colors px-3 py-2.5 min-w-0 text-right"
                     >
                       <span className="text-xs text-slate-600 truncate">一覧に戻る</span>
                       <ArrowRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
