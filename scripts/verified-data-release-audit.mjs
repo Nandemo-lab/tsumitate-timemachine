@@ -7,6 +7,12 @@ const dataDir = path.join(root, "data", "verified");
 const manifest = JSON.parse(await readFile(path.join(dataDir, "manifest.json"), "utf8"));
 const expectedSeries = ["vt", "vti", "vym", "eem", "inda", "orcan", "sp500", "nasdaq100", "fangplus"];
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
+// Git may materialize text snapshots with CRLF on Windows even when the
+// manifest was generated from LF bytes. Some downloaded CSV snapshots already
+// contain CRLF and are hashed as-is, so accept either the exact bytes or the
+// checkout-normalized LF representation without rewriting the source data.
+const rawSha256Matches = (value, expected) =>
+  sha256(value) === expected || sha256(value.replace(/\r\n/g, "\n")) === expected;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -25,7 +31,7 @@ assert(!manifest.series.schd, "G-quality SCHD must not enter the verified manife
 
 const commonEnd = manifest.fx.lastMonth;
 const rawFx = await readFile(path.join(dataDir, "raw", "boj-usdjpy-month-end.json"), "utf8");
-assert(sha256(rawFx) === manifest.fx.rawSha256, "BOJ raw SHA-256 mismatch");
+assert(rawSha256Matches(rawFx, manifest.fx.rawSha256), "BOJ raw SHA-256 mismatch");
 
 for (const id of expectedSeries) {
   const meta = manifest.series[id];
@@ -34,7 +40,7 @@ for (const id of expectedSeries) {
   assert(meta.missingMonths?.length === 0, `${id}: manifest reports missing months`);
 
   const raw = await readFile(path.join(dataDir, meta.rawFile), "utf8");
-  assert(sha256(raw) === meta.rawSha256, `${id}: raw SHA-256 mismatch`);
+  assert(rawSha256Matches(raw, meta.rawSha256), `${id}: raw SHA-256 mismatch`);
 
   const ledger = JSON.parse(await readFile(path.join(dataDir, meta.file), "utf8"));
   const observations = ledger.observations;

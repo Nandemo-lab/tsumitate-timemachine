@@ -21,6 +21,8 @@ const EXPECTED_PREFIX_SHA256 = {
 };
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
+const rawSha256Matches = (value, expected) =>
+  sha256(value) === expected || sha256(value.replace(/\r\n/g, "\n")) === expected;
 const closeEnough = (actual, expected, tolerance = 1e-12) =>
   Math.abs(actual - expected) <= tolerance;
 
@@ -56,7 +58,7 @@ function parseDomesticMonthEnds(text, id) {
 
 const manifest = JSON.parse(await readFile(path.join(DATA_DIR, "manifest.json"), "utf8"));
 const fxRaw = await readFile(path.join(RAW_DIR, "boj-usdjpy-month-end.json"), "utf8");
-assert(sha256(fxRaw) === manifest.fx.rawSha256, "BOJ raw SHA-256 mismatch");
+assert(rawSha256Matches(fxRaw, manifest.fx.rawSha256), "BOJ raw SHA-256 mismatch");
 const fxByMonth = Object.fromEntries(
   JSON.parse(fxRaw).observations.map((point) => [point.month, point.yenPerUsd]),
 );
@@ -72,7 +74,7 @@ for (const [id, meta] of Object.entries(manifest.series)) {
   assert(months.at(-1) === TARGET_MONTH, `${id}: final observation is not ${TARGET_MONTH}`);
   assert(new Set(months).size === months.length, `${id}: duplicate month`);
   assert(ledger.observations.every((point) => Number.isFinite(point.monthlyReturn)), `${id}: invalid return`);
-  assert(sha256(rawText) === meta.rawSha256, `${id}: raw SHA-256 mismatch`);
+  assert(rawSha256Matches(rawText, meta.rawSha256), `${id}: raw SHA-256 mismatch`);
 
   const prefix = ledger.observations.filter((point) => point.month <= PREVIOUS_MONTH);
   assert(
