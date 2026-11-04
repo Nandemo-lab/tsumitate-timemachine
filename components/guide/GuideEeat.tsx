@@ -22,7 +22,7 @@ export default function GuideEeat({ lastUpdated }: Props) {
       <div className="flex items-start gap-1.5">
         <Database className="h-3 w-3 text-slate-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-slate-500 leading-relaxed">
-          本記事は金融庁・JPX・MSCI・S&amp;P Dow Jonesなどの公開情報と、積立タイムマシン独自のシミュレーションデータをもとに作成しています。
+          本記事は各節に記載した一次情報と、積立タイムマシンの検証済み月次データをもとに編集しています。
         </p>
       </div>
     </div>

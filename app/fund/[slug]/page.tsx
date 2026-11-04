@@ -75,12 +75,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function NisaLabel({
+  fundId,
   tsumitate,
   growth,
 }: {
+  fundId: string;
   tsumitate: boolean;
   growth: boolean;
 }) {
+  // 米国上場ETFのSCHDは、国内での取扱いと口座区分を購入先で確認する。
+  // 国内投信の「楽天SCHD」と混同させないため、この商品ページでは断定しない。
+  if (fundId === "schd") return <>取扱金融機関で確認</>;
   if (tsumitate && growth) return <>つみたて枠・成長投資枠</>;
   if (growth) return <>成長投資枠のみ</>;
   return <>取扱金融機関で確認</>;
@@ -230,6 +235,7 @@ export default async function FundPage({ params }: Props) {
                   label: "NISA対応",
                   value: (
                     <NisaLabel
+                      fundId={page.fundId}
                       tsumitate={enc.nisaSupport.tsumitate}
                       growth={enc.nisaSupport.growth}
                     />

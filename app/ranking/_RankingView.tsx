@@ -108,6 +108,12 @@ export default function RankingView({ page }: Props) {
               </h1>
             </div>
             <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
+            <a
+              href="#ranking-results"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-[#B9DCEB] bg-white px-3 py-2 text-sm font-bold text-[#236B8E] hover:bg-[#F2F8FA]"
+            >
+              比較結果を先に見る<ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
           </section>
 
           <PageVisualStory kind="ranking" />
@@ -176,7 +182,7 @@ export default function RankingView({ page }: Props) {
           </section>
 
           {/* ── ランキング一覧 ────────────────────────────────── */}
-          <section className="space-y-4">
+          <section id="ranking-results" className="scroll-mt-20 space-y-4">
             <h2
               className="text-base font-bold text-[#263A53]"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}

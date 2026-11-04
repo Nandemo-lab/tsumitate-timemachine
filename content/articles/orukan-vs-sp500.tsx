@@ -108,7 +108,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           ["対象", "先進国23カ国＋新興国24カ国（約47カ国）"],
           ["銘柄数", "約3,000銘柄（2025年時点）"],
           ["米国比率", "構成国で最大（比率は月次で変動）"],
-          ["信託報酬", "年0.05775%（業界最安水準）"],
+          ["信託報酬", formatExpenseRatio("orcan")],
           ["新NISA対応", "つみたて投資枠・成長投資枠ともに対象"],
         ]} />
         <p className="text-sm text-slate-600 leading-relaxed">
@@ -206,7 +206,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
           <ul className="space-y-1.5 pl-5">
             {[
               "過去の成績ではS&P500がオルカンをやや上回っている",
-              "両者とも長期積立で元本の大幅な増加が見られた",
+              "この検証期間では、両者とも期間末評価額が元本を上回った",
               "開始年・期間によって差は変動する（特定の期間が未来を保証しない）",
             ].map((t, i) => (
               <li key={i} className="text-xs text-slate-600 list-disc">{t}</li>

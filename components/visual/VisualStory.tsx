@@ -314,7 +314,7 @@ const KODOMO_VISUALS: Record<string, {
     items: [
       { title: "子どもの名義", detail: `${KODOMO_NISA_LIMITS.minAge}〜${KODOMO_NISA_LIMITS.maxAge}歳が対象`, icon: Baby },
       { title: "年間の投資枠", detail: formatManEn(KODOMO_NISA_LIMITS.annual), icon: PiggyBank },
-      { title: "使う時期も確認", detail: "払出し条件と価格変動を先に確認", icon: GraduationCap },
+      { title: "元本割れもある", detail: "使う時期の価格と払出し条件を確認", icon: GraduationCap },
     ],
   },
   "kodomo-nisa-tsumitate-ikura": {

@@ -21,7 +21,7 @@ export default function BottomNav({ active, onChange }: Props) {
   return (
     <nav
       aria-label="主要メニュー"
-      className="fixed bottom-0 left-0 right-0 z-50"
+      className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
       style={{
         background: "rgba(255,255,255,0.96)",
         backdropFilter: "blur(14px)",

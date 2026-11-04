@@ -283,7 +283,8 @@ input[type="range"] {
 
 .tm-editorial-page {
   min-width: 0;
-  max-width: 100%;
+  /* 本文の一行を読み切れる幅に保つ。図表側で必要な場合だけ個別に広げる。 */
+  max-width: 48rem;
   font-size: 1rem;
   line-height: 1.85;
 }

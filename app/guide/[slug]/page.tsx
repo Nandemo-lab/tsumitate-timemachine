@@ -201,13 +201,6 @@ export default async function GuidePage({ params }: Props) {
                 {page.h1}
               </h1>
             </div>
-            {!isBeginnerGuide && (
-              <div className="space-y-3">
-                {page.intro.split(/\n\n+/).map((paragraph) => (
-                  <p key={paragraph} className="text-sm text-slate-600 leading-relaxed">{paragraph}</p>
-                ))}
-              </div>
-            )}
           </section>
 
           <GuideConceptVisual slug={slug} />
@@ -249,6 +242,14 @@ export default async function GuidePage({ params }: Props) {
                 ))}
               </div>
             </section>
+          )}
+
+          {!isBeginnerGuide && (
+            <div className="space-y-3" aria-label="このページの前提">
+              {page.intro.split(/\n\n+/).map((paragraph) => (
+                <p key={paragraph} className="text-sm text-slate-600 leading-relaxed">{paragraph}</p>
+              ))}
+            </div>
           )}
 
           {/* ── ◯分で分かること（読了時間を前面に出す）───────────── */}
