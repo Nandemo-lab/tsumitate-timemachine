@@ -108,77 +108,17 @@ export default function RankingView({ page }: Props) {
               </h1>
             </div>
             <p className="text-sm text-slate-600 leading-relaxed">{page.intro}</p>
-            <a
-              href="#ranking-results"
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-[#B9DCEB] bg-white px-3 py-2 text-sm font-bold text-[#236B8E] hover:bg-[#F2F8FA]"
-            >
-              比較結果を先に見る<ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
           </section>
 
-          <PageVisualStory kind="ranking" />
-
-          {isRoot && (
-            <section className="rounded-xl border border-[#D9E3E8] bg-white p-4 space-y-2">
-              <h2 className="text-sm font-bold text-[#263A53]">初めて商品を比べるときの確認項目</h2>
-              <p className="text-xs leading-relaxed text-slate-600">
-                数値順位は初心者適性や推奨順ではありません。投資対象、費用、分散範囲に加え、生活費と分けた余裕資金か、資金を使う時期までの期間、許容できる値動きを確認してください。
-              </p>
-              <p className="text-xs leading-relaxed text-slate-500">
-                NISAを使う場合は商品ごとの対象枠も確認します。制度条件は新NISAページ、正式商品と設定日は各商品詳細へ分けて掲載しています。
-              </p>
-            </section>
-          )}
-
-          <section className="rounded-xl border border-[#B9DCEB] bg-indigo-400/[0.05] p-4 space-y-2">
-            <h2 className="text-xs font-bold text-[#236B8E]">{isHighDividend ? "実績と商品属性の分け方" : "数値順位の計算方法"}</h2>
-            <p className="text-xs leading-relaxed text-slate-600">
-              {isHighDividend
-                ? `VYMは${page.simYear}年${page.simMonth}月から2026年9月まで月初に${formatCurrency(page.simAmount)}を積み立てたA品質の検証済み結果を表示します。SCHDはG品質のため評価額・利益・順位を表示せず、公式に確認できる商品属性だけを掲載します。`
-                : `${page.simYear}年${page.simMonth}月から2026年9月まで、月初に${formatCurrency(page.simAmount)}を積み立てた期間末評価額の高い順です。元本は${comparisonResult ? formatCurrency(comparisonResult.totalPrincipal) : "対象結果で確認"}で、期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}
-            </p>
-            <p className="text-xs leading-relaxed text-slate-500">
-              候補商品はこのページの目的に沿って絞っています。順位は将来予測、推奨順位、価格変動の小ささを表すものではありません。G品質は順位外の参考情報として分けます。
-            </p>
-            <Link href="/about/data-sources" className="inline-flex items-center gap-1 text-xs font-bold text-[#236B8E] hover:text-[#236B8E]">
-              対象系列と検証方法を見る<ArrowRight className="h-3 w-3" />
-            </Link>
-          </section>
-
-          {isNisa && (
-            <section className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 space-y-3">
-              <h2 className="text-sm font-bold text-emerald-200">新NISAの制度条件（2026年10月11日確認）</h2>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-lg bg-black/20 p-3"><p className="text-slate-500">つみたて投資枠／年</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.tsumitateAnnual)}</p></div>
-                <div className="rounded-lg bg-black/20 p-3"><p className="text-slate-500">成長投資枠／年</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.growthAnnual)}</p></div>
-                <div className="rounded-lg bg-black/20 p-3"><p className="text-slate-500">非課税保有限度額</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.lifetimeTotal)}</p></div>
-                <div className="rounded-lg bg-black/20 p-3"><p className="text-slate-500">うち成長投資枠</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}</p></div>
-              </div>
-              <p className="text-xs leading-relaxed text-slate-600">制度対象かどうかと、過去の積立結果は別の判断材料です。対象商品は金融庁の一覧と利用する金融機関で商品単位に確認してください。</p>
-              <p className="text-xs leading-relaxed text-slate-500">{NISA_SYSTEM_DISCLAIMER}</p>
-              <a href="https://www.fsa.go.jp/policy/nisa2/know/index.html" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">金融庁「NISAを知る」<ArrowRight className="h-3 w-3" /></a>
-            </section>
-          )}
-
-          {/* ── 評価基準 ─────────────────────────────────────── */}
-          <section>
-            <h2
-              className="text-sm font-bold text-slate-600 mb-3"
-              style={{ fontFamily: "var(--font-serif-jp), serif" }}
-            >
-              評価基準
-            </h2>
-            <div className="grid grid-cols-2 gap-2">
-              {displayedCriteria.map((c) => (
-                <div
-                  key={c.label}
-                  className="rounded-xl bg-white border border-[#DDE6EA] p-3 space-y-1"
-                >
-                  <p className="text-xs font-bold text-orange-600">{c.label}</p>
-                  <p className="text-xs text-slate-500 leading-snug">{c.description}</p>
-                </div>
-              ))}
-            </div>
+          <section className="border-y border-[#B9DCEB] bg-[#F4F9FB] px-1 py-4" aria-label="ランキングの集計条件">
+            <p className="text-xs font-bold text-[#236B8E]">この順位の条件</p>
+            <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+              <div><dt className="text-slate-500">期間</dt><dd className="font-bold text-[#263A53]">{page.simYear}年{page.simMonth}月〜2026年9月</dd></div>
+              <div><dt className="text-slate-500">毎月の金額</dt><dd className="font-bold text-[#263A53]">{formatCurrency(page.simAmount)}</dd></div>
+              <div><dt className="text-slate-500">元本</dt><dd className="font-bold text-[#263A53]">{comparisonResult ? formatCurrency(comparisonResult.totalPrincipal) : "対象結果で確認"}</dd></div>
+              <div><dt className="text-slate-500">並び順</dt><dd className="font-bold text-[#263A53]">期間末評価額</dd></div>
+            </dl>
+            <p className="mt-3 text-xs leading-relaxed text-slate-600">過去の同一条件による結果です。将来の成績や商品の推奨順ではありません。</p>
           </section>
 
           {/* ── ランキング一覧 ────────────────────────────────── */}
@@ -299,6 +239,42 @@ export default function RankingView({ page }: Props) {
                 </div>
               );
             })}
+          </section>
+
+          <PageVisualStory kind="ranking" />
+
+          {isRoot && (
+            <section className="border-y border-[#D9E3E8] py-4 space-y-2">
+              <h2 className="text-sm font-bold text-[#263A53]">順位の次に確認すること</h2>
+              <p className="text-xs leading-relaxed text-slate-600">投資対象、費用、分散範囲、資金を使う時期、許容できる値動きを商品詳細で確認します。数値順位は初心者適性を示しません。</p>
+            </section>
+          )}
+
+          <section className="border-y border-[#B9DCEB] py-4 space-y-2">
+            <h2 className="text-xs font-bold text-[#236B8E]">{isHighDividend ? "実績と商品属性の分け方" : "計算方法とデータ品質"}</h2>
+            <p className="text-xs leading-relaxed text-slate-600">{isHighDividend ? `VYMはA品質の検証済み結果を表示し、SCHDはG品質のため数値順位へ含めません。` : `期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}</p>
+            <Link href="/about/data-sources" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-[#236B8E]">対象系列と検証方法を見る<ArrowRight className="h-3 w-3" /></Link>
+          </section>
+
+          {isNisa && (
+            <section className="border-y border-emerald-400/20 py-4 space-y-3">
+              <h2 className="text-sm font-bold text-emerald-800">新NISAの制度条件（2026年10月11日確認）</h2>
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div><p className="text-slate-500">つみたて投資枠／年</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.tsumitateAnnual)}</p></div>
+                <div><p className="text-slate-500">成長投資枠／年</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.growthAnnual)}</p></div>
+                <div><p className="text-slate-500">非課税保有限度額</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.lifetimeTotal)}</p></div>
+                <div><p className="text-slate-500">うち成長投資枠</p><p className="mt-1 font-bold text-[#263A53]">{formatManEn(NISA_LIMITS.lifetimeGrowthOnly)}</p></div>
+              </div>
+              <p className="text-xs leading-relaxed text-slate-500">{NISA_SYSTEM_DISCLAIMER}</p>
+              <a href="https://www.fsa.go.jp/policy/nisa2/know/index.html" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-emerald-700">金融庁「NISAを知る」<ArrowRight className="h-3 w-3" /></a>
+            </section>
+          )}
+
+          <section>
+            <h2 className="mb-3 text-sm font-bold text-slate-600">評価基準</h2>
+            <div className="grid grid-cols-2 gap-3">
+              {displayedCriteria.map((c) => <div key={c.label}><p className="text-xs font-bold text-orange-600">{c.label}</p><p className="mt-1 text-xs leading-snug text-slate-500">{c.description}</p></div>)}
+            </div>
           </section>
 
           {referenceEntries.length > 0 && (

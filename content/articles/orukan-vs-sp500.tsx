@@ -59,8 +59,8 @@ const TOC = [
   "過去の積立シミュレーションで比較",
   "暴落時の動き方の違い",
   "新NISAで確認する条件",
-  "オルカンで確認する商品条件",
-  "S&P500で確認する商品条件",
+  "購入前に2商品を並べて確認",
+  "S&P500側の条件",
   "積立タイムマシンで実際に確かめよう",
 ];
 
@@ -290,7 +290,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. こんな人はオルカン */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="オルカンで確認する商品条件" />
+        <SectionHeading index={7} title="購入前に2商品を並べて確認" />
         <div className="rounded-xl bg-indigo-500/6 border border-indigo-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Globe className="h-4 w-4 text-[#236B8E]" />
@@ -314,7 +314,6 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はS&P500 */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="S&P500で確認する商品条件" />
         <div className="rounded-xl bg-amber-500/6 border border-amber-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Flag className="h-4 w-4 text-orange-600" />
@@ -338,7 +337,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* まとめ */}
       <div className="rounded-xl bg-white border border-[#DDE6EA] p-4 space-y-2">
-        <p className="text-xs font-bold text-slate-700">まとめ：どちらも「正解」</p>
+        <p className="text-xs font-bold text-slate-700">まとめ：唯一の正解はない</p>
         <p className="text-xs text-slate-600 leading-relaxed">
           オルカンもS&P500も低コストのインデックスファンドですが、対象地域と値動きが異なります。どちらが絶対に優れているという答えはなく、投資期間やリスク許容度に合わせて判断する必要があります。金融庁は長期・積立・分散投資の意義を案内していますが、個別商品を推奨しているわけではありません。
         </p>

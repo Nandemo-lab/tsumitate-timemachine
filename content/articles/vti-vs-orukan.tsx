@@ -59,8 +59,8 @@ const TOC = [
   "2022年など暴落時の違い",
   "ETFと投資信託、買い方の違い",
   "新NISAで確認する条件",
-  "VTI側の確認項目",
-  "オルカン側の確認項目",
+  "購入前にETFと国内投信を並べて確認",
+  "オルカン側の条件",
   "よくある質問",
   "積立タイムマシンで実際に確かめよう",
 ];
@@ -314,7 +314,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はVTI */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="VTI側の確認項目" />
+        <SectionHeading index={8} title="購入前にETFと国内投信を並べて確認" />
         <div className="rounded-xl bg-blue-500/6 border border-blue-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Flag className="h-4 w-4 text-blue-400" />
@@ -338,7 +338,6 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 9. こんな人はオルカン */}
       <section id="section-9" className="space-y-4">
-        <SectionHeading index={9} title="オルカン側の確認項目" />
         <div className="rounded-xl bg-indigo-500/6 border border-indigo-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Globe className="h-4 w-4 text-[#236B8E]" />

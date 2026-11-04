@@ -23,7 +23,7 @@ import GuideEeat from "@/components/guide/GuideEeat";
 import GuideBodyText from "@/components/guide/GuideBodyText";
 import BeginnerGuideLead from "@/components/guide/BeginnerGuideLead";
 import DisclaimerBar from "@/components/common/DisclaimerBar";
-import { GuideConceptVisual, GuidePointVisual } from "@/components/visual/VisualStory";
+import { GuideConceptVisual, GuidePointDetails, GuidePointVisual } from "@/components/visual/VisualStory";
 import ArticleToc from "@/components/articles/ArticleToc";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ReadingJourney, { type ReadingJourneyItem } from "@/components/editorial/ReadingJourney";
@@ -285,6 +285,7 @@ export default async function GuidePage({ params }: Props) {
 
           {/* ── 要点3つ（判断基準・理由の詳細）─────────────────── */}
           <GuidePointVisual slug={slug} points={page.points} />
+          <GuidePointDetails points={page.points} />
 
           {/* ── E-E-A-T 編集部情報 ───────────────────────────── */}
           {page.lastUpdated && <GuideEeat lastUpdated={page.lastUpdated} />}

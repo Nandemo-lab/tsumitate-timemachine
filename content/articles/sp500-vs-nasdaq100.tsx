@@ -59,8 +59,8 @@ const TOC = [
   "過去の積立シミュレーションで比較",
   "暴落時の動き方の違い",
   "新NISAで確認する条件",
-  "S&P500側の確認項目",
-  "NASDAQ100側の確認項目",
+  "購入前に2商品を並べて確認",
+  "NASDAQ100側の条件",
   "積立タイムマシンで実際に確かめよう",
 ];
 
@@ -290,7 +290,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. こんな人はS&P500 */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="S&P500側の確認項目" />
+        <SectionHeading index={7} title="購入前に2商品を並べて確認" />
         <div className="rounded-xl bg-amber-500/6 border border-amber-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Flag className="h-4 w-4 text-orange-600" />
@@ -314,7 +314,6 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はNASDAQ100 */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="NASDAQ100側の確認項目" />
         <div className="rounded-xl bg-violet-500/6 border border-violet-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Cpu className="h-4 w-4 text-violet-400" />

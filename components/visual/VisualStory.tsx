@@ -271,6 +271,10 @@ function getGuideVisualMode(slug: string) {
 
 export function GuidePointVisual({ slug, points }: { slug: string; points: { title: string; body: string }[] }) {
   const mode = getGuideVisualMode(slug);
+  // A generic three-card summary made long articles feel longer without
+  // showing a real relationship. Only keep the visual when the content has
+  // an actual comparison, sequence, or risk/response structure.
+  if (mode === "path") return null;
   const settings = {
     compare: { label: "違いを並べて確認", title: "判断するときの3つの軸", icons: [GitCompareArrows, Target, ShieldCheck] },
     timeline: { label: "時間の流れで見る", title: "今から次の行動までを整理", icons: [CalendarDays, LineChart, Signpost] },
@@ -289,17 +293,30 @@ export function GuidePointVisual({ slug, points }: { slug: string; points: { tit
           return (
             <li key={point.title}>
               <span className="tm-guide-point-map__icon" aria-hidden="true"><Icon /></span>
-              <span className="tm-guide-point-map__step">0{index + 1}</span>
+              {mode === "timeline" && <span className="tm-guide-point-map__step">0{index + 1}</span>}
               <strong>{point.title}</strong>
-              <div className="tm-guide-point-map__copy">
-                {point.body.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              </div>
             </li>
           );
         })}
       </ol>
       <figcaption>{mode === "compare" ? "3つの軸を別々に見ると、似ている点と異なる点を混同せずに読めます。" : mode === "timeline" ? "順番にたどると、今確認することと将来の手続を分けて読めます。" : mode === "risk" ? "不安を結論にせず、事実・条件・次の確認へ分けて読みます。" : "上から順に確認すると、制度・数字・注意点を混ぜずに読めます。"}</figcaption>
     </figure>
+  );
+}
+
+export function GuidePointDetails({ points }: { points: { title: string; body: string }[] }) {
+  return (
+    <section className="tm-guide-point-details" aria-labelledby="guide-point-details-title">
+      <h2 id="guide-point-details-title">先に押さえる要点</h2>
+      <div>
+        {points.slice(0, 3).map((point) => (
+          <article key={point.title}>
+            <h3>{point.title.replace(/^ステップ\d+[：:]?\s*/, "")}</h3>
+            {point.body.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

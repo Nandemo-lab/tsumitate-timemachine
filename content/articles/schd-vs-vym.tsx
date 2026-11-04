@@ -56,7 +56,7 @@ const TOC = [
   "過去の積立シミュレーションで比較",
   "分配方針と銘柄選定の違い",
   "新NISAで確認する点",
-  "SCHDの商品属性",
+  "数値比較できない理由と商品属性",
   "VYMの商品属性",
   "積立タイムマシンで実際に確かめよう",
 ];
@@ -282,7 +282,7 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 7. こんな人はSCHD */}
       <section id="section-7" className="space-y-4">
-        <SectionHeading index={7} title="SCHDの商品属性" />
+        <SectionHeading index={7} title="数値比較できない理由と商品属性" />
         <div className="rounded-xl bg-emerald-500/6 border border-emerald-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Coins className="h-4 w-4 text-emerald-700" />
@@ -306,7 +306,6 @@ export default function ArticleContent({ meta }: { meta: ArticleMeta }) {
 
       {/* 8. こんな人はVYM */}
       <section id="section-8" className="space-y-4">
-        <SectionHeading index={8} title="VYMの商品属性" />
         <div className="rounded-xl bg-sky-500/6 border border-sky-500/15 p-5 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Layers className="h-4 w-4 text-sky-400" />
