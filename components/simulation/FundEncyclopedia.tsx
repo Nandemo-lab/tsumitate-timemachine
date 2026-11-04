@@ -43,9 +43,10 @@ function InlineSimulator({
       className="rounded-xl p-4 space-y-4"
       style={{ background: `${fund.color}10`, border: `1px solid ${fund.color}25` }}
     >
-      <p className="text-xs font-black tracking-widest uppercase text-slate-600">
-        もしあの時から積立ていたら？
-      </p>
+      <div>
+        <p className="text-xs font-bold text-[#236B8E]">過去実績を試す</p>
+        <p className="mt-1 text-xs leading-5 text-slate-600">開始年と月額を変えて、元本・期間末評価額・損益を確認します。</p>
+      </div>
 
       {/* Controls */}
       <div className="flex gap-2">
@@ -53,7 +54,7 @@ function InlineSimulator({
           <select
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
-            className="w-full appearance-none rounded-lg border border-[#D2DEE4] bg-[#EAF3F7]0 px-3 py-2 text-xs font-bold text-[#263A53] focus:outline-none cursor-pointer"
+            className="min-h-11 w-full appearance-none rounded-lg border border-[#D2DEE4] bg-[#EAF3F7]0 px-3 py-2 text-xs font-bold text-[#263A53] focus:outline-none cursor-pointer"
           >
             {START_YEAR_OPTIONS.map((y) => (
               <option key={y} value={y} className="bg-white">{y}年から</option>
@@ -65,7 +66,7 @@ function InlineSimulator({
           <select
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            className="w-full appearance-none rounded-lg border border-[#D2DEE4] bg-[#EAF3F7]0 px-3 py-2 text-xs font-bold text-[#263A53] focus:outline-none cursor-pointer"
+            className="min-h-11 w-full appearance-none rounded-lg border border-[#D2DEE4] bg-[#EAF3F7]0 px-3 py-2 text-xs font-bold text-[#263A53] focus:outline-none cursor-pointer"
           >
             {MONTHLY_AMOUNT_OPTIONS.map((a) => (
               <option key={a} value={a} className="bg-white">月{(a / 10000).toFixed(0)}万円</option>
@@ -109,7 +110,7 @@ function InlineSimulator({
       {/* Compare CTA */}
       <button
         onClick={() => onCompare(fundId)}
-        className="w-full flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-bold text-slate-600 border border-[#D2DEE4] hover:text-slate-700 hover:border-[#B9CBD4] transition-all"
+        className="min-h-11 w-full flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-bold text-slate-600 border border-[#D2DEE4] hover:text-slate-700 hover:border-[#B9CBD4] transition-all"
       >
         比較モードで詳しく見る
         <ChevronRight className="h-3.5 w-3.5" />
@@ -141,6 +142,7 @@ function FundDetailCard({
     >
       {/* Header */}
       <div className="px-5 pt-5 pb-3">
+        <p className="mb-1 text-xs font-bold text-[#236B8E]">商品概要</p>
         <p className="text-sm text-slate-700 leading-relaxed font-medium mb-3">
           {enc.catchCopy}
         </p>
@@ -158,13 +160,19 @@ function FundDetailCard({
         </div>
 
         <ReturnQualityPill fundId={fund.id} />
+        <p className="mt-2 text-xs leading-5 text-slate-600">
+          {isVerifiedReturnSeries(fund.id)
+            ? "Aは、公式一次情報まで確認した月次データです。"
+            : "Gは参考系列です。未検証の数値は試算や順位に使用しません。"}
+        </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 gap-3 px-5 pb-3">
         <div>
-          <p className="text-xs text-slate-600 mb-0.5">信託報酬</p>
-          <p className="text-xs font-bold text-slate-700">{formatExpenseRatio(fundId)}</p>
+          <p className="text-xs font-bold text-[#236B8E] mb-1">費用</p>
+          <p className="text-xs text-slate-600">信託報酬・経費率</p>
+          <p className="mt-0.5 text-sm font-bold text-slate-700">{formatExpenseRatio(fundId)}</p>
         </div>
       </div>
 
@@ -176,6 +184,7 @@ function FundDetailCard({
 
       {/* Pros/Cons */}
       <div className="px-5 pb-4 space-y-1.5">
+        <p className="pb-1 text-xs font-bold text-[#236B8E]">特徴と注意点</p>
         {enc.pros.slice(0, 2).map((p) => (
           <div key={p} className="flex items-start gap-2">
             <CheckCircle className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
@@ -229,7 +238,7 @@ export default function FundEncyclopedia({ onSimulate, initialExpanded }: Props)
             <button
               key={catId}
               onClick={() => { setActiveCategory(catId); setExpandedFund(null); }}
-              className={`flex-shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition-all border ${
+              className={`min-h-11 flex-shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition-all border ${
                 isActive
                   ? "bg-[#DCEFFA] text-[#263A53] border-[#B9CBD4]"
                   : "bg-[#F7FAFB] text-slate-600 border-[#D9E3E8] hover:text-slate-700"

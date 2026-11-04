@@ -198,7 +198,7 @@ export default function RankingView({ page }: Props) {
                   {/* ランク＋銘柄名ヘッダー */}
                   <div className="px-4 pt-4 pb-3 space-y-2">
                     <div className="flex items-center gap-3">
-                      {!isHighDividend && <span className="text-sm font-black text-amber-700">{index + 1}位</span>}
+                      {!isHighDividend && <span className="rounded-md bg-[#E8F2F6] px-2 py-1 text-xs font-bold text-[#236B8E]">実績 {index + 1}位</span>}
                       <div className="flex-1 min-w-0">
                         <span
                           className="text-base font-black text-[#263A53]"
@@ -228,22 +228,24 @@ export default function RankingView({ page }: Props) {
                     <p className="text-[9px] text-slate-500">
                       {page.simYear}年{page.simMonth}月から月{page.simAmount / 10000}万円積立の場合
                     </p>
-                    <div className="flex items-baseline gap-2">
-                      <span
-                        className="text-xl font-black font-number"
-                        style={{ color: isProfit ? "#10b981" : "#ef4444" }}
-                      >
-                        {isProfit ? "+" : ""}{formatCurrency(result.profit)}
-                      </span>
-                      <span
-                        className="text-sm font-bold font-number"
-                        style={{ color: isProfit ? "#10b981" : "#ef4444" }}
-                      >
-                        {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
-                      </span>
-                      <span className="text-xs text-slate-500 ml-auto">
-                        評価額 {formatCurrency(result.finalValue)}
-                      </span>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div>
+                        <p className="text-[10px] text-slate-500">元本</p>
+                        <p className="mt-0.5 text-xs font-bold text-[#263A53]">{formatCurrency(result.totalPrincipal)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-slate-500">期間末評価額</p>
+                        <p className="mt-0.5 text-sm font-black text-[#263A53]">{formatCurrency(result.finalValue)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-slate-500">損益</p>
+                        <p className="mt-0.5 text-xs font-bold font-number" style={{ color: isProfit ? "#047857" : "#b91c1c" }}>
+                          {isProfit ? "+" : ""}{formatCurrency(result.profit)}
+                        </p>
+                        <p className="text-[10px] font-semibold" style={{ color: isProfit ? "#047857" : "#b91c1c" }}>
+                          {isProfit ? "+" : ""}{result.returnRate.toFixed(1)}%
+                        </p>
+                      </div>
                     </div>
                   </div> : null}
 
@@ -256,7 +258,7 @@ export default function RankingView({ page }: Props) {
                     {fundPageSlug && (
                       <Link
                         href={`/fund/${fundPageSlug}`}
-                        className="px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-slate-700 hover:bg-[#EFF5F7] transition-colors"
+                        className="min-h-11 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-slate-700 hover:bg-[#EFF5F7] transition-colors"
                       >
                         {enc.nickname}とは？
                         <ChevronRight className="h-3 w-3" />
@@ -265,7 +267,7 @@ export default function RankingView({ page }: Props) {
                     {entry.yearSlug ? (
                       <Link
                         href={`/${entry.yearSlug}/${page.simYear}`}
-                        className="flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
+                        className="min-h-11 flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
                       >
                         {page.simYear}年積立を見る
                         <ArrowRight className="h-3 w-3" />
@@ -273,7 +275,7 @@ export default function RankingView({ page }: Props) {
                     ) : fundPageSlug && MONTHLY_PAGE_FUND_SLUGS.has(fundPageSlug) ? (
                       <Link
                         href={`/${fundPageSlug}/monthly/30000`}
-                        className="flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
+                        className="min-h-11 flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
                       >
                         月3万円を見る
                         <ArrowRight className="h-3 w-3" />
@@ -281,7 +283,7 @@ export default function RankingView({ page }: Props) {
                     ) : fundPageSlug && FUND_SEO_MAP.has(fundPageSlug) ? (
                       <Link
                         href={`/${fundPageSlug}`}
-                        className="flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
+                        className="min-h-11 flex-1 px-3 py-2.5 flex items-center justify-center gap-1 text-xs font-bold text-[#236B8E] hover:bg-[#EFF5F7] transition-colors"
                       >
                         詳しく見る
                         <ArrowRight className="h-3 w-3" />

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { RankingItem } from "@/types";
 import { formatCurrency } from "@/lib/simulation";
 import AnimatedNumber from "./AnimatedNumber";
-import { Flame } from "lucide-react";
 import { getFundTags } from "@/lib/funds";
 
 interface Props {
@@ -14,16 +13,9 @@ interface Props {
   startMonth: number;
 }
 
-const MEDALS = [
-  { emoji: "🥇", label: "GOLD", glow: "#f59e0b" },
-  { emoji: "🥈", label: "SILVER", glow: "#94a3b8" },
-  { emoji: "🥉", label: "BRONZE", glow: "#cd7f32" },
-];
-
 export default function RankingView({ ranking, monthlyAmount, startYear, startMonth }: Props) {
   if (!ranking.length) return null;
   const top = ranking[0];
-  const maxProfit = top.result.profit;
 
   return (
     <motion.div
@@ -32,7 +24,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="space-y-3"
     >
-      {/* Winner hero card */}
+      {/* 同条件での期間末評価額1位。推奨順位とは分けて表示する。 */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -46,49 +38,48 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Flame className="h-4 w-4" style={{ color: top.fund.color }} />
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: top.fund.color }}>
-                最高パフォーマンス
+              <span className="rounded-md bg-[#E8F2F6] px-2 py-1 text-xs font-bold text-[#236B8E]">
+                この条件の期間末評価額 1位
               </span>
             </div>
 
-            {/* 銘柄名（やや強調） */}
-            <p className="font-heading text-lg font-bold text-[#263A53] mb-1">🥇 {top.fund.shortName}</p>
+            <p className="font-heading text-lg font-bold text-[#263A53] mb-2">{top.fund.shortName}</p>
 
-            {/* HERO: 利益額（リターン率を隣接表示） */}
-            <div className="flex items-baseline gap-2">
+            <p className="text-xs text-slate-600">期間末評価額</p>
+            <div className="flex items-baseline gap-2 mt-0.5">
               <p
-                className="font-heading font-number text-3xl font-bold"
-                style={{ color: "#10b981", filter: "drop-shadow(0 0 8px #10b98133)" }}
+                className="font-heading font-number text-3xl font-bold text-[#263A53]"
               >
-                +<AnimatedNumber
-                  value={top.result.profit}
+                <AnimatedNumber
+                  value={top.result.finalValue}
                   formatter={(n) => formatCurrency(Math.round(n))}
                   duration={1500}
                 />
-              </p>
-              <p className="font-number text-sm font-semibold text-emerald-700">
-                （+{top.result.returnRate.toFixed(1)}%）
               </p>
             </div>
             <p className="text-xs text-slate-600 mt-2">
               {startYear}年{startMonth}月〜 毎月{formatCurrency(monthlyAmount)}
             </p>
           </div>
-          <div className="text-right flex-shrink-0">
-            <p className="text-xs text-slate-600 mb-0.5">期間末評価額</p>
-            <p className="text-sm font-bold text-slate-700">{formatCurrency(top.result.finalValue)}</p>
+          <div className="text-right flex-shrink-0 space-y-2">
+            <div>
+              <p className="text-xs text-slate-600">元本</p>
+              <p className="text-sm font-bold text-slate-700">{formatCurrency(top.result.totalPrincipal)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-600">損益</p>
+              <p className="text-sm font-bold text-emerald-700">+{formatCurrency(top.result.profit)}</p>
+            </div>
           </div>
         </div>
+        <p className="mt-4 border-t border-[#DDE6EA] pt-3 text-xs leading-5 text-slate-600">
+          同じ期間・月額の過去実績です。1位はおすすめ順や将来の成果を示しません。
+        </p>
       </motion.div>
 
       {/* Ranking list */}
       <div className="space-y-2">
         {ranking.map((item, i) => {
-          const medal = MEDALS[i];
-          const barWidth = Math.max((item.result.profit / maxProfit) * 100, 4);
-          const isTopThree = i < 3;
-
           return (
             <motion.div
               key={item.fund.id}
@@ -98,46 +89,33 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
               className="relative rounded-xl overflow-hidden p-4"
               style={{
                 background: "#FBFCFC",
-                border: `1px solid ${isTopThree ? item.fund.color + "25" : "#DDE6EA"}`,
+                border: "1px solid #DDE6EA",
               }}
             >
-              {/* Animated bar */}
-              <motion.div
-                className="absolute left-0 top-0 bottom-0 opacity-[0.08]"
-                style={{ background: item.fund.color }}
-                initial={{ width: 0 }}
-                animate={{ width: `${barWidth}%` }}
-                transition={{ delay: i * 0.07 + 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              />
-
               <div className="relative flex items-center gap-3">
                 {/* Rank badge */}
-                <div className="flex-shrink-0 w-8 text-center">
-                  {isTopThree ? (
-                    <div className="text-lg leading-none">{medal.emoji}</div>
-                  ) : (
-                    <span className="text-xs font-bold text-slate-600">{i + 1}</span>
-                  )}
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#E8F2F6] text-xs font-bold text-[#236B8E]">
+                  {i + 1}位
                 </div>
 
-                {/* Numbers — 利益額を最優先で先頭に */}
+                {/* 数値順位の基準である期間末評価額を先に表示 */}
                 <div className="flex-shrink-0">
                   <p className="font-number text-sm font-bold text-[#263A53]">
-                    +<AnimatedNumber
-                      value={item.result.profit}
+                    <AnimatedNumber
+                      value={item.result.finalValue}
                       formatter={(n) => formatCurrency(Math.round(n))}
                       duration={900 + i * 80}
                     />
                   </p>
-                  <p className="text-xs font-semibold text-emerald-700">
-                    （+{item.result.returnRate.toFixed(1)}%）
+                  <p className="text-xs text-slate-600">
+                    損益 +{formatCurrency(item.result.profit)}
                   </p>
                 </div>
 
                 {/* Fund info */}
                 <div className="flex-1 min-w-0 text-right">
                   <div className="flex items-center justify-end gap-1.5 mb-1">
-                    <p className="font-heading text-base font-bold" style={{ color: isTopThree ? item.fund.color : "#e4e4e7" }}>
+                    <p className="font-heading text-base font-bold text-[#263A53]">
                       {item.fund.shortName}
                     </p>
                     <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: item.fund.color }} />
@@ -169,7 +147,7 @@ export default function RankingView({ ranking, monthlyAmount, startYear, startMo
             {formatCurrency(Math.max(0, ranking[0].result.profit - ranking[ranking.length - 1].result.profit))}
           </span>
           。<br />
-          同じ元本でも、選ぶ銘柄でここまで変わります。
+          。同じ期間・月額にそろえた過去実績の差であり、将来の差やおすすめ順を示しません。
         </p>
       </motion.div>
     </motion.div>
