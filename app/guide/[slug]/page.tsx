@@ -687,13 +687,13 @@ export default async function GuidePage({ params }: Props) {
             </div>
           </section>
 
-          {/* ── こんな人におすすめ ──────────────────────────── */}
+          {/* ── このページが役立つ場面 ──────────────────────── */}
           {page.recommendFor && page.recommendFor.length > 0 && (
             <section className="space-y-3">
               <h2
                 className="text-base font-bold text-[#263A53]"
               >
-                {page.recommendHeading ?? (isBeginnerGuide ? "このページが役立つ場面" : "こんな人におすすめ")}
+                {page.recommendHeading ?? "このページが役立つ場面"}
               </h2>
               <div className="rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20 p-4 space-y-2.5">
                 {page.recommendFor.map((item, i) => (
