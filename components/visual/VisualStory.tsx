@@ -308,12 +308,15 @@ export function GuidePointDetails({ points }: { points: { title: string; body: s
   return (
     <section className="tm-guide-point-details" aria-labelledby="guide-point-details-title">
       <h2 id="guide-point-details-title">先に押さえる要点</h2>
+      <p className="tm-guide-point-details__lead">見出しで全体をつかみ、必要な項目だけ開いて確認できます。</p>
       <div>
         {points.slice(0, 3).map((point) => (
-          <article key={point.title}>
-            <h3>{point.title.replace(/^ステップ\d+[：:]?\s*/, "")}</h3>
-            {point.body.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-          </article>
+          <details key={point.title}>
+            <summary>{point.title.replace(/^ステップ\d+[：:]?\s*/, "")}</summary>
+            <div>
+              {point.body.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+          </details>
         ))}
       </div>
     </section>
