@@ -30,7 +30,14 @@ export function proxy(req: NextRequest) {
     return NextResponse.redirect(url, { status: 301 });
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  // Cloudflare preview URLs must never compete with the canonical production domain.
+  if (host.endsWith(".workers.dev")) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+
+  return response;
 }
 
 export const config = {
