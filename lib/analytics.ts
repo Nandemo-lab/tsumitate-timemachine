@@ -25,6 +25,8 @@ interface EditorialEventParams {
   content_id: string;
 }
 
+export type DiscoveryContentType = "guide" | "article";
+
 interface PendingEvent {
   name: string;
   params: object;
@@ -128,4 +130,23 @@ export function trackRelatedArticleClick(params: EditorialEventParams & { destin
 /** 記事本文または読後CTAからシミュレーションへ進んだ時。 */
 export function trackArticleToSimulation(params: EditorialEventParams & { destination_type: "home" | "compare" }) {
   track("article_to_simulation", params);
+}
+
+/** 記事を探す画面が表示された時。検索語は送らない。 */
+export function trackDiscoveryView(itemCount: number) {
+  track("article_index_view", { item_count: itemCount });
+}
+
+/** カテゴリまたは検索で一覧を絞り込んだ時。自由入力された検索語は送らない。 */
+export function trackDiscoveryFilter(params: { mode: "category" | "search"; resultCount: number }) {
+  const resultBucket = params.resultCount === 0 ? "0" : params.resultCount <= 3 ? "1-3" : params.resultCount <= 10 ? "4-10" : "11+";
+  track("article_discovery_filter", { mode: params.mode, result_bucket: resultBucket });
+}
+
+/** 一覧から記事を開いた時。タイトルや検索語は送らない。 */
+export function trackDiscoveryClick(params: { contentType: DiscoveryContentType; categoryId: string }) {
+  track("article_discovery_click", {
+    content_type: params.contentType,
+    category_id: params.categoryId,
+  });
 }

@@ -1,75 +1,29 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
-import { getGuidePage, GUIDE_SERIES } from "@/lib/guide-pages";
+import { ArrowRight, BookOpen } from "lucide-react";
+import { GUIDE_PAGES } from "@/lib/guide-pages";
+import { ARTICLE_PAGES } from "@/lib/article-pages";
+import { buildGuideDiscoveryItems, GUIDE_DISCOVERY_CATEGORIES } from "@/lib/guide-discovery";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import SiteFooter from "@/components/layout/SiteFooter";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import GuideDiscovery from "@/components/guide/GuideDiscovery";
 
 const BASE_URL = SITE_URL;
-
-// クラスタハブページが無いテーマの個別ガイド一覧。
-// 税金・制度・暴落クラスタは専用ハブ（GUIDE_SERIES）があるためここには含めない。
-const BEGINNER_SLUGS = ["nisa-beginner", "index-investing", "how-to-start", "index-shippai-pattern"] as const;
-const OPERATION_SLUGS = [
-  "dollar-cost-averaging",
-  "orukan-ippon-de-ii",
-  "tsumitate-nansnen-keizoku",
-  "tsumitate-vs-ikkatu",
-  "orukan-yameta-houga-ii",
-  "shinnisa-schd-kaeru",
-] as const;
-const EXIT_SLUGS = ["tsumitate-torikuzushi", "retirement-investing"] as const;
-const SECTIONS = [
-  { key: "beginner",  label: "初めて積み立てる",       slugs: BEGINNER_SLUGS },
-  { key: "operation",  label: "積立を続けながら考える", slugs: OPERATION_SLUGS },
-  { key: "exit",       label: "使う時期・取り崩しを考える", slugs: EXIT_SLUGS },
-] as const;
-
 const PAGE_TITLE = "投資ガイド一覧";
 const TITLE = `${PAGE_TITLE}｜${SITE_NAME}`;
-const DESCRIPTION =
-  "新NISA・税金・制度・暴落対応から、初心者向けの始め方、運用中の判断基準、出口戦略まで、積立投資に関するガイド記事をテーマ別にまとめています。";
+const DESCRIPTION = "投資初心者の疑問を、はじめ方・NISA・子どものお金・商品比較・リスク・税金に分けて探せるガイドです。記事から同じ条件の積立試算へ進めます。";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
   description: DESCRIPTION,
   alternates: { canonical: `${BASE_URL}/guide` },
-  openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-    url: `${BASE_URL}/guide`,
-    type: "website",
-    siteName: SITE_NAME,
-    locale: "ja_JP",
-    images: [{ url: `${BASE_URL}/api/og?static=1`, width: 1200, height: 630, alt: TITLE }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-    images: [`${BASE_URL}/api/og?static=1`],
-  },
+  openGraph: { title: TITLE, description: DESCRIPTION, url: `${BASE_URL}/guide`, type: "website", siteName: SITE_NAME, locale: "ja_JP", images: [{ url: `${BASE_URL}/api/og?static=1`, width: 1200, height: 630, alt: TITLE }] },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [`${BASE_URL}/api/og?static=1`] },
 };
 
 export default function GuideIndexPage() {
-  const clusterHubs = Object.values(GUIDE_SERIES)
-    .filter((series) => series.hubSlug)
-    .map((series) => ({
-      href: `/guide/${series.hubSlug}`,
-      label: series.label,
-      count: series.slugs.length,
-    }));
-
-  const sections = SECTIONS.map(({ key, label, slugs }) => {
-    const guides: { slug: string; page: NonNullable<ReturnType<typeof getGuidePage>> }[] = [];
-    slugs.forEach((slug) => {
-      const page = getGuidePage(slug);
-      if (page) guides.push({ slug, page });
-    });
-    return { key, label, guides };
-  });
-
+  const items = buildGuideDiscoveryItems(GUIDE_PAGES, ARTICLE_PAGES);
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -82,117 +36,41 @@ export default function GuideIndexPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-
       <div className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
-        <div className="mx-auto max-w-2xl px-4 pt-5"><Breadcrumbs items={[{ label: "投資ガイド" }]} /></div>
-
-        <div className="max-w-2xl mx-auto px-4 py-10 pb-20 space-y-10">
-          <header className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1">
-              <BookOpen className="h-3 w-3 text-[#236B8E]" />
-              <span className="text-xs font-bold text-[#236B8E]">投資ガイド</span>
+        <div className="mx-auto max-w-3xl px-4 pt-5"><Breadcrumbs items={[{ label: "投資ガイド" }]} /></div>
+        <main className="mx-auto max-w-3xl space-y-12 px-4 pb-20 pt-8">
+          <header className="grid gap-7 border-b border-[#D9E3E8] pb-9 md:grid-cols-[1.25fr_.75fr] md:items-end">
+            <div>
+              <div className="inline-flex items-center gap-2 text-sm font-bold text-[#236B8E]"><BookOpen className="h-4 w-4" aria-hidden="true" />投資ガイド</div>
+              <h1 className="mt-3 text-3xl font-black leading-tight text-[#263A53] md:text-4xl">知りたいことから、<br className="hidden sm:block" />数字で確かめるまで。</h1>
+              <p className="mt-4 max-w-xl text-base leading-7 text-slate-600">難しい言葉を順番に覚える必要はありません。今の疑問から記事を選び、必要なら公式月次データの試算で確かめられます。</p>
             </div>
-            <h1 className="text-2xl font-black text-[#263A53] leading-tight">
-              投資ガイド一覧
-            </h1>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              新NISA・税金・制度・暴落対応から、初心者向けの始め方、運用中の判断基準、出口戦略まで、テーマ別に整理しています。
-            </p>
+            <Link href="/" className="group flex min-h-12 items-center justify-between border-y border-[#B9CBD4] py-3 text-sm font-bold text-[#236B8E]">先に積立結果を試す<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></Link>
           </header>
 
-          <section className="grid gap-2 sm:grid-cols-2" aria-label="疑問別のガイド案内">
+          <section className="grid gap-5 border-b border-[#D9E3E8] pb-10 sm:grid-cols-3" aria-label="最初に選ぶ入口">
             {[
-              ["子どもの教育費を考えたい", "#kodomo-nisa-paths", "制度、年齢、積立額、使う時期を保護者向けに確認"],
-              ["制度・税金を確認したい", "/guide/system", "投資枠、口座、分配金、申告の違いを確認"],
-              ["商品を選ぶ前提を知りたい", "/guide/nisa-beginner", "始め方、指数、値動きの基本を確認"],
-              ["積立中の判断を整理したい", "/guide/dollar-cost-averaging", "期間、一括との違い、継続時の論点を確認"],
-              ["使う時期から逆算したい", "/guide/tsumitate-torikuzushi", "取り崩し、必要時期、価格変動リスクを確認"],
-            ].map(([title, href, body]) => (
-              <Link key={title} href={href} className="group flex min-h-20 items-center justify-between gap-3 rounded-xl border border-[#D9E3E8] bg-white p-4 transition-colors hover:bg-[#F7FAFB]">
-                <div className="min-w-0">
-                  <p className="text-sm font-bold text-[#236B8E]">{title}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{body}</p>
-                </div>
-                <ArrowRight className="h-4 w-4 flex-none text-slate-400 transition-colors group-hover:text-[#236B8E]" aria-hidden="true" />
+              ["初めて投資を知る", "貯金との違いから確認", "#guide-discovery-title"],
+              ["子どものお金を考える", "制度・年齢・使う時期を確認", "/guide/kodomo-nisa"],
+              ["商品を同条件で比べる", "投資先と過去の積立経路を確認", "/compare"],
+            ].map(([title, body, href]) => (
+              <Link key={title} href={href} className="group min-h-24 border-l-2 border-[#B9DCEB] pl-4">
+                <strong className="block text-base leading-6 text-[#263A53] group-hover:text-[#236B8E]">{title}</strong>
+                <span className="mt-2 block text-sm leading-6 text-slate-600">{body}</span>
               </Link>
             ))}
           </section>
 
-          <section className="space-y-3" aria-labelledby="kodomo-nisa-paths">
-            <div>
-              <p className="text-xs font-bold text-[#236B8E]">こどもNISA特集</p>
-              <h2 id="kodomo-nisa-paths" className="mt-1 text-lg font-black text-[#263A53]">
-                今の疑問から選ぶ
-              </h2>
-              <p className="mt-1 text-sm leading-6 text-slate-600">
-                制度の全体像、積立期間、月額、使う時期を分けて確認できます。
-              </p>
-            </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {[
-                ["まず制度を知る", "/guide/kodomo-nisa", "開始時期・対象年齢・投資枠を確認"],
-                ["今の年齢から考える", "/guide/kodomo-nisa-nansai-kara", "18歳までの積立回数と元本を確認"],
-                ["毎月いくらか考える", "/guide/kodomo-nisa-tsumitate-ikura", "月1万・3万・5万円の条件を確認"],
-                ["親のNISAと分ける", "/guide/kodomo-nisa-oya-nisa-tsukaiwake", "名義・目的・払出し条件を確認"],
-                ["商品や準備方法を比べる", "/guide/kodomo-nisa-orukan-vs-sp500", "オルカンとS&P500の違いを確認"],
-                ["学資保険と比べる", "/guide/kodomo-nisa-vs-gakushi-hoken", "保障と価格変動の違いを確認"],
-                ["途中で使う条件を確認", "/guide/kodomo-nisa-hikidashi", "払出し条件と手続を確認"],
-                ["使う時期を考える", "/guide/kodomo-nisa-daigaku-shikin-deguchi", "大学資金の現金化までを確認"],
-              ].map(([title, href, body]) => (
-                <Link key={href} href={href} className="min-h-20 rounded-xl border border-[#D9E3E8] bg-white p-4 transition-colors hover:bg-[#F7FAFB]">
-                  <p className="text-sm font-bold text-[#263A53]">{title}</p>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
-                </Link>
-              ))}
-            </div>
-          </section>
+          <GuideDiscovery items={items} categories={GUIDE_DISCOVERY_CATEGORIES} />
 
-          {/* クラスタハブ（税金・制度・暴落） */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5 text-emerald-700" />
-              <h2 className="text-sm font-bold text-[#263A53]">まとめて読む</h2>
+          <aside className="border-y border-[#D9E3E8] py-6" aria-label="比較コラムへの案内">
+            <p className="text-xs font-bold text-[#236B8E]">比較を深く読む</p>
+            <div className="mt-2 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+              <p className="text-sm leading-6 text-slate-600">商品の仕組み・費用・投資対象を詳しく確認したい場合は、比較コラムだけをまとめた一覧も使えます。</p>
+              <Link href="/articles" className="inline-flex min-h-11 flex-none items-center gap-2 text-sm font-bold text-[#236B8E]">比較コラム一覧 <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
-            <div className="space-y-2">
-              {clusterHubs.map(({ href, label, count }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center justify-between rounded-xl border border-[#D9E3E8] p-5 hover:bg-white transition-colors group"
-                >
-                  <div>
-                    <p className="text-base font-bold text-[#263A53] leading-snug">{label}一覧</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{count}記事をまとめて読む</p>
-                  </div>
-                  <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-slate-700 transition-colors flex-shrink-0" />
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* テーマ別セクション */}
-          {sections.map(({ key, label, guides }) => (
-            <details key={key} className="border-y border-[#D9E3E8] bg-white">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-1 py-3">
-                <span className="text-sm font-bold text-[#263A53]">{label}</span>
-                <span className="text-xs text-slate-500">{guides.length}記事</span>
-              </summary>
-              <div className="space-y-1 border-t border-[#E2EAEE] py-2">
-                {guides.map(({ slug, page }) => (
-                  <Link
-                    key={slug}
-                    href={`/guide/${slug}`}
-                    className="block min-h-14 px-1 py-3 transition-colors hover:bg-[#F7FAFB]"
-                  >
-                    <p className="text-sm font-bold text-[#263A53] leading-snug">{page.h1}</p>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">{page.metaDescription}</p>
-                  </Link>
-                ))}
-              </div>
-            </details>
-          ))}
-        </div>
-
+          </aside>
+        </main>
         <SiteFooter />
       </div>
     </>
