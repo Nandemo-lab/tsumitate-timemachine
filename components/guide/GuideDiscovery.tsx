@@ -29,6 +29,7 @@ export default function GuideDiscovery({
 }) {
   const [query, setQuery] = useState("");
   const [categoryId, setCategoryId] = useState("all");
+  const [showAll, setShowAll] = useState(false);
   const hydrated = useRef(false);
   const trackedSearch = useRef("");
 
@@ -81,6 +82,8 @@ export default function GuideDiscovery({
   }, [categoryId, query, results.length]);
 
   const categoryLabel = categories.find((category) => category.id === categoryId)?.label;
+  const isFiltered = query.trim().length > 0 || categoryId !== "all";
+  const visibleResults = isFiltered || showAll ? results : results.slice(0, 12);
 
   return (
     <section className="space-y-6" aria-labelledby="guide-discovery-title">
@@ -115,7 +118,7 @@ export default function GuideDiscovery({
         )}
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1" aria-label="目的別カテゴリ">
+      <div className="flex flex-wrap gap-2" aria-label="目的別カテゴリ">
         <button
           type="button"
           aria-pressed={categoryId === "all"}
@@ -146,34 +149,49 @@ export default function GuideDiscovery({
 
       <div aria-live="polite" className="flex items-baseline justify-between gap-4 border-b border-[#D9E3E8] pb-3">
         <p className="text-sm font-bold text-[#263A53]">{categoryLabel ?? "すべての記事"}</p>
-        <p className="text-xs text-slate-500">{results.length}件</p>
+        <p className="text-xs text-slate-500">
+          {!isFiltered && !showAll && results.length > visibleResults.length
+            ? `${visibleResults.length}件を表示・全${results.length}件`
+            : `${results.length}件`}
+        </p>
       </div>
 
       {results.length > 0 ? (
-        <ol className="divide-y divide-[#D9E3E8]">
-          {results.map((item) => (
-            <li key={item.id}>
-              <Link
-                href={item.href}
-                onClick={() => trackDiscoveryClick({ contentType: item.contentType, categoryId: item.categoryId })}
-                className="group grid min-h-28 grid-cols-[2.5rem_1fr_auto] gap-3 py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#236B8E]"
-              >
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-[#E8F3F7] text-[#236B8E]" aria-hidden="true">
-                  <BookOpen className="h-4 w-4" />
-                </span>
-                <span className="min-w-0">
-                  <span className="flex flex-wrap items-center gap-2 text-xs font-bold text-[#236B8E]">
-                    {categories.find((category) => category.id === item.categoryId)?.label}
-                    {item.isNew && <span className="rounded-full bg-[#E6F3EC] px-2 py-0.5 text-[#17644D]">新しく追加</span>}
+        <>
+          <ol className="divide-y divide-[#D9E3E8]">
+            {visibleResults.map((item) => (
+              <li key={item.id}>
+                <Link
+                  href={item.href}
+                  onClick={() => trackDiscoveryClick({ contentType: item.contentType, categoryId: item.categoryId })}
+                  className="group grid min-h-28 grid-cols-[2.5rem_1fr_auto] gap-3 py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#236B8E]"
+                >
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#E8F3F7] text-[#236B8E]" aria-hidden="true">
+                    <BookOpen className="h-4 w-4" />
                   </span>
-                  <strong className="mt-1 block text-base leading-7 text-[#263A53] group-hover:text-[#236B8E]">{item.title}</strong>
-                  <span className="mt-1 block text-sm leading-6 text-slate-600">{item.reason}</span>
-                </span>
-                <ArrowRight className="mt-3 h-4 w-4 text-slate-400 group-hover:text-[#236B8E]" aria-hidden="true" />
-              </Link>
-            </li>
-          ))}
-        </ol>
+                  <span className="min-w-0">
+                    <span className="flex flex-wrap items-center gap-2 text-xs font-bold text-[#236B8E]">
+                      {categories.find((category) => category.id === item.categoryId)?.label}
+                      {item.isNew && <span className="rounded-full bg-[#E6F3EC] px-2 py-0.5 text-[#17644D]">新しく追加</span>}
+                    </span>
+                    <strong className="mt-1 block text-base leading-7 text-[#263A53] group-hover:text-[#236B8E]">{item.title}</strong>
+                    <span className="mt-1 block text-sm leading-6 text-slate-600">{item.reason}</span>
+                  </span>
+                  <ArrowRight className="mt-3 h-4 w-4 text-slate-400 group-hover:text-[#236B8E]" aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ol>
+          {!isFiltered && !showAll && results.length > visibleResults.length && (
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              className="min-h-12 w-full border-y border-[#B9CBD4] py-3 text-sm font-bold text-[#236B8E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#236B8E]"
+            >
+              残り{results.length - visibleResults.length}件をすべて見る
+            </button>
+          )}
+        </>
       ) : (
         <div className="border-y border-[#D9E3E8] py-7">
           <p className="font-bold text-[#263A53]">一致する記事が見つかりませんでした</p>
