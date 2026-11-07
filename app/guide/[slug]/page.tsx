@@ -79,7 +79,16 @@ const GUIDE_LABELS: Record<string, string> = {
   "lehman-kyuu-tsumitate-kensho": "リーマンショック級の暴落が来たら？",
   "shinnisa-schd-kaeru":        "新NISAでSCHDは買える？",
   "ikkatsu-vs-tsumitate-booraku": "一括投資と積立投資、暴落に強いのは？",
+  "saving-vs-investing": "貯金と投資の違い",
+  "stock-fund-etf-difference": "株式・投資信託・ETFの違い",
+  "money-not-to-invest": "投資しない方がよいお金",
 };
+
+const BEGINNER_LEAD_SLUGS = new Set([
+  "saving-vs-investing",
+  "stock-fund-etf-difference",
+  "money-not-to-invest",
+]);
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -126,7 +135,7 @@ export default async function GuidePage({ params }: Props) {
   const { slug } = await params;
   const page = getGuidePage(slug);
   if (!page) notFound();
-  const isBeginnerGuide = slug.startsWith("kodomo-nisa");
+  const isBeginnerGuide = slug.startsWith("kodomo-nisa") || BEGINNER_LEAD_SLUGS.has(slug);
 
   // シミュレーション行の計算
   const simResults = page.simRows.map((row) => {

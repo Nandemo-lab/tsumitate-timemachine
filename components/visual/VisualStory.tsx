@@ -328,6 +328,33 @@ const KODOMO_VISUALS: Record<string, {
   title: string;
   items: { title: string; detail: string; icon: LucideIcon }[];
 }> = {
+  "saving-vs-investing": {
+    label: "使う時期で分ける",
+    title: "近く使うお金と、長く使わないお金は役割が違う",
+    items: [
+      { title: "今・緊急時", detail: "支払額を確認しやすい預貯金", icon: WalletCards },
+      { title: "使う時期を確認", detail: "金額と年月を先に分ける", icon: CalendarDays },
+      { title: "長期の資金", detail: "元本割れを受け入れられる範囲で投資", icon: LineChart },
+    ],
+  },
+  "stock-fund-etf-difference": {
+    label: "商品の関係",
+    title: "ETFは、取引所で売買する投資信託",
+    items: [
+      { title: "株式", detail: "1社の事業と価値に投資", icon: Landmark },
+      { title: "投資信託", detail: "複数資産をまとめて運用", icon: Globe2 },
+      { title: "ETF", detail: "上場し、市場価格で売買する投資信託", icon: GitCompareArrows },
+    ],
+  },
+  "money-not-to-invest": {
+    label: "投資前の確認経路",
+    title: "支払予定を確保してから、積立額を考える",
+    items: [
+      { title: "生活費", detail: "毎月必ず使うお金", icon: WalletCards },
+      { title: "緊急・予定資金", detail: "急な支出と数年以内の支払い", icon: ShieldCheck },
+      { title: "長く使わない分", detail: "値動きを受けてもよい範囲", icon: PiggyBank },
+    ],
+  },
   "kodomo-nisa": {
     label: "制度の全体像",
     title: `${KODOMO_NISA_LIMITS.startYear}年から、子どもの名義で長期の積立を考える制度`,
@@ -407,7 +434,13 @@ export function GuideConceptVisual({ slug }: { slug: string }) {
   if (slug === "kodomo-nisa-oya-nisa-tsukaiwake") return <ParentChildNisaMap />;
   const visual = KODOMO_VISUALS[slug];
   if (!visual) return null;
-  const variant = slug === "kodomo-nisa"
+  const variant = slug === "stock-fund-etf-difference"
+    ? "system"
+    : slug === "saving-vs-investing"
+      ? "compare"
+      : slug === "money-not-to-invest"
+        ? "timeline"
+        : slug === "kodomo-nisa"
     ? "system"
     : slug === "kodomo-nisa-tsumitate-ikura"
       ? "budget"
