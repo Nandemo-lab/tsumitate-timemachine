@@ -56,3 +56,18 @@ GSC Wizardは `INVALID_ARGUMENT` で取得できなかったため、同じ失�
 - 未着手: なし。公開後は新規追加よりGSC・GA4実測で既存記事を評価する。
 
 完成率は既存4/6（67%）から、主要な初心者疑問7/7（100%）として再定義する。公開日・Search Console登録日・インデックス日・表示回数は、公開前は「測定中」。Search Consoleへの書き込みは禁止指示により実施しない。
+
+## 検証と公開判定
+
+- TypeScript、ESLint、Webpack本番ビルド: 合格。
+- 通常QA / live QA: 132ページ、ERROR 0、WARNING 0、QA SCORE 100。
+- パンくず: 89ページ、168リンクが実在URLへ到達。
+- Verified Ledger、Return Series、2026年9月データ、Simulation Insights、G品質境界、Content Trust、比較OGP: 合格。
+- Vercel Preview: commit `42f8d718aa809e4d2fc0129d660ea6812d584967` で成功。
+- スクリーンショットを伴う375px・390px・768px・1280pxの視覚確認: Work設定でローカルブラウザ利用が無効のため未検証。未検証をPASS扱いせず、本番公開は保留する。
+
+公開可能な新規URL候補:
+
+- `/guide/saving-vs-investing`
+- `/guide/stock-fund-etf-difference`
+- `/guide/money-not-to-invest`
