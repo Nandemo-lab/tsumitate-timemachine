@@ -18,6 +18,7 @@
     "qa:live": "node scripts/qa-check.mjs --server http://localhost:3000",
     "breadcrumb-audit": "node scripts/breadcrumb-audit.mjs",
     "article-engagement-audit": "node scripts/article-engagement-audit.mjs",
+    "content-expansion-audit": "node scripts/content-expansion-audit.mjs",
     "new-article": "node scripts/new-article.mjs",
     "system-check-audit": "node scripts/system-check-audit.mjs",
     "verified-ledger-audit": "node scripts/verified-ledger-audit.mjs",
