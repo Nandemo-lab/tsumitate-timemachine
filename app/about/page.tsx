@@ -180,6 +180,27 @@ export default function AboutPage() {
         </section>
 
         {/* データの考え方 */}
+        <section className="space-y-3" id="editorial-process">
+          <h2 className="text-base font-bold text-[#263A53]">公開までの編集・検証工程</h2>
+          <div className="rounded-xl bg-white border border-[#E1E8EC] p-5 space-y-4">
+            {[
+              ["1. 一次情報を確認", "制度は金融庁・財務省・国税庁、商品情報は運用会社・指数提供会社の公式資料を優先します。制度記事には確認日と参照先を表示します。"],
+              ["2. 数値を共通データと照合", "信託報酬、銘柄数、年間リターン、NISAの制度数値はページごとに転記せず、サイト内の共通データから表示します。"],
+              ["3. 月次系列を監査", "A品質の系列は取得元のraw snapshotとSHA-256を保存し、欠損・重複・通貨換算・期間外参照がないかを検査します。未検証の系列はG品質として数値順位から除外します。"],
+              ["4. 公開後も訂正を受け付ける", "制度変更やデータの誤りを確認した場合は再照合し、必要な訂正を行います。気づいた点はお問い合わせフォームからご連絡ください。"],
+            ].map(([title, body]) => (
+              <div key={title} className="space-y-1">
+                <h3 className="text-sm font-bold text-slate-700">{title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{body}</p>
+              </div>
+            ))}
+            <p className="text-xs text-slate-500 leading-relaxed">
+              この工程は内容の正確性を高めるためのもので、将来の運用成果や個別商品の適合性を保証するものではありません。
+            </p>
+          </div>
+        </section>
+
+        {/* データの考え方 */}
         <section className="space-y-3">
           <h2
             className="text-base font-bold text-[#263A53]"
@@ -236,6 +257,7 @@ export default function AboutPage() {
           <div className="rounded-xl bg-white border border-[#E1E8EC] p-5">
             <ul className="space-y-3">
               {[
+                { date: "2026年11月", text: "記事検索と目的別カテゴリを公開。初心者向け基礎ガイドを追加し、編集・検証工程とサイトマップ監査を更新" },
                 { date: "2026年8月", text: "比較記事「VTIとオルカン」を公開。投資ガイド一覧・比較一覧・銘柄解説一覧のページを新設し、サイト内の回遊導線を整理" },
                 { date: "2026年7月", text: "比較記事を複数追加（オルカン vs VYM、VTI vs NASDAQ100、SCHD関連 等）。Google AdSense審査への対応、暴落クラスタの記事を追加" },
                 { date: "2026年7月", text: "税金ガイド・制度ガイドの一覧ページを新設。クラスタ内の記事を前へ・次へで読み進められるナビを追加" },

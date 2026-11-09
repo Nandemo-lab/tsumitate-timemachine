@@ -81,21 +81,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/guide`, changeFrequency: "weekly" as const, priority: 0.85 },
   ];
 
-  // 税金ガイド一覧（/guide/tax）
-  const taxGuideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide/tax`, changeFrequency: "monthly" as const, priority: 0.85 },
-  ];
-
-  // 制度ガイド一覧（/guide/system）
-  const systemGuideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide/system`, changeFrequency: "monthly" as const, priority: 0.85 },
-  ];
-
-  // 暴落ガイド一覧（/guide/booraku）
-  const boorakuGuideIndexPage: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/guide/booraku`, changeFrequency: "monthly" as const, priority: 0.85 },
-  ];
-
   // 比較一覧（/compare）
   const compareIndexPage: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/compare`, changeFrequency: "weekly" as const, priority: 0.85 },
@@ -127,9 +112,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...monthlyAmountPages,
     ...guideArticlePages,
     ...guideIndexPage,
-    ...taxGuideIndexPage,
-    ...systemGuideIndexPage,
-    ...boorakuGuideIndexPage,
     ...compareIndexPage,
     ...fundIndexPage,
     ...articleIndexPage,

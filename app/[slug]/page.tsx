@@ -154,7 +154,7 @@ export default async function FundLandingPage({ params }: Props) {
               className="text-3xl font-bold text-[#263A53] mb-2"
               style={{ fontFamily: "var(--font-serif-jp), serif", letterSpacing: "0.01em" }}
             >
-              {page.heroTitle}
+              {fund.shortName}の過去積立を条件別に確認
             </h1>
             <p className="text-base text-slate-600 mb-4">{fund.encyclopedia.formalName}</p>
             <p className="text-sm text-slate-600 leading-relaxed max-w-lg mx-auto mb-8">

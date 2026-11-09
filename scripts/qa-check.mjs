@@ -496,6 +496,10 @@ async function main() {
       const sitemapRes = await fetch(`${SERVER_URL}/sitemap.xml`);
       const sitemapBody = await sitemapRes.text();
       const locs = [...sitemapBody.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+      const duplicateLocs = [...new Set(locs.filter((loc, index) => locs.indexOf(loc) !== index))];
+      if (duplicateLocs.length) {
+        report("ERROR", "/sitemap.xml", `重複URL: ${duplicateLocs.join(", ")}`);
+      }
       for (const loc of locs) {
         const local = toLocalUrl(loc);
         if (!local) continue;

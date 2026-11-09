@@ -1,4 +1,5 @@
 import { Calendar, Database } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   lastUpdated: string;
@@ -6,7 +7,7 @@ interface Props {
 
 export default function GuideEeat({ lastUpdated }: Props) {
   return (
-    <div className="rounded-xl bg-white border border-[#E1E8EC] p-3 space-y-2.5">
+    <aside aria-label="記事の編集・検証情報" className="rounded-xl bg-white border border-[#E1E8EC] p-3 space-y-2.5">
       <div className="flex items-center gap-2.5">
         <div className="w-7 h-7 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
           <span className="text-xs font-black text-[#236B8E]">編</span>
@@ -22,9 +23,13 @@ export default function GuideEeat({ lastUpdated }: Props) {
       <div className="flex items-start gap-1.5">
         <Database className="h-3 w-3 text-slate-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-slate-500 leading-relaxed">
-          本記事は各節に記載した一次情報と、積立タイムマシンの検証済み月次データをもとに編集しています。
+          各節の一次情報と検証済み月次データを照合し、制度記事は公式情報の確認日も記録しています。値の出所と更新方法は
+          <Link href="/about" className="mx-1 font-semibold text-[#236B8E] underline underline-offset-2">
+            編集・検証方針
+          </Link>
+          で確認できます。
         </p>
       </div>
-    </div>
+    </aside>
   );
 }
