@@ -42,6 +42,7 @@ const recentConditions = read("components/simulation/RecentConditions.tsx");
 const fromPage = read("app/from/[year]/page.tsx");
 const comparePage = read("app/compare/[slug]/page.tsx");
 const fundDetailPage = read("app/fund/[slug]/page.tsx");
+const funds = read("lib/funds.ts");
 
 for (const snippet of [
   "同じ開始月・終了月・月額で期間末評価額だけでなく、月末時点の元本割れ月数と最大評価損も比較できます",
@@ -77,6 +78,8 @@ assert(fundSeo.includes("evidenceReading"), "商品Landingに商品固有の結�
 assert(!read("app/[slug]/page.tsx").includes("rResult.returnRate"), "異なる開始条件の商品リターンを関連リンクで横並び表示している");
 assert(!fundSeoPages.includes("年300円のコストのみ"), "VTIの経費率を全費用と誤認させる表現が残っている");
 assert(fundDetailPage.includes("同じ数値を重複掲載せず") && fundDetailPage.includes("separateResultLanding"), "商品LandingとFund詳細の役割分離が欠落している");
+assert(!funds.includes("投資初心者・長期積立を始めたい人") && !funds.includes("大きな急騰は期待しにくい"), "銘柄詳細に根拠の弱い適性・将来値動き表現が残っている");
+assert(!funds.includes("長期実績が豊富") && !funds.includes("成長株より値上がり益は小さい"), "銘柄詳細に検証条件のない比較表現が残っている");
 assert(!article.includes("米国経済の動向をほぼそのまま反映"), "S&P500を米国経済全体と同一視する表現が残っている");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年9月まで"), "トップでデータ終端を開示していない");

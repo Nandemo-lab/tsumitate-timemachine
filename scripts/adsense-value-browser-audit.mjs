@@ -7,6 +7,8 @@ const base = process.argv[2] ?? "http://127.0.0.1:4324";
 const outputDir = process.argv[3] ?? path.join(process.cwd(), ".artifacts", "adsense-value-visual");
 const chrome = process.env.CHROME_PATH ?? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const port = 9335;
+const widths = (process.env.AUDIT_WIDTHS ?? "375,390,768,1280")
+  .split(",").map(Number).filter(Number.isFinite);
 const profile = await fs.mkdtemp(path.join(os.tmpdir(), "tm-adsense-audit-"));
 await fs.mkdir(outputDir, { recursive: true });
 
@@ -75,10 +77,12 @@ try {
   await cdp.send("Runtime.enable");
 
   const pages = [
-    "/about", "/orukan", "/ranking", "/ranking/nisa", "/ranking/high-return",
-    "/ranking/high-dividend", "/from/2020", "/compare/orukan-vs-nasdaq100",
+    "/", "/about", "/about/data-sources", "/orukan", "/fund/orukan",
+    "/ranking", "/ranking/nisa", "/ranking/high-return", "/ranking/high-dividend",
+    "/from/2020", "/compare/orukan-vs-nasdaq100", "/guide",
+    "/guide/kodomo-nisa", "/articles/orukan-vs-sp500",
   ];
-  for (const width of [375, 390, 768, 1280]) {
+  for (const width of widths) {
     await cdp.send("Emulation.setDeviceMetricsOverride", { width, height: width < 768 ? 844 : 900, deviceScaleFactor: 1, mobile: width < 768 });
     for (const page of pages) {
       await cdp.send("Page.navigate", { url: `${base}${page}` });
