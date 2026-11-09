@@ -146,7 +146,7 @@ export default async function MonthlyAmountPage({ params }: Props) {
         <div className="max-w-lg mx-auto px-4 pt-8 pb-16 space-y-10">
 
           {/* パンくず */}
-          <nav className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
+          <nav aria-label="パンくず" className="flex items-center gap-1 text-xs text-slate-500 flex-wrap">
             <Link href="/" className="hover:text-slate-700 transition-colors">ホーム</Link>
             <ChevronRight className="h-3 w-3 flex-shrink-0" />
             <Link href={`/${slug}`} className="hover:text-slate-700 transition-colors">

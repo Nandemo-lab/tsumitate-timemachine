@@ -103,7 +103,12 @@ try {
         try { return new URL(a.href, location.href).origin === location.origin; } catch { return false; }
       });
       const breadcrumb = document.querySelector('nav[aria-label*="パンくず"], nav[aria-label*="breadcrumb" i]');
-      const sourceText = [...document.querySelectorAll('a[href]')].filter((a) => /金融庁|財務省|国税庁|目論見書|公式|出典|source/i.test(a.textContent || '')).length;
+      const sourceLinks = [...document.querySelectorAll('a[href]')].filter((a) => {
+        try {
+          const target = new URL(a.href, location.href);
+          return /^https?:$/.test(target.protocol) && target.origin !== location.origin;
+        } catch { return false; }
+      });
       return {
         title: document.title,
         description: document.querySelector('meta[name="description"]')?.content || '',
@@ -119,7 +124,8 @@ try {
         hasJsonLd: Boolean(document.querySelector('script[type="application/ld+json"]')),
         hasGa4: document.documentElement.innerHTML.includes('googletagmanager.com') || document.documentElement.innerHTML.includes('gtag('),
         hasAdsense: document.documentElement.innerHTML.includes('pagead2.googlesyndication.com'),
-        sourceLinkCount: sourceText,
+        sourceLinkCount: sourceLinks.length,
+        sourceHosts: [...new Set(sourceLinks.map((a) => new URL(a.href, location.href).hostname))],
         hasUpdate: /最終更新|確認日|データ終端|2026年9月/.test(document.body.innerText),
       };
     })();`);
