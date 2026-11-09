@@ -186,6 +186,24 @@ export default async function FundLandingPage({ params }: Props) {
             counterpartLabel={fundDetailSlug ? `${fund.shortName}の正式商品・費用・データ品質を見る` : undefined}
           />
 
+          <section className="mb-12 border-y border-[#B9DCEB] py-5" aria-labelledby="evidence-reading-title">
+            <h2 id="evidence-reading-title" className="text-lg font-bold text-[#263A53]">{fund.shortName}の数字をどう読むか</h2>
+            <dl className="mt-4 space-y-4 text-sm leading-relaxed">
+              <div>
+                <dt className="font-bold text-[#236B8E]">このページで確かめること</dt>
+                <dd className="mt-1 text-slate-700">{page.evidenceReading.focus}</dd>
+              </div>
+              <div>
+                <dt className="font-bold text-rose-700">商品固有の注意点</dt>
+                <dd className="mt-1 text-slate-700">{page.evidenceReading.risk}</dd>
+              </div>
+              <div>
+                <dt className="font-bold text-slate-700">この結果では分からないこと</dt>
+                <dd className="mt-1 text-slate-600">{page.evidenceReading.limitation}</dd>
+              </div>
+            </dl>
+          </section>
+
           {/* ── Features ─────────────────────────────────────────── */}
           <section className="mb-12">
             <SectionHeading>{fund.shortName}の確認できる商品情報</SectionHeading>
@@ -298,40 +316,30 @@ export default async function FundLandingPage({ params }: Props) {
           {/* ── Related Funds ─────────────────────────────────────── */}
           <section className="mb-12">
             <SectionHeading>{fund.shortName}と比較される銘柄</SectionHeading>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="space-y-2">
               {relatedPages.map((rp) => {
                 const rf = FUNDS[rp.fundId];
-                const rResult = simulate({
-                  fundId: rp.fundId,
-                  startYear: rp.simYear,
-                  startMonth: rp.simMonth,
-                  monthlyAmount: rp.simAmount,
-                });
                 return (
                   <Link
                     key={rp.slug}
                     href={`/${rp.slug}`}
-                    className="rounded-xl border border-[#D9E3E8] p-4 text-center hover:bg-[#F4F7F8] transition-colors group"
+                    className="flex min-h-11 items-center gap-3 rounded-xl border border-[#D9E3E8] p-4 hover:bg-[#F4F7F8] transition-colors group"
                     style={{ background: "#FFFFFF" }}
                   >
                     <div
-                      className="h-2 w-2 rounded-full mx-auto mb-2"
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
                       style={{ background: rf.color }}
                     />
-                    <p
-                      className="text-sm font-bold mb-1 group-hover:opacity-90 transition-opacity"
-                      style={{ color: rf.color }}
-                    >
-                      {rf.shortName}
-                    </p>
-                    <p className="text-[10px] text-slate-600 leading-tight">{rp.heroSubtitle}</p>
-                    <p className="text-xs font-bold text-emerald-700 mt-1.5">
-                      +{rResult.returnRate.toFixed(0)}%
-                    </p>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold group-hover:opacity-90" style={{ color: rf.color }}>{rf.shortName}</span>
+                      <span className="mt-0.5 block text-xs leading-relaxed text-slate-600">{rp.heroSubtitle}</span>
+                    </span>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-slate-400" />
                   </Link>
                 );
               })}
             </div>
+            <p className="mt-3 text-xs leading-relaxed text-slate-500">商品ごとに開始可能月が異なるため、ここでは異なる条件のリターン率を横並びにしません。比較ページでは共通期間・同額にそろえて確認できます。</p>
           </section>
 
           {/* ── All Funds Footer Links ────────────────────────────── */}

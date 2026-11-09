@@ -41,6 +41,7 @@ const rootLayout = read("app/layout.tsx");
 const recentConditions = read("components/simulation/RecentConditions.tsx");
 const fromPage = read("app/from/[year]/page.tsx");
 const comparePage = read("app/compare/[slug]/page.tsx");
+const fundDetailPage = read("app/fund/[slug]/page.tsx");
 
 for (const snippet of [
   "同じ開始月・終了月・月額で期間末評価額だけでなく、月末時点の元本割れ月数と最大評価損も比較できます",
@@ -71,7 +72,11 @@ assert(!compares.includes("過去20年のデータではS&P500"), "商品設定�
 assert(!article.includes("過去20年以上にわたり"), "記事に商品設定前を含む主張が再混入");
 assert(!fundSeoPages.includes("信託報酬は年率年"), "信託報酬の年率表記が重複している");
 assert(!fundSeo.includes("残高No.1") && !fundSeo.includes("人気ランキング1位"), "根拠・基準日のないNo.1表示が商品ページに残っている");
+assert(!fundSeo.includes("歴史的には回復・成長してきた実績"), "商品ページに長期保有なら回復するように読める表現が残っている");
+assert(fundSeo.includes("evidenceReading"), "商品Landingに商品固有の結果解釈がない");
+assert(!read("app/[slug]/page.tsx").includes("rResult.returnRate"), "異なる開始条件の商品リターンを関連リンクで横並び表示している");
 assert(!fundSeoPages.includes("年300円のコストのみ"), "VTIの経費率を全費用と誤認させる表現が残っている");
+assert(fundDetailPage.includes("同じ数値を重複掲載せず") && fundDetailPage.includes("separateResultLanding"), "商品LandingとFund詳細の役割分離が欠落している");
 assert(!article.includes("米国経済の動向をほぼそのまま反映"), "S&P500を米国経済全体と同一視する表現が残っている");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年9月まで"), "トップでデータ終端を開示していない");

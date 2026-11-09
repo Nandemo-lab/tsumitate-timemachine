@@ -11,6 +11,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { getFundPage, FUND_PAGES } from "@/lib/fund-seo-pages";
+import { getFundSeoPage } from "@/lib/fund-seo";
 import { getComparePage } from "@/lib/compare-pages";
 import { FUNDS, formatExpenseRatio } from "@/lib/funds";
 import { simulate, formatCurrency } from "@/lib/simulation";
@@ -100,6 +101,8 @@ export default async function FundPage({ params }: Props) {
   const enc = fund.encyclopedia;
 
   const isVerifiedSeries = getReturnSeriesDefinition(page.fundId).quality === "A";
+  const landingSlug = page.fundId === "orcan" ? "orukan" : page.fundId;
+  const separateResultLanding = getFundSeoPage(landingSlug);
   const result = isVerifiedSeries ? simulate({
     fundId: page.fundId,
     startYear: page.simYear,
@@ -297,7 +300,7 @@ export default async function FundPage({ params }: Props) {
           </section>
 
           {/* ── シミュレーション ─────────────────────────────────── */}
-          {result ? <section
+          {result && !separateResultLanding ? <section
             className="rounded-2xl p-5 space-y-4"
             style={{
               background: `${fund.color}10`,
@@ -379,7 +382,21 @@ export default async function FundPage({ params }: Props) {
               自分の条件でシミュレーション
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </section> : (
+          </section> : result && separateResultLanding ? (
+            <section className="border-y border-[#B9DCEB] py-5 space-y-3">
+              <h2 className="text-base font-bold text-[#263A53]">積立結果は条件変更ページで検証</h2>
+              <p className="text-sm leading-relaxed text-slate-600">
+                この銘柄解説は正式商品、費用、設定日、NISA区分、一次情報を確認するページです。元本・期間末評価額・元本割れ月数は、同じ数値を重複掲載せず、条件を変えられる積立ページにまとめています。
+              </p>
+              <Link
+                href={`/${separateResultLanding.slug}`}
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[#B9DCEB] bg-[#F4F8FA] px-4 py-2.5 text-sm font-bold text-[#236B8E]"
+              >
+                {enc.nickname}の検証済み積立結果を見る
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </section>
+          ) : (
             <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5 space-y-3">
               <ReturnQualityPill fundId={page.fundId} />
               <h2 className="text-base font-bold text-[#263A53]">参考系列のため積立評価額は掲載していません</h2>

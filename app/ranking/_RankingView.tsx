@@ -128,7 +128,7 @@ export default function RankingView({ page }: Props) {
               <div><dt className="text-slate-500">元本</dt><dd className="font-bold text-[#263A53]">{comparisonResult ? formatCurrency(comparisonResult.totalPrincipal) : "対象結果で確認"}</dd></div>
               <div><dt className="text-slate-500">並び順</dt><dd className="font-bold text-[#263A53]">期間末評価額</dd></div>
             </dl>
-            <p className="mt-3 text-xs leading-relaxed text-slate-600">過去の同一条件による結果です。将来の成績や商品の推奨順ではありません。</p>
+            <p className="mt-3 text-xs leading-relaxed text-slate-600">元本は全商品で同じ積立回数・月額から計算しています。過去の同一条件による結果であり、将来予測や商品の推奨順ではありません。</p>
           </section>
 
           {/* ── ランキング一覧 ────────────────────────────────── */}
@@ -299,7 +299,7 @@ export default function RankingView({ page }: Props) {
 
           <section className="border-y border-[#B9DCEB] py-4 space-y-2">
             <h2 className="text-xs font-bold text-[#236B8E]">{isHighDividend ? "実績と商品属性の分け方" : "計算方法とデータ品質"}</h2>
-            <p className="text-xs leading-relaxed text-slate-600">{isHighDividend ? `VYMはA品質の検証済み結果を表示し、SCHDはG品質のため数値順位へ含めません。` : `期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}</p>
+            <p className="text-xs leading-relaxed text-slate-600">{isHighDividend ? `VYMは2020年1月から2026年9月までのA品質・検証済み結果を表示し、SCHDはG品質のため数値順位へ含めません。` : `期間全体を計算できるA品質系列だけを順位付けし、商品設定前や欠損月を別系列で補いません。`}</p>
             <Link href="/about/data-sources" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-[#236B8E]">対象系列と検証方法を見る<ArrowRight className="h-3 w-3" /></Link>
           </section>
 
