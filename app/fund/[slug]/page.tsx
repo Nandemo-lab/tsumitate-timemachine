@@ -100,7 +100,8 @@ export default async function FundPage({ params }: Props) {
   const fund = FUNDS[page.fundId];
   const enc = fund.encyclopedia;
 
-  const isVerifiedSeries = getReturnSeriesDefinition(page.fundId).quality === "A";
+  const returnDefinition = getReturnSeriesDefinition(page.fundId);
+  const isVerifiedSeries = returnDefinition.quality === "A";
   const landingSlug = page.fundId === "orcan" ? "orukan" : page.fundId;
   const separateResultLanding = getFundSeoPage(landingSlug);
   const result = isVerifiedSeries ? simulate({
@@ -223,6 +224,27 @@ export default async function FundPage({ params }: Props) {
             counterpartHref={page.fundId === "schd" ? "/compare/schd-vs-vym" : page.fundId === "vym" ? undefined : page.fundId === "fangplus" ? `/simulate/fangplus/${page.simYear}` : `/${page.fundId === "orcan" ? "orukan" : page.fundId}`}
             counterpartLabel={page.fundId === "schd" ? "SCHDとVYMの商品属性を比較する" : page.fundId === "vym" ? undefined : `${enc.nickname}の積立条件を変えて試す`}
           />
+
+          <section className="border-y border-[#D2DEE4] py-5 space-y-3" aria-labelledby="fund-primary-source-title">
+            <h2 id="fund-primary-source-title" className="text-base font-bold text-[#263A53]">商品データの原典と確認範囲</h2>
+            <dl className="grid gap-2 text-sm leading-6 sm:grid-cols-2">
+              <div><dt className="font-bold text-slate-700">月次系列</dt><dd className="text-slate-600">{returnDefinition.quality === "A" ? `${returnDefinition.startMonth}〜${returnDefinition.endMonth}` : "公開計算の対象外"}</dd></div>
+              <div><dt className="font-bold text-slate-700">原典確認日</dt><dd className="text-slate-600">{returnDefinition.retrievedAt}</dd></div>
+            </dl>
+            <a
+              href={returnDefinition.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center text-sm font-bold text-[#236B8E] underline underline-offset-4"
+            >
+              {returnDefinition.sourceName}を確認する
+            </a>
+            <p className="text-xs leading-5 text-slate-500">
+              {returnDefinition.quality === "A"
+                ? "一次情報から検証した商品設定後の月次系列です。欠損値を補間せず、別系列でも補いません。"
+                : "商品定義の一次情報だけを確認済みです。月次リターンの原典検証が終わるまで評価額・利益・順位には使用しません。"}
+            </p>
+          </section>
 
           {/* ── 基本情報テーブル ────────────────────────────────── */}
           {page.contextualComparison && <GuideBodyText body={page.contextualComparison} />}

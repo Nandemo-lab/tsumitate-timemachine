@@ -186,6 +186,23 @@ export default async function FundLandingPage({ params }: Props) {
             counterpartLabel={fundDetailSlug ? `${fund.shortName}の正式商品・費用・データ品質を見る` : undefined}
           />
 
+          <section className="mb-12 border-y border-[#D2DEE4] py-5" aria-labelledby="landing-source-title">
+            <h2 id="landing-source-title" className="text-base font-bold text-[#263A53]">この試算の原典と収録範囲</h2>
+            <dl className="mt-3 grid gap-2 text-sm leading-6 sm:grid-cols-2">
+              <div><dt className="font-bold text-slate-700">収録期間</dt><dd className="text-slate-600">{returnDefinition.startMonth}〜{returnDefinition.endMonth}</dd></div>
+              <div><dt className="font-bold text-slate-700">原典確認日</dt><dd className="text-slate-600">{returnDefinition.retrievedAt}</dd></div>
+            </dl>
+            <a
+              href={returnDefinition.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex min-h-11 items-center text-sm font-bold text-[#236B8E] underline underline-offset-4"
+            >
+              {returnDefinition.sourceName}を確認する
+            </a>
+            <p className="mt-2 text-xs leading-5 text-slate-500">商品設定前の期間や欠損値は別系列で補わず、表示条件に含めません。</p>
+          </section>
+
           <section className="mb-12 border-y border-[#B9DCEB] py-5" aria-labelledby="evidence-reading-title">
             <h2 id="evidence-reading-title" className="text-lg font-bold text-[#263A53]">{fund.shortName}の数字をどう読むか</h2>
             <dl className="mt-4 space-y-4 text-sm leading-relaxed">

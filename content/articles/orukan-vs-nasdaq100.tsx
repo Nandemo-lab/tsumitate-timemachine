@@ -21,7 +21,7 @@ import type { ArticleMeta } from "@/lib/article-pages";
 export const meta: ArticleMeta = {
   slug: "orukan-vs-nasdaq100",
   h1: "オルカンとNASDAQ100どっち？違い・過去実績・判断材料を比較",
-  metaTitle: "オルカンとNASDAQ100どっち？違い・過去実績・どちらが向いているかを比較",
+  metaTitle: "オルカンとNASDAQ100どっち？違い・過去実績・確認点を比較",
   metaDescription:
     "オルカン（全世界株）とNASDAQ100の投資範囲・銘柄集中・費用・新NISAでの取扱いを整理。過去シミュレーションの条件と結果の読み方を確認できます。",
   lastUpdated: "2026年7月",

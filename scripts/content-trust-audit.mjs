@@ -80,6 +80,7 @@ assert(!fundSeoPages.includes("年300円のコストのみ"), "VTIの経費率�
 assert(fundDetailPage.includes("同じ数値を重複掲載せず") && fundDetailPage.includes("separateResultLanding"), "商品LandingとFund詳細の役割分離が欠落している");
 assert(!funds.includes("投資初心者・長期積立を始めたい人") && !funds.includes("大きな急騰は期待しにくい"), "銘柄詳細に根拠の弱い適性・将来値動き表現が残っている");
 assert(!funds.includes("長期実績が豊富") && !funds.includes("成長株より値上がり益は小さい"), "銘柄詳細に検証条件のない比較表現が残っている");
+assert(!read("content/articles/vti-vs-orukan.tsx").includes("業界最低水準") && !read("content/articles/vti-vs-orukan.tsx").includes("使いやすい商品"), "比較記事に根拠のない費用評価・適性表現が残っている");
 assert(!article.includes("米国経済の動向をほぼそのまま反映"), "S&P500を米国経済全体と同一視する表現が残っている");
 assert(home.includes("商品設定前の期間や欠損値は別系列で補いません"), "トップで独自の検証方針を説明していない");
 assert(home.includes("実績期間：2026年9月まで"), "トップでデータ終端を開示していない");
