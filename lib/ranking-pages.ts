@@ -35,6 +35,7 @@ export interface RankingPageData {
   faqs: RankingFaq[];
   relatedCompareSlugs: string[];
   relatedRankingSlugs: string[]; // 関連ランキングページ
+  relatedGuides: Array<{ label: string; href: string; reason: string }>;
   // シミュレーション基準（全カード共通）
   simYear: number;
   simMonth: number;
@@ -113,6 +114,11 @@ export const RANKING_PAGES: RankingPageData[] = [
     ],
     relatedCompareSlugs: ["orukan-vs-sp500", "sp500-vs-nasdaq100", "schd-vs-vym"],
     relatedRankingSlugs: ["nisa", "high-return", "high-dividend"],
+    relatedGuides: [
+      { label: "インデックス投資とは？", href: "/guide/index-investing", reason: "順位を見る前に、指数へ分散する仕組みを確認" },
+      { label: "貯金と投資の違い", href: "/guide/saving-vs-investing", reason: "過去結果より先に、使う時期で資金を分ける" },
+      { label: "積立投資の始め方", href: "/guide/how-to-start", reason: "商品を決める前の確認順序を整理" },
+    ],
   },
 
   // ─── 新NISAランキング (/ranking/nisa) ─────────────────────────────
@@ -171,6 +177,11 @@ export const RANKING_PAGES: RankingPageData[] = [
     ],
     relatedCompareSlugs: ["orukan-vs-sp500", "sp500-vs-nasdaq100", "schd-vs-sp500"],
     relatedRankingSlugs: ["", "high-return"],
+    relatedGuides: [
+      { label: "NISAを初めて確認する", href: "/guide/nisa-beginner", reason: "非課税制度と投資商品のリスクを分けて理解" },
+      { label: "つみたて投資枠と成長投資枠", href: "/guide/nisa-tsumitate-vs-seicho", reason: "2つの枠の対象商品と年間枠を確認" },
+      { label: "NISAと課税口座の違い", href: "/guide/nisa-vs-tokutei-tax", reason: "損失時の税務を含めて口座の役割を比較" },
+    ],
   },
 
   // ─── リターン重視ランキング (/ranking/high-return) ─────────────────
@@ -217,12 +228,17 @@ export const RANKING_PAGES: RankingPageData[] = [
     faqs: [
       { q: "NASDAQ100とFANG+の過去結果はどう比べますか？", a: "同じ開始月・月額・終了月にそろえた期間末評価額で比較します。NASDAQ100とFANG+は構成銘柄数と指数設計が異なり、特定期間の順位を将来の優劣には使えません。" },
       { q: "高リターンファンドはいつ始めればいいですか？", a: "定額積立（ドルコスト平均法）は購入時期を分散する方法の一つです。高リターン・高リスクの商品は値動きが大きいため、リスク許容度と余裕資金を確認した上で、購入時期や金額を判断する必要があります。" },
-      { q: "NASDAQ100は新NISAで買えますか？", a: "成長投資枠では多くのNASDAQ100ファンドを購入できます。つみたて投資枠は商品によって対応・非対応があります。iFreeNEXT NASDAQ100インデックスなど、つみたて投資枠対応商品を選ぶことも可能です。" },
+      { q: "NASDAQ100は新NISAで買えますか？", a: "NISA対象区分は指数名ではなく正式商品ごとに異なり、変更される場合があります。金融庁の対象商品一覧と、利用する金融機関の商品ページで最新の対象枠を確認してください。" },
       { q: "集中度はどこで確認しますか？", a: "構成銘柄数、上位銘柄比率、対象セクター、指数の入替方法を確認します。具体的な配分は一期間の順位では決めず、資金を使う時期と許容できる値動きに照らして判断します。" },
       { q: "下落時は数値順位をどう読みますか？", a: "順位は2020年開始から2026年9月までの一つの経路です。積立停止・保有継続・売却は、生活資金と資金を使う時期を確認して別々に判断します。過去の順位から回復時期は予測できません。" },
     ],
     relatedCompareSlugs: ["sp500-vs-nasdaq100", "nasdaq100-vs-fangplus"],
     relatedRankingSlugs: ["", "nisa"],
+    relatedGuides: [
+      { label: "インデックス投資の失敗パターン", href: "/guide/index-shippai-pattern", reason: "過去リターンだけで集中商品を選ぶリスクを確認" },
+      { label: "S&P500の暴落リスク", href: "/guide/sp500-booraku-taisho", reason: "下落中の評価額と積立継続を分けて考える" },
+      { label: "ドルコスト平均法", href: "/guide/dollar-cost-averaging", reason: "定額積立でも損失を防げない理由を確認" },
+    ],
   },
 
   // ─── 高配当ランキング (/ranking/high-dividend) ─────────────────────
@@ -266,6 +282,11 @@ export const RANKING_PAGES: RankingPageData[] = [
     ],
     relatedCompareSlugs: ["schd-vs-vym", "schd-vs-sp500"],
     relatedRankingSlugs: ["", "nisa"],
+    relatedGuides: [
+      { label: "分配金と税金", href: "/guide/bunpaikin-to-zeikin", reason: "分配額だけでなく普通分配金と税務を確認" },
+      { label: "配当金の受取方法", href: "/guide/haitoukin-uketori-houhou", reason: "口座区分と受取方式による違いを整理" },
+      { label: "外国税額控除", href: "/guide/gaikoku-zeigaku-koujo", reason: "米国ETFの外国税と国内税を分けて確認" },
+    ],
   },
 ];
 

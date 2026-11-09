@@ -74,8 +74,11 @@ try {
   await cdp.send("Page.enable");
   await cdp.send("Runtime.enable");
 
-  const pages = ["/about", "/orukan", "/ranking/high-dividend", "/from/2020", "/compare/orukan-vs-nasdaq100"];
-  for (const width of [375, 390, 1280]) {
+  const pages = [
+    "/about", "/orukan", "/ranking", "/ranking/nisa", "/ranking/high-return",
+    "/ranking/high-dividend", "/from/2020", "/compare/orukan-vs-nasdaq100",
+  ];
+  for (const width of [375, 390, 768, 1280]) {
     await cdp.send("Emulation.setDeviceMetricsOverride", { width, height: width < 768 ? 844 : 900, deviceScaleFactor: 1, mobile: width < 768 });
     for (const page of pages) {
       await cdp.send("Page.navigate", { url: `${base}${page}` });

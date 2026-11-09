@@ -16,6 +16,7 @@ import { PageVisualStory } from "@/components/visual/VisualStory";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { NISA_LIMITS, NISA_SYSTEM_DISCLAIMER, formatManEn } from "@/lib/nisa";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { analyzeSimulationPath } from "@/lib/simulation-insights";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -29,6 +30,7 @@ interface Props {
 export default function RankingView({ page }: Props) {
   const isRoot = page.slug === "";
   const isNisa = page.slug === "nisa";
+  const isHighReturn = page.slug === "high-return";
   const isHighDividend = page.slug === "high-dividend";
   const breadcrumbSlug = isRoot ? null : page.slug;
   const preparedEntries = page.funds.map((entry) => {
@@ -243,6 +245,28 @@ export default function RankingView({ page }: Props) {
 
           <PageVisualStory kind="ranking" />
 
+          {isHighReturn && (
+            <section className="border-y border-[#B9DCEB] py-4 space-y-3" aria-labelledby="high-return-path-title">
+              <div>
+                <h2 id="high-return-path-title" className="text-sm font-bold text-[#263A53]">期間末順位だけでは分からない値動き</h2>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">同じ積立条件でも、元本を下回った月数と最も大きな月末評価損は商品ごとに異なります。</p>
+              </div>
+              <div className="space-y-2">
+                {rankedEntries.map(({ entry, result }) => {
+                  const insight = analyzeSimulationPath(result.dataPoints);
+                  return (
+                    <div key={entry.fundId} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-b border-[#D9E3E8] pb-2 text-xs last:border-b-0 last:pb-0">
+                      <span className="font-bold text-[#263A53]">{FUNDS[entry.fundId].shortName}</span>
+                      <span className="text-slate-600">元本割れ {insight.belowPrincipalMonths}か月</span>
+                      <span className="font-semibold text-rose-700">最大 {insight.worstShortfallRate.toFixed(1)}%</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-xs leading-relaxed text-slate-500">月初の積立後に月次収益を反映した月末値で判定しています。日中の最大下落や将来の回復期間を示す指標ではありません。</p>
+            </section>
+          )}
+
           {isRoot && (
             <section className="border-y border-[#D9E3E8] py-4 space-y-2">
               <h2 className="text-sm font-bold text-[#263A53]">順位の次に確認すること</h2>
@@ -394,20 +418,18 @@ export default function RankingView({ page }: Props) {
               関連する投資ガイド
             </h2>
             <div className="space-y-2">
-              {[
-                { label: "新NISAの商品比較ガイド",       href: "/guide/nisa-beginner" },
-                { label: "インデックス投資とは？",        href: "/guide/index-investing" },
-                { label: "積立投資の始め方",              href: "/guide/how-to-start" },
-                { label: "ドルコスト平均法の効果",        href: "/guide/dollar-cost-averaging" },
-              ].map(({ label, href }) => (
+              {page.relatedGuides.map(({ label, href, reason }) => (
                 <Link
                   key={href}
                   href={href}
                   className="flex items-center justify-between rounded-xl bg-white border border-[#E1E8EC] px-4 py-3 hover:bg-[#EFF5F7] transition-colors"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-start gap-2">
                     <BookOpen className="h-3.5 w-3.5 text-[#236B8E] flex-shrink-0" />
-                    <span className="text-sm text-slate-700">{label}</span>
+                    <span>
+                      <span className="block text-sm font-semibold text-slate-700">{label}</span>
+                      <span className="mt-0.5 block text-xs leading-relaxed text-slate-500">{reason}</span>
+                    </span>
                   </div>
                   <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
                 </Link>
@@ -436,30 +458,6 @@ export default function RankingView({ page }: Props) {
               積立タイムマシンで試す
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </section>
-
-          {/* ── 人気ページ ───────────────────────────────────── */}
-          <section className="space-y-3">
-            <h2 className="text-sm font-bold text-slate-600">人気ページ</h2>
-            <div className="grid grid-cols-1 gap-2">
-              {[
-                { label: "オルカンとは？",         href: "/fund/orukan" },
-                { label: "S&P500とは？",           href: "/fund/sp500" },
-                { label: "オルカン vs S&P500",     href: "/compare/orukan-vs-sp500" },
-                { label: "2020年からオルカン",      href: "/orukan/2020" },
-                { label: "月3万円オルカン積立",     href: "/orukan/monthly/30000" },
-                { label: "積立開始年ランキング",    href: "/from/2020" },
-              ].map(({ label, href }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center justify-between rounded-xl bg-white border border-[#E1E8EC] px-4 py-3 hover:bg-[#EFF5F7] transition-colors"
-                >
-                  <span className="text-sm text-slate-700">{label}</span>
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-500 flex-shrink-0" />
-                </Link>
-              ))}
-            </div>
           </section>
 
         </div>
