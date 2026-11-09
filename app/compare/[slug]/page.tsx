@@ -398,7 +398,7 @@ export default async function ComparePage({ params }: Props) {
                   className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
-                  次に読まれることが多い比較
+                  関連する条件を比べる
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {related.map((p) => {
@@ -424,7 +424,7 @@ export default async function ComparePage({ params }: Props) {
             );
           })()}
 
-          {/* ── 他の人気シミュレーション ──────────────────────────── */}
+          {/* ── 同じ銘柄の開始年別シミュレーション ────────────────── */}
           {(() => {
             const involved = new Set([page.fundAId, page.fundBId]);
             const simLinks = YEAR_PAGES.filter((yp) => involved.has(yp.fundId) && isVerifiedReturnSeries(yp.fundId)).slice(0, 4);
@@ -435,7 +435,7 @@ export default async function ComparePage({ params }: Props) {
                   className="text-base font-bold text-[#263A53] mb-4"
                   style={{ fontFamily: "var(--font-serif-jp), serif" }}
                 >
-                  他の人気シミュレーション
+                  同じ銘柄を開始年別に見る
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
                   {simLinks.map((yp) => {

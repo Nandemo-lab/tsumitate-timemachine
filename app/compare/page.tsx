@@ -12,7 +12,7 @@ const BASE_URL = SITE_URL;
 const PAGE_TITLE = "銘柄比較一覧";
 const TITLE = `${PAGE_TITLE}｜${SITE_NAME}`;
 const DESCRIPTION =
-  "オルカン・S&P500・NASDAQ100・SCHD・VYM・VTIなど、人気銘柄同士の過去実績・コスト・NISA対応を比較したページ一覧です。";
+  "オルカン・S&P500・NASDAQ100・SCHD・VYM・VTIなど、主要銘柄同士の過去実績・コスト・NISA対応を比較したページ一覧です。";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -65,7 +65,7 @@ export default function CompareIndexPage() {
               銘柄比較一覧
             </h1>
             <p className="text-sm text-slate-600 leading-relaxed">
-              人気銘柄同士の過去実績・コスト・NISA対応を比較したページ一覧です。気になる2銘柄を選んで、過去データで違いを確認できます。
+              主要銘柄同士の過去実績・コスト・NISA対応を比較したページ一覧です。気になる2銘柄を選んで、過去データで違いを確認できます。
             </p>
           </header>
 

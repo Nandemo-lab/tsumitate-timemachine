@@ -476,13 +476,13 @@ export default async function MonthlyAmountPage({ params }: Props) {
             </div>
           </section>
 
-          {/* ── 人気ページ ───────────────────────────────────── */}
+          {/* ── 関連ページ ───────────────────────────────────── */}
           <section className="space-y-3">
             <h2
               className="text-sm font-bold text-slate-600"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              人気ページ
+              関連する条件を見る
             </h2>
             <div className="grid grid-cols-1 gap-2">
               {[

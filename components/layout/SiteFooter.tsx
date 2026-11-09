@@ -16,7 +16,7 @@ const articleLinks = ARTICLE_PAGES.map((a) => {
 
 const SECTIONS = [
   {
-    title: "人気ページ",
+    title: "主なページ",
     links: [
       { href: "/",        label: "積立シミュレーション" },
       { href: "/guide",   label: "投資ガイド一覧" },
@@ -51,7 +51,7 @@ const SECTIONS = [
     ],
   },
   {
-    title: "人気比較",
+    title: "商品比較",
     links: [
       { href: "/compare/orukan-vs-sp500",       label: "オルカン vs S&P500" },
       { href: "/compare/sp500-vs-nasdaq100",     label: "S&P500 vs NASDAQ100" },

@@ -467,7 +467,7 @@ export default async function YearPage({ params }: Props) {
             </div>
           </section>
 
-          {/* ── 他の人気シミュレーション（同年・他銘柄） ─────────── */}
+          {/* ── 同じ開始年の他銘柄シミュレーション ───────────────── */}
           {crossFundPages.length > 0 && (
             <section>
               <h2
@@ -586,13 +586,13 @@ export default async function YearPage({ params }: Props) {
             </div>
           </section>
 
-          {/* ── 人気ページ ──────────────────────────────────────────── */}
+          {/* ── 関連する積立シミュレーション ───────────────────────── */}
           <section>
             <h2
               className="text-base font-bold text-[#263A53] mb-4"
               style={{ fontFamily: "var(--font-serif-jp), serif" }}
             >
-              人気の積立シミュレーション
+              関連する積立シミュレーション
             </h2>
             <div className="grid grid-cols-1 gap-2">
               {[

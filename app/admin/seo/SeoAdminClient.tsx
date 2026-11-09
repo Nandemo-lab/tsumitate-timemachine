@@ -307,7 +307,7 @@ function generateTop5(enriched: EnrichedPage[]): Top5Item[] {
       effect = `順位${sc.position.toFixed(1)}位 → 10位以内でクリック数3〜5倍が見込める`;
       specific = missingCats.length > 0
         ? `「${missingCats.slice(0, 2).join("」「")}」ページからの内部リンクを追加する`
-        : "関連する人気ページからのアンカーテキストを最適化する";
+        : "関連性の高いページからのアンカーテキストを最適化する";
     }
     // 高表示・低クリック → descriptionも見直し
     else if (sc && sc.impressions > 500 && sc.clicks < 10) {

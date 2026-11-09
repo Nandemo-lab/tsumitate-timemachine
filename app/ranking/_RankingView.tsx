@@ -51,6 +51,14 @@ export default function RankingView({ page }: Props) {
   const displayedCriteria = page.criteria;
   const displayedFaqs = page.faqs;
   const comparisonResult = rankedEntries[0]?.result;
+  const pathSummaries = rankedEntries.map(({ entry, result }) => ({
+    entry,
+    result,
+    insight: analyzeSimulationPath(result.dataPoints),
+  }));
+  const shallowestPath = [...pathSummaries].sort(
+    (a, b) => b.insight.worstShortfallRate - a.insight.worstShortfallRate,
+  )[0];
 
   // fangplus には /fund/fangplus がある
   const FUND_SLUG_MAP: Record<string, string> = {
@@ -268,9 +276,24 @@ export default function RankingView({ page }: Props) {
           )}
 
           {isRoot && (
-            <section className="border-y border-[#D9E3E8] py-4 space-y-2">
-              <h2 className="text-sm font-bold text-[#263A53]">順位の次に確認すること</h2>
-              <p className="text-xs leading-relaxed text-slate-600">投資対象、費用、分散範囲、資金を使う時期、許容できる値動きを商品詳細で確認します。数値順位は初心者適性を示しません。</p>
+            <section className="border-y border-[#D9E3E8] py-4 space-y-3">
+              <div>
+                <h2 className="text-sm font-bold text-[#263A53]">期間末1位と、途中の値動きは別の情報</h2>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">同じ条件の期間末評価額を並べた順位です。開始月・終了月・比較対象が変われば、途中経路と順位も変わり得ます。</p>
+              </div>
+              <dl className="grid grid-cols-2 gap-4 border-y border-[#E1E8EC] py-3 text-xs">
+                <div>
+                  <dt className="text-slate-500">期間末評価額 1位</dt>
+                  <dd className="mt-1 font-bold text-[#263A53]">{pathSummaries[0] ? FUNDS[pathSummaries[0].entry.fundId].shortName : "—"}</dd>
+                  <dd className="mt-1 text-emerald-700">{pathSummaries[0] ? formatCurrency(pathSummaries[0].result.finalValue) : "—"}</dd>
+                </div>
+                <div>
+                  <dt className="text-slate-500">最大月末評価損が浅い</dt>
+                  <dd className="mt-1 font-bold text-[#263A53]">{shallowestPath ? FUNDS[shallowestPath.entry.fundId].shortName : "—"}</dd>
+                  <dd className="mt-1 text-rose-700">{shallowestPath ? `${shallowestPath.insight.worstShortfallRate.toFixed(1)}%` : "—"}</dd>
+                </div>
+              </dl>
+              <p className="text-xs leading-relaxed text-slate-600">投資対象、費用、分散範囲、資金を使う時期も商品詳細で確認してください。数値順位は初心者適性や将来の推奨順を示しません。</p>
             </section>
           )}
 

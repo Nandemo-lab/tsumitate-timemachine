@@ -10,11 +10,11 @@ const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   title: "コラム一覧",
-  description: "オルカン・S&P500・NASDAQ100・SCHDなど人気銘柄の比較コラムを過去データとともに解説します。",
+  description: "オルカン・S&P500・NASDAQ100・SCHDなど主要銘柄の比較コラムを過去データとともに解説します。",
   alternates: { canonical: `${BASE_URL}/articles` },
   openGraph: {
     title: `コラム一覧 | ${SITE_NAME}`,
-    description: "人気銘柄の比較コラムを過去データとともに解説します。",
+    description: "主要銘柄の比較コラムを過去データとともに解説します。",
     url: `${BASE_URL}/articles`,
     type: "website",
     siteName: SITE_NAME,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `コラム一覧 | ${SITE_NAME}`,
-    description: "人気銘柄の比較コラムを過去データとともに解説します。",
+    description: "主要銘柄の比較コラムを過去データとともに解説します。",
     images: [`${BASE_URL}/api/og?static=1`],
   },
 };
@@ -59,7 +59,7 @@ export default function ArticlesIndexPage() {
               コラム一覧
             </h1>
             <p className="text-sm text-slate-600 leading-relaxed">
-              人気銘柄の違いを、過去データをもとに整理した比較コラムです。
+              主要銘柄の違いを、過去データをもとに整理した比較コラムです。
             </p>
           </header>
 

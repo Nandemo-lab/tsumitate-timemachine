@@ -14,7 +14,7 @@ const BASE_URL = SITE_URL;
 const PAGE_TITLE = "銘柄解説一覧";
 const TITLE = `${PAGE_TITLE}｜${SITE_NAME}`;
 const DESCRIPTION =
-  "オルカン・S&P500・NASDAQ100・SCHD・VYM・VTI・FANG+など、人気銘柄の特徴・信託報酬・NISA対応・積立実績を解説したページ一覧です。";
+  "オルカン・S&P500・NASDAQ100・SCHD・VYM・VTI・FANG+など、主要銘柄の特徴・信託報酬・NISA対応・積立実績を解説したページ一覧です。";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

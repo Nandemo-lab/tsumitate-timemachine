@@ -12,6 +12,7 @@ import PageRoleGuide from "@/components/common/PageRoleGuide";
 import { getReturnSeriesDefinition } from "@/lib/return-series";
 import { getFundPageSlug } from "@/lib/fund-seo-pages";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { analyzeSimulationPath } from "@/lib/simulation-insights";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 
@@ -82,17 +83,21 @@ export default async function FundLandingPage({ params }: Props) {
     { title: "費用", description: fund.encyclopedia.managementFee },
     { title: "検証できる実績期間", description: returnDefinition.quality === "A" ? `${returnDefinition.startMonth}〜${returnDefinition.endMonth}` : "参考データ・月次原典未検証" },
   ];
-  const displayedFaqs = [
-    { q: `${fund.shortName}を確認するときの要点は？`, a: `投資対象は${fund.description}、構成は${fund.shareCount}、費用は${fund.encyclopedia.managementFee}です。商品設定日、NISA対象区分、許容できる値動きも正式資料で確認してください。` },
-    { q: "このページの積立結果は将来予測ですか？", a: "いいえ。商品設定後の収録済み月次データに同じ計算条件を適用した過去結果です。税金、売買手数料、実際の約定価格は個別計算していません。" },
-    { q: "データ品質はどこで確認できますか？", a: returnDefinition.quality === "A" ? `A品質です。${returnDefinition.seriesName}を${returnDefinition.startMonth}から${returnDefinition.endMonth}まで収録しています。` : "G品質（参考データ・原典未検証）です。検証済み実績と同じ確度の数値比較には使用しません。" },
-  ];
   const result = simulate({
     fundId: page.fundId,
     startYear: page.simYear,
     startMonth: page.simMonth,
     monthlyAmount: page.simAmount,
   });
+  const pathInsight = analyzeSimulationPath(result.dataPoints);
+  const displayedFaqs = [
+    {
+      q: `${page.simYear}年${page.simMonth}月開始では、途中で元本割れしましたか？`,
+      a: `月初積立後の月末値で見ると、元本を下回った月は${pathInsight.belowPrincipalMonths}か月、最大月末評価損は${pathInsight.worstShortfallRate.toFixed(1)}%でした。日中の最大下落や、別の開始月・積立条件の結果を示すものではありません。`,
+    },
+    { q: "このページの積立結果は将来予測ですか？", a: "いいえ。商品設定後の収録済み月次データに同じ計算条件を適用した過去結果です。税金、売買手数料、実際の約定価格は個別計算していません。" },
+    { q: "データ品質はどこで確認できますか？", a: returnDefinition.quality === "A" ? `A品質です。${returnDefinition.seriesName}を${returnDefinition.startMonth}から${returnDefinition.endMonth}まで収録しています。` : "G品質（参考データ・原典未検証）です。検証済み実績と同じ確度の数値比較には使用しません。" },
+  ];
 
   const relatedPages = page.relatedSlugs
     .map((s) => FUND_SEO_PAGES.find((p) => p.slug === s))
@@ -261,6 +266,20 @@ export default async function FundLandingPage({ params }: Props) {
                 <ShieldCheck className="h-3 w-3 flex-shrink-0" />
                 <span>{returnDefinition.quality === "A" ? `${returnDefinition.seriesName}（${returnDefinition.startMonth}〜${returnDefinition.endMonth}）` : "参考データ・原典未検証。A品質の実績順位には使用していません"}</span>
               </div>
+            </div>
+
+            <div className="mb-4 border-y border-[#D9E3E8] py-3">
+              <dl className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <dt className="text-xs text-slate-500">元本を下回った月</dt>
+                  <dd className="mt-1 font-bold text-[#263A53]">{pathInsight.belowPrincipalMonths}か月</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-slate-500">最大月末評価損</dt>
+                  <dd className="mt-1 font-bold text-rose-700">{pathInsight.worstShortfallRate.toFixed(1)}%</dd>
+                </div>
+              </dl>
+              <p className="mt-2 text-[11px] leading-relaxed text-slate-500">月初積立後の月末値で判定。期間末の利益だけでは分からない途中経過です。</p>
             </div>
 
             <Link
