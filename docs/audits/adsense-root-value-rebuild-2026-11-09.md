@@ -50,3 +50,7 @@
 - 固定年・固定月額・From・Ranking 派生の統合判断には、無料の GSC Query × Page と被リンクの実測が必要。
 - Work のローカルブラウザ利用が無効だったため、この作業環境では新規スクリーンショットによる375/390/768/1280の視覚検収を実施できなかった。今回はレイアウトCSSを変更せず、レンダリングHTMLとライブHTTPを検証した。
 
+## 公開経路の注意
+
+- 同一commitを保全ブランチへ先にpushすると、VercelがPreviewとして処理済みと判定し、その後のmain pushでProduction aliasが更新されない場合がある。Production反映時はmainへのpushを先に行い、Current ProductionのSource SHAと本番HTMLの両方を確認する。
+
