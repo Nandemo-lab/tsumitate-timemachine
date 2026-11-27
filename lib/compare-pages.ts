@@ -102,11 +102,13 @@ export const COMPARE_PAGES: ComparePage[] = [
     fundBId: "nasdaq100",
     metaTitle: "S&P500 vs NASDAQ100 どっちがいい？リスク・リターン・積立実績を比較",
     metaDescription:
-      "S&P500とNASDAQ100の積立実績・リスク・信託報酬を比較。2022年の暴落でどのくらい差がついた？実データで今すぐ確認→",
+      "eMAXIS Slim米国株式（S&P500）とiFreeNEXT NASDAQ100を同じ開始月・月額で比較。2022年の暦年リターンと積立途中の元本割れを、公式月次データの範囲で確認します。",
     relatedDescription: "安定の500社 vs ハイテク100社",
     h1: "S&P500とNASDAQ100、リスクとリターンどっちを選ぶ？",
     intro:
-      "どちらも米国株に投資する指数です。「幅広い500社」か「NASDAQ上場の非金融100社」か——過去の積立実績とリスクを同じ条件で比べます。",
+      "比較対象は指数そのものではなく、eMAXIS Slim米国株式（S&P500）とiFreeNEXT NASDAQ100の国内投信です。商品設定後の共通期間について、同じ月額の積立経路と銘柄構成を分けて比べます。",
+    searchIntentAnswer:
+      "両商品は米国株を対象にしますが、S&P500は複数業種の大型株、NASDAQ100はNASDAQ上場の非金融大型株に絞ります。2022年の暦年リターンは年間の始点と終点の差で、年中の最大下落率ではありません。積立途中の元本割れ月数は下の実績欄から同条件で確認できます。",
     conclusionA: "500社・複数業種を対象 → S&P500",
     conclusionB: "米国大型非金融株100社を対象 → NASDAQ100",
     simYear: 2020,
@@ -114,7 +116,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     simAmount: 30000,
     specs: [
       { label: "投資対象",      a: "米国大型株500社",              b: "ナスダック上場の非金融100社" },
-      { label: "業種分散",      a: "○ 全業種に分散",               b: "△ IT・ハイテク偏重（約60%）" },
+      { label: "業種分散",      a: "複数業種の大型株",               b: "非金融の大型株・ハイテク比率が高い" },
       { label: "銘柄数",        a: FUNDS.sp500.shareCount,          b: FUNDS.nasdaq100.shareCount },
       { label: "集中の特徴",    a: "米国大型株500社・複数業種",     b: "非金融の大型株100社" },
       verifiedCagrSpec("sp500", "nasdaq100"),
@@ -125,7 +127,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     faqs: [
       {
         q: "S&P500とNASDAQ100の違いは何ですか？",
-        a: "S&P500は米国大型株500社に幅広く分散投資するインデックスです。NASDAQ100はナスダック上場の非金融大型株上位100社（AppleやNVIDIA、Microsoftなどハイテク企業中心）に絞って投資します。NASDAQ100のほうがIT集中度が高く、上昇相場では大きく伸びる一方、下落時の値動きも大きい傾向があります。",
+        a: "このページはS&P500連動とNASDAQ100連動の国内投信を比較しています。前者は米国の複数業種の大型株、後者はNASDAQ上場の非金融大型株を対象とします。組入銘柄や業種比率は変わるため、購入時の運用会社の月次資料で確認してください。",
       },
       {
         q: "長期投資ならS&P500とNASDAQ100どちらがおすすめですか？",
@@ -226,11 +228,13 @@ export const COMPARE_PAGES: ComparePage[] = [
     fundBId: "orcan",
     metaTitle: "VTI vs オルカン どっちがいい？ETF vs 投信・積立実績を徹底比較",
     metaDescription:
-      "VTI（楽天VTI含む）とオルカンの違い・積立実績・NISA対応を比較。ETFと投資信託どちらが長期積立に向いている？今すぐ確認→",
+      "米国ETFのVTIと国内投信オルカンを、投資対象・買付方法・分配・NISA区分・同条件の過去積立で比較。楽天VTIは別商品として区別します。",
     relatedDescription: "ETFと投資信託を比較",
     h1: "VTIとオルカン、米国集中 vs 全世界どっちがいい？",
     intro:
-      "「米国全体に投資するETF」VTIと「全世界に分散する投資信託」オルカン。どちらも長期積立の定番ですが、投資対象・コスト・買い方の違いを数字で解説します。",
+      "このページのVTIは米国上場ETFそのものです。楽天VTIなどの国内投信とは区別し、オルカンとの投資対象・買付方法・分配・費用を比較します。過去積立の円換算は公式月次資料と為替データに基づく試算です。",
+    searchIntentAnswer:
+      "VTIは米国株式市場全体に投資するUSD建てETF、オルカンは先進国・新興国の株式に投資する円建て国内投信です。VTIには外貨売買と分配金の扱いがあり、表示された積立評価額には個別の税金・売買手数料・為替スプレッドを加減していません。",
     conclusionA: "米国集中・ETF運用 → VTI",
     conclusionB: "全世界分散・簡単積立 → オルカン",
     simYear: 2020,
@@ -243,7 +247,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "米国比率",      a: "100%",                          b: "構成国で最大（比率は変動）" },
       { label: "投資範囲",      a: "米国株式市場全体",             b: "全世界の株式" },
       verifiedCagrSpec("vti", "orcan"),
-      { label: "経費率",        a: `${formatExpenseRatio("vti")}（世界最低水準）`,       b: formatExpenseRatio("orcan") },
+      { label: "経費率",        a: formatExpenseRatio("vti"),       b: formatExpenseRatio("orcan") },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",           b: "○ つみたて・成長両対応" },
     ],
     faqs: [
@@ -265,11 +269,11 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "手数料はVTIとオルカンのどちらが安いですか？",
-        a: "経費率（実質コスト）ではVTIが年0.03%と世界最低水準です。オルカンは年0.05775%で、投資信託の中では最安クラス。差は年0.02%程度で、100万円投資しても年200円の差です。どちらも十分に低コストで、手数料で悩む必要はほとんどありません。",
+        a: `公表されている経費率・信託報酬はVTIが${formatExpenseRatio("vti")}、オルカンが${formatExpenseRatio("orcan")}です。費用の定義は商品形態によって異なり、米国ETFの売買手数料、外貨交換のコストや分配金への課税はこの数値に含まれません。`,
       },
       {
         q: "将来性はVTIとオルカンのどちらが高いですか？",
-        a: "過去の実績ではVTI（米国集中）がオルカン（全世界）を若干上回るリターンを記録しています。ただし「今後も米国が世界をリードし続けるか」は不明です。米国優位が続くと思うならVTI、世界全体の成長を取り込みたいならオルカンという選び方が一般的です。",
+        a: "掲載する過去実績は、両商品の公式月次データがそろう共通期間に限った円換算試算です。掲載期間の評価額の順位から将来の優劣は判断できません。米国のみと全世界という投資範囲、ETFと国内投信という買付方法の違いを確認できます。",
       },
     ],
   },
@@ -286,6 +290,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "SCHDとVYM、配当投資するならどっちがいい？",
     intro:
       "米国高配当ETFのSCHDとVYMについて、指数の銘柄選定方法・分散範囲・費用を整理します。SCHDのリターン系列はG品質のため、検証済み実績による優劣は判定しません。",
+    searchIntentAnswer:
+      "SCHDは財務指標などを用いて対象を絞り、VYMはより広い高配当株を対象とします。どちらも米国ETFですが、分配利回りだけで優劣は決められません。SCHDの月次原典は未検証のため、このページでは両商品の積立評価額や最大下落率を数値比較しません。",
     conclusionA: "財務比率等で約100銘柄を選定 → SCHD",
     conclusionB: "より広い銘柄分散 → VYM",
     simYear: 2020,
