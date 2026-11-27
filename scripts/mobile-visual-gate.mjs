@@ -1,0 +1,40 @@
+import { chromium } from 'playwright'
+import { mkdir, writeFile } from 'node:fs/promises'
+
+const base = 'http://127.0.0.1:3000'
+const pages = [
+  '/', '/compare/orukan-vs-sp500', '/compare/orukan-vs-nasdaq100',
+  '/compare/vti-vs-sp500', '/simulate/orcan/2024',
+  '/guide/orukan-ippon-de-ii',
+]
+const widths = [375, 390, 430]
+const results = []
+await mkdir('mobile-evidence', { recursive: true })
+const browser = await chromium.launch({ headless: true })
+try {
+  for (const width of widths) {
+    const context = await browser.newContext({ viewport: { width, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true })
+    for (const path of pages) {
+      const page = await context.newPage()
+      const errors = []
+      page.on('pageerror', error => errors.push(error.message))
+      page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
+      const response = await page.goto(base + path, { waitUntil: 'networkidle' })
+      const layout = await page.evaluate(() => ({
+        viewport: innerWidth,
+        documentWidth: document.documentElement.scrollWidth,
+        brokenImages: [...document.images].filter(image => !image.complete || image.naturalWidth === 0).map(image => image.currentSrc),
+        tables: [...document.querySelectorAll('table')].map(table => ({ width: Math.round(table.getBoundingClientRect().width), parentWidth: Math.round(table.parentElement.getBoundingClientRect().width), scrollable: table.parentElement.scrollWidth > table.parentElement.clientWidth })),
+        buttons: [...document.querySelectorAll('a, button')].filter(element => element.getBoundingClientRect().width > 0).length,
+      }))
+      const slug = path === '/' ? 'home' : path.replace(/\W+/g, '-').replace(/^-|-$/g, '')
+      await page.screenshot({ path: `mobile-evidence/${slug}-${width}.png`, fullPage: true })
+      results.push({ path, width, status: response?.status(), ...layout, errors })
+      await page.close()
+    }
+    await context.close()
+  }
+} finally { await browser.close() }
+await writeFile('mobile-evidence/results.json', JSON.stringify(results, null, 2))
+console.log(JSON.stringify(results, null, 2))
+if (results.some(result => result.status !== 200 || result.documentWidth > result.viewport + 1 || result.brokenImages.length || result.errors.length)) process.exitCode = 1
