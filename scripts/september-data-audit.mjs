@@ -22,7 +22,8 @@ const EXPECTED_PREFIX_SHA256 = {
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const rawSha256Matches = (value, expected) =>
-  sha256(value) === expected || sha256(value.replace(/\r\n/g, "\n")) === expected;
+  [value, value.replace(/\r\n/g, "\n"), value.replace(/\r?\n/g, "\r\n")]
+    .some((variant) => sha256(variant) === expected);
 const closeEnough = (actual, expected, tolerance = 1e-12) =>
   Math.abs(actual - expected) <= tolerance;
 
