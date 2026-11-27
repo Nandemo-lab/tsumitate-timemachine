@@ -7,12 +7,12 @@ const dataDir = path.join(root, "data", "verified");
 const manifest = JSON.parse(await readFile(path.join(dataDir, "manifest.json"), "utf8"));
 const expectedSeries = ["vt", "vti", "vym", "eem", "inda", "orcan", "sp500", "nasdaq100", "fangplus"];
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
-// Git may materialize text snapshots with CRLF on Windows even when the
-// manifest was generated from LF bytes. Some downloaded CSV snapshots already
-// contain CRLF and are hashed as-is, so accept either the exact bytes or the
-// checkout-normalized LF representation without rewriting the source data.
+// Git can normalize CSV line endings in either direction on checkout. Compare
+// the original and both newline encodings; all non-newline source bytes must
+// still match the manifest. Never rewrite the snapshot or its recorded hash.
 const rawSha256Matches = (value, expected) =>
-  sha256(value) === expected || sha256(value.replace(/\r\n/g, "\n")) === expected;
+  [value, value.replace(/\r\n/g, "\n"), value.replace(/\r?\n/g, "\r\n")]
+    .some((variant) => sha256(variant) === expected);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
