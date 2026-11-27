@@ -394,6 +394,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "VTとオルカン、全世界投資するならどっちがいい？",
     intro:
       `どちらも全世界株式へ投資しますが、VTは米国ETF（${FUNDS.vt.shareCount}）、オルカンは国内投資信託（${FUNDS.orcan.shareCount}）です。値動きの差よりも、分配金、円での自動積立、NISAで使える枠など保有方法の違いが判断軸になります。`,
+    searchIntentAnswer:
+      "どちらも世界株式を対象にします。VTは米国上場ETFを口数単位で買い、分配金を受け取ります。オルカンは国内投信として円で積立設定できます。月3万円の比較は購入単位・税務・為替取引まで同一化した実売買の再現ではなく、月次系列を同じ条件に置いた参考結果です。",
     conclusionA: "ETF・幅広分散重視 → VT",
     conclusionB: "投信・NISA積立・手軽さ重視 → オルカン",
     simYear: 2020,
@@ -443,13 +445,15 @@ export const COMPARE_PAGES: ComparePage[] = [
     slug: "vti-vs-sp500",
     fundAId: "vti",
     fundBId: "sp500",
-    metaTitle: "VTI vs S&P500 どっちがいい？実績はほぼ同じ？違いを徹底比較",
+    metaTitle: "VTIとS&P500の違い｜米国全体と大型株・積立実績を比較",
     metaDescription:
-      "VTIとS&P500の積立実績・コスト・NISA対応を比較。ほぼ同じと言われる2つの本当の違いを今すぐ確認→",
+      "VTIと国内S&P500投信は何が違う？中小型株を含む範囲、ETFと投信の買い方、NISA枠、公式月次データの共通期間で月3万円の過去実績を比較します。",
     relatedDescription: "米国全体 vs 大型株500社",
     h1: "VTIとS&P500、どっちを選ぶ？実質的な違いとは",
     intro:
       `VTIは米国株${FUNDS.vti.shareCount}を対象とするETF、S&P500は米国大型株500社を対象とする投資信託です。「中小型株を含むか」と「ETFか投信か」が主な違いです。`,
+    searchIntentAnswer:
+      "VTIは中小型株も含む米国市場全体のETF、比較対象のS&P500は米国大型株を対象とする国内投信です。投資範囲に加え、口数・円での積立設定、分配金、利用できるNISA枠が異なります。過去の積立差は同じ開始月・月額・共通終端で確認でき、購入時の税務・為替手数料を完全に再現した結果ではありません。",
     conclusionA: "中小型株込み・ETF保有 → VTI",
     conclusionB: "大型株500社・投信積立 → S&P500",
     simYear: 2020,
@@ -460,7 +464,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "形式",          a: "ETF（株式市場でリアルタイム売買）", b: "投資信託（毎日基準価格）" },
       { label: "中小型株",      a: "○ 含む",                           b: "× 大型株のみ" },
       { label: "経費率",        a: `${formatExpenseRatio("vti")}（世界最低水準）`,           b: formatExpenseRatio("sp500") },
-      { label: "値動きの近似度", a: "S&P500と相関0.99以上",             b: "VTIとほぼ同じ動き" },
+      { label: "値動きの比較", a: "大型株の影響を受けるが中小型株も含む", b: "米国大型株が対象。期間により実績差が変わる" },
       { label: "NISA対応",      a: "○ 成長投資枠（ETF）",              b: "○ つみたて・成長両対応" },
       { label: "最低購入額",    a: "数万円〜（口数単位）",              b: "100円〜（積立設定可）" },
       { label: "自動積立",      a: "△ 証券会社設定必要",               b: "◎ 簡単に毎月自動積立" },
