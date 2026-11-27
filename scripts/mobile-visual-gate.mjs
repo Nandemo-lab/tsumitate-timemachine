@@ -29,10 +29,15 @@ try {
         scrollTo(0, 0)
       })
       await page.waitForLoadState('networkidle')
-      const layout = await page.evaluate(() => ({
+      const layout = await page.evaluate(async () => ({
         viewport: innerWidth,
         documentWidth: document.documentElement.scrollWidth,
-        brokenImages: [...document.images].filter(image => image.currentSrc && (!image.complete || image.naturalWidth === 0)).map(image => image.currentSrc),
+        brokenImages: (await Promise.all([...new Set([...document.images].map(image => image.currentSrc).filter(Boolean))].map(src => new Promise(resolve => {
+          const image = new Image()
+          image.onload = () => resolve(null)
+          image.onerror = () => resolve(src)
+          image.src = src
+        })))).filter(Boolean),
         tables: [...document.querySelectorAll('table')].map(table => ({ width: Math.round(table.getBoundingClientRect().width), parentWidth: Math.round(table.parentElement.getBoundingClientRect().width), scrollable: table.parentElement.scrollWidth > table.parentElement.clientWidth })),
         buttons: [...document.querySelectorAll('a, button')].filter(element => element.getBoundingClientRect().width > 0).length,
       }))
