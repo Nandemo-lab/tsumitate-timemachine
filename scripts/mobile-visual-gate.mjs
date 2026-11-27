@@ -20,10 +20,19 @@ try {
       page.on('pageerror', error => errors.push(error.message))
       page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
       const response = await page.goto(base + path, { waitUntil: 'networkidle' })
+      // Trigger lazy-loaded images before asserting that visible assets work.
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.documentElement.scrollHeight; y += 500) {
+          scrollTo(0, y)
+          await new Promise(resolve => setTimeout(resolve, 30))
+        }
+        scrollTo(0, 0)
+      })
+      await page.waitForLoadState('networkidle')
       const layout = await page.evaluate(() => ({
         viewport: innerWidth,
         documentWidth: document.documentElement.scrollWidth,
-        brokenImages: [...document.images].filter(image => !image.complete || image.naturalWidth === 0).map(image => image.currentSrc),
+        brokenImages: [...document.images].filter(image => image.currentSrc && (!image.complete || image.naturalWidth === 0)).map(image => image.currentSrc),
         tables: [...document.querySelectorAll('table')].map(table => ({ width: Math.round(table.getBoundingClientRect().width), parentWidth: Math.round(table.parentElement.getBoundingClientRect().width), scrollable: table.parentElement.scrollWidth > table.parentElement.clientWidth })),
         buttons: [...document.querySelectorAll('a, button')].filter(element => element.getBoundingClientRect().width > 0).length,
       }))
