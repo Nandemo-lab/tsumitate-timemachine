@@ -16,6 +16,11 @@ try {
     const context = await browser.newContext({ viewport: { width, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true })
     for (const path of pages) {
       const page = await context.newPage()
+      await page.addInitScript(() => {
+        window.__mobileVitals = { lcpMs: null, cls: 0 }
+        new PerformanceObserver(list => { for (const entry of list.getEntries()) window.__mobileVitals.lcpMs = Math.round(entry.startTime) }).observe({ type: 'largest-contentful-paint', buffered: true })
+        new PerformanceObserver(list => { for (const entry of list.getEntries()) if (!entry.hadRecentInput) window.__mobileVitals.cls += entry.value }).observe({ type: 'layout-shift', buffered: true })
+      })
       const errors = []
       page.on('pageerror', error => errors.push(error.message))
       page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
@@ -32,6 +37,7 @@ try {
       const layout = await page.evaluate(async () => ({
         viewport: innerWidth,
         documentWidth: document.documentElement.scrollWidth,
+        labVitals: window.__mobileVitals,
         brokenImages: (await Promise.all([...new Set([...document.images].map(image => image.currentSrc).filter(Boolean))].map(src => new Promise(resolve => {
           const image = new Image()
           image.onload = () => resolve(null)
