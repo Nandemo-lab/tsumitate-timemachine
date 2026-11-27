@@ -1,0 +1,30 @@
+name: Mobile visual gate
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright@1.64.1
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Start isolated preview
+        run: |
+          npx next start -p 3000 > /tmp/finance-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:3000/ >/dev/null && break; sleep 1; done
+      - run: node scripts/mobile-visual-gate.mjs
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: mobile-evidence
+          path: mobile-evidence/
+          retention-days: 7
