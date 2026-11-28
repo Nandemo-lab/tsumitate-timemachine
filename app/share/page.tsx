@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ShareClient from "./ShareClient";
 
 const BASE_URL = "https://tsumitate-timemachine.com";
-const title = "共有された積立条件を確認 | 積立タイムマシン";
+const title = "共有された積立条件を確認";
 const description = "共有URLに保存された銘柄・期間・毎月の積立額を読み取り、過去の月次実績から結果を再計算します。金額と損益は共有ページでご確認ください。";
 
 // A generic, accurate card for every amount and comparison. The old
