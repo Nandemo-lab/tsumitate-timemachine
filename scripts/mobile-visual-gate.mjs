@@ -7,6 +7,10 @@ const pages = [
   '/compare/vti-vs-sp500', '/simulate/orcan/2024',
   '/simulate/orcan/2024?amount=50000',
   '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=50000',
+  '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=10000',
+  '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=30000',
+  '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=100000',
+  '/share?f=orcan&fb=sp500&y=2024&m=1&ey=2026&em=9&a=50000',
   '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=0',
   '/guide/orukan-ippon-de-ii',
 ]
@@ -55,9 +59,18 @@ try {
       }))
       const slug = path === '/' ? 'home' : path.replace(/\W+/g, '-').replace(/^-|-$/g, '')
       await page.screenshot({ path: `mobile-evidence/${slug}-${width}.png`, fullPage: true })
-      const resultVisible = path.includes('amount=50000') || path.includes('a=50000')
+      const amountChecks = [
+        ['a=10000', '毎月1万円', '33万円'],
+        ['a=30000', '毎月3万円', '99万円'],
+        ['a=50000', '毎月5万円', '165万円'],
+        ['a=100000', '毎月10万円', '330万円'],
+      ]
+      const shareAmount = path.startsWith('/share') && amountChecks.find(([query]) => path.includes(query))
+      const resultVisible = path.includes('amount=50000')
         ? layout.text.includes('毎月5万円') && layout.text.includes('165万円') && layout.text.includes('221万円')
-        : path.includes('a=0') ? layout.text.includes('共有条件を確認できません') : true
+        : path.includes('a=0') ? layout.text.includes('共有条件を確認できません')
+          : shareAmount ? layout.text.includes(shareAmount[1]) && layout.text.includes(shareAmount[2]) && layout.text.includes('期間末評価額') && (!path.includes('fb=sp500') || layout.text.includes('S&P500'))
+            : true
       const ogAccurate = !path.startsWith('/share') || (!layout.ogDescription.includes('3万円') && !layout.ogDescription.includes('30000'))
       const { text, ...metrics } = layout
       results.push({ path, width, status: response?.status(), ...metrics, resultVisible, ogAccurate, errors })
