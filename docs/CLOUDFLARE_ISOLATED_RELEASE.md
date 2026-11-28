@@ -1,5 +1,11 @@
 # 積立タイムマシン: Cloudflare隔離配信と切り戻し
 
+## 2026-11-28 共有ページの静的配信検証
+
+既存の234経路に `/share` を追加し、235経路のHTML/RSCをStatic Assetsから配信した。共有URLのクエリはブラウザで既存パーサーを使って検証し、既存の `simulate` で再計算する。任意の積立額を3万円と誤表示しないよう、共通OG説明は金額・収益を含めず、共有画面で条件を確認する表現とした。OG画像は事前生成済みの共通PNG。プレビューでは235経路すべてHTTP 200かつ `X-Robots-Tag: noindex`、未知経路と非公開管理画面は軽量404、既知・未知OGは静的PNG。ブラウザで5万円・2024年1月〜2026年9月の共有結果を確認し、元本165万円、期間末221万円、33回の結果と共通OG説明が一致した。ブラウザ拡張由来のConsole Errorはサイト起因と区別する。
+
+隔離WorkerからOpenNextサーバーのimportを取り除き、動的なSSR/API/404を実行しない構成にした。静的配信によるFree枠の成立性は、Cloudflareの実CPUログ・コールドアクセス・反復アクセスおよび変更ページの375/390/430px CI実画面を確認してから最終判定する。本番Vercelは未変更。
+
 ## 2026-11-28 実配信の判定: Workers Free は NO-GO
 
 公式Wrangler OAuthで既存アカウントへ認証し、`wrangler deploy --config wrangler.isolated.jsonc` で別名Worker `tsumitate-isolated-preview` に配信した。既存ドメインとVercel本番は未変更。プレビュー専用のWorkerラッパーと静的アセットの `_headers` で `noindex, nofollow` を設定し、robots.txtは `Disallow: /` とした。GA4は既存コードの本番ドメイン限定条件によりプレビューから送信しない。再ビルド後は `printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > .open-next/assets/_headers` を実行してから隔離配信する（`.open-next` はGit管理外）。
