@@ -1,5 +1,8 @@
 import app from './.open-next/worker.js'
 import ogImages from './.open-next/og-static-map.json'
+import staticRoutes from './.open-next/static-route-map.json'
+
+const knownStaticRoutes = new Set(staticRoutes)
 
 export { DOQueueHandler, DOShardedTagCache, BucketCachePurge } from './.open-next/worker.js'
 
@@ -22,6 +25,16 @@ export default {
       headers.set('X-Robots-Tag', 'noindex, nofollow')
       if (!exact) headers.set('X-OG-Fallback', 'generic')
       return new Response(response.body, { status: response.status, headers })
+    }
+    // The public build has no other on-demand document routes besides /share.
+    // Avoid booting the Next server for URLs that can only be a 404.
+    const pathname = url.pathname.replace(/\/$/, '') || '/'
+    if (!knownStaticRoutes.has(pathname) && pathname !== '/share' &&
+        pathname !== '/admin/seo' && !pathname.startsWith('/_next/')) {
+      return new Response('<!doctype html><html lang="ja"><meta charset="utf-8"><title>ページが見つかりません</title><main><h1>ページが見つかりません</h1><a href="/">トップへ</a></main></html>', {
+        status: 404,
+        headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
+      })
     }
     const response = await app.fetch(request, env, ctx)
     const headers = new Headers(response.headers)
