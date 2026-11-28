@@ -2,6 +2,11 @@ import ogImages from './.open-next/og-static-map.json'
 import staticRoutes from './.open-next/static-route-map.json'
 
 const knownStaticRoutes = new Set(staticRoutes)
+const publicAssets = new Set([
+  '/robots.txt', '/sitemap.xml', '/ads.txt', '/favicon.ico',
+  '/icon-192.png', '/icon-512.png', '/next.svg', '/globe.svg',
+  '/file.svg', '/window.svg', '/vercel.svg',
+])
 
 export default {
   async fetch(request, env, ctx) {
@@ -24,11 +29,10 @@ export default {
       if (!exact) headers.set('X-OG-Fallback', 'generic')
       return new Response(response.body, { status: response.status, headers })
     }
-    // Public pages are static. The development-only /admin/seo must remain
-    // unavailable, and no request may boot an OpenNext server on Free.
+    // Public pages and explicitly listed files are static. Do not boot OpenNext.
     const pathname = url.pathname.replace(/\/$/, '') || '/'
-    if (!knownStaticRoutes.has(pathname) && !pathname.startsWith('/_next/') &&
-        !pathname.startsWith('/og-static/')) {
+    if (!knownStaticRoutes.has(pathname) && !publicAssets.has(pathname) &&
+        !pathname.startsWith('/_next/') && !pathname.startsWith('/og-static/')) {
       return new Response('<!doctype html><html lang="ja"><meta charset="utf-8"><title>ページが見つかりません</title><main><h1>ページが見つかりません</h1><a href="/">トップへ</a></main></html>', {
         status: 404,
         headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
