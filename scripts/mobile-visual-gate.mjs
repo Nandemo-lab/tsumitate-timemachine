@@ -5,6 +5,9 @@ const base = 'http://127.0.0.1:3000'
 const pages = [
   '/', '/compare/orukan-vs-sp500', '/compare/orukan-vs-nasdaq100',
   '/compare/vti-vs-sp500', '/simulate/orcan/2024',
+  '/simulate/orcan/2024?amount=50000',
+  '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=50000',
+  '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=0',
   '/guide/orukan-ippon-de-ii',
 ]
 const widths = [375, 390, 430]
@@ -46,10 +49,18 @@ try {
         })))).filter(Boolean),
         tables: [...document.querySelectorAll('table')].map(table => ({ width: Math.round(table.getBoundingClientRect().width), parentWidth: Math.round(table.parentElement.getBoundingClientRect().width), scrollable: table.parentElement.scrollWidth > table.parentElement.clientWidth })),
         buttons: [...document.querySelectorAll('a, button')].filter(element => element.getBoundingClientRect().width > 0).length,
+        text: document.body.innerText,
+        ogDescription: document.querySelector('meta[property="og:description"]')?.content || '',
+        bytes: performance.getEntriesByType('resource').reduce((n, r) => n + (r.transferSize || 0), 0),
       }))
       const slug = path === '/' ? 'home' : path.replace(/\W+/g, '-').replace(/^-|-$/g, '')
       await page.screenshot({ path: `mobile-evidence/${slug}-${width}.png`, fullPage: true })
-      results.push({ path, width, status: response?.status(), ...layout, errors })
+      const resultVisible = path.includes('amount=50000') || path.includes('a=50000')
+        ? layout.text.includes('毎月5万円') && layout.text.includes('165万円') && layout.text.includes('221万円')
+        : path.includes('a=0') ? layout.text.includes('共有条件を確認できません') : true
+      const ogAccurate = !path.startsWith('/share') || (!layout.ogDescription.includes('3万円') && !layout.ogDescription.includes('30000'))
+      const { text, ...metrics } = layout
+      results.push({ path, width, status: response?.status(), ...metrics, resultVisible, ogAccurate, errors })
       await page.close()
     }
     await context.close()
@@ -57,4 +68,4 @@ try {
 } finally { await browser.close() }
 await writeFile('mobile-evidence/results.json', JSON.stringify(results, null, 2))
 console.log(JSON.stringify(results, null, 2))
-if (results.some(result => result.status !== 200 || result.documentWidth > result.viewport + 1 || result.brokenImages.length || result.errors.length)) process.exitCode = 1
+if (results.some(result => result.status !== 200 || result.documentWidth > result.viewport + 1 || result.brokenImages.length || result.errors.length || !result.resultVisible || !result.ogAccurate)) process.exitCode = 1
