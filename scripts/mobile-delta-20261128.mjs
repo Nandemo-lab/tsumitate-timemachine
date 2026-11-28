@@ -7,6 +7,7 @@ const paths = [
   '/compare/orukan-vs-sp500',
   '/compare/vti-vs-sp500',
   '/compare/schd-vs-vym',
+  '/tools/withdrawal',
 ]
 const widths = [375, 390, 430]
 const results = []
@@ -21,6 +22,7 @@ try {
       page.on('pageerror', error => errors.push(error.message))
       page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
       const response = await page.goto(base + path, { waitUntil: 'networkidle' })
+      if (path === '/tools/withdrawal') await page.getByRole('button', { name: '取り崩しを試算する' }).click()
       await page.evaluate(async () => {
         for (let y = 0; y < document.documentElement.scrollHeight; y += 500) {
           scrollTo(0, y)
@@ -45,6 +47,9 @@ try {
         })),
         compareCta: [...document.querySelectorAll('a')].some(a => a.textContent?.includes('同じ2商品で条件を変える')),
         unapprovedAspLinks: [...document.querySelectorAll('a[href]')].map(a => a.href).filter(href => /(?:px\.a8\.net|h\.accesstrade\.net|af\.moshimo\.com)/i.test(href)),
+        withdrawalRows: document.querySelectorAll('tbody tr').length,
+        withdrawalAlert: document.querySelector('[role="alert"]')?.textContent ?? null,
+        inputTapTargets: [...document.querySelectorAll('main input')].every(input => input.getBoundingClientRect().height >= 44),
       }))
       const jump = page.getByRole('link', { name: '途中経過と判定条件を見る' })
       let riskJumpOpen = false
@@ -62,4 +67,4 @@ try {
 } finally { await browser.close() }
 await writeFile('mobile-delta-evidence/results.json', JSON.stringify(results, null, 2))
 console.log(JSON.stringify(results, null, 2))
-if (results.some(r => r.status !== 200 || r.documentWidth > r.viewport + 1 || r.brokenImages.length || r.errors.length || r.unapprovedAspLinks.length || r.tables.some(t => t.width > t.containerWidth && !t.scrollable) || (r.path !== '/compare/schd-vs-vym' && (!r.compareCta || !r.riskJumpOpen)))) process.exitCode = 1
+if (results.some(r => r.status !== 200 || r.documentWidth > r.viewport + 1 || r.brokenImages.length || r.errors.length || r.unapprovedAspLinks.length || r.tables.some(t => t.width > t.containerWidth && !t.scrollable) || (r.path.startsWith('/compare/') && r.path !== '/compare/schd-vs-vym' && (!r.compareCta || !r.riskJumpOpen)) || (r.path === '/tools/withdrawal' && (r.withdrawalRows !== 30 || r.withdrawalAlert || !r.inputTapTargets)))) process.exitCode = 1

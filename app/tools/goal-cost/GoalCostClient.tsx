@@ -81,6 +81,7 @@ export default function GoalCostClient() {
         <button type="button" onClick={share} className="min-h-11 rounded-lg border border-indigo-700 px-4 py-2 text-sm font-bold text-indigo-800">この条件のURLをコピー</button>
         <p role="status" className="text-sm">{shareStatus}</p>
       </section>}
+      <p className="text-sm leading-7">積立後の資産を取り崩す期間も試したい場合は、<Link href="/tools/withdrawal" className="font-bold text-indigo-800 underline underline-offset-4">資産取り崩しシミュレーション</Link>へ。両方とも過去の運用実績は読み込みません。</p>
       <section className="space-y-2 text-xs leading-6 text-slate-700"><h2 className="text-base font-bold">計算条件と限界</h2>
         <p>毎月初めに同額を拠出し、その月に想定年率を複利換算して適用したあと、年率費用を月率換算して差し引きます。端数は必要月額を1円単位で切り上げ、積立元本はその月額×月数です。毎年同じ利回り・物価上昇率が続くという仮定で、値動き、税金、売買手数料、分配金、為替は扱いません。実際の信託報酬の計上方法や総費用とも異なる概算です。</p>
         <p>年率費用の差だけを比較するため、商品の値動き・投資対象・リスクが同じとは限りません。元本割れの可能性があります。<a className="underline" href="https://www.fsa.go.jp/policy/nisa2/invest/">金融庁の資産形成の説明</a>も参照してください。</p>
