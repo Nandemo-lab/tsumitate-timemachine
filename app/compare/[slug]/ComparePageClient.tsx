@@ -92,7 +92,11 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
         </div>
         <p className="mt-3 rounded-xl border border-[#D9E3E8] bg-white px-4 py-3 text-xs leading-relaxed text-slate-700">
           月末の元本割れは{resultA.fundName}が{pathA.belowPrincipalMonths}か月、{resultB.fundName}が{pathB.belowPrincipalMonths}か月。
-          <a href="#risk-path" className="ml-1 font-bold text-[#236B8E] underline underline-offset-2">途中経過と判定条件を見る</a>
+          <a
+            href="#risk-path"
+            onClick={() => { const details = document.getElementById("risk-path") as HTMLDetailsElement | null; if (details) details.open = true; }}
+            className="ml-1 font-bold text-[#236B8E] underline underline-offset-2"
+          >途中経過と判定条件を見る</a>
         </p>
       </section>
 
