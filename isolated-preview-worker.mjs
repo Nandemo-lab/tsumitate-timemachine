@@ -6,7 +6,8 @@ const knownStaticRoutes = new Set(staticRoutes)
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
-    if (url.pathname === '/robots.txt') {
+    const preview = env.PREVIEW_MODE !== 'false'
+    if (url.pathname === '/robots.txt' && preview) {
       return new Response('User-agent: *\nDisallow: /\n', {
         headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
       })
@@ -19,7 +20,7 @@ export default {
       const response = await env.ASSETS.fetch(new Request(assetUrl, request))
       const headers = new Headers(response.headers)
       headers.set('Content-Type', 'image/png')
-      headers.set('X-Robots-Tag', 'noindex, nofollow')
+      if (preview) headers.set('X-Robots-Tag', 'noindex, nofollow')
       if (!exact) headers.set('X-OG-Fallback', 'generic')
       return new Response(response.body, { status: response.status, headers })
     }
@@ -35,7 +36,7 @@ export default {
     }
     const response = await env.ASSETS.fetch(request)
     const headers = new Headers(response.headers)
-    headers.set('X-Robots-Tag', 'noindex, nofollow')
+    if (preview) headers.set('X-Robots-Tag', 'noindex, nofollow')
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
   },
 }
