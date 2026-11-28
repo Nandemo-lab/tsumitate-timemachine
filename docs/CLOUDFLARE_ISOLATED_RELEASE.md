@@ -4,7 +4,9 @@
 
 公式Wrangler OAuthで既存アカウントへ認証し、`wrangler deploy --config wrangler.isolated.jsonc` で別名Worker `tsumitate-isolated-preview` に配信した。既存ドメインとVercel本番は未変更。プレビュー専用のWorkerラッパーと静的アセットの `_headers` で `noindex, nofollow` を設定し、robots.txtは `Disallow: /` とした。GA4は既存コードの本番ドメイン限定条件によりプレビューから送信しない。再ビルド後は `printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > .open-next/assets/_headers` を実行してから隔離配信する（`.open-next` はGit管理外）。
 
-実環境で `/`、主な比較ページ、積立ページ、`robots.txt`、`ads.txt` は200を確認した一方、OG画像APIと404経路は **HTTP 503 / Cloudflare Error 1102** を再現した。比較ページもブラウザからの再訪時に1102を返し、不安定だった。1102はリソース上限で、FreeのWorker CPU制限は10ms/リクエスト。HTTP待ち時間やデプロイ時の24ms起動時間をCPU時間として扱わない。OG・SSRを含む現在の構成を本番へ移す条件を満たさない。再配信や広告開始、DNS変更は行わない。
+実環境で `/`、主な比較ページ、積立ページ、`robots.txt`、`ads.txt` は200を確認した一方、OG画像APIと404経路は **HTTP 503 / Cloudflare Error 1102** を再現した。11月28日のWrangler tailでは、初回の比較ページCPU 48〜70ms、トップ59ms、積立ページ51ms、OG画像APIの失敗例58msと10ms、存在しないURLの失敗例10msで `outcome: exceededCpu`。成功した50ms台の応答もFree枠で安定稼働する証拠ではない。HTTP待ち時間やデプロイ時の起動時間はCPU時間として扱わない。
+
+11月28日に `node scripts/prepare-cloudflare-static-preview.mjs` を隔離配信のビルド後へ追加し、Next.jsのprerender manifestから134経路のHTML/RSCペアをStatic Assetsへコピーした。別名Worker `tsumitate-isolated-preview` を再配信（version `958d619f-43bd-47c6-bd9d-c78535cf9eea`）。主要比較、トップ、積立ページはStatic AssetsからHTTP 200とnoindexを返し、tailではこれらのWorker実行が見えなくなった。OG画像は再検証でも1269ms CPU、未知URLは163ms CPUで、初回/再訪に1102が起こり得る。**静的ページの障害だけ部分解消。OG・404を含む現在の構成の本番移行はNO-GO**。広告開始とDNS変更は行わない。
 
 次の候補は、OGの事前生成・必要な動的経路の静的化によって10ms制限下で全主要機能が動くかを隔離検証すること。機能と更新工数が増える場合は無料商用の別ホストも比較する。いずれも実配信、OG、404、比較、シミュレーションを通過するまで本番移行を承認対象にしない。
 
@@ -12,7 +14,7 @@
 
 ## 前提と配信
 
-- `npm ci && npx opennextjs-cloudflare build` で `.open-next/worker.js` と `.open-next/assets` を生成する。`wrangler.jsonc` はこれらを参照する。
+- `npm ci && npx opennextjs-cloudflare build` で `.open-next/worker.js` と `.open-next/assets` を生成する。隔離ビルドでは `_headers` を設置後に `node scripts/prepare-cloudflare-static-preview.mjs` を実行し、prerendered HTML/RSCを静的配信する。`wrangler.isolated.jsonc` はこれらを参照する。本番用 `wrangler.jsonc` とプレビュー専用noindexは混同しない。
 - 既存Cloudflareアカウントの正規権限を確認し、隔離用の別Worker名・`workers.dev` URLで実配信する。既存本番のDNS、Git連携、広告設定を変更しない。新規アカウント登録が必要な場合はOWNER承認後に進める。
 - 配信時はデプロイ対象のコミットSHAとWorker名を記録する。同名の本番Workerを上書きしない。必要な環境変数は名称だけ照合し、値や認証情報を報告書・Gitに含めない。
 
