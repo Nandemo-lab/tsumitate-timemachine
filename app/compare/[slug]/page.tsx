@@ -162,7 +162,7 @@ export default async function ComparePage({ params }: Props) {
               <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-xs text-slate-600">{fundB.shortName}<ReturnQualityPill fundId={page.fundBId} /></span>
             </div>
             {hasReferenceSeries && (
-              <p className="rounded-xl border border-amber-400/20 bg-amber-400/5 px-3 py-2 text-[11px] leading-relaxed text-amber-200/90">
+              <p className="rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-[11px] leading-relaxed text-amber-950">
                 SCHDの表示値は参考データ・原典未検証です。A品質系列と同じ信頼度の公式実績ではなく、実績ランキングにも使用していません。<Link href="/about/data-sources" className="ml-1 underline underline-offset-2">データ詳細</Link>
               </p>
             )}
@@ -191,8 +191,8 @@ export default async function ComparePage({ params }: Props) {
           {/* ── 積立シミュレーション比較（クライアント） ─────────── */}
           <div id="comparison-result" className="scroll-mt-4">
           {hasReferenceSeries ? (
-            <section className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] p-5 space-y-2">
-              <h2 className="text-sm font-bold text-amber-200">この組み合わせは商品属性だけを比較します</h2>
+            <section className="rounded-2xl border border-amber-300 bg-amber-50 p-5 space-y-2">
+              <h2 className="text-sm font-bold text-amber-950">この組み合わせは商品属性だけを比較します</h2>
               <p className="text-xs leading-relaxed text-slate-600">
                 G品質系列を含むため、評価額・利益・推移グラフは表示しません。投資対象、銘柄選定、分散範囲、費用、分配方法を確認できます。月次原典、通貨、配当、費用、為替の扱いを検証できるまでは、A品質商品との実績優劣を数値で示しません。
               </p>

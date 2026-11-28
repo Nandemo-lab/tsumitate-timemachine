@@ -10,7 +10,7 @@ const assert = (condition, message) => {
 
 const simulation = read("lib/simulation.ts");
 const returnSeries = read("lib/return-series.ts");
-const simulatePage = read("app/simulate/[fund]/[year]/page.tsx");
+const simulatePage = read("app/simulate/[fund]/[year]/page.tsx") + read("app/simulate/[fund]/[year]/SimulationDetail.tsx");
 const comparePage = read("app/compare/[slug]/page.tsx");
 const selector = read("components/simulation/FundSelector.tsx");
 const advanced = read("components/simulation/AdvancedSimulation.tsx");

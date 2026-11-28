@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const OLD_HOST = "tsumitate-timemachine.vercel.app";
 const NEW_HOST = "tsumitate-timemachine.com";
 
-export function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const host = req.headers.get("host") ?? "";
   const url = req.nextUrl.clone();
   let shouldRedirect = false;

@@ -1,15 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_JP, Geist_Mono } from "next/font/google";
 import { ProductionGoogleAnalytics } from "@/components/analytics/ProductionGoogleAnalytics";
 import "./globals.css";
-
-const notoSansJP = Noto_Sans_JP({
-  variable: "--font-sans-jp",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
-  display: "swap",
-});
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 const BASE_URL = "https://tsumitate-timemachine.com";
 const OG_IMAGE = `${BASE_URL}/api/og`;
@@ -113,7 +104,7 @@ const webappLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${geistMono.variable}`}>
+    <html lang="ja">
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />

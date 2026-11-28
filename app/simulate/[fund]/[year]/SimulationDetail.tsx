@@ -1,0 +1,251 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { simulate, formatCurrency, calcElapsedYears, CURRENT_YEAR, CURRENT_MONTH, isValidMonthlyAmount, parseStrictInteger } from "@/lib/simulation";
+import { FUNDS, FUND_LIST } from "@/lib/funds";
+import { FundId } from "@/types";
+import SimulatePageClient from "./SimulatePageClient";
+import DisclaimerBar from "@/components/common/DisclaimerBar";
+import { getReturnDataSource } from "@/lib/return-data-sources";
+import { getAvailableStartMonth, isReturnMonthAvailable, isVerifiedReturnSeries } from "@/lib/return-series";
+
+function isValidFundId(id: string): id is FundId { return id in FUNDS; }
+
+// The default 30,000-yen result is prerendered for SEO. Query-specific
+// results are recomputed with the same verified data and simulation function.
+export default function SimulationDetail({ fund, year }: { fund: string; year: string }) {
+  const [amount, setAmount] = useState<string | null>(null);
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const sync = () => {
+      const raw = new URLSearchParams(window.location.search).get("amount");
+      setAmount(raw);
+      if (raw !== null && isValidFundId(fund)) {
+        const parsed = parseStrictInteger(raw);
+        const startYear = parseStrictInteger(year);
+        if (parsed === null || !isValidMonthlyAmount(parsed)) {
+          document.title = "積立額の指定を確認してください | 積立タイムマシン";
+        } else if (!isVerifiedReturnSeries(fund)) {
+          document.title = `${FUNDS[fund].shortName}のデータ品質と商品情報 | 積立タイムマシン`;
+        } else if (startYear !== null && isReturnMonthAvailable(fund, startYear, 1)) {
+          document.title = `${year}年から${FUNDS[fund].shortName}を積み立てていたら？ ${formatCurrency(simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount: parsed }).profit)}の利益 | 積立タイムマシン`;
+        }
+      }
+    };
+    sync();
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
+  }, [fund, year]);
+  useEffect(() => {
+    if (amount !== null) document.documentElement.removeAttribute("data-simulate-pending");
+  }, [amount]);
+
+  if (!isValidFundId(fund)) notFound();
+
+  const startYear = parseStrictInteger(year);
+  if (startYear === null || startYear < 2015 || startYear > 2024) notFound();
+
+  const monthlyAmount = parseStrictInteger(amount ?? "30000");
+  if (monthlyAmount === null || !isValidMonthlyAmount(monthlyAmount)) {
+    return (
+      <main className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto max-w-2xl px-4 py-16">
+          <nav className="mb-8 text-xs text-slate-600"><Link href="/">トップ</Link> / 入力条件</nav>
+          <div className="space-y-4 rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-6">
+            <h1 className="text-2xl font-bold">積立額の指定を確認してください</h1>
+            <p className="text-sm leading-relaxed text-slate-700">積立額は1円以上100万円以下の整数で指定してください。不正な値を既定額へ置き換えず、計算を停止しました。</p>
+            <Link href="/" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-[#263A53]">条件を選び直す</Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+  const fundData = FUNDS[fund];
+  if (!isVerifiedReturnSeries(fund)) {
+    return (
+      <main className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="mx-auto max-w-2xl px-4 py-16">
+          <nav className="mb-8 text-xs text-slate-600"><Link href="/">トップ</Link> / {fundData.shortName}</nav>
+          <div className="space-y-4 rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-6">
+            <p className="text-xs font-bold text-amber-200">G品質・参考系列</p>
+            <h1 className="text-2xl font-bold">未検証の積立結果は表示していません</h1>
+            <p className="text-sm leading-relaxed text-slate-700">
+              {fundData.encyclopedia.formalName}の商品属性は確認できますが、当サイトの月次リターン系列は原典未検証です。評価額・利益・リターン・推移グラフは、月次原典、通貨、分配金、費用、為替処理を検証できるまで公開しません。
+            </p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link href="/fund/schd" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-amber-400 px-4 py-3 text-sm font-bold text-zinc-950">
+                商品属性を確認する
+              </Link>
+              <Link href="/about/data-sources" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#D2DEE4] px-4 py-3 text-sm font-bold text-slate-700">
+                データ品質と出典を見る
+              </Link>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+  if (!isReturnMonthAvailable(fund, startYear, 1)) {
+    const available = getAvailableStartMonth(fund);
+    const firstYear = Number(available.slice(0, 4));
+    const firstMonth = Number(available.slice(5, 7));
+    const availableYear = firstMonth === 1 ? firstYear : firstYear + 1;
+    return (
+      <main className="min-h-dvh bg-[#FAFAF7] text-[#263A53]">
+        <div className="max-w-2xl mx-auto px-4 py-16">
+          <nav className="text-xs text-slate-600 mb-8"><Link href="/">トップ</Link> / {fundData.shortName}</nav>
+          <div className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.06] p-6 space-y-4">
+            <h1 className="text-2xl font-bold">この期間は商品実績を計算できません</h1>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              {fundData.encyclopedia.formalName}の公式実績は{firstYear}年{firstMonth}月からです。商品設定前の指数や別商品で補完した結果は表示していません。
+            </p>
+            <Link href={`/simulate/${fund}/${availableYear}?amount=${monthlyAmount}`} className="inline-flex rounded-xl bg-indigo-500 px-4 py-3 text-sm font-bold text-[#263A53]">
+              最初の利用可能年から確認する
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+  const result = simulate({ fundId: fund, startYear, startMonth: 1, monthlyAmount });
+  const elapsed = calcElapsedYears(startYear, 1);
+
+  // 構造化データ (JSON-LD)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${startYear}年から${fundData.shortName}を積み立てていたら？`,
+    description: `${startYear}年から約${elapsed.toFixed(0)}年間、毎月${formatCurrency(monthlyAmount)}を${fundData.shortName}に積み立てた場合のシミュレーション結果`,
+    datePublished: "2025-01-01",
+    dateModified: new Date().toISOString().slice(0, 10),
+    author: { "@type": "Organization", name: "積立タイムマシン" },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="relative min-h-dvh bg-[#FAFAF7] overflow-hidden">
+        <div className="relative max-w-2xl mx-auto px-4 py-12 pb-24">
+          {/* パンくず */}
+          <nav className="flex items-center gap-2 text-xs text-slate-600 mb-8">
+            <Link href="/" className="hover:text-slate-600 transition-colors">トップ</Link>
+            <span>/</span>
+            <span className="text-slate-600">{fundData.shortName}</span>
+            <span>/</span>
+            <span className="text-slate-600">{startYear}年〜</span>
+          </nav>
+
+          {/* H1 */}
+          <h1 className="text-3xl sm:text-4xl font-black text-[#263A53] leading-tight mb-3">
+            もし{startYear}年から<br />
+            <span style={{ color: fundData.color }}>{fundData.shortName}</span>を<br />
+            積み立てていたら？
+          </h1>
+          <p className="text-slate-600 text-sm mb-10">
+            毎月{formatCurrency(monthlyAmount)} · {startYear}年1月〜{CURRENT_YEAR}年{CURRENT_MONTH}月（約{elapsed.toFixed(0)}年間）
+          </p>
+
+          {/* クライアントコンポーネント（グラフ・アニメーション） */}
+          <SimulatePageClient
+            fundId={fund}
+            startYear={startYear}
+            startMonth={1}
+            monthlyAmount={monthlyAmount}
+            result={result}
+          />
+
+          {/* 解説テキスト（SEO用） */}
+          <section className="mt-12 space-y-6 text-sm text-slate-600 leading-relaxed">
+            <h2 className="text-lg font-bold text-[#263A53]">
+              {startYear}年から{fundData.shortName}に積み立てた場合の詳細
+            </h2>
+            <p>
+              {startYear}年1月から{CURRENT_YEAR}年{CURRENT_MONTH}月まで、毎月{formatCurrency(monthlyAmount)}を
+              {fundData.name}（{fundData.shortName}）に積み立てた場合、
+              元本合計{formatCurrency(result.totalPrincipal)}に対して、
+              {CURRENT_YEAR}年{CURRENT_MONTH}月時点の評価額は{formatCurrency(result.finalValue)}となります。
+              利益額は<strong className="text-[#263A53]">+{formatCurrency(result.profit)}</strong>で、
+              リターン率は{result.returnRate.toFixed(1)}%です。
+            </p>
+            <p>
+              {fundData.shortName}（{fundData.name}）は{fundData.description}。
+              {fundData.riskLevel !== null && <>サイト内の参考リスク区分は5段階中{fundData.riskLevel}です。この区分は将来の値動きや利益を保証するものではありません。</>}
+            </p>
+            <p>
+              {getReturnDataSource(fund).sourceStatus === "verified" ? (
+                <>※ 一次情報から検証した商品設定後の月次実績を使用しています。売買手数料・税金・為替スプレッドは個別計算せず、将来の運用成果を示すものではありません。</>
+              ) : (
+                <>※ このシミュレーションは原典未特定の年次参考系列を月次換算した簡易計算で、実際の商品実績や将来の運用成果を示すものではありません。配当・費用・為替処理は未特定です。</>
+              )}{" "}
+              投資は自己責任でお願いします。
+            </p>
+          </section>
+
+          {/* 他の条件も試す */}
+          <section className="mt-12">
+            <h3 className="text-sm font-bold text-slate-600 mb-4 tracking-widest uppercase">他の条件でも試す</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {[2015, 2018, 2019, 2020, 2021, 2022].filter(y => y !== startYear && isReturnMonthAvailable(fund, y, 1)).slice(0, 4).map((y) => {
+                const r = simulate({ fundId: fund, startYear: y, startMonth: 1, monthlyAmount });
+                return (
+                  <Link
+                    key={y}
+                    href={`/simulate/${fund}/${y}?amount=${monthlyAmount}`}
+                    className="rounded-xl border border-[#D2DEE4] bg-[#F4F7F8] p-4 hover:bg-[#EAF3F7] transition-all"
+                  >
+                    <p className="text-xs text-slate-600 mb-1">{y}年〜</p>
+                    <p className="text-sm font-bold" style={{ color: fundData.color }}>
+                      +{formatCurrency(r.profit)}
+                    </p>
+                    <p className="text-xs text-slate-600">+{r.returnRate.toFixed(1)}%</p>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 他の銘柄へ */}
+          <section className="mt-8">
+            <h3 className="text-sm font-bold text-slate-600 mb-4 tracking-widest uppercase">同期間で他の銘柄と比べる</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {FUND_LIST.filter((f) => f.id !== fund && isReturnMonthAvailable(f.id, startYear, 1)).slice(0, 4).map((f) => {
+                const r = simulate({ fundId: f.id, startYear, startMonth: 1, monthlyAmount });
+                return (
+                  <Link
+                    key={f.id}
+                    href={`/simulate/${f.id}/${year}?amount=${monthlyAmount}`}
+                    className="rounded-xl border border-[#D2DEE4] bg-[#F4F7F8] p-4 hover:bg-[#EAF3F7] transition-all"
+                  >
+                    <p className="text-xs mb-1" style={{ color: f.color }}>{f.shortName}</p>
+                    <p className="text-sm font-bold text-[#263A53]">
+                      +{formatCurrency(r.profit)}
+                    </p>
+                    <p className="text-xs text-slate-600">+{r.returnRate.toFixed(1)}%</p>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-bold text-white transition-all"
+              style={{ background: "#236B8E" }}
+            >
+              ⚡ 自分の条件でシミュレーション
+            </Link>
+          </div>
+          <div className="mt-8 px-4">
+            <DisclaimerBar />
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}

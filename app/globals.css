@@ -49,6 +49,9 @@
 }
 
 :root {
+  /* System fallbacks avoid build-time font downloads in isolated commercial hosting. */
+  --font-sans-jp: "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+  --font-geist-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-serif-jp: var(--font-sans-jp);
   --tm-ink: #263a53;
   --tm-ink-soft: #52677d;

@@ -17,7 +17,7 @@ export interface ShareParams {
 }
 
 /**
- * Builds the shareable URL pointing to /share (Server Component with OGP metadata).
+ * Builds the shareable URL pointing to the static /share client calculation.
  * Short params: f=fund, y=year, m=month, a=amount
  */
 export function buildShareUrl(input: ShareParams): string {

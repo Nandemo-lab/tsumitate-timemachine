@@ -1,0 +1,1013 @@
+{
+  "schemaVersion": 1,
+  "source": "ECB daily EUR/JPY and EUR/USD reference rates",
+  "sourceUrl": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD+JPY.EUR.SP00.A?startPeriod=2014-12-01&format=csvdata",
+  "licenseUrl": "https://www.ecb.europa.eu/services/using-our-site/disclaimer/html/index.en.html",
+  "calculation": "Last common ECB business day in each calendar month; derived JPY per USD = ECB JPY per EUR / ECB USD per EUR. This cross rate is calculated by CarVista/Tsumitate Timemachine, not an ECB-published USD/JPY rate.",
+  "generatedAt": "2026-11-28T09:03:13.765Z",
+  "firstMonth": "2014-12",
+  "lastMonth": "2026-10",
+  "observations": [
+    {
+      "month": "2014-12",
+      "referenceDate": "2014-12-31",
+      "yenPerUsd": 119.61947121324438,
+      "eurJpy": 145.23,
+      "eurUsd": 1.2141
+    },
+    {
+      "month": "2015-01",
+      "referenceDate": "2015-01-30",
+      "yenPerUsd": 117.71782397169395,
+      "eurJpy": 133.08,
+      "eurUsd": 1.1305
+    },
+    {
+      "month": "2015-02",
+      "referenceDate": "2015-02-27",
+      "yenPerUsd": 119.26156583629893,
+      "eurJpy": 134.05,
+      "eurUsd": 1.124
+    },
+    {
+      "month": "2015-03",
+      "referenceDate": "2015-03-31",
+      "yenPerUsd": 119.85314620317871,
+      "eurJpy": 128.95,
+      "eurUsd": 1.0759
+    },
+    {
+      "month": "2015-04",
+      "referenceDate": "2015-04-30",
+      "yenPerUsd": 118.82300490414623,
+      "eurJpy": 133.26,
+      "eurUsd": 1.1215
+    },
+    {
+      "month": "2015-05",
+      "referenceDate": "2015-05-29",
+      "yenPerUsd": 123.9288969917958,
+      "eurJpy": 135.95,
+      "eurUsd": 1.097
+    },
+    {
+      "month": "2015-06",
+      "referenceDate": "2015-06-30",
+      "yenPerUsd": 122.45062114576815,
+      "eurJpy": 137.01,
+      "eurUsd": 1.1189
+    },
+    {
+      "month": "2015-07",
+      "referenceDate": "2015-07-31",
+      "yenPerUsd": 124.31840977477889,
+      "eurJpy": 136.34,
+      "eurUsd": 1.0967
+    },
+    {
+      "month": "2015-08",
+      "referenceDate": "2015-08-31",
+      "yenPerUsd": 121.32857779759252,
+      "eurJpy": 136.07,
+      "eurUsd": 1.1215
+    },
+    {
+      "month": "2015-09",
+      "referenceDate": "2015-09-30",
+      "yenPerUsd": 120.22672498437917,
+      "eurJpy": 134.69,
+      "eurUsd": 1.1203
+    },
+    {
+      "month": "2015-10",
+      "referenceDate": "2015-10-30",
+      "yenPerUsd": 120.61359716801307,
+      "eurJpy": 132.88,
+      "eurUsd": 1.1017
+    },
+    {
+      "month": "2015-11",
+      "referenceDate": "2015-11-30",
+      "yenPerUsd": 123.09291993572171,
+      "eurJpy": 130.22,
+      "eurUsd": 1.0579
+    },
+    {
+      "month": "2015-12",
+      "referenceDate": "2015-12-31",
+      "yenPerUsd": 120.39129236704326,
+      "eurJpy": 131.07,
+      "eurUsd": 1.0887
+    },
+    {
+      "month": "2016-01",
+      "referenceDate": "2016-01-29",
+      "yenPerUsd": 121.1080586080586,
+      "eurJpy": 132.25,
+      "eurUsd": 1.092
+    },
+    {
+      "month": "2016-02",
+      "referenceDate": "2016-02-29",
+      "yenPerUsd": 113.09698750918443,
+      "eurJpy": 123.14,
+      "eurUsd": 1.0888
+    },
+    {
+      "month": "2016-03",
+      "referenceDate": "2016-03-31",
+      "yenPerUsd": 112.34079929732104,
+      "eurJpy": 127.9,
+      "eurUsd": 1.1385
+    },
+    {
+      "month": "2016-04",
+      "referenceDate": "2016-04-29",
+      "yenPerUsd": 107.28755590634043,
+      "eurJpy": 122.34,
+      "eurUsd": 1.1403
+    },
+    {
+      "month": "2016-05",
+      "referenceDate": "2016-05-31",
+      "yenPerUsd": 111.0184687107764,
+      "eurJpy": 123.83,
+      "eurUsd": 1.1154
+    },
+    {
+      "month": "2016-06",
+      "referenceDate": "2016-06-30",
+      "yenPerUsd": 102.72923797513961,
+      "eurJpy": 114.05,
+      "eurUsd": 1.1102
+    },
+    {
+      "month": "2016-07",
+      "referenceDate": "2016-07-29",
+      "yenPerUsd": 103.32943399622064,
+      "eurJpy": 114.83,
+      "eurUsd": 1.1113
+    },
+    {
+      "month": "2016-08",
+      "referenceDate": "2016-08-31",
+      "yenPerUsd": 103.31476823571685,
+      "eurJpy": 115.01,
+      "eurUsd": 1.1132
+    },
+    {
+      "month": "2016-09",
+      "referenceDate": "2016-09-30",
+      "yenPerUsd": 101.32604605322103,
+      "eurJpy": 113.09,
+      "eurUsd": 1.1161
+    },
+    {
+      "month": "2016-10",
+      "referenceDate": "2016-10-31",
+      "yenPerUsd": 105.03380230221084,
+      "eurJpy": 114.97,
+      "eurUsd": 1.0946
+    },
+    {
+      "month": "2016-11",
+      "referenceDate": "2016-11-30",
+      "yenPerUsd": 113.28631875881524,
+      "eurJpy": 120.48,
+      "eurUsd": 1.0635
+    },
+    {
+      "month": "2016-12",
+      "referenceDate": "2016-12-30",
+      "yenPerUsd": 117.06669196470924,
+      "eurJpy": 123.4,
+      "eurUsd": 1.0541
+    },
+    {
+      "month": "2017-01",
+      "referenceDate": "2017-01-31",
+      "yenPerUsd": 113.37982333798234,
+      "eurJpy": 121.94,
+      "eurUsd": 1.0755
+    },
+    {
+      "month": "2017-02",
+      "referenceDate": "2017-02-28",
+      "yenPerUsd": 112.13551005001415,
+      "eurJpy": 118.83,
+      "eurUsd": 1.0597
+    },
+    {
+      "month": "2017-03",
+      "referenceDate": "2017-03-31",
+      "yenPerUsd": 111.82302871574221,
+      "eurJpy": 119.55,
+      "eurUsd": 1.0691
+    },
+    {
+      "month": "2017-04",
+      "referenceDate": "2017-04-28",
+      "yenPerUsd": 111.39981701738336,
+      "eurJpy": 121.76,
+      "eurUsd": 1.093
+    },
+    {
+      "month": "2017-05",
+      "referenceDate": "2017-05-31",
+      "yenPerUsd": 110.86355939755815,
+      "eurJpy": 124.4,
+      "eurUsd": 1.1221
+    },
+    {
+      "month": "2017-06",
+      "referenceDate": "2017-06-30",
+      "yenPerUsd": 111.94356817385209,
+      "eurJpy": 127.75,
+      "eurUsd": 1.1412
+    },
+    {
+      "month": "2017-07",
+      "referenceDate": "2017-07-31",
+      "yenPerUsd": 110.59947130553422,
+      "eurJpy": 129.7,
+      "eurUsd": 1.1727
+    },
+    {
+      "month": "2017-08",
+      "referenceDate": "2017-08-31",
+      "yenPerUsd": 110.62156448202958,
+      "eurJpy": 130.81,
+      "eurUsd": 1.1825
+    },
+    {
+      "month": "2017-09",
+      "referenceDate": "2017-09-29",
+      "yenPerUsd": 112.50211756733863,
+      "eurJpy": 132.82,
+      "eurUsd": 1.1806
+    },
+    {
+      "month": "2017-10",
+      "referenceDate": "2017-10-31",
+      "yenPerUsd": 113.42155009451797,
+      "eurJpy": 132,
+      "eurUsd": 1.1638
+    },
+    {
+      "month": "2017-11",
+      "referenceDate": "2017-11-30",
+      "yenPerUsd": 112.31327538188877,
+      "eurJpy": 133.08,
+      "eurUsd": 1.1849
+    },
+    {
+      "month": "2017-12",
+      "referenceDate": "2017-12-29",
+      "yenPerUsd": 112.5740015008755,
+      "eurJpy": 135.01,
+      "eurUsd": 1.1993
+    },
+    {
+      "month": "2018-01",
+      "referenceDate": "2018-01-31",
+      "yenPerUsd": 108.85445934013003,
+      "eurJpy": 135.6,
+      "eurUsd": 1.2457
+    },
+    {
+      "month": "2018-02",
+      "referenceDate": "2018-02-28",
+      "yenPerUsd": 107.02472572457835,
+      "eurJpy": 130.72,
+      "eurUsd": 1.2214
+    },
+    {
+      "month": "2018-03",
+      "referenceDate": "2018-03-29",
+      "yenPerUsd": 106.4442821199578,
+      "eurJpy": 131.15,
+      "eurUsd": 1.2321
+    },
+    {
+      "month": "2018-04",
+      "referenceDate": "2018-04-30",
+      "yenPerUsd": 109.3799155559235,
+      "eurJpy": 132.12,
+      "eurUsd": 1.2079
+    },
+    {
+      "month": "2018-05",
+      "referenceDate": "2018-05-31",
+      "yenPerUsd": 108.83836225318403,
+      "eurJpy": 127.33,
+      "eurUsd": 1.1699
+    },
+    {
+      "month": "2018-06",
+      "referenceDate": "2018-06-29",
+      "yenPerUsd": 110.68793961228342,
+      "eurJpy": 129.04,
+      "eurUsd": 1.1658
+    },
+    {
+      "month": "2018-07",
+      "referenceDate": "2018-07-31",
+      "yenPerUsd": 111.48602590320382,
+      "eurJpy": 130.84,
+      "eurUsd": 1.1736
+    },
+    {
+      "month": "2018-08",
+      "referenceDate": "2018-08-31",
+      "yenPerUsd": 110.76302463307871,
+      "eurJpy": 129.05,
+      "eurUsd": 1.1651
+    },
+    {
+      "month": "2018-09",
+      "referenceDate": "2018-09-28",
+      "yenPerUsd": 113.36385625431927,
+      "eurJpy": 131.23,
+      "eurUsd": 1.1576
+    },
+    {
+      "month": "2018-10",
+      "referenceDate": "2018-10-31",
+      "yenPerUsd": 113.22671850150205,
+      "eurJpy": 128.15,
+      "eurUsd": 1.1318
+    },
+    {
+      "month": "2018-11",
+      "referenceDate": "2018-11-30",
+      "yenPerUsd": 113.55753147284094,
+      "eurJpy": 128.99,
+      "eurUsd": 1.1359
+    },
+    {
+      "month": "2018-12",
+      "referenceDate": "2018-12-31",
+      "yenPerUsd": 109.91266375545851,
+      "eurJpy": 125.85,
+      "eurUsd": 1.145
+    },
+    {
+      "month": "2019-01",
+      "referenceDate": "2019-01-31",
+      "yenPerUsd": 108.64380222841226,
+      "eurJpy": 124.81,
+      "eurUsd": 1.1488
+    },
+    {
+      "month": "2019-02",
+      "referenceDate": "2019-02-28",
+      "yenPerUsd": 110.75683251576734,
+      "eurJpy": 126.44,
+      "eurUsd": 1.1416
+    },
+    {
+      "month": "2019-03",
+      "referenceDate": "2019-03-29",
+      "yenPerUsd": 110.76991544281265,
+      "eurJpy": 124.45,
+      "eurUsd": 1.1235
+    },
+    {
+      "month": "2019-04",
+      "referenceDate": "2019-04-30",
+      "yenPerUsd": 111.3656623284008,
+      "eurJpy": 124.93,
+      "eurUsd": 1.1218
+    },
+    {
+      "month": "2019-05",
+      "referenceDate": "2019-05-31",
+      "yenPerUsd": 108.75257824410366,
+      "eurJpy": 121.27,
+      "eurUsd": 1.1151
+    },
+    {
+      "month": "2019-06",
+      "referenceDate": "2019-06-28",
+      "yenPerUsd": 107.7328646748682,
+      "eurJpy": 122.6,
+      "eurUsd": 1.138
+    },
+    {
+      "month": "2019-07",
+      "referenceDate": "2019-07-31",
+      "yenPerUsd": 108.54631871581024,
+      "eurJpy": 121.04,
+      "eurUsd": 1.1151
+    },
+    {
+      "month": "2019-08",
+      "referenceDate": "2019-08-30",
+      "yenPerUsd": 106.27038782167453,
+      "eurJpy": 117.28,
+      "eurUsd": 1.1036
+    },
+    {
+      "month": "2019-09",
+      "referenceDate": "2019-09-30",
+      "yenPerUsd": 107.98971439066949,
+      "eurJpy": 117.59,
+      "eurUsd": 1.0889
+    },
+    {
+      "month": "2019-10",
+      "referenceDate": "2019-10-31",
+      "yenPerUsd": 108.23919670073518,
+      "eurJpy": 120.73,
+      "eurUsd": 1.1154
+    },
+    {
+      "month": "2019-11",
+      "referenceDate": "2019-11-29",
+      "yenPerUsd": 109.66126388635949,
+      "eurJpy": 120.43,
+      "eurUsd": 1.0982
+    },
+    {
+      "month": "2019-12",
+      "referenceDate": "2019-12-31",
+      "yenPerUsd": 108.54548691472317,
+      "eurJpy": 121.94,
+      "eurUsd": 1.1234
+    },
+    {
+      "month": "2020-01",
+      "referenceDate": "2020-01-31",
+      "yenPerUsd": 108.89431777053927,
+      "eurJpy": 120.35,
+      "eurUsd": 1.1052
+    },
+    {
+      "month": "2020-02",
+      "referenceDate": "2020-02-28",
+      "yenPerUsd": 108.73644893869,
+      "eurJpy": 119.36,
+      "eurUsd": 1.0977
+    },
+    {
+      "month": "2020-03",
+      "referenceDate": "2020-03-31",
+      "yenPerUsd": 108.52500912741878,
+      "eurJpy": 118.9,
+      "eurUsd": 1.0956
+    },
+    {
+      "month": "2020-04",
+      "referenceDate": "2020-04-30",
+      "yenPerUsd": 106.5373299006988,
+      "eurJpy": 115.87,
+      "eurUsd": 1.0876
+    },
+    {
+      "month": "2020-05",
+      "referenceDate": "2020-05-29",
+      "yenPerUsd": 107.12104885057472,
+      "eurJpy": 119.29,
+      "eurUsd": 1.1136
+    },
+    {
+      "month": "2020-06",
+      "referenceDate": "2020-06-30",
+      "yenPerUsd": 107.75138417574567,
+      "eurJpy": 120.66,
+      "eurUsd": 1.1198
+    },
+    {
+      "month": "2020-07",
+      "referenceDate": "2020-07-31",
+      "yenPerUsd": 104.92066171505739,
+      "eurJpy": 124.31,
+      "eurUsd": 1.1848
+    },
+    {
+      "month": "2020-08",
+      "referenceDate": "2020-08-31",
+      "yenPerUsd": 105.9212730318258,
+      "eurJpy": 126.47,
+      "eurUsd": 1.194
+    },
+    {
+      "month": "2020-09",
+      "referenceDate": "2020-09-30",
+      "yenPerUsd": 105.70550051247011,
+      "eurJpy": 123.76,
+      "eurUsd": 1.1708
+    },
+    {
+      "month": "2020-10",
+      "referenceDate": "2020-10-30",
+      "yenPerUsd": 104.59907676525903,
+      "eurJpy": 122.36,
+      "eurUsd": 1.1698
+    },
+    {
+      "month": "2020-11",
+      "referenceDate": "2020-11-30",
+      "yenPerUsd": 104.16527545909851,
+      "eurJpy": 124.79,
+      "eurUsd": 1.198
+    },
+    {
+      "month": "2020-12",
+      "referenceDate": "2020-12-31",
+      "yenPerUsd": 103.08043354249857,
+      "eurJpy": 126.49,
+      "eurUsd": 1.2271
+    },
+    {
+      "month": "2021-01",
+      "referenceDate": "2021-01-29",
+      "yenPerUsd": 104.68852999340804,
+      "eurJpy": 127.05,
+      "eurUsd": 1.2136
+    },
+    {
+      "month": "2021-02",
+      "referenceDate": "2021-02-26",
+      "yenPerUsd": 106.2866100156753,
+      "eurJpy": 128.83,
+      "eurUsd": 1.2121
+    },
+    {
+      "month": "2021-03",
+      "referenceDate": "2021-03-31",
+      "yenPerUsd": 110.79744136460553,
+      "eurJpy": 129.91,
+      "eurUsd": 1.1725
+    },
+    {
+      "month": "2021-04",
+      "referenceDate": "2021-04-30",
+      "yenPerUsd": 108.93891739778184,
+      "eurJpy": 131.62,
+      "eurUsd": 1.2082
+    },
+    {
+      "month": "2021-05",
+      "referenceDate": "2021-05-31",
+      "yenPerUsd": 109.65494631587575,
+      "eurJpy": 133.79,
+      "eurUsd": 1.2201
+    },
+    {
+      "month": "2021-06",
+      "referenceDate": "2021-06-30",
+      "yenPerUsd": 110.59407606866377,
+      "eurJpy": 131.43,
+      "eurUsd": 1.1884
+    },
+    {
+      "month": "2021-07",
+      "referenceDate": "2021-07-30",
+      "yenPerUsd": 109.6543604406694,
+      "eurJpy": 130.39,
+      "eurUsd": 1.1891
+    },
+    {
+      "month": "2021-08",
+      "referenceDate": "2021-08-31",
+      "yenPerUsd": 109.810714889302,
+      "eurJpy": 129.95,
+      "eurUsd": 1.1834
+    },
+    {
+      "month": "2021-09",
+      "referenceDate": "2021-09-30",
+      "yenPerUsd": 111.98721823991708,
+      "eurJpy": 129.67,
+      "eurUsd": 1.1579
+    },
+    {
+      "month": "2021-10",
+      "referenceDate": "2021-10-29",
+      "yenPerUsd": 113.88578789179905,
+      "eurJpy": 132.62,
+      "eurUsd": 1.1645
+    },
+    {
+      "month": "2021-11",
+      "referenceDate": "2021-11-30",
+      "yenPerUsd": 112.82231804981078,
+      "eurJpy": 128.2,
+      "eurUsd": 1.1363
+    },
+    {
+      "month": "2021-12",
+      "referenceDate": "2021-12-31",
+      "yenPerUsd": 115.11566307610806,
+      "eurJpy": 130.38,
+      "eurUsd": 1.1326
+    },
+    {
+      "month": "2022-01",
+      "referenceDate": "2022-01-31",
+      "yenPerUsd": 115.4446038006454,
+      "eurJpy": 128.79,
+      "eurUsd": 1.1156
+    },
+    {
+      "month": "2022-02",
+      "referenceDate": "2022-02-28",
+      "yenPerUsd": 115.46566657737299,
+      "eurJpy": 129.31,
+      "eurUsd": 1.1199
+    },
+    {
+      "month": "2022-03",
+      "referenceDate": "2022-03-31",
+      "yenPerUsd": 121.76380506260695,
+      "eurJpy": 135.17,
+      "eurUsd": 1.1101
+    },
+    {
+      "month": "2022-04",
+      "referenceDate": "2022-04-29",
+      "yenPerUsd": 129.99051233396582,
+      "eurJpy": 137.01,
+      "eurUsd": 1.054
+    },
+    {
+      "month": "2022-05",
+      "referenceDate": "2022-05-31",
+      "yenPerUsd": 128.21805283300665,
+      "eurJpy": 137.36,
+      "eurUsd": 1.0713
+    },
+    {
+      "month": "2022-06",
+      "referenceDate": "2022-06-30",
+      "yenPerUsd": 136.2664869548474,
+      "eurJpy": 141.54,
+      "eurUsd": 1.0387
+    },
+    {
+      "month": "2022-07",
+      "referenceDate": "2022-07-29",
+      "yenPerUsd": 133.77132771131593,
+      "eurJpy": 136.42,
+      "eurUsd": 1.0198
+    },
+    {
+      "month": "2022-08",
+      "referenceDate": "2022-08-31",
+      "yenPerUsd": 138.72,
+      "eurJpy": 138.72,
+      "eurUsd": 1
+    },
+    {
+      "month": "2022-09",
+      "referenceDate": "2022-09-30",
+      "yenPerUsd": 144.65531391054574,
+      "eurJpy": 141.01,
+      "eurUsd": 0.9748
+    },
+    {
+      "month": "2022-10",
+      "referenceDate": "2022-10-31",
+      "yenPerUsd": 148.6786362719387,
+      "eurJpy": 147.4,
+      "eurUsd": 0.9914
+    },
+    {
+      "month": "2022-11",
+      "referenceDate": "2022-11-30",
+      "yenPerUsd": 139.05165767154972,
+      "eurJpy": 144.28,
+      "eurUsd": 1.0376
+    },
+    {
+      "month": "2022-12",
+      "referenceDate": "2022-12-30",
+      "yenPerUsd": 131.8769923120195,
+      "eurJpy": 140.66,
+      "eurUsd": 1.0666
+    },
+    {
+      "month": "2023-01",
+      "referenceDate": "2023-01-31",
+      "yenPerUsd": 130.40708944890613,
+      "eurJpy": 141.27,
+      "eurUsd": 1.0833
+    },
+    {
+      "month": "2023-02",
+      "referenceDate": "2023-02-28",
+      "yenPerUsd": 136.764290422827,
+      "eurJpy": 145.23,
+      "eurUsd": 1.0619
+    },
+    {
+      "month": "2023-03",
+      "referenceDate": "2023-03-31",
+      "yenPerUsd": 133.1770114942529,
+      "eurJpy": 144.83,
+      "eurUsd": 1.0875
+    },
+    {
+      "month": "2023-04",
+      "referenceDate": "2023-04-28",
+      "yenPerUsd": 136.0076495765413,
+      "eurJpy": 149.35,
+      "eurUsd": 1.0981
+    },
+    {
+      "month": "2023-05",
+      "referenceDate": "2023-05-31",
+      "yenPerUsd": 139.5956192080876,
+      "eurJpy": 149.13,
+      "eurUsd": 1.0683
+    },
+    {
+      "month": "2023-06",
+      "referenceDate": "2023-06-30",
+      "yenPerUsd": 144.63464016197312,
+      "eurJpy": 157.16,
+      "eurUsd": 1.0866
+    },
+    {
+      "month": "2023-07",
+      "referenceDate": "2023-07-31",
+      "yenPerUsd": 142.18452326952735,
+      "eurJpy": 156.73,
+      "eurUsd": 1.1023
+    },
+    {
+      "month": "2023-08",
+      "referenceDate": "2023-08-31",
+      "yenPerUsd": 145.83179977916822,
+      "eurJpy": 158.49,
+      "eurUsd": 1.0868
+    },
+    {
+      "month": "2023-09",
+      "referenceDate": "2023-09-29",
+      "yenPerUsd": 149.2354162733623,
+      "eurJpy": 158.1,
+      "eurUsd": 1.0594
+    },
+    {
+      "month": "2023-10",
+      "referenceDate": "2023-10-31",
+      "yenPerUsd": 150.95583388266314,
+      "eurJpy": 160.3,
+      "eurUsd": 1.0619
+    },
+    {
+      "month": "2023-11",
+      "referenceDate": "2023-11-30",
+      "yenPerUsd": 147.4613484585125,
+      "eurJpy": 161.19,
+      "eurUsd": 1.0931
+    },
+    {
+      "month": "2023-12",
+      "referenceDate": "2023-12-29",
+      "yenPerUsd": 141.47511312217196,
+      "eurJpy": 156.33,
+      "eurUsd": 1.105
+    },
+    {
+      "month": "2024-01",
+      "referenceDate": "2024-01-31",
+      "yenPerUsd": 147.8176617144966,
+      "eurJpy": 160.19,
+      "eurUsd": 1.0837
+    },
+    {
+      "month": "2024-02",
+      "referenceDate": "2024-02-29",
+      "yenPerUsd": 150.12931830777757,
+      "eurJpy": 162.53,
+      "eurUsd": 1.0826
+    },
+    {
+      "month": "2024-03",
+      "referenceDate": "2024-03-28",
+      "yenPerUsd": 151.1886041994265,
+      "eurJpy": 163.45,
+      "eurUsd": 1.0811
+    },
+    {
+      "month": "2024-04",
+      "referenceDate": "2024-04-30",
+      "yenPerUsd": 156.99757417428626,
+      "eurJpy": 168.27,
+      "eurUsd": 1.0718
+    },
+    {
+      "month": "2024-05",
+      "referenceDate": "2024-05-31",
+      "yenPerUsd": 157.13232583855512,
+      "eurJpy": 170.52,
+      "eurUsd": 1.0852
+    },
+    {
+      "month": "2024-06",
+      "referenceDate": "2024-06-28",
+      "yenPerUsd": 160.61653432975245,
+      "eurJpy": 171.94,
+      "eurUsd": 1.0705
+    },
+    {
+      "month": "2024-07",
+      "referenceDate": "2024-07-31",
+      "yenPerUsd": 150.31400073882526,
+      "eurJpy": 162.76,
+      "eurUsd": 1.0828
+    },
+    {
+      "month": "2024-08",
+      "referenceDate": "2024-08-30",
+      "yenPerUsd": 145.38648868043654,
+      "eurJpy": 161.19,
+      "eurUsd": 1.1087
+    },
+    {
+      "month": "2024-09",
+      "referenceDate": "2024-09-30",
+      "yenPerUsd": 142.74740978921042,
+      "eurJpy": 159.82,
+      "eurUsd": 1.1196
+    },
+    {
+      "month": "2024-10",
+      "referenceDate": "2024-10-31",
+      "yenPerUsd": 152.82117257857013,
+      "eurJpy": 166.3,
+      "eurUsd": 1.0882
+    },
+    {
+      "month": "2024-11",
+      "referenceDate": "2024-11-29",
+      "yenPerUsd": 150.19882597992802,
+      "eurJpy": 158.64,
+      "eurUsd": 1.0562
+    },
+    {
+      "month": "2024-12",
+      "referenceDate": "2024-12-31",
+      "yenPerUsd": 156.9544710751757,
+      "eurJpy": 163.06,
+      "eurUsd": 1.0389
+    },
+    {
+      "month": "2025-01",
+      "referenceDate": "2025-01-31",
+      "yenPerUsd": 154.90233811219093,
+      "eurJpy": 160.99,
+      "eurUsd": 1.0393
+    },
+    {
+      "month": "2025-02",
+      "referenceDate": "2025-02-28",
+      "yenPerUsd": 150.7636154067813,
+      "eurJpy": 156.96,
+      "eurUsd": 1.0411
+    },
+    {
+      "month": "2025-03",
+      "referenceDate": "2025-03-31",
+      "yenPerUsd": 149.42209893666205,
+      "eurJpy": 161.6,
+      "eurUsd": 1.0815
+    },
+    {
+      "month": "2025-04",
+      "referenceDate": "2025-04-30",
+      "yenPerUsd": 143.04053459949003,
+      "eurJpy": 162.68,
+      "eurUsd": 1.1373
+    },
+    {
+      "month": "2025-05",
+      "referenceDate": "2025-05-30",
+      "yenPerUsd": 143.71637710556487,
+      "eurJpy": 162.96,
+      "eurUsd": 1.1339
+    },
+    {
+      "month": "2025-06",
+      "referenceDate": "2025-06-30",
+      "yenPerUsd": 144.34300341296927,
+      "eurJpy": 169.17,
+      "eurUsd": 1.172
+    },
+    {
+      "month": "2025-07",
+      "referenceDate": "2025-07-31",
+      "yenPerUsd": 149.85147649834002,
+      "eurJpy": 171.52,
+      "eurUsd": 1.1446
+    },
+    {
+      "month": "2025-08",
+      "referenceDate": "2025-08-29",
+      "yenPerUsd": 147.29799279464746,
+      "eurJpy": 171.72,
+      "eurUsd": 1.1658
+    },
+    {
+      "month": "2025-09",
+      "referenceDate": "2025-09-30",
+      "yenPerUsd": 147.99420832978453,
+      "eurJpy": 173.76,
+      "eurUsd": 1.1741
+    },
+    {
+      "month": "2025-10",
+      "referenceDate": "2025-10-31",
+      "yenPerUsd": 154.18037043448155,
+      "eurJpy": 178.14,
+      "eurUsd": 1.1554
+    },
+    {
+      "month": "2025-11",
+      "referenceDate": "2025-11-28",
+      "yenPerUsd": 156.1213902818606,
+      "eurJpy": 180.57,
+      "eurUsd": 1.1566
+    },
+    {
+      "month": "2025-12",
+      "referenceDate": "2025-12-31",
+      "yenPerUsd": 156.6723404255319,
+      "eurJpy": 184.09,
+      "eurUsd": 1.175
+    },
+    {
+      "month": "2026-01",
+      "referenceDate": "2026-01-30",
+      "yenPerUsd": 154.03137847134826,
+      "eurJpy": 183.59,
+      "eurUsd": 1.1919
+    },
+    {
+      "month": "2026-02",
+      "referenceDate": "2026-02-27",
+      "yenPerUsd": 155.97628123676407,
+      "eurJpy": 184.13,
+      "eurUsd": 1.1805
+    },
+    {
+      "month": "2026-03",
+      "referenceDate": "2026-03-31",
+      "yenPerUsd": 159.49730387893547,
+      "eurJpy": 183.39,
+      "eurUsd": 1.1498
+    },
+    {
+      "month": "2026-04",
+      "referenceDate": "2026-04-30",
+      "yenPerUsd": 156.56298068706207,
+      "eurJpy": 183.21,
+      "eurUsd": 1.1702
+    },
+    {
+      "month": "2026-05",
+      "referenceDate": "2026-05-29",
+      "yenPerUsd": 159.26657506011676,
+      "eurJpy": 185.45,
+      "eurUsd": 1.1644
+    },
+    {
+      "month": "2026-06",
+      "referenceDate": "2026-06-30",
+      "yenPerUsd": 162.4363700193084,
+      "eurJpy": 185.08,
+      "eurUsd": 1.1394
+    },
+    {
+      "month": "2026-07",
+      "referenceDate": "2026-07-31",
+      "yenPerUsd": 160.2350892468437,
+      "eurJpy": 184.03,
+      "eurUsd": 1.1485
+    },
+    {
+      "month": "2026-08",
+      "referenceDate": "2026-08-31",
+      "yenPerUsd": 159.727492238703,
+      "eurJpy": 185.22,
+      "eurUsd": 1.1596
+    },
+    {
+      "month": "2026-09",
+      "referenceDate": "2026-09-30",
+      "yenPerUsd": 156.99691765741966,
+      "eurJpy": 178.27,
+      "eurUsd": 1.1355
+    },
+    {
+      "month": "2026-10",
+      "referenceDate": "2026-10-30",
+      "yenPerUsd": 157.25026852846403,
+      "eurJpy": 175.68,
+      "eurUsd": 1.1172
+    }
+  ]
+}
