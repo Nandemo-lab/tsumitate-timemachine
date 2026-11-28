@@ -10,7 +10,7 @@ const assert = (condition, message) => { if (!condition) failures.push(message);
 const guides = read("lib/guide-pages.ts");
 const years = read("lib/year-pages.ts");
 const shareCard = read("components/simulation/ShareCard.tsx");
-const sharePage = read("app/share/page.tsx");
+const sharePage = read("app/share/page.tsx") + read("app/share/ShareClient.tsx");
 const shareUrl = read("lib/utils/shareUrl.ts");
 const compares = read("lib/compare-pages.ts");
 const article = read("content/articles/orukan-vs-sp500.tsx");
