@@ -14,6 +14,7 @@ const pages = [
   '/share?f=orcan&y=2024&m=1&ey=2026&em=9&a=0',
   '/guide/orukan-ippon-de-ii',
   '/tools/own-data',
+  '/tools/goal-cost',
 ]
 const widths = [375, 390, 430]
 const results = []
@@ -46,6 +47,7 @@ try {
         await page.locator('#own-returns').fill('2025-01,10\n2025-02,-10')
         await page.getByRole('button', { name: '端末内で計算' }).click()
       }
+      if (path === '/tools/goal-cost') await page.getByRole('button', { name: '必要な月額を比較する' }).click()
       const layout = await page.evaluate(async () => ({
         viewport: innerWidth,
         documentWidth: document.documentElement.scrollWidth,
@@ -73,6 +75,8 @@ try {
       const shareAmount = path.startsWith('/share') && amountChecks.get(new URLSearchParams(path.split('?')[1]).get('a'))
       const resultVisible = path === '/tools/own-data'
         ? layout.text.includes('60,000円') && layout.text.includes('56,700円') && layout.text.includes('元本割れ月数')
+        : path === '/tools/goal-cost'
+        ? layout.text.includes('同じ目標額まで積み立てる場合') && layout.text.includes('BとAの必要月額の差')
         : path.includes('amount=50000')
         ? layout.text.includes('毎月5万円') && layout.text.includes('165万円') && layout.text.includes('221万円')
         : path.includes('a=0') ? layout.text.includes('共有条件を確認できません')
