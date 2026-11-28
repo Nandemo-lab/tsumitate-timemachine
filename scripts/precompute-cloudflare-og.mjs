@@ -33,15 +33,21 @@ for (const [route, metadata] of Object.entries(manifest.routes)) {
 if (originalUrls.size < 30) throw new Error(`Only ${originalUrls.size} OG variants found; metadata extraction may be broken`)
 
 const images = {}
-for (const query of [...originalUrls].sort()) {
-  const response = await fetch(`${origin}/api/og?${query}`, { signal: AbortSignal.timeout(45000) })
-  const bytes = new Uint8Array(await response.arrayBuffer())
-  if (!response.ok || !response.headers.get('content-type')?.startsWith('image/png') || bytes.length < 1000) {
-    throw new Error(`OG generation failed for ${query}: ${response.status} ${response.headers.get('content-type')}`)
+const queries = [...originalUrls].sort()
+let nextIndex = 0
+async function generate() {
+  while (nextIndex < queries.length) {
+    const query = queries[nextIndex++]
+    const response = await fetch(`${origin}/api/og?${query}`, { signal: AbortSignal.timeout(45000) })
+    const bytes = new Uint8Array(await response.arrayBuffer())
+    if (!response.ok || !response.headers.get('content-type')?.startsWith('image/png') || bytes.length < 1000) {
+      throw new Error(`OG generation failed for ${query}: ${response.status} ${response.headers.get('content-type')}`)
+    }
+    const file = `${createHash('sha256').update(query).digest('hex').slice(0,20)}.png`
+    await writeFile(join(imageRoot, file), bytes)
+    images[query] = `/og-static/${file}`
   }
-  const file = `${createHash('sha256').update(query).digest('hex').slice(0,20)}.png`
-  await writeFile(join(imageRoot, file), bytes)
-  images[query] = `/og-static/${file}`
 }
+await Promise.all(Array.from({ length: 3 }, generate))
 await writeFile(join(root, '.open-next/og-static-map.json'), JSON.stringify(images))
 console.log(`Generated ${Object.keys(images).length} exact OG images; default ${images['static=1']}`)
