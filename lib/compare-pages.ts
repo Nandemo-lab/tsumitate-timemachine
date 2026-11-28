@@ -52,6 +52,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     h1: "オルカンとS&P500、新NISAで積み立てるならどっちがいい？",
     intro:
       "オルカンとS&P500について、両商品の公式月次データがそろう共通期間の積立結果と、投資対象・費用の違いを分けて確認します。過去結果は将来の優劣を示しません。",
+    searchIntentAnswer:
+      "両方とも米国株を含みます。違いは米国以外の先進国・新興国も持つかどうかです。下の結果は商品設定後の共通期間に同じ月初積立・月末評価を適用し、期間末の差と途中の元本割れ月数を示します。相場の日中下落率や将来の優劣とは区別してください。",
     conclusionA: "全世界（先進国・新興国）へ分散する商品",
     conclusionB: "米国大型株へ集中する商品",
     simYear: 2020,
@@ -159,11 +161,11 @@ export const COMPARE_PAGES: ComparePage[] = [
     fundBId: "nasdaq100",
     metaTitle: "オルカン vs NASDAQ100 どっちがいい？分散と集中、積立実績を徹底比較",
     metaDescription:
-      "オルカンとNASDAQ100はどっちが合う？月3万円の積立実績、下落時の値動き、分散、信託報酬、NISA対応を比較します。",
+      "オルカンとNASDAQ100の国内投信を共通期間・月3万円で比較。期間末評価額だけでなく、月末の元本割れ月数、投資範囲、費用と公式月次データの出典を確認できます。",
     relatedDescription: "世界分散 vs テック集中",
     h1: "オルカンとNASDAQ100、世界分散とテック集中どっちを選ぶ？",
     intro:
-      "オルカンは全世界株式への分散、NASDAQ100は米国の非金融大型株への集中が特徴です。分散を優先するならオルカン、値動きの大きさを許容して米国大型グロース株を重視するならNASDAQ100が比較対象になります。2020年から月3万円を積み立てた実績と下落時の差を数字で確認します。",
+      "オルカンは全世界株式、iFreeNEXT NASDAQ100は米国のNASDAQ上場非金融大型株を対象とする国内投信です。公式月次系列がそろう2020年以降、月3万円を同額で積み立てた結果と、対象・費用の違いを分けて確認します。過去の月末結果は将来の値動きを保証しません。",
     searchIntentAnswer:
       "違いは投資範囲です。オルカンは先進国・新興国を含む全世界株式、NASDAQ100はNASDAQ上場の非金融大型株100社を対象とします。このページでは、同じ開始月・終了月・月額で期間末評価額だけでなく、月末時点の元本割れ月数と最大評価損も比較できます。",
     conclusionA: "地域分散を確認 → オルカン",
@@ -175,7 +177,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       { label: "投資対象",      a: "全世界株式（先進国＋新興国）", b: "ナスダック上場の非金融100社" },
       { label: "国数",          a: "約50ヵ国",                     b: "米国のみ（1ヵ国）" },
       { label: "銘柄数",        a: FUNDS.orcan.shareCount,          b: FUNDS.nasdaq100.shareCount },
-      { label: "業種分散",      a: "◎ 全業種・全世界に分散",       b: "△ IT・ハイテク偏重（約60%）" },
+      { label: "業種分散",      a: "全世界の複数業種",             b: "非金融大型株に集中。業種比率は変動" },
       { label: "集中の特徴",    a: "全世界へ地域分散",             b: "非金融の大型株100社" },
       { label: "2022年の暦年リターン", a: formatAnnualReturn("orcan", 2022), b: formatAnnualReturn("nasdaq100", 2022), note: "円ベース・分配金再投資込みの暦年リターンです。年中の高値から安値までの最大下落率ではありません。" },
       { label: "信託報酬",      a: formatExpenseRatio("orcan"),    b: formatExpenseRatio("nasdaq100") },
@@ -204,7 +206,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       },
       {
         q: "暴落時に強いのはオルカンとNASDAQ100のどちらですか？",
-        a: `2022年の暦年リターンはオルカン${formatAnnualReturn("orcan", 2022)}、NASDAQ100${formatAnnualReturn("nasdaq100", 2022)}でした。この年は分散範囲の広いオルカンの下落幅が相対的に小さくなりましたが、将来も同じ関係になるとは限りません。`,
+        a: `2022年の円建て暦年リターンはオルカン${formatAnnualReturn("orcan", 2022)}、iFreeNEXT NASDAQ100${formatAnnualReturn("nasdaq100", 2022)}でした。これはその年の始点と終点の比較で、日中の最大下落率や将来の暴落耐性は判断できません。下の積立途中の元本割れも月末時点に限定します。`,
       },
       {
         q: "初心者にはオルカンとNASDAQ100のどちらが向いていますか？",
