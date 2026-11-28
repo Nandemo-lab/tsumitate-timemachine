@@ -1,5 +1,13 @@
 # 積立タイムマシン: Cloudflare隔離配信と切り戻し
 
+## 最新判定（2026-11-28）
+
+旧「Workers Free はNO-GO」の記録は修正前の動的SSR構成。現在の隔離WorkerはOpenNextサーバーを読み込まず、235公開経路（旧234経路と `/share`）のHTML/RSC、OG PNG、robots、sitemapを静的アセットで配信する。`/api/og` の既知/未知画像は事前生成PNG、未知URLは軽量404。再配信バージョン `d160deea-6ba7-4741-b4ff-52dec6792ce4` でrobots、sitemap、共有ページ、OGが200、未知URLが404。Wrangler tail実測はOGと404でCPU各0ms、静的公開ページはWorker実行ログに現れずStatic Assetsから配信された。個別リクエストの無料枠10msは通過したが、長期のリクエスト数・エラー率と本番ドメインでの安定性は未測定。本番公開・DNS変更は未実施。
+
+`STATIC_TARGET=production OG_PUBLIC_ORIGIN=https://tsumitate-timemachine.com node scripts/prepare-cloudflare-static-preview.mjs` で本番用235経路と公式robots/sitemapを別途生成し、プレビューnoindexヘッダーがあれば失敗させる。本番Wrangler設定は同じ軽量Workerを `PREVIEW_MODE=false` で使う。ローカルの本番配信物で `wrangler deploy --config wrangler.jsonc --dry-run` 成功（718 assets、実配信なし）。切替時は**クリーンビルド→OG事前生成→本番用静的パッケージ生成→dry-run→OWNER承認範囲内の配信**の順。プレビュー配信物を本番に使わない。
+
+CIでは変更した詳細・共有ページを375/390/430pxで実画面確認し、横溢れ・画像欠落・サイト起因Console Errorは0。共有URLの月額1/3/5/10万円、2銘柄比較、異常額の追加行列検証は最新CIで確認する。共有画面5万円の元本165万円、評価額221万円と33回は実ブラウザで確認済み。GA4はプレビューから送信しない。AdSense審査中の本番は維持し、本番移行は独立した承認対象。
+
 ## 2026-11-28 共有ページの静的配信検証
 
 既存の234経路に `/share` を追加し、235経路のHTML/RSCをStatic Assetsから配信した。共有URLのクエリはブラウザで既存パーサーを使って検証し、既存の `simulate` で再計算する。任意の積立額を3万円と誤表示しないよう、共通OG説明は金額・収益を含めず、共有画面で条件を確認する表現とした。OG画像は事前生成済みの共通PNG。プレビューでは235経路すべてHTTP 200かつ `X-Robots-Tag: noindex`、未知経路と非公開管理画面は軽量404、既知・未知OGは静的PNG。ブラウザで5万円・2024年1月〜2026年9月の共有結果を確認し、元本165万円、期間末221万円、33回の結果と共通OG説明が一致した。ブラウザ拡張由来のConsole Errorはサイト起因と区別する。
