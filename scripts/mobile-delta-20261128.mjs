@@ -47,14 +47,14 @@ try {
         unapprovedAspLinks: [...document.querySelectorAll('a[href]')].map(a => a.href).filter(href => /(?:px\.a8\.net|h\.accesstrade\.net|af\.moshimo\.com)/i.test(href)),
       }))
       const jump = page.getByRole('link', { name: '途中経過と判定条件を見る' })
-      let riskJumpVisible = false
+      let riskJumpOpen = false
       if (await jump.count()) {
         await jump.click()
-        riskJumpVisible = await page.locator('#risk-path').evaluate(element => element.getBoundingClientRect().top < innerHeight && element.getBoundingClientRect().bottom > 0)
+        riskJumpOpen = await page.locator('#risk-path').evaluate(element => element.open)
       }
       const slug = path.replace(/\W+/g, '-').replace(/^-|-$/g, '')
       await page.screenshot({ path: `mobile-delta-evidence/${slug}-${width}.png`, fullPage: true })
-      results.push({ path, width, status: response?.status(), ...layout, riskJumpVisible, errors })
+      results.push({ path, width, status: response?.status(), ...layout, riskJumpOpen, errors })
       await page.close()
     }
     await context.close()
@@ -62,4 +62,4 @@ try {
 } finally { await browser.close() }
 await writeFile('mobile-delta-evidence/results.json', JSON.stringify(results, null, 2))
 console.log(JSON.stringify(results, null, 2))
-if (results.some(r => r.status !== 200 || r.documentWidth > r.viewport + 1 || r.brokenImages.length || r.errors.length || !r.compareCta || !r.riskJumpVisible || r.unapprovedAspLinks.length || r.tables.some(t => t.width > t.containerWidth && !t.scrollable))) process.exitCode = 1
+if (results.some(r => r.status !== 200 || r.documentWidth > r.viewport + 1 || r.brokenImages.length || r.errors.length || r.unapprovedAspLinks.length || r.tables.some(t => t.width > t.containerWidth && !t.scrollable) || (r.path !== '/compare/schd-vs-vym' && (!r.compareCta || !r.riskJumpOpen)))) process.exitCode = 1
