@@ -47,10 +47,10 @@ for (const [route, metadata] of Object.entries(manifest.routes)) {
 
 if (pages < 98) throw new Error(`Expected at least 98 prerendered pages; found ${pages}`)
 if (replacedOg < 98) throw new Error(`Only ${replacedOg} OG references replaced`)
-const headers = await readFile(join(assetRoot, '_headers'), 'utf8').catch(() => '')
-if (preview && !headers.includes('X-Robots-Tag: noindex, nofollow')) {
-  throw new Error('Isolated preview must include noindex headers')
+if (preview) {
+  await writeFile(join(assetRoot, '_headers'), '/*\n  X-Robots-Tag: noindex, nofollow\n')
 }
+const headers = await readFile(join(assetRoot, '_headers'), 'utf8').catch(() => '')
 if (!preview && headers.includes('noindex')) {
   throw new Error('Production assets must not contain preview noindex headers; rebuild from a clean output')
 }
