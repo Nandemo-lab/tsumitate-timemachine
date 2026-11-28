@@ -18,6 +18,14 @@
 
 この手順は本番ドメインとVercel本番を変更しない隔離検証用。`next build` や OpenNext の生成成功だけでは Cloudflare Workers Free で実行可能とは判定しない。
 
+### 11月28日 詳細シミュレーションの静的化
+
+`/simulate/[fund]/[year]` の100経路をビルド時に既定の月額3万円で事前生成し、`?amount=` はブラウザで既存の `simulate` と同じ検証済み月次系列から再計算する。元本、最終評価額、利益などの計算関数は変更していない。OG画像も100種類を事前生成した。プレビュー用スクリプトは合計234経路のHTML/RSCをStatic Assetsに置き、未知の公開URLをWorkerで軽い404にする。OG URL置換で埋め込みRSCのエスケープを損なった初回版は、実画面で発見して修正し、再配信した。
+
+隔離Worker version `539fd5f1-b714-4e91-be38-ab373fa8da6a` では100詳細経路すべてHTTP 200/noindex。既定額と任意額の5ケースで現行本番の数値と既存計算関数を照合して一致した。ブラウザ実画面ではオルカン2024年の月額5万円が元本165万円、評価額221万円、利益56万円と表示された。未知URLの再訪時CPUは0ms。静的詳細ページへのWorker起動はtailで観測されなかった。
+
+**全サイトの本番移行はまだNO-GO。** `/share` は個別条件のSSRと共有メタデータを維持しておりCPU実測197〜234msでFree上限10msを超える。`/admin/seo` も未検証の動的経路。任意額の詳細ページは画面上の数値は更新するが、静的HTMLとOGメタデータは既定の3万円のままなので共有カードの数値が一致しない。今回変更したページの375/390/430px実画面と低性能端末でのフリーズ・転送量は未確認。これらを解消してから再度全経路、コールドアクセス、CPUを実測する。無料枠を超える有料プラン変更や現行本番への反映はしない。
+
 ## 前提と配信
 
 - `npm ci && npx opennextjs-cloudflare build` で `.open-next/worker.js` と `.open-next/assets` を生成する。隔離ビルドでは `_headers` を設置後に `node scripts/prepare-cloudflare-static-preview.mjs` を実行し、prerendered HTML/RSCを静的配信する。`wrangler.isolated.jsonc` はこれらを参照する。本番用 `wrangler.jsonc` とプレビュー専用noindexは混同しない。
