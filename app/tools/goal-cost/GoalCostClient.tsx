@@ -20,15 +20,18 @@ export default function GoalCostClient() {
   const [shareStatus, setShareStatus] = useState("");
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    if (!keys.some(key => params.has(key))) return;
-    const next = { ...fields };
-    for (const key of keys) if (params.has(key)) next[key] = params.get(key) ?? "";
-    setFields(next);
-    try { setResult(projectGoal(Object.fromEntries(keys.map(key => [key, Number(next[key])])) as GoalInputs)); }
-    catch { setError("共有URLの条件が不正です。数値を確認してください。"); }
-    // Initial URL is read once, never overwritten while typing.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const readSharedURL = () => {
+      const params = new URLSearchParams(location.search);
+      if (!keys.some(key => params.has(key))) return;
+      const next = Object.fromEntries(keys.map(key => [key, params.get(key) ?? String(defaults[key])])) as Record<keyof GoalInputs, string>;
+      setFields(next);
+      try { setResult(projectGoal(Object.fromEntries(keys.map(key => [key, Number(next[key])])) as GoalInputs)); }
+      catch { setError("共有URLの条件が不正です。数値を確認してください。"); }
+    };
+    // The queued callback runs after mount, and popstate keeps shared URLs usable.
+    queueMicrotask(readSharedURL);
+    window.addEventListener("popstate", readSharedURL);
+    return () => window.removeEventListener("popstate", readSharedURL);
   }, []);
 
   function calculate(event: React.FormEvent<HTMLFormElement>) {
