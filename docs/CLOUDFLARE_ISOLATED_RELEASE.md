@@ -10,6 +10,12 @@
 
 次の候補は、OGの事前生成・必要な動的経路の静的化によって10ms制限下で全主要機能が動くかを隔離検証すること。機能と更新工数が増える場合は無料商用の別ホストも比較する。いずれも実配信、OG、404、比較、シミュレーションを通過するまで本番移行を承認対象にしない。
 
+### 11月28日 OG画像の事前生成と再配信
+
+`scripts/precompute-cloudflare-og.mjs` は同じNextビルドをローカルサーバーで起動した状態で `OG_SOURCE_ORIGIN=http://127.0.0.1:PORT` を指定して実行する。134件の静的ページのメタデータから50種類のクエリを収集し、元のOG生成コードを使ってPNGをビルド時に生成する。画像・投資計算は改変しない。次に `OG_PUBLIC_ORIGIN=https://tsumitate-isolated-preview.nandemomail24.workers.dev node scripts/prepare-cloudflare-static-preview.mjs` を実行し、静的ページのHTML/RSCのOG参照を隔離配信上のPNGへ置換する。本番用の配信物を作る際は `OG_PUBLIC_ORIGIN` に本番オリジンを指定して再生成する。ビルドのたびに両スクリプトを再実行する。
+
+プレビューWorkerの `/api/og` は、既知のクエリを対応する静的PNG、未知のクエリを共通PNGとして配信する。隔離実配信では既知・未知のOG APIがともにHTTP 200のPNGで、Wrangler tailのCPUは9回中0〜1msだった。静的134経路は全件HTTP 200かつ `noindex`。一方、`/simulate/orcan/2024` はHTTP 200でもCPU 284〜293ms、存在しないURLは55〜82msだった。10msのFree枠では安定性を証明できないため、**積立タイムマシン全体の本番移行は引き続きNO-GO**。動的計算の静的化・キャッシュか、無料商用の別ホストが必要。旧本番は未変更。
+
 この手順は本番ドメインとVercel本番を変更しない隔離検証用。`next build` や OpenNext の生成成功だけでは Cloudflare Workers Free で実行可能とは判定しない。
 
 ## 前提と配信
