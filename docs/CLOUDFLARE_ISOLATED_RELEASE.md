@@ -1,5 +1,13 @@
 # 積立タイムマシン: Cloudflare隔離配信と切り戻し
 
+## 2026-11-28 実配信の判定: Workers Free は NO-GO
+
+公式Wrangler OAuthで既存アカウントへ認証し、`wrangler deploy --config wrangler.isolated.jsonc` で別名Worker `tsumitate-isolated-preview` に配信した。既存ドメインとVercel本番は未変更。プレビュー専用のWorkerラッパーと静的アセットの `_headers` で `noindex, nofollow` を設定し、robots.txtは `Disallow: /` とした。GA4は既存コードの本番ドメイン限定条件によりプレビューから送信しない。再ビルド後は `printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > .open-next/assets/_headers` を実行してから隔離配信する（`.open-next` はGit管理外）。
+
+実環境で `/`、主な比較ページ、積立ページ、`robots.txt`、`ads.txt` は200を確認した一方、OG画像APIと404経路は **HTTP 503 / Cloudflare Error 1102** を再現した。比較ページもブラウザからの再訪時に1102を返し、不安定だった。1102はリソース上限で、FreeのWorker CPU制限は10ms/リクエスト。HTTP待ち時間やデプロイ時の24ms起動時間をCPU時間として扱わない。OG・SSRを含む現在の構成を本番へ移す条件を満たさない。再配信や広告開始、DNS変更は行わない。
+
+次の候補は、OGの事前生成・必要な動的経路の静的化によって10ms制限下で全主要機能が動くかを隔離検証すること。機能と更新工数が増える場合は無料商用の別ホストも比較する。いずれも実配信、OG、404、比較、シミュレーションを通過するまで本番移行を承認対象にしない。
+
 この手順は本番ドメインとVercel本番を変更しない隔離検証用。`next build` や OpenNext の生成成功だけでは Cloudflare Workers Free で実行可能とは判定しない。
 
 ## 前提と配信
