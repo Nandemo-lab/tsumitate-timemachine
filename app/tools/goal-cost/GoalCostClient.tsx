@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import PlannerSteps from "../PlannerSteps";
 import { projectGoal, type GoalInputs } from "@/lib/goal-fee-simulation";
 
 const defaults: GoalInputs = {
@@ -61,6 +62,7 @@ export default function GoalCostClient() {
   return <main className="min-h-dvh bg-[#FAFAF7] px-4 py-8 text-[#263A53]">
     <div className="mx-auto max-w-3xl space-y-6">
       <Link href="/" className="text-sm underline underline-offset-4">トップへ戻る</Link>
+      <PlannerSteps current="goal" />
       <header className="space-y-3"><p className="text-xs font-bold tracking-wide text-indigo-700">条件を自分で置く・実績データ不使用</p>
         <h1 className="text-2xl font-black leading-tight sm:text-3xl">目標額から逆算する積立額と費用の差</h1>
         <p className="text-sm leading-7 text-slate-700">将来の目標額を今の購買力で指定し、物価上昇と運用費用の仮定を変えて必要な月額を比較します。実在商品の過去実績や将来予測ではありません。</p></header>
@@ -78,6 +80,12 @@ export default function GoalCostClient() {
           <div className="rounded-xl bg-slate-100 p-4"><h3 className="font-bold">費用B：年{fields.annualFeeHighPercent}%</h3><p className="mt-2 text-2xl font-black">月{yen(result.monthlyB)}</p><p className="text-xs">積立元本 {yen(result.contributionB)}</p></div>
         </div>
         <p className="text-sm font-bold">BとAの必要月額の差：{yen(result.monthlyDifference)}（符号付き。費用率の大小で逆転します）</p>
+        <div className="space-y-3 border-t border-slate-200 pt-4 text-sm" aria-label="必要積立額の比較">
+          {([ ["費用A", result.monthlyA], ["費用B", result.monthlyB] ] as const).map(([label, amount]) =>
+            <div key={label} className="grid grid-cols-[4rem_1fr] items-center gap-2"><span>{label}</span><div className="h-5 rounded-sm bg-slate-100"><div className="h-5 rounded-sm bg-[#526D82]" style={{ width: `${Math.max(2, amount / Math.max(result.monthlyA, result.monthlyB) * 100)}%` }} /></div><span className="col-start-2 text-xs">月{yen(amount)}</span></div>)}
+        </div>
+        <p className="text-sm leading-7">この目標額を開始資産として、次の取り崩し試算に渡せます。取り崩し時の年率・期間・月額は別途設定してください。</p>
+        <Link href={`/tools/withdrawal?initialYen=${result.nominalTarget}&annualInflationPercent=${fields.inflationAnnualPercent}`} className="inline-flex min-h-11 items-center rounded-md bg-[#263A53] px-4 py-2 text-sm font-semibold text-white">この目標額で取り崩しを試す →</Link>
         <button type="button" onClick={share} className="min-h-11 rounded-lg border border-indigo-700 px-4 py-2 text-sm font-bold text-indigo-800">この条件のURLをコピー</button>
         <p role="status" className="text-sm">{shareStatus}</p>
       </section>}

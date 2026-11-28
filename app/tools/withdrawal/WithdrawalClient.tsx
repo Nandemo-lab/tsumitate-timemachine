@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import PlannerSteps from "../PlannerSteps";
 import { projectWithdrawal, sustainableMonthlyWithdrawal, type WithdrawalInputs } from "@/lib/withdrawal-simulation";
 
 const defaults: WithdrawalInputs = { initialYen: 30_000_000, monthlyYen: 100_000, years: 30, annualReturnPercent: 2, annualInflationPercent: 2 };
@@ -62,7 +63,8 @@ export default function WithdrawalClient() {
   }
 
   return <main className="min-h-dvh bg-[#FAFAF7] px-4 py-8 text-[#263A53]"><div className="mx-auto max-w-3xl space-y-6">
-    <Link href="/tools/goal-cost" className="text-sm underline underline-offset-4">目標額から積立額を逆算する</Link>
+    <Link href="/" className="text-sm underline underline-offset-4">トップへ戻る</Link>
+    <PlannerSteps current="withdrawal" />
     <header className="space-y-3"><p className="text-xs font-bold tracking-wide text-indigo-700">想定条件を自分で入力・実績データ不使用</p>
       <h1 className="text-2xl font-black leading-tight sm:text-3xl">資産取り崩しシミュレーション</h1>
       <p className="text-sm leading-7 text-slate-700">最初の月額を物価上昇率に合わせて毎月調整し、何年持つかを確認します。老後資金の計画など、条件を変えて比較するための概算です。</p></header>
@@ -80,6 +82,16 @@ export default function WithdrawalClient() {
       </div>
       <p className="text-sm font-bold">資金不足：{result.shortfallMonth === null ? "指定期間中は発生しない計算" : `${Math.ceil(result.shortfallMonth / 12)}年目の${(result.shortfallMonth - 1) % 12 + 1}か月目`}</p>
       <p className="text-sm">同じ条件で期間中に不足しない最初の月額の上限（1円単位）：<strong>{sustainable === null ? "計算中" : yen(sustainable)}</strong></p>
+      <figure className="border-t border-slate-200 pt-4">
+        <figcaption className="mb-2 text-sm font-semibold">年末残高の推移（一定年率の仮定）</figcaption>
+        <svg role="img" aria-label={`開始時${yen(Number(fields.initialYen))}、${result.yearly.length}年目の年末残高${yen(result.endingBalance)}。${result.shortfallMonth === null ? "期間中の資金不足なし" : `${Math.ceil(result.shortfallMonth / 12)}年目に資金不足`}`} viewBox="0 0 600 180" preserveAspectRatio="none" className="h-44 w-full rounded-sm bg-[#F3F5F4]">
+          <path d="M 20 155 H 590" stroke="#94A3B8" strokeWidth="1" />
+          <polyline fill="none" stroke="#34546A" strokeWidth="3" vectorEffect="non-scaling-stroke" points={[
+            [20, Number(fields.initialYen)], ...result.yearly.map((row, index) => [20 + 570 * (index + 1) / result.yearly.length, row.balance]),
+          ].map(([x, value]) => `${x},${155 - 130 * value / Math.max(1, Number(fields.initialYen), ...result.yearly.map(row => row.balance))}`).join(" ")} />
+        </svg>
+        <p className="mt-1 flex justify-between text-xs text-slate-600"><span>開始時</span><span>{result.yearly.length}年目</span></p>
+      </figure>
       <div className="overflow-x-auto"><table className="w-full min-w-[360px] text-right text-sm"><caption className="mb-2 text-left font-bold">年末残高と累計取崩額</caption>
         <thead><tr className="border-b"><th scope="col" className="py-2 text-left">年目</th><th scope="col">年末残高</th><th scope="col">累計取崩額</th></tr></thead><tbody>{result.yearly.map(row => <tr key={row.year} className="border-b border-slate-100"><th scope="row" className="py-2 text-left">{row.year}</th><td>{yen(row.balance)}</td><td>{yen(row.withdrawn)}</td></tr>)}</tbody></table></div>
       <button type="button" onClick={share} className="min-h-11 rounded-lg border border-indigo-700 px-4 py-2 text-sm font-bold text-indigo-800">この条件のURLをコピー</button><p role="status" className="text-sm">{shareStatus}</p>
