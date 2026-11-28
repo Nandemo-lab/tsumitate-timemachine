@@ -19,6 +19,7 @@ const canonical = (raw) => {
 }
 let replacedOg = 0
 let pages = 0
+const staticRoutes = []
 
 for (const [route, metadata] of Object.entries(manifest.routes)) {
   if (metadata.routeType !== 'page' || metadata.compute !== 'static') continue
@@ -32,11 +33,15 @@ for (const [route, metadata] of Object.entries(manifest.routes)) {
       const image = ogImages[canonical(url)]
       if (!image) throw new Error(`Missing precomputed OG image for ${route}`)
       replacedOg++
-      return `${publicOrigin}${image}`
+      // RSC flight data is embedded in a JavaScript string. The URL matcher
+      // includes its trailing escaped quote; keep those backslashes intact.
+      const escapedQuote = url.match(/\\+$/)?.[0] || ''
+      return `${publicOrigin}${image}${escapedQuote}`
     })
     await writeFile(destination, replaced)
   }
   pages++
+  staticRoutes.push(route)
 }
 
 if (pages < 98) throw new Error(`Expected at least 98 prerendered pages; found ${pages}`)
@@ -46,4 +51,5 @@ await readFile(join(assetRoot, '_headers'), 'utf8').then((headers) => {
     throw new Error('Isolated preview must include noindex headers')
   }
 })
+await writeFile(join(root, '.open-next/static-route-map.json'), JSON.stringify(staticRoutes))
 console.log(`Prepared ${pages} static HTML/RSC route pairs and ${replacedOg} OG references`)
