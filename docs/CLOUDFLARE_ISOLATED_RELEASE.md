@@ -62,3 +62,11 @@ Vercel本番のデプロイID、DNSのA/AAAA/CNAME、MX、TXT（SPF/DKIM/DMARC�
 切替後に多数の404、画像欠落、canonical相違、SSR/OG失敗、CPU上限超過、メール障害を確認したら、事前保存したDNSを基に旧Vercel向け設定へ戻す。旧Vercelプロジェクト・デプロイを削除しない。DNSのTTLと証明書の状態を追跡し、正常な旧環境で主要URL・GA4・メール関連レコードを再確認する。修正のために蓄積データや公開URLを削除しない。
 
 公式資料: [Workersの制限](https://developers.cloudflare.com/workers/platform/limits/)、[Workersのメトリクス](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/)、[リアルタイムログ](https://developers.cloudflare.com/workers/observability/logs/real-time-logs/)、[Pagesの制限](https://developers.cloudflare.com/pages/platform/limits/)。
+
+## 2026-11-28 最終差分とデータ更新ゲート
+
+隔離再配信 version `7bb2888a-08d3-4f6f-8f95-78cf77bd0192`。本番用配信物を隔離Workerへ誤投入した際、asset-first配信により `robots.txt` が `Allow: /` になった。隔離設定だけ `run_worker_first: true` にし、隔離パッケージ生成時に必ず `_headers` noindex と `Disallow: /` を書き込むよう修正した。再配信後のブラウザで `robots.txt` は拒否、`sitemap.xml`、`ads.txt` は配信。静的ファイルの許可リストをWorkerに追加し、本番用設定は asset-first のままとする。共有URLの月5万円・2024年1月〜2026年9月は元本165万円、評価額221万円、33回を実画面で再現。該当実行の tail CPUは0ms。隔離環境を本番用SEO設定のまま再配信しない。
+
+月次検証 `.github/workflows/verified-data-freshness.yml` は毎月1日、9系列の原典スナップショットSHA・欠損・重複とデータ年月の鮮度を検査する。更新が2か月以上遅れたら失敗し、GitHub Actionsに異常を残す。これは既存の事業KPI定期タスクとは別のデータ完全性監視。原典取得・台帳再生成・OG画像再生成・本番デプロイを自動実行しない。現状の生成スクリプトは終了年月、件数、取得日が2026-09/2026-10-13で固定されている。次月を扱うには出典の再利用条件とデータ形式を確認し、原典ハッシュと計算結果のレビューを経てから個別PRで更新する。失敗時は前回の正常な静的配信物を維持する。現行データの利用条件を十分確認できるまで、無人の自動更新をGOと扱わない。
+
+Vercelのドメイン設定から現行NSはお名前.com系 `01〜04.dnsv.jp`、apexの公開A応答は `216.198.79.1`。これはDNSゾーン全レコード、メール設定、SSL、ドメイン更新費の証明ではない。Cloudflareの本番用独自ドメインと現行DNSの安全な切替・復旧値を確定するまで積立の本番移行はNO-GO。
