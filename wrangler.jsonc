@@ -1,9 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tsumitate-timemachine",
-  "main": ".open-next/worker.js",
+  "main": "isolated-preview-worker.mjs",
   "compatibility_date": "2026-11-05",
   "compatibility_flags": ["nodejs_compat"],
+  "vars": { "PREVIEW_MODE": "false" },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
