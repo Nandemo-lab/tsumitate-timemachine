@@ -7,6 +7,7 @@ import PathInsights from "@/components/simulation/PathInsights";
 import Link from "next/link";
 import { trackCompareClick, trackSourceView } from "@/lib/analytics";
 import { PageVisualStory } from "@/components/visual/VisualStory";
+import { analyzeSimulationPath } from "@/lib/simulation-insights";
 
 interface Props {
   resultA: SimulationResult;
@@ -17,6 +18,9 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
   const isTie = resultA.finalValue === resultB.finalValue;
   const winner = isTie ? null : (resultA.finalValue > resultB.finalValue ? resultA : resultB);
   const diff = Math.abs(resultA.finalValue - resultB.finalValue);
+  const lastMonth = resultA.dataPoints.at(-1)?.date;
+  const pathA = analyzeSimulationPath(resultA.dataPoints);
+  const pathB = analyzeSimulationPath(resultB.dataPoints);
   const signed = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${formatCurrency(Math.abs(value))}`;
   const compareHref = `/?tab=compare&fund=${resultA.fundId}&fundB=${resultB.fundId}&year=${resultA.startYear}&month=${resultA.startMonth}&amount=${resultA.monthlyAmount}`;
 
@@ -32,8 +36,8 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
           積立シミュレーション比較
         </h2>
         <p className="text-xs text-slate-500 mb-4">
-          {resultA.startYear}年{resultA.startMonth}月〜 / 毎月
-          {(resultA.monthlyAmount / 10000).toFixed(0)}万円積立
+          {resultA.startYear}年{resultA.startMonth}月〜{lastMonth?.replace("/", "年")}月 / 毎月
+          {formatCurrency(resultA.monthlyAmount)}を月初に積立、月末で評価
         </p>
 
         <div className="mb-4 grid grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
@@ -86,6 +90,10 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
             {winner ? `差 ${formatCurrency(diff)}` : "同額"}
           </p>
         </div>
+        <p className="mt-3 rounded-xl border border-[#D9E3E8] bg-white px-4 py-3 text-xs leading-relaxed text-slate-700">
+          月末の元本割れは{resultA.fundName}が{pathA.belowPrincipalMonths}か月、{resultB.fundName}が{pathB.belowPrincipalMonths}か月。
+          <a href="#risk-path" className="ml-1 font-bold text-[#236B8E] underline underline-offset-2">途中経過と判定条件を見る</a>
+        </p>
       </section>
 
       {/* グラフ比較 */}
@@ -108,7 +116,7 @@ export default function ComparePageClient({ resultA, resultB }: Props) {
         </Link>
       </div>
 
-      <details className="rounded-xl border border-[#D9E3E8] bg-white px-4 py-3">
+      <details id="risk-path" className="scroll-mt-4 rounded-xl border border-[#D9E3E8] bg-white px-4 py-3">
         <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-bold text-[#263A53]">積立途中の元本割れを確認する</summary>
         <div className="grid gap-4 border-t border-[#E2EAEE] pt-4">
           <PathInsights result={resultA} title={`${resultA.fundName}の途中経過`} />
