@@ -1,8 +1,8 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 
-// Isolated preview only. Serve already prerendered public pages as static
-// assets, bypassing OpenNext's Worker CPU for ordinary HTML requests.
+// Package prerendered public pages as Static Assets. Preview additionally
+// requires noindex and robots Disallow; production fails closed on noindex.
 const root = process.cwd()
 const manifest = JSON.parse(await readFile(join(root, '.next/prerender-manifest.json'), 'utf8'))
 const sourceRoot = join(root, '.next/server/app')
@@ -16,7 +16,7 @@ if (!/^https:\/\/[a-z0-9.-]+$/.test(publicOrigin)) {
 const canonical = (raw) => {
   const url = new URL(raw.replaceAll('&amp;', '&').replaceAll('\\u0026', '&').replace(/\\+$/, ''))
   url.searchParams.sort()
-      return url.searchParams.toString() || 'static=1'
+  return url.searchParams.toString() || 'static=1'
 }
 let replacedOg = 0
 let pages = 0
